@@ -1,0 +1,185 @@
+<div class="simulator-container">
+  <div class="simulator-header">
+    <h3 class="simulator-title">⚡ Simulador de Transformador</h3>
+    <p class="simulator-desc">Visualiza la transferencia de energía por inducción electromagnética</p>
+  </div>
+
+  <div class="simulator-body">
+    
+    <!-- Controles -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label class="control-label">
+          Vueltas Primario (N₁): <span class="control-value">{{ primaryTurns() }}</span>
+        </label>
+        <input type="range" [(ngModel)]="primaryTurns" min="10" max="500" step="10" class="control-slider">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Vueltas Secundario (N₂): <span class="control-value">{{ secondaryTurns() }}</span>
+        </label>
+        <input type="range" [(ngModel)]="secondaryTurns" min="10" max="500" step="10" class="control-slider">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Voltaje Primario (V₁): <span class="control-value">{{ primaryVoltage() }} V</span>
+        </label>
+        <input type="range" [(ngModel)]="primaryVoltage" min="12" max="240" step="12" class="control-slider">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Carga (R): <span class="control-value">{{ load() }} Ω</span>
+        </label>
+        <input type="range" [(ngModel)]="load" min="10" max="1000" step="10" class="control-slider">
+      </div>
+
+      <button (click)="togglePlay()" class="btn-play">
+        {{ isPlaying() ? '⏸ Pausar' : '▶ Reproducir' }}
+      </button>
+    </div>
+
+    <!-- Visualización del Transformador -->
+    <div class="transformer-visual">
+      <div class="coil-section primary-section">
+        <div class="coil-label">Primario</div>
+        <div class="coil-container">
+          <div class="coil primary-coil">
+            <div class="coil-wire" *ngFor="let i of [].constructor(8); let idx = index" 
+                 [style.animation-delay.s]="idx * 0.1"></div>
+          </div>
+          <div class="coil-info">
+            <p>N₁ = {{ primaryTurns() }}</p>
+            <p>V₁ = {{ primaryVoltage() }} V</p>
+            <p>I₁ = {{ primaryCurrent().toFixed(3) }} A</p>
+          </div>
+        </div>
+        <svg class="wave-display" viewBox="0 0 200 60">
+          <line x1="0" y1="30" x2="200" y2="30" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
+          <path [attr.d]="generatePrimaryWave()" fill="none" stroke="#3b82f6" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <div class="core-section">
+        <div class="magnetic-core" [style.opacity]="0.3 + getMagneticFluxIntensity() * 0.7">
+          <div class="flux-lines">
+            <div class="flux-line" *ngFor="let i of [].constructor(5)"></div>
+          </div>
+          <div class="core-label">Núcleo<br>Magnético</div>
+        </div>
+        <div class="flux-indicator">
+          <span class="badge badge--warning">Φ</span>
+          <p class="flux-text">Flujo Magnético</p>
+        </div>
+      </div>
+
+      <div class="coil-section secondary-section">
+        <div class="coil-label">Secundario</div>
+        <div class="coil-container">
+          <div class="coil secondary-coil">
+            <div class="coil-wire" *ngFor="let i of [].constructor(8); let idx = index"
+                 [style.animation-delay.s]="idx * 0.1"></div>
+          </div>
+          <div class="coil-info">
+            <p>N₂ = {{ secondaryTurns() }}</p>
+            <p>V₂ = {{ secondaryVoltage().toFixed(1) }} V</p>
+            <p>I₂ = {{ secondaryCurrent().toFixed(3) }} A</p>
+          </div>
+        </div>
+        <svg class="wave-display" viewBox="0 0 200 60">
+          <line x1="0" y1="30" x2="200" y2="30" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
+          <path [attr.d]="generateSecondaryWave()" fill="none" stroke="#10b981" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Ecuación Fundamental -->
+    <div class="equation-section">
+      <h4 class="section-subtitle">Ecuación Fundamental del Transformador</h4>
+      <div class="equation-display">
+        <div [appKatex]="'\\frac{V_1}{V_2} = \\frac{N_1}{N_2} = \\frac{I_2}{I_1}'"></div>
+      </div>
+      <div class="equation-values">
+        <div class="value-card">
+          <p class="value-label">Relación de Vueltas</p>
+          <p class="value-number">{{ turnsRatio().toFixed(3) }}</p>
+        </div>
+        <div class="value-card">
+          <p class="value-label">Relación de Voltaje</p>
+          <p class="value-number">{{ (primaryVoltage() / secondaryVoltage()).toFixed(3) }}</p>
+        </div>
+        <div class="value-card">
+          <p class="value-label">Relación de Corriente</p>
+          <p class="value-number">{{ (secondaryCurrent() / primaryCurrent()).toFixed(3) }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tipo y Características -->
+    <div class="characteristics-panel">
+      <div class="char-card char-card--type">
+        <p class="char-label">Tipo de Transformador</p>
+        <p class="char-value char-value--large">{{ transformerType() }}</p>
+        <p class="char-desc" *ngIf="transformerType() === 'Elevador'">N₂ > N₁ → Aumenta voltaje, disminuye corriente</p>
+        <p class="char-desc" *ngIf="transformerType() === 'Reductor'">N₂ < N₁ → Disminuye voltaje, aumenta corriente</p>
+        <p class="char-desc" *ngIf="transformerType() === 'Aislamiento'">N₂ = N₁ → Mantiene voltaje, aislamiento galvánico</p>
+      </div>
+
+      <div class="char-card">
+        <p class="char-label">Potencia Primario</p>
+        <p class="char-value">{{ primaryPower().toFixed(2) }} W</p>
+      </div>
+
+      <div class="char-card">
+        <p class="char-label">Potencia Secundario</p>
+        <p class="char-value">{{ secondaryPower().toFixed(2) }} W</p>
+      </div>
+
+      <div class="char-card">
+        <p class="char-label">Eficiencia</p>
+        <p class="char-value">{{ efficiency().toFixed(1) }} %</p>
+        <div class="efficiency-bar">
+          <div class="efficiency-fill" [style.width.%]="efficiency()"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Principio de Funcionamiento -->
+    <div class="info-panel">
+      <h4 class="info-title">Principio de Funcionamiento</h4>
+      <div class="info-steps">
+        <div class="info-step">
+          <span class="step-number">1</span>
+          <div class="step-content">
+            <p class="step-title">Corriente Alterna en Primario</p>
+            <p class="step-desc">La corriente AC en el bobinado primario genera un campo magnético variable</p>
+          </div>
+        </div>
+        <div class="info-step">
+          <span class="step-number">2</span>
+          <div class="step-content">
+            <p class="step-title">Flujo Magnético en el Núcleo</p>
+            <p class="step-desc">El núcleo laminado canaliza el flujo magnético entre ambas bobinas</p>
+          </div>
+        </div>
+        <div class="info-step">
+          <span class="step-number">3</span>
+          <div class="step-content">
+            <p class="step-title">Inducción en Secundario</p>
+            <p class="step-desc">El flujo variable induce voltaje en el secundario por inducción mutua</p>
+          </div>
+        </div>
+        <div class="info-step">
+          <span class="step-number">4</span>
+          <div class="step-content">
+            <p class="step-title">Transferencia de Energía</p>
+            <p class="step-desc">La energía se transfiere sin contacto eléctrico directo entre bobinas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

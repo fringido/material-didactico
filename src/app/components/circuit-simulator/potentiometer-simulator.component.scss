@@ -1,0 +1,526 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.simulator-container {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-xl;
+  padding: $spacing-6;
+  margin: $spacing-6 0;
+}
+
+.simulator-header {
+  margin-bottom: $spacing-6;
+  text-align: center;
+}
+
+.simulator-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin-bottom: $spacing-2;
+}
+
+.simulator-desc {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.simulator-body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.controls-panel {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.control-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.control-value {
+  color: $color-primary;
+  font-weight: $font-weight-bold;
+}
+
+.control-select {
+  padding: $spacing-2 $spacing-3;
+  border: 1px solid $border-primary;
+  border-radius: $radius-md;
+  background: $bg-primary;
+  color: $text-primary;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: border-color $transition-base;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}
+
+.control-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: $bg-tertiary;
+  outline: none;
+  -webkit-appearance: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: $color-primary;
+    cursor: pointer;
+    transition: transform $transition-base;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: $color-primary;
+    cursor: pointer;
+    border: none;
+  }
+}
+
+.potentiometer-visual {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+  align-items: center;
+}
+
+.pot-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-6;
+}
+
+.pot-body {
+  width: 300px;
+  height: 60px;
+  position: relative;
+  background: $bg-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+}
+
+.pot-track {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, $color-primary, $color-success);
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.pot-wiper {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.2s ease;
+}
+
+.wiper-indicator {
+  width: 4px;
+  height: 40px;
+  background: $color-warning;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba($color-warning, 0.6);
+}
+
+.pot-terminal {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #888;
+  border-radius: 50%;
+  border: 2px solid #666;
+  
+  &--left {
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  &--center {
+    top: 10px;
+    transform: translateX(-50%);
+    transition: left 0.2s ease;
+  }
+  
+  &--right {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.terminal-label {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-weight: $font-weight-bold;
+}
+
+.pot-knob-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.pot-knob {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 30% 30%, #555, #222);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.1);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.15);
+  }
+}
+
+.knob-indicator {
+  width: 4px;
+  height: 30px;
+  background: $color-primary;
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba($color-primary, 0.8);
+}
+
+.knob-scale {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.scale-mark {
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background: #666;
+  top: 0;
+  left: 50%;
+  transform-origin: 50% 50px;
+}
+
+.pot-control {
+  width: 100%;
+  max-width: 400px;
+}
+
+.pot-slider-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-2;
+}
+
+.pot-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, $color-primary, $color-success);
+  outline: none;
+  -webkit-appearance: none;
+  margin-bottom: $spacing-2;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: $color-warning;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba($color-warning, 0.6);
+    transition: transform $transition-base;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: $color-warning;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba($color-warning, 0.6);
+  }
+}
+
+.pot-markers {
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-size-xs;
+  color: $text-tertiary;
+}
+
+.section-subtitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-3;
+  text-align: center;
+}
+
+.equation-section {
+  background: rgba($color-primary, 0.05);
+  border: 1px solid rgba($color-primary, 0.2);
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+}
+
+.equation-display {
+  background: $bg-primary;
+  padding: $spacing-4;
+  border-radius: $radius-md;
+  text-align: center;
+  margin-bottom: $spacing-4;
+}
+
+.resistance-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resistance-card {
+  background: $bg-primary;
+  padding: $spacing-4;
+  border-radius: $radius-md;
+}
+
+.resistance-label {
+  font-size: $font-size-xs;
+  color: $text-tertiary;
+  margin-bottom: $spacing-1;
+}
+
+.resistance-value {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin-bottom: $spacing-2;
+}
+
+.resistance-bar {
+  width: 100%;
+  height: 8px;
+  background: $bg-tertiary;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.resistance-fill {
+  height: 100%;
+  background: $color-primary;
+  transition: width 0.3s ease;
+
+  &--secondary {
+    background: $color-success;
+  }
+}
+
+.output-panel {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $spacing-6;
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.output-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.output-icon {
+  font-size: 3rem;
+}
+
+.output-meter {
+  width: 60px;
+  height: 150px;
+  background: $bg-tertiary;
+  border-radius: $radius-md;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid $border-primary;
+}
+
+.meter-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, $color-success, $color-primary);
+  transition: height 0.3s ease;
+}
+
+.output-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: $spacing-3;
+}
+
+.metric-card {
+  background: $bg-primary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-md;
+  padding: $spacing-3;
+  text-align: center;
+
+  &--highlight {
+    background: rgba($color-primary, 0.05);
+    border-color: $color-primary;
+  }
+}
+
+.metric-label {
+  font-size: $font-size-xs;
+  color: $text-tertiary;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: $spacing-1;
+}
+
+.metric-value {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+}
+
+.metric-percent {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  margin-top: $spacing-1;
+}
+
+.response-section {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+}
+
+.response-svg {
+  width: 100%;
+  height: 150px;
+  background: $bg-primary;
+  border-radius: $radius-md;
+}
+
+.applications-section {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+}
+
+.app-card {
+  background: $bg-primary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  text-align: center;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-2px);
+  }
+}
+
+.app-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: $spacing-2;
+}
+
+.app-title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-1;
+}
+
+.app-desc {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  line-height: $line-height-relaxed;
+}

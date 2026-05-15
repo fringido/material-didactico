@@ -1,0 +1,206 @@
+<div class="simulator-container">
+  <div class="simulator-header">
+    <h3 class="simulator-title">🎛️ Simulador de Potenciómetro</h3>
+    <p class="simulator-desc">Control variable de resistencia y división de voltaje</p>
+  </div>
+
+  <div class="simulator-body">
+    
+    <!-- Controles -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label class="control-label">Resistencia Total</label>
+        <select [(ngModel)]="totalResistance" class="control-select">
+          <option [value]="1000">1 kΩ</option>
+          <option [value]="10000">10 kΩ</option>
+          <option [value]="100000">100 kΩ</option>
+          <option [value]="1000000">1 MΩ</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Tipo de Curva</label>
+        <select [(ngModel)]="curveType" class="control-select">
+          <option value="linear">Lineal (B)</option>
+          <option value="logarithmic">Logarítmica (A - Audio)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Voltaje Entrada: <span class="control-value">{{ inputVoltage() }} V</span>
+        </label>
+        <input type="range" [(ngModel)]="inputVoltage" min="3" max="24" step="1" class="control-slider">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Aplicación</label>
+        <select [(ngModel)]="application" class="control-select">
+          <option value="volume">Control de Volumen</option>
+          <option value="brightness">Control de Brillo</option>
+          <option value="speed">Control de Velocidad</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Visualización del Potenciómetro -->
+    <div class="potentiometer-visual">
+      <div class="pot-diagram">
+        <div class="pot-body">
+          <div class="pot-track"></div>
+          <div class="pot-wiper" [style.left.%]="position()">
+            <div class="wiper-indicator"></div>
+          </div>
+          <div class="pot-terminal pot-terminal--left">
+            <span class="terminal-label">1</span>
+          </div>
+          <div class="pot-terminal pot-terminal--center" [style.left.%]="position()">
+            <span class="terminal-label">2</span>
+          </div>
+          <div class="pot-terminal pot-terminal--right">
+            <span class="terminal-label">3</span>
+          </div>
+        </div>
+        
+        <div class="pot-knob-container">
+          <div class="pot-knob" [style.transform]="'rotate(' + (position() * 2.7 - 135) + 'deg)'">
+            <div class="knob-indicator"></div>
+          </div>
+          <div class="knob-scale">
+            <span class="scale-mark" *ngFor="let i of [0, 25, 50, 75, 100]" 
+                  [style.transform]="'rotate(' + (i * 2.7 - 135) + 'deg)'"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pot-control">
+        <label class="pot-slider-label">
+          Posición del Cursor: <span class="control-value">{{ position() }}%</span>
+        </label>
+        <input type="range" [(ngModel)]="position" min="0" max="100" step="1" class="pot-slider">
+        <div class="pot-markers">
+          <span>0%</span>
+          <span>25%</span>
+          <span>50%</span>
+          <span>75%</span>
+          <span>100%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ecuación de División de Voltaje -->
+    <div class="equation-section">
+      <h4 class="section-subtitle">División de Voltaje</h4>
+      <div class="equation-display">
+        <div [appKatex]="'V_{out} = V_{in} \\times \\frac{R_2}{R_1 + R_2}'"></div>
+      </div>
+      <div class="resistance-values">
+        <div class="resistance-card">
+          <p class="resistance-label">R₁ (Terminal 1 → 2)</p>
+          <p class="resistance-value">{{ (resistance1() / 1000).toFixed(2) }} kΩ</p>
+          <div class="resistance-bar">
+            <div class="resistance-fill" [style.width.%]="(resistance1() / totalResistance()) * 100"></div>
+          </div>
+        </div>
+        <div class="resistance-card">
+          <p class="resistance-label">R₂ (Terminal 2 → 3)</p>
+          <p class="resistance-value">{{ (resistance2() / 1000).toFixed(2) }} kΩ</p>
+          <div class="resistance-bar">
+            <div class="resistance-fill resistance-fill--secondary" 
+                 [style.width.%]="(resistance2() / totalResistance()) * 100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salida y Métricas -->
+    <div class="output-panel">
+      <div class="output-visual">
+        <div class="output-icon">{{ getApplicationIcon() }}</div>
+        <div class="output-meter">
+          <div class="meter-fill" [style.height.%]="getVisualOutput()"></div>
+        </div>
+        <p class="output-label">{{ getApplicationLabel() }}</p>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <p class="metric-label">Voltaje Entrada</p>
+          <p class="metric-value">{{ inputVoltage() }} V</p>
+        </div>
+        <div class="metric-card metric-card--highlight">
+          <p class="metric-label">Voltaje Salida</p>
+          <p class="metric-value">{{ outputVoltage().toFixed(2) }} V</p>
+          <p class="metric-percent">{{ outputPercentage().toFixed(1) }}%</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Corriente</p>
+          <p class="metric-value">{{ current().toFixed(2) }} mA</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Potencia</p>
+          <p class="metric-value">{{ power().toFixed(3) }} W</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curva de Respuesta -->
+    <div class="response-section">
+      <h4 class="section-subtitle">Curva de Respuesta: {{ curveType() === 'linear' ? 'Lineal' : 'Logarítmica' }}</h4>
+      <svg class="response-svg" viewBox="0 0 300 150">
+        <!-- Ejes -->
+        <line x1="30" y1="10" x2="30" y2="130" stroke="#666" stroke-width="2"/>
+        <line x1="30" y1="130" x2="290" y2="130" stroke="#666" stroke-width="2"/>
+        
+        <!-- Labels -->
+        <text x="5" y="15" fill="#888" font-size="10">100%</text>
+        <text x="10" y="135" fill="#888" font-size="10">0%</text>
+        <text x="25" y="145" fill="#888" font-size="10">0%</text>
+        <text x="270" y="145" fill="#888" font-size="10">100%</text>
+        <text x="120" y="145" fill="#888" font-size="10">Posición</text>
+        <text x="5" y="75" fill="#888" font-size="10" transform="rotate(-90 5 75)">Salida</text>
+        
+        <!-- Curva -->
+        <path *ngIf="curveType() === 'linear'" 
+              d="M 30 130 L 290 10" 
+              fill="none" stroke="#8b5cf6" stroke-width="3"/>
+        <path *ngIf="curveType() === 'logarithmic'" 
+              d="M 30 130 Q 100 100, 160 50 T 290 10" 
+              fill="none" stroke="#8b5cf6" stroke-width="3"/>
+        
+        <!-- Punto actual -->
+        <circle [attr.cx]="30 + (position() / 100) * 260" 
+                [attr.cy]="130 - (getVisualOutput() / 100) * 120" 
+                r="5" fill="#f59e0b"/>
+      </svg>
+    </div>
+
+    <!-- Aplicaciones -->
+    <div class="applications-section">
+      <h4 class="section-subtitle">Aplicaciones Comunes</h4>
+      <div class="app-grid">
+        <div class="app-card">
+          <span class="app-icon">🔊</span>
+          <p class="app-title">Control de Volumen</p>
+          <p class="app-desc">Ajuste de nivel de audio en amplificadores y sistemas de sonido</p>
+        </div>
+        <div class="app-card">
+          <span class="app-icon">💡</span>
+          <p class="app-title">Control de Brillo</p>
+          <p class="app-desc">Regulación de intensidad lumínica en dimmers y pantallas</p>
+        </div>
+        <div class="app-card">
+          <span class="app-icon">⚙️</span>
+          <p class="app-title">Control de Velocidad</p>
+          <p class="app-desc">Ajuste de RPM en motores y ventiladores</p>
+        </div>
+        <div class="app-card">
+          <span class="app-icon">🌡️</span>
+          <p class="app-title">Control de Temperatura</p>
+          <p class="app-desc">Ajuste de setpoint en termostatos</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

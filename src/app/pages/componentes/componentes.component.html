@@ -1,0 +1,48 @@
+<div class="loading-state" *ngIf="loading()">
+  <div class="spinner"></div>
+</div>
+
+<div class="cat-wrapper" *ngIf="!loading()">
+
+  <!-- HEADER -->
+  <header class="cat-header">
+    <a routerLink="/" class="btn btn--ghost btn--sm">← Inicio</a>
+    <div class="cat-header__text">
+      <h1 class="cat-header__title">Catálogo de Componentes</h1>
+      <p class="cat-header__sub">Electrónica Analógica — Componentes activos y pasivos con ecuaciones interactivas</p>
+    </div>
+  </header>
+
+  <!-- CATEGORÍAS -->
+  <div class="categories" *ngFor="let cat of categorias()">
+    <div class="cat-label">
+      <span class="cat-label__badge badge badge--{{ cat.id === 'activos' ? 'success' : (cat.id === 'pasivos' ? 'info' : 'neutral') }} badge--lg">{{ cat.nombre }}</span>
+      <p class="cat-label__desc">{{ cat.descripcion }}</p>
+    </div>
+
+    <div class="comp-grid">
+      <a class="comp-card"
+         *ngFor="let comp of cat.componentes"
+         [routerLink]="['/componentes', cat.id, comp.id]">
+        <div class="comp-card__icon">{{ cat.id === 'activos' ? '⚡' : '🔧' }}</div>
+        <div class="comp-card__body">
+          <p class="comp-card__name">{{ comp.nombre }}</p>
+          <p class="comp-card__sub" *ngIf="comp.subtitulo">{{ comp.subtitulo }}</p>
+          
+          <!-- Visual Equation Preview -->
+          <div class="comp-card__formula" *ngIf="comp.ecuacion_principal">
+            <div [appKatex]="comp.ecuacion_principal"></div>
+          </div>
+
+          <p class="comp-card__desc">{{ comp.descripcion | slice:0:90 }}...</p>
+          <div class="comp-card__tags" *ngIf="comp.terminales?.length || comp.unidad">
+            <span class="badge badge--neutral badge--sm" *ngFor="let t of comp.terminales">{{ t }}</span>
+            <span class="badge badge--warning badge--sm" *ngIf="comp.unidad">{{ comp.unidad }}</span>
+          </div>
+        </div>
+        <span class="comp-card__arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+</div>

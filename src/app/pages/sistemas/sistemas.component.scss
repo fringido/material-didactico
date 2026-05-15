@@ -1,0 +1,546 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.loading-state {
+  min-height: 50vh;
+  @include flex-center;
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid $border-primary;
+    border-top-color: $color-primary;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.sistemas-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-8 $spacing-6 $spacing-16;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-10;
+}
+
+.sistemas-header {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-6;
+  padding-bottom: $spacing-8;
+  border-bottom: 1px solid $border-primary;
+
+  &__text { flex: 1; }
+
+  &__title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-extrabold;
+    color: $text-primary;
+    line-height: $line-height-tight;
+    margin-bottom: $spacing-2;
+  }
+
+  &__sub {
+    font-size: $font-size-base;
+    color: $text-secondary;
+  }
+}
+
+.sistemas-grid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-10;
+}
+
+.sistema-card {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-xl;
+  padding: $spacing-8;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+
+  &__header {
+    display: flex;
+    gap: $spacing-4;
+    align-items: flex-start;
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+  }
+
+  &__equation {
+    background: $bg-secondary;
+    padding: $spacing-5;
+    border-radius: $radius-md;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 3px solid $color-primary;
+    min-height: 80px;
+
+    ::ng-deep .katex { font-size: 1.4em; }
+  }
+
+  &__section {
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+      margin-bottom: $spacing-4;
+      padding-bottom: $spacing-2;
+      border-bottom: 1px solid $border-primary;
+    }
+  }
+}
+
+.conceptos-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.concepto-item {
+  background: $bg-secondary;
+  padding: $spacing-4;
+  border-radius: $radius-md;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    margin-bottom: $spacing-2;
+    
+    strong {
+      color: $text-primary;
+      font-size: $font-size-sm;
+    }
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-2;
+  }
+}
+
+.concepto-formula {
+  background: $bg-primary;
+  padding: $spacing-3;
+  border-radius: $radius-sm;
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-2;
+
+  ::ng-deep .katex { font-size: 1.1em; }
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $spacing-4;
+}
+
+.config-card {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  text-decoration: none;
+  transition: all $transition-base;
+  position: relative;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-2px);
+    .config-card__arrow { color: $color-primary; transform: translateX(4px); }
+  }
+
+  &__name {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+    flex: 1;
+  }
+
+  &__specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-1;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: $spacing-4;
+    right: $spacing-4;
+    font-size: $font-size-lg;
+    color: $text-tertiary;
+    transition: all $transition-base;
+  }
+}
+
+.spec-badge {
+  font-size: $font-size-xs;
+  padding: 2px $spacing-2;
+  background: rgba($color-primary, 0.1);
+  color: $color-primary;
+  border-radius: $radius-sm;
+}
+
+.opamp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $spacing-4;
+}
+
+.opamp-card {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+  text-decoration: none;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-2px);
+  }
+
+  &__name {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-3;
+  }
+
+  &__formula {
+    background: $bg-primary;
+    padding: $spacing-3;
+    border-radius: $radius-sm;
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-3;
+    min-height: 50px;
+    align-items: center;
+
+    ::ng-deep .katex { font-size: 1em; }
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-2;
+  }
+}
+
+.filtros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-4;
+}
+
+.filtro-card {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  text-decoration: none;
+  transition: all $transition-base;
+  position: relative;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-2px);
+    .filtro-card__arrow { color: $color-primary; transform: translateX(4px); }
+  }
+
+  &__name {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-3;
+  }
+
+  &__formula {
+    background: $bg-primary;
+    padding: $spacing-3;
+    border-radius: $radius-sm;
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-3;
+    min-height: 50px;
+    align-items: center;
+
+    ::ng-deep .katex { font-size: 0.95em; }
+  }
+
+  &__apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-1;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: $spacing-4;
+    right: $spacing-4;
+    font-size: $font-size-lg;
+    color: $text-tertiary;
+    transition: all $transition-base;
+  }
+}
+
+.tipo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $spacing-4;
+}
+
+.tipo-card {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+
+  &__name {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.pros-cons-mini {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    
+    li {
+      font-size: $font-size-xs;
+      color: $text-secondary;
+      padding: $spacing-1 0;
+      line-height: $line-height-relaxed;
+    }
+  }
+}
+
+.label-success {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-success-light;
+  margin-bottom: $spacing-2;
+}
+
+.label-error {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-error-light;
+  margin-bottom: $spacing-2;
+}
+
+.barkhausen-section {
+  background: rgba($color-primary, 0.03);
+  padding: $spacing-5;
+  border-radius: $radius-lg;
+  border: 1px solid rgba($color-primary, 0.2);
+}
+
+.criterio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $spacing-4;
+}
+
+.criterio-card {
+  background: $bg-primary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &__num {
+    width: 32px;
+    height: 32px;
+    background: $color-primary;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-sm;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+  }
+
+  &__formula {
+    background: $bg-secondary;
+    padding: $spacing-3;
+    border-radius: $radius-sm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+
+    ::ng-deep .katex { font-size: 1.1em; }
+  }
+}
+
+.osc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-4;
+}
+
+.osc-card {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  text-decoration: none;
+  transition: all $transition-base;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-2px);
+    .osc-card__arrow { color: $color-primary; transform: translateX(4px); }
+  }
+
+  &__name {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+    flex: 1;
+  }
+
+  &__formula {
+    background: $bg-primary;
+    padding: $spacing-3;
+    border-radius: $radius-sm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    margin: $spacing-2 0;
+
+    ::ng-deep .katex { font-size: 1em; }
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-1;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: $spacing-4;
+    right: $spacing-4;
+    font-size: $font-size-lg;
+    color: $text-tertiary;
+    transition: all $transition-base;
+  }
+}
+
+.onda-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $spacing-4;
+}
+
+.onda-card {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+
+  &__tipo {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-3;
+  }
+
+  &__oscs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-1;
+  }
+}
+
+.text-secondary {
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}
+
+.mb-3 {
+  margin-bottom: $spacing-3;
+}

@@ -1,0 +1,91 @@
+@use 'variables' as *;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin card {
+    background: $bg-card;
+    border: 1px solid $border-primary;
+    border-radius: $radius-lg;
+    padding: $spacing-6;
+    box-shadow: $shadow-md;
+}
+
+@mixin room {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    padding: $spacing-6 $spacing-4;
+    box-shadow: $shadow-md;
+}
+
+@mixin button-base {
+    font-family: $font-primary;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    border-radius: $radius-md;
+    padding: $spacing-3 $spacing-6;
+    transition: all $transition-base $ease-in-out;
+    cursor: pointer;
+    border: none;
+    outline: none;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+@mixin button-primary {
+    @include button-base;
+    background: $color-primary;
+    color: $text-primary;
+
+    &:hover:not(:disabled) {
+        background: $color-primary-hover;
+        border: 1px solid $color-primary;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.98);
+    }
+}
+
+@mixin truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin scrollbar {
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        margin: $spacing-1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $border-secondary;
+        border-radius: $radius-full;
+        border: 3px solid transparent; 
+        background-clip: content-box; 
+        transition: background $transition-base;
+
+        &:hover {
+            background: $color-primary;
+            background-clip: content-box;
+        }
+    }
+}

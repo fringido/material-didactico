@@ -1,0 +1,349 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.loading-state {
+  min-height: 50vh;
+  @include flex-center;
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid $border-primary;
+    border-top-color: $color-primary;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.detalle-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: $spacing-8 $spacing-6 $spacing-16;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-10;
+}
+
+// Breadcrumb
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $font-size-sm;
+  color: $text-tertiary;
+
+  &__link { color: $text-secondary; transition: color $transition-base; &:hover { color: $color-primary; } }
+  &__sep { color: $border-secondary; }
+  &__current { color: $text-primary; font-weight: $font-weight-medium; }
+}
+
+// Component hero
+.comp-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-8;
+  padding-bottom: $spacing-8;
+  border-bottom: 1px solid $border-primary;
+
+  @media (max-width: $breakpoint-md) { flex-direction: column; }
+
+  &__title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-extrabold;
+    color: $text-primary;
+    line-height: $line-height-tight;
+    margin-bottom: $spacing-2;
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    color: $text-secondary;
+    font-style: italic;
+    margin-bottom: $spacing-3;
+  }
+
+  &__desc {
+    font-size: $font-size-base;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+    max-width: 560px;
+  }
+
+  &__badges {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    align-items: flex-end;
+    flex-shrink: 0;
+
+    .terminals { display: flex; flex-wrap: wrap; gap: $spacing-1; justify-content: flex-end; }
+  }
+}
+
+// Sections
+.section {
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+    padding-bottom: $spacing-3;
+    border-bottom: 1px solid $border-primary;
+  }
+
+  &__sub {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-5;
+  }
+}
+
+// Equation display
+.equation-display {
+  background: $bg-secondary;
+  padding: $spacing-6;
+  border-radius: $radius-md;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 3px solid $color-primary;
+  margin-top: $spacing-4;
+  min-height: 100px;
+  overflow-x: auto;
+
+  &--sm {
+    min-height: 60px;
+    padding: $spacing-3 $spacing-4;
+    margin-top: $spacing-3;
+  }
+
+  // KaTeX specific overrides if needed
+  ::ng-deep .katex-display {
+    margin: 0;
+  }
+  ::ng-deep .katex {
+    font-size: 1.5em;
+  }
+  &--sm ::ng-deep .katex {
+    font-size: 1.1em;
+  }
+  
+  // Fallback to hide MathML if Katex CSS is slow to load
+  ::ng-deep .katex-mathml {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+  }
+}
+
+.variables-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  margin-top: $spacing-4;
+}
+
+.var-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  background: $bg-secondary;
+  border-radius: $radius-md;
+  padding: $spacing-2 $spacing-3;
+}
+
+.var-key {
+  font-family: $font-mono;
+  font-size: $font-size-xs;
+  color: $color-accent-blue;
+  font-weight: $font-weight-bold;
+  background: rgba($color-accent-blue, 0.1);
+  padding: 2px $spacing-1;
+  border-radius: 4px;
+}
+
+.var-desc {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}
+
+// Charts
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: $spacing-5;
+  margin-top: $spacing-4;
+}
+
+// Formulas grid
+.formulas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: $spacing-5;
+  margin-top: $spacing-4;
+}
+
+.formula-card {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $text-secondary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__desc {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    margin-top: $spacing-3;
+    line-height: $line-height-relaxed;
+  }
+}
+
+// Behavior
+.behavior-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.behavior-card {
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  line-height: $line-height-relaxed;
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: $spacing-2;
+  }
+
+  &--success { background: $color-success-bg; border: 1px solid rgba($color-success, 0.2); .behavior-card__label { color: $color-success-light; } }
+  &--error   { background: $color-error-bg;   border: 1px solid rgba($color-error, 0.2);   .behavior-card__label { color: $color-error-light; } }
+  &--warning { background: $color-warning-bg; border: 1px solid rgba($color-warning, 0.2); .behavior-card__label { color: $color-warning-light; } }
+  &--info    { background: $color-info-bg;    border: 1px solid rgba($color-info, 0.2);    .behavior-card__label { color: $color-info-light; } }
+}
+
+// Variants
+.variants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $spacing-5;
+  margin-top: $spacing-4;
+}
+
+.variant-card {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  transition: border-color $transition-base;
+
+  &:hover { border-color: $color-primary; }
+
+  &__name {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+  }
+
+  &__meta {
+    font-size: $font-size-xs;
+    color: $text-tertiary;
+    margin-top: $spacing-2;
+  }
+}
+
+.variant-sublist {
+  margin-top: $spacing-3;
+  padding-left: $spacing-4;
+  list-style: disc;
+  li {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-1;
+  }
+}
+
+// Tags
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  margin-top: $spacing-4;
+}
+
+// Parameter table
+.param-table { margin-top: 0.5rem; }
+
+.param-row {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-3;
+  padding: $spacing-1 0;
+  border-bottom: 1px solid rgba($border-primary, 0.4);
+  &:last-child { border: none; }
+}
+
+// LED materials table
+.led-table { display: flex; flex-direction: column; gap: $spacing-1; margin-top: $spacing-2; }
+
+.led-row {
+  display: flex;
+  gap: $spacing-3;
+  font-size: $font-size-xs;
+  &__color {
+    color: $text-primary;
+    font-weight: $font-weight-medium;
+    min-width: 120px;
+  }
+  &__mat { color: $text-tertiary; }
+}
+
+// Pros / cons
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+
+  @media (max-width: $breakpoint-sm) { grid-template-columns: 1fr; }
+
+  .behavior-card__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: $spacing-2;
+  }
+}
+
+.unidad__sublabel {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: $spacing-2;
+}

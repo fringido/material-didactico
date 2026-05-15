@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for the Design System */
+
+// Note: variables and mixins are loaded within each module below.
+// We don't need to @use them here unless we were writing styles in this file.
+
+// 1. Estilos Base y Reset
+@use 'styles/base';
+
+// 2. Componentes Globales
+@use 'styles/components';
+
+// 3. Utilidades
+@use 'styles/utilities';

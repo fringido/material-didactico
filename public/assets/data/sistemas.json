@@ -1,0 +1,235 @@
+{
+  "sistemas_analogos": {
+    "amplificadores": {
+      "id": "amplificadores",
+      "nombre": "Amplificadores",
+      "descripcion": "Circuito que aumenta la amplitud de una señal de entrada utilizando energía de una fuente externa",
+      "icono": "📡",
+      "ecuacion_principal": "A = \\frac{V_{out}}{V_{in}}",
+      "conceptos": [
+        {
+          "nombre": "Ganancia",
+          "simbolo": "A",
+          "formula": "A = \\frac{V_{out}}{V_{in}}",
+          "descripcion": "Relación entre la salida y la entrada"
+        },
+        {
+          "nombre": "Ancho de Banda",
+          "simbolo": "BW",
+          "descripcion": "Rango de frecuencias en el que el amplificador opera eficientemente"
+        }
+      ],
+      "configuraciones": [
+        {
+          "id": "emisor_comun",
+          "nombre": "Emisor Común",
+          "descripcion": "Alta ganancia de voltaje y corriente, invierte la fase de la señal",
+          "ganancia_voltaje": "Alta",
+          "ganancia_corriente": "Alta",
+          "fase": "Invertida (180°)",
+          "impedancia_entrada": "Media",
+          "impedancia_salida": "Alta",
+          "aplicaciones": ["Amplificación de señales débiles", "Etapas de ganancia"]
+        },
+        {
+          "id": "colector_comun",
+          "nombre": "Colector Común (Seguidor de Emisor)",
+          "descripcion": "Ganancia de voltaje cercana a 1, alta impedancia de entrada",
+          "ganancia_voltaje": "≈ 1",
+          "ganancia_corriente": "Alta",
+          "fase": "No invertida",
+          "impedancia_entrada": "Muy Alta",
+          "impedancia_salida": "Baja",
+          "aplicaciones": ["Buffer de impedancia", "Acoplamiento de etapas"]
+        },
+        {
+          "id": "base_comun",
+          "nombre": "Base Común",
+          "descripcion": "Alta ganancia de voltaje, baja impedancia de entrada",
+          "ganancia_voltaje": "Alta",
+          "ganancia_corriente": "≈ 1",
+          "fase": "No invertida",
+          "impedancia_entrada": "Baja",
+          "impedancia_salida": "Alta",
+          "aplicaciones": ["Amplificadores de RF", "Etapas de alta frecuencia"]
+        }
+      ],
+      "opamps": {
+        "nombre": "Amplificadores Operacionales",
+        "descripcion": "Circuitos integrados que facilitan la creación de amplificadores",
+        "tipos": [
+          {
+            "id": "inversor",
+            "nombre": "Inversor",
+            "formula": "A_v = -\\frac{R_f}{R_{in}}",
+            "descripcion": "Invierte la fase y amplifica según la relación de resistencias",
+            "fase": "180°"
+          },
+          {
+            "id": "no_inversor",
+            "nombre": "No Inversor",
+            "formula": "A_v = 1 + \\frac{R_f}{R_{in}}",
+            "descripcion": "Mantiene la fase y amplifica",
+            "fase": "0°"
+          },
+          {
+            "id": "sumador",
+            "nombre": "Sumador",
+            "formula": "V_{out} = -R_f\\left(\\frac{V_1}{R_1} + \\frac{V_2}{R_2} + \\frac{V_3}{R_3}\\right)",
+            "descripcion": "Suma múltiples señales de entrada"
+          }
+        ]
+      }
+    },
+    "filtros": {
+      "id": "filtros",
+      "nombre": "Filtros Analógicos",
+      "descripcion": "Redes que permiten el paso de ciertas frecuencias mientras atenúan otras",
+      "icono": "🎚️",
+      "ecuacion_principal": "H(j\\omega) = \\frac{V_{out}}{V_{in}}",
+      "por_frecuencia": [
+        {
+          "id": "pasa_bajas",
+          "nombre": "Pasa-Bajas (LPF)",
+          "descripcion": "Deja pasar frecuencias bajas y bloquea las altas",
+          "formula_rc": "H(j\\omega) = \\frac{1}{1 + j\\omega RC}",
+          "frecuencia_corte": "f_c = \\frac{1}{2\\pi RC}",
+          "aplicaciones": ["Eliminar interferencia de alta frecuencia", "Anti-aliasing", "Suavizado de señales"],
+          "ejemplo": "Eliminar ruido de alta frecuencia en audio"
+        },
+        {
+          "id": "pasa_altas",
+          "nombre": "Pasa-Altas (HPF)",
+          "descripcion": "Deja pasar frecuencias altas y bloquea las bajas",
+          "formula_rc": "H(j\\omega) = \\frac{j\\omega RC}{1 + j\\omega RC}",
+          "frecuencia_corte": "f_c = \\frac{1}{2\\pi RC}",
+          "aplicaciones": ["Eliminar acoplamiento DC", "Bloqueo de componente continua", "Ecualización"],
+          "ejemplo": "Eliminar el acoplamiento de DC en amplificadores"
+        },
+        {
+          "id": "pasa_banda",
+          "nombre": "Pasa-Banda (BPF)",
+          "descripcion": "Solo permite un rango específico de frecuencias",
+          "formula": "H(j\\omega) = \\frac{j\\omega \\frac{\\omega_0}{Q}}{(j\\omega)^2 + j\\omega\\frac{\\omega_0}{Q} + \\omega_0^2}",
+          "parametros": {
+            "frecuencia_central": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}",
+            "ancho_banda": "BW = \\frac{f_0}{Q}",
+            "factor_calidad": "Q = \\frac{f_0}{BW}"
+          },
+          "aplicaciones": ["Sintonización de radio", "Selección de canales", "Comunicaciones"],
+          "ejemplo": "Sintonización de estaciones de radio FM"
+        },
+        {
+          "id": "rechaza_banda",
+          "nombre": "Rechaza-Banda (Notch)",
+          "descripcion": "Elimina una frecuencia específica",
+          "aplicaciones": ["Eliminar zumbido de 60Hz", "Rechazo de interferencias", "Cancelación de ruido"],
+          "ejemplo": "Eliminar el zumbido de 60Hz de la red eléctrica"
+        }
+      ],
+      "por_componentes": [
+        {
+          "tipo": "Pasivos",
+          "descripcion": "Usan solo R, L y C. No tienen ganancia",
+          "ventajas": ["No requieren alimentación", "Bajo costo", "Alta linealidad"],
+          "desventajas": ["Sin ganancia", "Dependientes de la carga", "Atenuación de señal"]
+        },
+        {
+          "tipo": "Activos",
+          "descripcion": "Utilizan Op-Amps además de componentes pasivos",
+          "ventajas": ["Pueden amplificar", "Independientes de la carga", "Mayor control de parámetros"],
+          "desventajas": ["Requieren alimentación", "Mayor costo", "Limitados por ancho de banda del Op-Amp"]
+        }
+      ]
+    },
+    "osciladores": {
+      "id": "osciladores",
+      "nombre": "Osciladores",
+      "descripcion": "Circuito que genera una señal de salida periódica a partir de DC, sin señal de entrada externa",
+      "icono": "〰️",
+      "ecuacion_principal": "v_{out}(t) = A\\sin(\\omega t + \\phi)",
+      "criterio_barkhausen": {
+        "nombre": "Criterio de Barkhausen",
+        "descripcion": "Condiciones para que un circuito oscile de forma sostenida",
+        "condiciones": [
+          {
+            "numero": 1,
+            "descripcion": "La ganancia del lazo debe ser igual o ligeramente mayor a 1",
+            "formula": "|A\\beta| \\geq 1"
+          },
+          {
+            "numero": 2,
+            "descripcion": "El desplazamiento de fase total alrededor del lazo debe ser 0° (o múltiplos de 360°)",
+            "formula": "\\angle(A\\beta) = 0° + n \\cdot 360°"
+          }
+        ]
+      },
+      "tipos": [
+        {
+          "id": "rc_phase_shift",
+          "nombre": "Oscilador por Corrimiento de Fase (RC)",
+          "descripcion": "Ideal para bajas frecuencias (audio)",
+          "formula_frecuencia": "f = \\frac{1}{2\\pi RC\\sqrt{6}}",
+          "componentes": "3 etapas RC + amplificador",
+          "fase_total": "180° (red RC) + 180° (amplificador) = 360°",
+          "rango_frecuencia": "Audio (20Hz - 20kHz)",
+          "aplicaciones": ["Generadores de audio", "Osciladores de baja frecuencia", "Instrumentos musicales"]
+        },
+        {
+          "id": "wien_bridge",
+          "nombre": "Oscilador de Puente de Wien",
+          "descripcion": "Muy estable, utilizado para señales senoidales puras",
+          "formula_frecuencia": "f = \\frac{1}{2\\pi RC}",
+          "estabilidad": "Muy alta",
+          "distorsion": "Muy baja",
+          "rango_frecuencia": "Audio a RF baja",
+          "aplicaciones": ["Generadores de señal de precisión", "Instrumentación", "Calibración"]
+        },
+        {
+          "id": "colpitts",
+          "nombre": "Oscilador Colpitts",
+          "descripcion": "Utiliza divisor capacitivo, preferido para RF",
+          "formula_frecuencia": "f = \\frac{1}{2\\pi\\sqrt{L C_{eq}}}",
+          "componentes": "L + 2 capacitores",
+          "rango_frecuencia": "RF (MHz - GHz)",
+          "aplicaciones": ["Transmisores RF", "Osciladores locales", "Generadores de portadora"]
+        },
+        {
+          "id": "hartley",
+          "nombre": "Oscilador Hartley",
+          "descripcion": "Utiliza divisor inductivo, para RF",
+          "formula_frecuencia": "f = \\frac{1}{2\\pi\\sqrt{L_{eq} C}}",
+          "componentes": "2 inductores + C",
+          "rango_frecuencia": "RF (MHz)",
+          "aplicaciones": ["Receptores de radio", "Osciladores de RF", "Comunicaciones"]
+        },
+        {
+          "id": "cristal",
+          "nombre": "Oscilador de Cristal",
+          "descripcion": "Utiliza resonancia mecánica de cuarzo para precisión extrema",
+          "formula_frecuencia": "f = \\frac{n}{2t}\\sqrt{\\frac{E}{\\rho}}",
+          "estabilidad": "Extremadamente alta (±10 ppm o mejor)",
+          "precision": "Partes por millón (ppm)",
+          "aplicaciones": ["Relojes digitales", "Microcontroladores", "Comunicaciones digitales", "GPS"]
+        }
+      ],
+      "formas_onda": [
+        {
+          "tipo": "Senoidal",
+          "descripcion": "Onda suave y continua",
+          "osciladores": ["Wien", "Colpitts", "Hartley", "Cristal"]
+        },
+        {
+          "tipo": "Cuadrada",
+          "descripcion": "Transiciones abruptas entre niveles",
+          "osciladores": ["Multivibrador astable", "555 Timer"]
+        },
+        {
+          "tipo": "Triangular",
+          "descripcion": "Rampa lineal ascendente y descendente",
+          "osciladores": ["Integrador con comparador"]
+        }
+      ]
+    }
+  }
+}

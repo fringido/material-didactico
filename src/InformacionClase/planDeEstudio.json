@@ -1,0 +1,210 @@
+{
+  "plan_de_estudio": {
+    "materia": "Electrónica Analógica",
+    "carrera": "Ingeniería Mecatrónica",
+    "cuatrimestre": "Sexto",
+    "clave": "LIM-029",
+    "profesor": "Camacho Ríos Maximiliano Alfredo",
+
+    "informacion_general": {
+      "modalidad": "Ejecutivo",
+      "plantel": ["Torres", "Zinacantepec"],
+      "horarios": [
+        {
+          "modulo": 1,
+          "dia": "Sábados",
+          "hora_inicio": "10:00",
+          "hora_fin": "12:00",
+          "periodo_inicio": "2026-05-09",
+          "periodo_fin": "2026-06-20"
+        },
+        {
+          "modulo": 2,
+          "dia": "Sábados",
+          "hora_inicio": "12:00",
+          "hora_fin": "14:00",
+          "periodo_inicio": "2026-07-04",
+          "periodo_fin": "2026-08-15"
+        }
+      ]
+    },
+
+    "objetivo": "Al término del curso, el estudiante adquirirá conocimientos básicos sobre los principios y fundamentos de los circuitos electrónicos analógicos, así como desarrollar habilidades para diseñar y analizar circuitos simples que se aplican en sistemas mecatrónicos.",
+
+    "competencias": [
+      "Analizar y diseñar circuitos electrónicos analógicos básicos",
+      "Aplicar leyes y teoremas fundamentales en análisis de circuitos",
+      "Comprender el funcionamiento de amplificadores y osciladores",
+      "Utilizar herramientas de simulación para diseño de circuitos",
+      "Implementar y probar circuitos en laboratorio"
+    ],
+
+    "modulos": [
+      {
+        "numero": 1,
+        "periodo": "9 de Mayo - 20 de Junio de 2026",
+        "fecha_evaluacion": "2026-06-20",
+        "fecha_extraordinario": "2026-06-27",
+        "unidades": [
+          {
+            "numero": 1,
+            "titulo": "Introducción a la Electrónica Analógica",
+            "semanas": "1-2",
+            "temas": [
+              "Conceptos básicos de electrónica analógica",
+              "Características y propiedades de los componentes electrónicos",
+              "Circuitos básicos: amplificadores, filtros, osciladores"
+            ],
+            "ejercicios": [
+              { "numero": 1, "descripcion": "Identificar componentes en diagramas esquemáticos" },
+              { "numero": 2, "descripcion": "Clasificar circuitos según su función" },
+              { "numero": 3, "descripcion": "Investigar aplicaciones de amplificadores en mecatrónica" }
+            ]
+          },
+          {
+            "numero": 2,
+            "titulo": "Análisis de Circuitos en DC",
+            "semanas": "3-4",
+            "temas": [
+              "Leyes y teoremas fundamentales (Ohm, Kirchhoff)",
+              "Métodos de análisis: nodos y mallas",
+              "Cálculo de corrientes, voltajes y resistencias equivalentes",
+              "Teoremas de Thevenin y Norton"
+            ],
+            "ejercicios": [
+              { "numero": 4, "descripcion": "Resolver 5 circuitos usando análisis de nodos" },
+              { "numero": 5, "descripcion": "Resolver 5 circuitos usando análisis de mallas" },
+              { "numero": 6, "descripcion": "Encontrar equivalentes de Thevenin en 3 circuitos" },
+              { "numero": 7, "descripcion": "Simular circuitos en software (LTSpice o Proteus)" }
+            ]
+          },
+          {
+            "numero": 3,
+            "titulo": "Análisis de Circuitos en AC",
+            "semanas": "5-6",
+            "temas": [
+              "Conceptos de señales y sistemas en AC",
+              "Filtros pasivos (RC, RL, RLC)",
+              "Respuesta en frecuencia",
+              "Análisis de respuesta transitoria y estable"
+            ],
+            "ejercicios": [
+              { "numero": 8,  "descripcion": "Diseñar filtros pasa-bajas, pasa-altas y pasa-banda" },
+              { "numero": 9,  "descripcion": "Calcular frecuencias de corte" },
+              { "numero": 10, "descripcion": "Graficar diagramas de Bode" },
+              { "numero": 11, "descripcion": "Laboratorio: Construir y medir filtros RC" }
+            ]
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "periodo": "4 de Julio - 15 de Agosto de 2026",
+        "fecha_evaluacion": "2026-08-15",
+        "fecha_extraordinario": "2026-08-22",
+        "unidades": [
+          {
+            "numero": 4,
+            "titulo": "Amplificadores y Etapas de Potencia",
+            "semanas": "7-8",
+            "temas": [
+              "Clasificación de amplificadores: clase A, B, AB y C",
+              "Configuraciones: emisor común, base común, colector común",
+              "Diseño de amplificadores de bajo y alto nivel",
+              "Etapas de potencia y aplicaciones"
+            ],
+            "ejercicios": [
+              { "numero": 12, "descripcion": "Calcular ganancia en amplificadores BJT" },
+              { "numero": 13, "descripcion": "Diseñar amplificador emisor común con ganancia de 50" },
+              { "numero": 14, "descripcion": "Comparar eficiencia entre clases de amplificadores" },
+              { "numero": 15, "descripcion": "Simular amplificadores en Proteus" }
+            ]
+          },
+          {
+            "numero": 5,
+            "titulo": "Osciladores y Generadores de Señales",
+            "semanas": "9-10",
+            "temas": [
+              "Osciladores LC y RC",
+              "Osciladores de cristal y PLL",
+              "Generadores de señales senoidales y no senoidales",
+              "Estabilidad y ajuste de frecuencia"
+            ],
+            "ejercicios": [
+              { "numero": 16, "descripcion": "Diseñar oscilador RC a 1 kHz" },
+              { "numero": 17, "descripcion": "Calcular componentes para oscilador de cristal" },
+              { "numero": 18, "descripcion": "Construir y probar oscilador de relajación con 555" }
+            ]
+          },
+          {
+            "numero": 6,
+            "titulo": "Amplificadores Operacionales",
+            "semanas": "11-12",
+            "temas": [
+              "Características del amplificador operacional ideal",
+              "Configuraciones básicas: inversor, no inversor, sumador",
+              "Integrador y derivador",
+              "Filtros activos con op-amps",
+              "Aplicaciones en instrumentación"
+            ],
+            "ejercicios": [
+              { "numero": 19, "descripcion": "Diseñar amplificador inversor con ganancia -10" },
+              { "numero": 20, "descripcion": "Implementar sumador de 3 entradas" },
+              { "numero": 21, "descripcion": "Diseñar filtro activo pasa-bajas Butterworth de 2do orden" },
+              { "numero": 22, "descripcion": "Construir integrador y medir respuesta" },
+              { "numero": 23, "descripcion": "Proyecto final: Sistema de acondicionamiento de señales" }
+            ]
+          }
+        ]
+      }
+    ],
+
+    "metodologia": {
+      "clases_teoricas": [
+        "Exposición de conceptos fundamentales",
+        "Resolución de ejercicios en clase",
+        "Uso de presentaciones y materiales visuales"
+      ],
+      "practicas_laboratorio": [
+        "Simulación de circuitos (LTSpice, Proteus, Multisim)",
+        "Construcción de prototipos en protoboard",
+        "Mediciones con osciloscopio y multímetro"
+      ],
+      "trabajo_independiente": [
+        "Investigación de componentes",
+        "Resolución de problemas asignados",
+        "Elaboración de mapas mentales y reportes"
+      ]
+    },
+
+    "recursos": {
+      "software": [
+        { "nombre": "LTSpice",  "licencia": "Gratuito" },
+        { "nombre": "Proteus",  "licencia": "Institucional" },
+        { "nombre": "Multisim", "licencia": "Alternativa" }
+      ],
+      "material_laboratorio": [
+        "Protoboards y cables",
+        "Componentes pasivos (resistencias, capacitores)",
+        "Transistores BJT y amplificadores operacionales",
+        "Osciloscopio",
+        "Generador de funciones",
+        "Multímetro"
+      ],
+      "bibliografia": [
+        "Antología didáctica del curso",
+        "Boylestad & Nashelsky - Electrónica: Teoría de Circuitos",
+        "Sedra & Smith - Circuitos Microelectrónicos",
+        "Floyd - Dispositivos Electrónicos"
+      ]
+    },
+
+    "evaluacion": [
+      { "criterio": "Ejercicios en la antología didáctica", "porcentaje": 40 },
+      { "criterio": "Exámenes parciales",                  "porcentaje": 30 },
+      { "criterio": "Simulación, ejercicios y esquemas",   "porcentaje": 10 },
+      { "criterio": "Discusiones y mesas de trabajo",      "porcentaje": 10 },
+      { "criterio": "Mapas mentales y trabajo escrito",    "porcentaje": 10 }
+    ]
+  }
+}

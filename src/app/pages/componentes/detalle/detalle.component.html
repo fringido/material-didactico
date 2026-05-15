@@ -1,0 +1,251 @@
+<div class="loading-state" *ngIf="loading()">
+  <div class="spinner"></div>
+</div>
+
+<div class="detalle-wrapper" *ngIf="componente()">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb">
+    <a routerLink="/" class="breadcrumb__link">Inicio</a>
+    <span class="breadcrumb__sep">›</span>
+    <a routerLink="/componentes" class="breadcrumb__link">Componentes</a>
+    <span class="breadcrumb__sep">›</span>
+    <span class="breadcrumb__current">{{ componente().nombre }}</span>
+  </nav>
+
+  <!-- HERO DEL COMPONENTE -->
+  <header class="comp-hero">
+    <div>
+      <span class="badge badge--primary badge--lg mb-3" *ngIf="categoriaId()">{{ categoriaId() | titlecase }}</span>
+      <h1 class="comp-hero__title">{{ componente().nombre }}</h1>
+      <p class="comp-hero__subtitle" *ngIf="componente().subtitulo">{{ componente().subtitulo }}</p>
+      <p class="comp-hero__desc">{{ componente().descripcion }}</p>
+    </div>
+    <div class="comp-hero__badges">
+      <span class="badge badge--success badge--lg" *ngIf="componente().unidad">{{ componente().unidad }}</span>
+      <span class="badge badge--info badge--lg" *ngIf="componente().clasificacion">{{ componente().clasificacion }}</span>
+      <div class="terminals" *ngIf="componente().terminales?.length">
+        <span class="badge badge--neutral" *ngFor="let t of componente().terminales">{{ t }}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- OLD GRÁFICAS INTERACTIVAS SECTION REMOVED -->
+
+  <!-- LEY / ECUACIÓN FUNDAMENTAL -->
+  <section class="section" *ngIf="componente().ecuacion_principal || componente().ley_fundamental || componente().ecuacion_fundamental || componente().ecuacion_caracteristica">
+    <h2 class="section__title">Ecuación Fundamental</h2>
+    <div class="equation-display" [appKatex]="componente().ecuacion_principal || componente().ley_fundamental || componente().ecuacion_fundamental || componente().ecuacion_caracteristica">
+    </div>
+    <div class="variables-list" *ngIf="componente().variables">
+      <div class="var-item" *ngFor="let key of objectKeys(componente().variables)">
+        <span class="var-key" [appKatex]="key" [inline]="true"></span>
+        <span class="var-desc">{{ componente().variables[key] }}</span>
+      </div>
+    </div>
+    <div class="mt-4" *ngIf="getChartForContext('principal') as chart">
+      <app-equation-chart
+        [chartType]="chart.type"
+        [title]="chart.title"
+        [equation]="chart.equation">
+      </app-equation-chart>
+    </div>
+  </section>
+
+  <!-- IMPEDANCIA -->
+  <section class="section" *ngIf="componente().ecuacion_impedancia">
+    <h2 class="section__title">Impedancia</h2>
+    <div class="formulas-grid">
+      <div class="formula-card">
+        <p class="formula-card__label">Impedancia (Z)</p>
+        <div class="equation-display equation-display--sm" [appKatex]="componente().ecuacion_impedancia"></div>
+        <p class="formula-card__desc" *ngIf="componente().respuesta_frecuencia">
+          <strong>Respuesta en frecuencia:</strong> {{ componente().respuesta_frecuencia }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REACTANCIAS / FÓRMULAS ESPECIALES -->
+  <section class="section" *ngIf="componente().reactancia_capacitiva || componente().reactancia_inductiva || componente().formula_ganancia_inversor">
+    <h2 class="section__title">📡 Reactancia / Fórmulas Especiales</h2>
+    <div class="formulas-grid">
+      <div class="formula-card" *ngIf="componente().reactancia_capacitiva">
+        <p class="formula-card__label">Reactancia Capacitiva</p>
+        <div class="equation-display equation-display--sm" [appKatex]="componente().reactancia_capacitiva.formula"></div>
+        <p class="formula-card__desc">{{ componente().reactancia_capacitiva.descripcion }}</p>
+        <div class="mt-4" *ngIf="getChartForContext('reactancia_capacitiva') as chart">
+          <app-equation-chart [chartType]="chart.type" [title]="chart.title" [equation]="chart.equation"></app-equation-chart>
+        </div>
+      </div>
+      <div class="formula-card" *ngIf="componente().reactancia_inductiva">
+        <p class="formula-card__label">Reactancia Inductiva</p>
+        <div class="equation-display equation-display--sm" [appKatex]="componente().reactancia_inductiva.formula"></div>
+        <p class="formula-card__desc">{{ componente().reactancia_inductiva.descripcion }}</p>
+        <div class="mt-4" *ngIf="getChartForContext('reactancia_inductiva') as chart">
+          <app-equation-chart [chartType]="chart.type" [title]="chart.title" [equation]="chart.equation"></app-equation-chart>
+        </div>
+      </div>
+      <div class="formula-card" *ngIf="componente().formula_ganancia_inversor">
+        <p class="formula-card__label">Ganancia Inversor</p>
+        <div class="equation-display equation-display--sm" [appKatex]="componente().formula_ganancia_inversor.formula"></div>
+        <div class="variables-list mt-3" *ngIf="componente().formula_ganancia_inversor.variables">
+          <div class="var-item" *ngFor="let key of objectKeys(componente().formula_ganancia_inversor.variables)">
+            <span class="var-key" [appKatex]="key" [inline]="true"></span>
+            <span class="var-desc">{{ componente().formula_ganancia_inversor.variables[key] }}</span>
+          </div>
+        </div>
+        <div class="mt-4" *ngIf="getChartForContext('ganancia_inversor') as chart">
+          <app-equation-chart [chartType]="chart.type" [title]="chart.title" [equation]="chart.equation"></app-equation-chart>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPIO DE OPERACIÓN / COMPORTAMIENTO -->
+  <section class="section" *ngIf="componente().principio_operacion || componente().comportamiento">
+    <h2 class="section__title">⚙️ Comportamiento</h2>
+    <div class="behavior-grid">
+      <div class="behavior-card behavior-card--info" *ngIf="componente().principio_operacion?.composicion">
+        <p class="behavior-card__label">Composición</p>
+        <p>{{ componente().principio_operacion.composicion }}</p>
+      </div>
+      <div class="behavior-card behavior-card--success" *ngIf="componente().principio_operacion?.polarizacion_directa">
+        <p class="behavior-card__label">✅ Polarización Directa</p>
+        <p>{{ componente().principio_operacion.polarizacion_directa }}</p>
+      </div>
+      <div class="behavior-card behavior-card--error" *ngIf="componente().principio_operacion?.polarizacion_inversa">
+        <p class="behavior-card__label">🚫 Polarización Inversa</p>
+        <p>{{ componente().principio_operacion.polarizacion_inversa }}</p>
+      </div>
+      <div class="behavior-card behavior-card--warning" *ngIf="componente().comportamiento?.en_dc">
+        <p class="behavior-card__label">🔋 En DC</p>
+        <p>{{ componente().comportamiento.en_dc }}</p>
+      </div>
+      <div class="behavior-card behavior-card--info" *ngIf="componente().comportamiento?.en_ac">
+        <p class="behavior-card__label">〰️ En AC</p>
+        <p>{{ componente().comportamiento.en_ac }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIPOS / SUBTIPOS / FAMILIAS -->
+  <section class="section" *ngIf="componente().subtipos?.length || componente().tipos?.length || componente().familias?.length || componente().tipos_por_nucleo?.length">
+    <h2 class="section__title">🔬 Variantes y Tipos</h2>
+    <div class="variants-grid">
+      <ng-container *ngIf="componente().subtipos">
+        <div class="variant-card" *ngFor="let s of componente().subtipos">
+          <p class="variant-card__name">{{ s.nombre }}</p>
+          <p class="variant-card__desc">{{ s.descripcion }}</p>
+
+          <!-- Ecuación del subtipo -->
+          <div class="equation-display equation-display--sm mt-3" *ngIf="s.ecuacion_principal"
+               [appKatex]="s.ecuacion_principal"></div>
+
+          <!-- Interactive Chart -->
+          <div class="mt-4 mb-2" *ngIf="getChartForContext(s.id) as chart">
+            <app-equation-chart [chartType]="chart.type" [title]="chart.title" [equation]="chart.equation"></app-equation-chart>
+          </div>
+
+          <!-- Parámetros técnicos -->
+          <div class="param-table" *ngIf="s.parametros">
+            <p class="unidad__sublabel mt-3">Parámetros</p>
+            <div class="param-row" *ngFor="let k of objectKeys(s.parametros)">
+              <span class="var-key" [appKatex]="k" [inline]="true"></span>
+              <span class="var-desc">{{ s.parametros[k] }}</span>
+            </div>
+          </div>
+
+          <!-- Función -->
+          <p class="variant-card__meta mt-2" *ngIf="s.funcion"><strong>Función:</strong> {{ s.funcion }}</p>
+          <p class="variant-card__meta" *ngIf="s.ventaja_clave"><strong>Ventaja clave:</strong> {{ s.ventaja_clave }}</p>
+
+          <!-- Aplicaciones -->
+          <div class="tags-cloud mt-2" *ngIf="s.aplicaciones?.length">
+            <span class="badge badge--primary badge--sm" *ngFor="let a of s.aplicaciones">{{ a }}</span>
+          </div>
+
+          <!-- Ventajas / Desventajas -->
+          <div class="pros-cons" *ngIf="s.ventajas || s.desventajas">
+            <div *ngIf="s.ventajas">
+              <p class="behavior-card__label" style="color: var(--color-success)">✅ Ventajas</p>
+              <ul class="variant-sublist">
+                <li *ngFor="let v of s.ventajas">{{ v }}</li>
+              </ul>
+            </div>
+            <div *ngIf="s.desventajas">
+              <p class="behavior-card__label" style="color: var(--color-error)">⚠️ Desventajas</p>
+              <ul class="variant-sublist">
+                <li *ngFor="let d of s.desventajas">{{ d }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Materiales / colores (LED) -->
+          <div *ngIf="s.tipos_por_material" class="mt-3">
+            <p class="unidad__sublabel">Materiales y colores</p>
+            <div class="led-table">
+              <div class="led-row" *ngFor="let m of s.tipos_por_material">
+                <span class="led-row__color">{{ m.color }}</span>
+                <span class="led-row__mat">{{ m.material }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Criterios de selección -->
+          <div *ngIf="s.criterios_seleccion" class="mt-3">
+            <p class="unidad__sublabel">Criterios de selección</p>
+            <ul class="variant-sublist">
+              <li *ngFor="let c of s.criterios_seleccion">{{ c }}</li>
+            </ul>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="componente().familias">
+        <div class="variant-card" *ngFor="let f of componente().familias">
+          <span class="badge badge--info badge--sm mb-2">{{ f.principio }}</span>
+          <p class="variant-card__name">{{ f.nombre }}</p>
+          <p class="variant-card__desc">{{ f.descripcion }}</p>
+          <div class="mt-2" *ngIf="f.terminales">
+            <span class="badge badge--neutral mr-1" *ngFor="let t of f.terminales">{{ t }}</span>
+          </div>
+          <div class="equation-display equation-display--sm mt-3" *ngIf="f.ecuacion_fundamental">{{ f.ecuacion_fundamental }}</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="componente().tipos">
+        <div class="variant-card" *ngFor="let t of componente().tipos">
+          <p class="variant-card__name">{{ t.nombre || t }}</p>
+          <p class="variant-card__desc" *ngIf="t.descripcion">{{ t.descripcion }}</p>
+          <ul class="variant-sublist" *ngIf="t.subtipos">
+            <li *ngFor="let st of t.subtipos"><strong>{{ st.nombre }}:</strong> {{ st.descripcion }}</li>
+          </ul>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="componente().tipos_por_nucleo">
+        <div class="variant-card" *ngFor="let t of componente().tipos_por_nucleo">
+          <p class="variant-card__name">{{ t.nombre }}</p>
+          <span class="badge badge--warning badge--sm">μ = {{ t.permeabilidad }}</span>
+          <p class="variant-card__desc mt-2">{{ t.caracteristicas }}</p>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+
+  <!-- SHOCKLEY LAB (ONLY FOR DIODES) -->
+  <app-shockley-lab *ngIf="componente().id === 'diodo'"></app-shockley-lab>
+
+  <!-- TRANSFORMER SIMULATOR (ONLY FOR TRANSFORMERS) -->
+  <app-transformer-simulator *ngIf="componente().id === 'transformador'"></app-transformer-simulator>
+
+  <!-- POTENTIOMETER SIMULATOR (ONLY FOR POTENTIOMETERS) -->
+  <app-potentiometer-simulator *ngIf="componente().id === 'potenciometro'"></app-potentiometer-simulator>
+
+  <!-- APLICACIONES / FUNCIONES -->
+  <section class="section" *ngIf="componente().aplicaciones?.length || componente().funciones?.length || componente().caracteristicas_ideales?.length">
+    <h2 class="section__title">💡 Aplicaciones</h2>
+    <div class="tags-cloud">
+      <span class="badge badge--primary" *ngFor="let a of (componente().aplicaciones || componente().funciones || componente().caracteristicas_ideales)">{{ a }}</span>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,124 @@
+<div class="simulator-container">
+  <div class="simulator-header">
+    <h3 class="simulator-title">🔊 Simulador de Amplificador</h3>
+    <p class="simulator-desc">Experimenta con diferentes configuraciones de amplificadores BJT</p>
+  </div>
+
+  <div class="simulator-body">
+    
+    <!-- Controles -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label class="control-label">Configuración</label>
+        <select [(ngModel)]="configuration" class="control-select">
+          <option value="emisor_comun">Emisor Común</option>
+          <option value="colector_comun">Colector Común</option>
+          <option value="base_comun">Base Común</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Voltaje Entrada: <span class="control-value">{{ inputVoltage() }} V</span>
+        </label>
+        <input type="range" [(ngModel)]="inputVoltage" min="0.1" max="5" step="0.1" class="control-slider">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Ganancia (β): <span class="control-value">{{ gain() }}</span>
+        </label>
+        <input type="range" [(ngModel)]="gain" min="1" max="200" step="1" class="control-slider">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Frecuencia: <span class="control-value">{{ frequency() }} Hz</span>
+        </label>
+        <input type="range" [(ngModel)]="frequency" min="0.5" max="5" step="0.5" class="control-slider">
+      </div>
+
+      <button (click)="togglePlay()" class="btn-play">
+        {{ isPlaying() ? '⏸ Pausar' : '▶ Reproducir' }}
+      </button>
+    </div>
+
+    <!-- Visualización de ondas -->
+    <div class="waves-panel">
+      <div class="wave-container">
+        <p class="wave-label">Señal de Entrada</p>
+        <svg class="wave-svg" viewBox="0 0 300 80">
+          <line x1="0" y1="40" x2="300" y2="40" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
+          <path [attr.d]="generateWavePath(true)" fill="none" stroke="#3b82f6" stroke-width="2"/>
+        </svg>
+        <div class="wave-info">
+          <span [appKatex]="'V_{in} = ' + inputVoltage() + ' V'" [inline]="true"></span>
+        </div>
+      </div>
+
+      <div class="amplifier-icon">
+        <div class="amp-triangle">
+          <span class="amp-label">A = {{ (outputVoltage() / inputVoltage()).toFixed(1) }}</span>
+        </div>
+        <div class="phase-indicator" *ngIf="phaseShift() === 180">
+          <span class="badge badge--warning badge--sm">Fase: 180°</span>
+        </div>
+      </div>
+
+      <div class="wave-container">
+        <p class="wave-label">Señal de Salida</p>
+        <svg class="wave-svg" viewBox="0 0 300 80">
+          <line x1="0" y1="40" x2="300" y2="40" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
+          <path [attr.d]="generateWavePath(false)" fill="none" stroke="#10b981" stroke-width="2"/>
+        </svg>
+        <div class="wave-info">
+          <span [appKatex]="'V_{out} = ' + outputVoltage().toFixed(2) + ' V'" [inline]="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información de configuración -->
+    <div class="config-info">
+      <h4 class="config-info__title">{{ getConfigInfo().nombre }}</h4>
+      <div class="config-specs">
+        <div class="spec-item">
+          <span class="spec-label">Ganancia Voltaje:</span>
+          <span class="spec-value">{{ getConfigInfo().ganancia_v }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Ganancia Corriente:</span>
+          <span class="spec-value">{{ getConfigInfo().ganancia_i }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Z entrada:</span>
+          <span class="spec-value">{{ getConfigInfo().impedancia_in }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Z salida:</span>
+          <span class="spec-value">{{ getConfigInfo().impedancia_out }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Desfase:</span>
+          <span class="spec-value">{{ getConfigInfo().fase }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Métricas -->
+    <div class="metrics-panel">
+      <div class="metric-card">
+        <p class="metric-label">Ganancia de Voltaje</p>
+        <p class="metric-value">{{ (outputVoltage() / inputVoltage()).toFixed(2) }}</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Ganancia de Potencia (dB)</p>
+        <p class="metric-value">{{ powerGain().toFixed(2) }} dB</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Desfase</p>
+        <p class="metric-value">{{ phaseShift() }}°</p>
+      </div>
+    </div>
+
+  </div>
+</div>

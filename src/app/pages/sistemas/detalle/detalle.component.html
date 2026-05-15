@@ -1,0 +1,125 @@
+<div class="loading-state" *ngIf="loading()">
+  <div class="spinner"></div>
+</div>
+
+<div class="detalle-wrapper" *ngIf="!loading() && detalle()">
+
+  <nav class="breadcrumb">
+    <a routerLink="/" class="breadcrumb__link">Inicio</a>
+    <span class="breadcrumb__sep">›</span>
+    <a routerLink="/sistemas" class="breadcrumb__link">Sistemas</a>
+    <span class="breadcrumb__sep">›</span>
+    <span class="breadcrumb__current">{{ detalle().nombre }}</span>
+  </nav>
+
+  <header class="detalle-hero">
+    <div>
+      <span class="badge badge--primary badge--lg mb-3">{{ detalle().categoria }}</span>
+      <h1 class="detalle-hero__title">{{ detalle().nombre }}</h1>
+      <p class="detalle-hero__desc">{{ detalle().descripcion }}</p>
+    </div>
+  </header>
+
+  <!-- AMPLIFICADORES -->
+  <section class="section" *ngIf="sistema() === 'amplificadores' && detalle().ganancia_voltaje">
+    <h2 class="section__title">Características</h2>
+    <div class="specs-grid">
+      <div class="spec-card">
+        <p class="spec-card__label">Ganancia de Voltaje</p>
+        <p class="spec-card__value">{{ detalle().ganancia_voltaje }}</p>
+      </div>
+      <div class="spec-card">
+        <p class="spec-card__label">Ganancia de Corriente</p>
+        <p class="spec-card__value">{{ detalle().ganancia_corriente }}</p>
+      </div>
+      <div class="spec-card">
+        <p class="spec-card__label">Fase</p>
+        <p class="spec-card__value">{{ detalle().fase }}</p>
+      </div>
+      <div class="spec-card">
+        <p class="spec-card__label">Impedancia Entrada</p>
+        <p class="spec-card__value">{{ detalle().impedancia_entrada }}</p>
+      </div>
+      <div class="spec-card">
+        <p class="spec-card__label">Impedancia Salida</p>
+        <p class="spec-card__value">{{ detalle().impedancia_salida }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULA -->
+  <section class="section" *ngIf="detalle().formula || detalle().formula_frecuencia">
+    <h2 class="section__title">Ecuación</h2>
+    <div class="equation-display" [appKatex]="detalle().formula || detalle().formula_frecuencia"></div>
+    
+    <div class="variables-list" *ngIf="detalle().variables">
+      <div class="var-item" *ngFor="let key of objectKeys(detalle().variables)">
+        <span class="var-key" [appKatex]="key" [inline]="true"></span>
+        <span class="var-desc">{{ detalle().variables[key] }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTROS ESPECÍFICOS -->
+  <section class="section" *ngIf="sistema() === 'filtros' && detalle().frecuencia_corte">
+    <h2 class="section__title">Frecuencia de Corte</h2>
+    <div class="equation-display" [appKatex]="detalle().frecuencia_corte"></div>
+  </section>
+
+  <section class="section" *ngIf="sistema() === 'filtros' && detalle().parametros">
+    <h2 class="section__title">Parámetros</h2>
+    <div class="formulas-grid">
+      <div class="formula-card" *ngFor="let key of objectKeys(detalle().parametros)">
+        <p class="formula-card__label">{{ formatLabel(key) }}</p>
+        <div class="equation-display equation-display--sm" [appKatex]="detalle().parametros[key]"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OSCILADORES ESPECÍFICOS -->
+  <section class="section" *ngIf="sistema() === 'osciladores'">
+    <div class="osc-specs">
+      <div class="osc-spec-item" *ngIf="detalle().componentes">
+        <p class="osc-spec-item__label">Componentes</p>
+        <p class="osc-spec-item__value">{{ detalle().componentes }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().fase_total">
+        <p class="osc-spec-item__label">Fase Total</p>
+        <p class="osc-spec-item__value">{{ detalle().fase_total }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().rango_frecuencia">
+        <p class="osc-spec-item__label">Rango de Frecuencia</p>
+        <p class="osc-spec-item__value">{{ detalle().rango_frecuencia }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().estabilidad">
+        <p class="osc-spec-item__label">Estabilidad</p>
+        <p class="osc-spec-item__value">{{ detalle().estabilidad }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().distorsion">
+        <p class="osc-spec-item__label">Distorsión</p>
+        <p class="osc-spec-item__value">{{ detalle().distorsion }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().precision">
+        <p class="osc-spec-item__label">Precisión</p>
+        <p class="osc-spec-item__value">{{ detalle().precision }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- APLICACIONES -->
+  <section class="section" *ngIf="detalle().aplicaciones?.length">
+    <h2 class="section__title">Aplicaciones</h2>
+    <div class="tags-cloud">
+      <span class="badge badge--primary" *ngFor="let app of detalle().aplicaciones">{{ app }}</span>
+    </div>
+  </section>
+
+  <!-- EJEMPLO -->
+  <section class="section" *ngIf="detalle().ejemplo">
+    <h2 class="section__title">Ejemplo Práctico</h2>
+    <div class="ejemplo-box">
+      <p>{{ detalle().ejemplo }}</p>
+    </div>
+  </section>
+
+</div>

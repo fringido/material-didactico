@@ -1,0 +1,150 @@
+<div class="simulator-container">
+  <div class="simulator-header">
+    <h3 class="simulator-title">〰️ Simulador de Osciladores</h3>
+    <p class="simulator-desc">Genera señales periódicas sin entrada externa</p>
+  </div>
+
+  <div class="simulator-body">
+    
+    <!-- Controles -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label class="control-label">Tipo de Oscilador</label>
+        <select [(ngModel)]="oscillatorType" class="control-select">
+          <option value="rc">RC (Corrimiento de Fase)</option>
+          <option value="wien">Puente de Wien</option>
+          <option value="colpitts">Colpitts (LC)</option>
+          <option value="crystal">Cristal de Cuarzo</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Forma de Onda</label>
+        <select [(ngModel)]="waveform" class="control-select">
+          <option value="sine">Senoidal</option>
+          <option value="square">Cuadrada</option>
+          <option value="triangle">Triangular</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Frecuencia: <span class="control-value">{{ frequency() }} Hz</span>
+        </label>
+        <input type="range" [(ngModel)]="frequency" min="100" max="5000" step="100" class="control-slider">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Amplitud: <span class="control-value">{{ amplitude() }} V</span>
+        </label>
+        <input type="range" [(ngModel)]="amplitude" min="1" max="10" step="0.5" class="control-slider">
+      </div>
+
+      <button (click)="togglePlay()" class="btn-play">
+        {{ isPlaying() ? '⏸ Pausar' : '▶ Reproducir' }}
+      </button>
+    </div>
+
+    <!-- Criterio de Barkhausen -->
+    <div class="barkhausen-panel">
+      <h4 class="section-subtitle">Criterio de Barkhausen</h4>
+      <div class="barkhausen-conditions">
+        <div class="condition-card" [class.condition-met]="barkhausenCondition1()">
+          <div class="condition-number">1</div>
+          <div class="condition-content">
+            <p class="condition-text">Ganancia del lazo ≥ 1</p>
+            <div class="condition-formula" [appKatex]="'|A\\beta| = ' + getLoopGain().toFixed(1) + ' \\geq 1'"></div>
+            <span class="condition-status">{{ barkhausenCondition1() ? '✓ Cumplida' : '✗ No cumplida' }}</span>
+          </div>
+        </div>
+        <div class="condition-card" [class.condition-met]="barkhausenCondition2()">
+          <div class="condition-number">2</div>
+          <div class="condition-content">
+            <p class="condition-text">Desfase total = 0° (o 360°)</p>
+            <div class="condition-formula" [appKatex]="'\\angle(A\\beta) = ' + getPhaseShift() + '°'"></div>
+            <span class="condition-status">{{ barkhausenCondition2() ? '✓ Cumplida' : '✗ No cumplida' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visualización -->
+    <div class="visualization-panel">
+      <div class="waveform-display">
+        <h4 class="section-subtitle">Forma de Onda Generada</h4>
+        <svg class="waveform-svg" viewBox="0 0 400 120">
+          <line x1="0" y1="60" x2="400" y2="60" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
+          <path [attr.d]="generateWaveform()" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
+          
+          <!-- Marcadores de amplitud -->
+          <text x="5" y="15" fill="#888" font-size="10">+{{ amplitude() }}V</text>
+          <text x="5" y="115" fill="#888" font-size="10">-{{ amplitude() }}V</text>
+        </svg>
+        <div class="waveform-info">
+          <span class="badge badge--primary">f = {{ frequency() }} Hz</span>
+          <span class="badge badge--success">T = {{ (period() * 1000).toFixed(2) }} ms</span>
+          <span class="badge badge--info">ω = {{ angularFrequency().toFixed(0) }} rad/s</span>
+        </div>
+      </div>
+
+      <div class="phasor-display">
+        <h4 class="section-subtitle">Diagrama Fasorial</h4>
+        <svg class="phasor-svg" viewBox="0 0 120 120">
+          <!-- Círculo de referencia -->
+          <circle cx="60" cy="60" r="40" fill="none" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
+          
+          <!-- Ejes -->
+          <line x1="20" y1="60" x2="100" y2="60" stroke="#666" stroke-width="1"/>
+          <line x1="60" y1="20" x2="60" y2="100" stroke="#666" stroke-width="1"/>
+          
+          <!-- Fasor rotante -->
+          <line x1="60" y1="60" [attr.x2]="generatePhasorDiagram().x" [attr.y2]="generatePhasorDiagram().y" 
+                stroke="#8b5cf6" stroke-width="2.5"/>
+          <circle [attr.cx]="generatePhasorDiagram().x" [attr.cy]="generatePhasorDiagram().y" 
+                  r="4" fill="#8b5cf6"/>
+          
+          <!-- Labels -->
+          <text x="105" y="63" fill="#888" font-size="10">Re</text>
+          <text x="58" y="15" fill="#888" font-size="10">Im</text>
+        </svg>
+        <div class="phasor-info">
+          <span class="badge badge--neutral">θ = {{ generatePhasorDiagram().angle.toFixed(0) }}°</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información del oscilador -->
+    <div class="oscillator-info">
+      <h4 class="oscillator-info__title">{{ getOscillatorInfo().nombre }}</h4>
+      <p class="oscillator-info__desc">{{ getOscillatorInfo().descripcion }}</p>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <p class="info-label">Fórmula de Frecuencia</p>
+          <div class="info-formula" [appKatex]="getOscillatorInfo().formula"></div>
+        </div>
+        
+        <div class="info-specs">
+          <div class="spec-row">
+            <span class="spec-label">Componentes:</span>
+            <span class="spec-value">{{ getOscillatorInfo().componentes }}</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Rango:</span>
+            <span class="spec-value">{{ getOscillatorInfo().rango }}</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Estabilidad:</span>
+            <span class="spec-value">{{ getOscillatorInfo().estabilidad }}</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Aplicación:</span>
+            <span class="spec-value">{{ getOscillatorInfo().aplicacion }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

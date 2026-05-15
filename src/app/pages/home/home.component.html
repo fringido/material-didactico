@@ -1,0 +1,183 @@
+<div class="home-loading" *ngIf="loading()">
+  <div class="spinner"></div>
+  <p>Cargando...</p>
+</div>
+
+<div class="home-error" *ngIf="error()">
+  <p>{{ error() }}</p>
+</div>
+
+<div class="home-wrapper" *ngIf="planData() as data">
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero__content">
+      <span class="hero__tag badge badge--primary badge--lg">{{ data.clave }}</span>
+      <h1 class="hero__title">{{ data.materia }}</h1>
+      <p class="hero__subtitle">{{ data.carrera }} &mdash; {{ data.cuatrimestre }} Cuatrimestre</p>
+      <p class="hero__objective">{{ data.objetivo }}</p>
+      <div class="hero__actions">
+        <a routerLink="/componentes" class="btn btn--primary btn--lg">
+          <span>⚡</span> Explorar Componentes
+        </a>
+        <a routerLink="/sistemas" class="btn btn--ghost btn--lg">
+          <span>📡</span> Sistemas Analógicos
+        </a>
+      </div>
+    </div>
+    <div class="hero__meta">
+      <div class="meta-card" *ngFor="let h of data.informacion_general?.horarios">
+        <span class="meta-card__icon">&#128197;</span>
+        <div>
+          <p class="meta-card__label">Módulo {{ h.modulo }}</p>
+          <p class="meta-card__value">{{ h.dia }} · {{ h.hora_inicio }}–{{ h.hora_fin }}</p>
+          <p class="meta-card__sub">{{ h.periodo_inicio | date:'d MMM':'':'es' }} → {{ h.periodo_fin | date:'d MMM, y':'':'es' }}</p>
+        </div>
+      </div>
+      <div class="meta-card">
+        <span class="meta-card__icon">&#128104;&zwj;&#127979;</span>
+        <div>
+          <p class="meta-card__label">Docente</p>
+          <p class="meta-card__value">{{ data.profesor }}</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== COMPETENCIAS ===== -->
+  <section class="section">
+    <h2 class="section__title">Competencias a Desarrollar</h2>
+    <div class="competencias-grid">
+      <div class="competencia-item" *ngFor="let c of data.competencias; let i = index">
+        <span class="competencia-item__num">0{{ i + 1 }}</span>
+        <p class="competencia-item__text">{{ c }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EVALUACIÓN ===== -->
+  <section class="section">
+    <h2 class="section__title">Criterios de Evaluación</h2>
+    <div class="eval-grid">
+      <div class="eval-card" *ngFor="let e of data.evaluacion">
+        <div class="eval-card__bar" [style.width.%]="e.porcentaje"></div>
+        <div class="eval-card__info">
+          <p class="eval-card__label">{{ e.criterio }}</p>
+          <span class="eval-card__pct badge badge--info badge--lg">{{ e.porcentaje }}%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PLAN DE ESTUDIOS ===== -->
+  <section class="section">
+    <h2 class="section__title">Plan de Estudios</h2>
+    <div class="modulos-grid">
+      <div class="modulo-card" *ngFor="let mod of data.modulos">
+        <div class="modulo-card__header">
+          <div>
+            <p class="modulo-card__num">Módulo {{ mod.numero }}</p>
+            <p class="modulo-card__periodo">{{ mod.periodo }}</p>
+          </div>
+          <span class="badge badge--warning">Eval. {{ mod.fecha_evaluacion | date:'d MMM':'':'es' }}</span>
+        </div>
+
+        <div class="unidades">
+          <details class="unidad" *ngFor="let u of mod.unidades" [open]="u.numero === 1">
+            <summary class="unidad__summary">
+              <span class="unidad__num">U{{ u.numero }}</span>
+              <span class="unidad__titulo">{{ u.titulo }}</span>
+              <span class="unidad__semanas badge badge--neutral">Sem. {{ u.semanas }}</span>
+            </summary>
+
+            <div class="unidad__body">
+              <div class="unidad__temas">
+                <p class="unidad__sublabel">&#128214; Temas</p>
+                <ul>
+                  <li *ngFor="let t of u.temas">
+                    <ng-container *ngIf="getRouteForTema(t) as route; else noRoute">
+                      <a [routerLink]="route" class="tema-link">{{ t }} <span class="link-icon">&#x2197;</span></a>
+                    </ng-container>
+                    <ng-template #noRoute>{{ t }}</ng-template>
+                  </li>
+                </ul>
+              </div>
+              <div class="unidad__ejercicios">
+                <p class="unidad__sublabel">&#9999;&#65039; Ejercicios</p>
+                <ul>
+                  <li *ngFor="let ej of u.ejercicios">
+                    <span class="ej-num">#{{ ej.numero }}</span> {{ ej.descripcion }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== METODOLOGÍA ===== -->
+  <section class="section">
+    <h2 class="section__title">Metodología de Trabajo</h2>
+    <div class="methodology-grid">
+      <div class="methodology-card">
+        <h3>Teoría</h3>
+        <ul>
+          <li *ngFor="let item of data.metodologia?.clases_teoricas">{{ item }}</li>
+        </ul>
+      </div>
+      <div class="methodology-card">
+        <h3>Laboratorio</h3>
+        <ul>
+          <li *ngFor="let item of data.metodologia?.practicas_laboratorio">{{ item }}</li>
+        </ul>
+      </div>
+      <div class="methodology-card">
+        <h3>Independiente</h3>
+        <ul>
+          <li *ngFor="let item of data.metodologia?.trabajo_independiente">{{ item }}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RECURSOS Y BIBLIOGRAFÍA ===== -->
+  <section class="section">
+    <div class="resources-wrapper">
+      <div class="resources-col">
+        <h2 class="section__title">Recursos</h2>
+        <div class="resource-group">
+          <h4>Software de Simulación</h4>
+          <div class="software-tags">
+            <span class="badge badge--info" *ngFor="let s of data.recursos?.software">{{ s.nombre }} ({{ s.licencia }})</span>
+          </div>
+        </div>
+        <div class="resource-group mt-4">
+          <h4>Material de Laboratorio</h4>
+          <ul class="text-sm">
+            <li *ngFor="let m of data.recursos?.material_laboratorio">{{ m }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="resources-col">
+        <h2 class="section__title">Bibliografía</h2>
+        <ul class="bib-list">
+          <li *ngFor="let b of data.recursos?.bibliografia">
+            <span class="bib-icon">&#128218;</span> {{ b }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA COMPONENTES ===== -->
+  <section class="section cta-section">
+    <div class="cta-box">
+      <h2>Catálogo Interactivo de Componentes</h2>
+      <p>Explora componentes activos y pasivos con ecuaciones y gráficas interactivas.</p>
+      <a routerLink="/componentes" class="btn btn--primary btn--lg">Ir al Catálogo →</a>
+    </div>
+  </section>
+
+</div>

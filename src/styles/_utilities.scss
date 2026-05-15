@@ -1,0 +1,82 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ============================================
+// UTILIDADES DE TEXTO
+// ============================================
+
+.text {
+    &-xs { font-size: $font-size-xs; }
+    &-sm { font-size: $font-size-sm; }
+    &-base { font-size: $font-size-base; }
+    &-lg { font-size: $font-size-lg; }
+    &-xl { font-size: $font-size-xl; }
+    &-2xl { font-size: $font-size-2xl; }
+    &-3xl { font-size: $font-size-3xl; }
+
+    &-primary { color: $text-primary; }
+    &-secondary { color: $text-secondary; }
+    &-tertiary { color: $text-tertiary; }
+
+    &-success { color: $color-success; }
+    &-warning { color: $color-warning; }
+    &-error { color: $color-error; }
+    &-info { color: $color-info; }
+
+    &-light { font-weight: $font-weight-light; }
+    &-normal { font-weight: $font-weight-normal; }
+    &-medium { font-weight: $font-weight-medium; }
+    &-semibold { font-weight: $font-weight-semibold; }
+    &-bold { font-weight: $font-weight-bold; }
+
+    &-center { text-align: center; }
+    &-left { text-align: left; }
+    &-right { text-align: right; }
+
+    &-truncate { @include truncate; }
+}
+
+.noselect {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.no-spin {
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+// Animations
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

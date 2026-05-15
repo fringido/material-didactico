@@ -1,0 +1,129 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.error-container {
+  min-height: calc(100vh - 120px); // Ajustar según el header
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: $spacing-8;
+  background: $bg-primary;
+}
+
+.error-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 600px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.error-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4;
+  margin-bottom: $spacing-6;
+  
+  .digit {
+    font-size: 12rem;
+    font-weight: 900;
+    line-height: 1;
+    color: white;
+    text-shadow: 0 0 30px rgba($color-primary, 0.3);
+    font-family: $font-primary;
+    
+    @media (max-width: $breakpoint-md) {
+      font-size: 8rem;
+    }
+  }
+
+  .circuit-element {
+    width: 120px;
+    height: 120px;
+    color: $color-primary;
+    animation: pulse 2s infinite ease-in-out;
+    
+    @media (max-width: $breakpoint-md) {
+      width: 80px;
+      height: 80px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 10px rgba($color-primary, 0.5));
+    }
+  }
+}
+
+.error-title {
+  font-size: $font-size-4xl;
+  color: white;
+  margin-bottom: $spacing-4;
+  font-weight: $font-weight-bold;
+  letter-spacing: -0.02em;
+}
+
+.error-message {
+  font-size: $font-size-lg;
+  color: $text-secondary;
+  margin-bottom: $spacing-8;
+  line-height: $line-height-relaxed;
+}
+
+.error-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-8;
+  background: $color-primary;
+  color: white;
+  border-radius: $radius-full;
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba($color-primary, 0.4);
+
+  &:hover {
+    background: $color-primary-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($color-primary, 0.5);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.background-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.8; transform: scale(1); }
+}

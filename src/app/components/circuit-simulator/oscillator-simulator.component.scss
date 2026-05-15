@@ -1,0 +1,338 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.simulator-container {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-xl;
+  padding: $spacing-6;
+  margin: $spacing-6 0;
+}
+
+.simulator-header {
+  margin-bottom: $spacing-6;
+  text-align: center;
+}
+
+.simulator-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin-bottom: $spacing-2;
+}
+
+.simulator-desc {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.simulator-body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.controls-panel {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.control-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.control-value {
+  color: $color-primary;
+  font-weight: $font-weight-bold;
+}
+
+.control-select {
+  padding: $spacing-2 $spacing-3;
+  border: 1px solid $border-primary;
+  border-radius: $radius-md;
+  background: $bg-primary;
+  color: $text-primary;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: border-color $transition-base;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}
+
+.control-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: $bg-tertiary;
+  outline: none;
+  -webkit-appearance: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: $color-primary;
+    cursor: pointer;
+    transition: transform $transition-base;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: $color-primary;
+    cursor: pointer;
+    border: none;
+  }
+}
+
+.btn-play {
+  padding: $spacing-3 $spacing-4;
+  background: $color-primary;
+  color: white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all $transition-base;
+  grid-column: 1 / -1;
+
+  &:hover {
+    background: $color-primary-dark;
+    transform: translateY(-1px);
+  }
+}
+
+.section-subtitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-3;
+  text-align: center;
+}
+
+.barkhausen-panel {
+  background: rgba($color-primary, 0.05);
+  border: 1px solid rgba($color-primary, 0.2);
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+}
+
+.barkhausen-conditions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-4;
+}
+
+.condition-card {
+  background: $bg-primary;
+  border: 2px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+  display: flex;
+  gap: $spacing-3;
+  transition: all $transition-base;
+
+  &.condition-met {
+    border-color: $color-success;
+    background: rgba($color-success, 0.05);
+  }
+}
+
+.condition-number {
+  width: 36px;
+  height: 36px;
+  background: $color-primary;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-base;
+  flex-shrink: 0;
+}
+
+.condition-content {
+  flex: 1;
+}
+
+.condition-text {
+  font-size: $font-size-sm;
+  color: $text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-2;
+}
+
+.condition-formula {
+  background: $bg-secondary;
+  padding: $spacing-2;
+  border-radius: $radius-sm;
+  margin-bottom: $spacing-2;
+  text-align: center;
+}
+
+.condition-status {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  padding: 2px $spacing-2;
+  border-radius: $radius-sm;
+  
+  .condition-met & {
+    color: $color-success;
+    background: rgba($color-success, 0.1);
+  }
+  
+  .condition-card:not(.condition-met) & {
+    color: $color-error;
+    background: rgba($color-error, 0.1);
+  }
+}
+
+.visualization-panel {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $spacing-5;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.waveform-display,
+.phasor-display {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+}
+
+.waveform-svg,
+.phasor-svg {
+  width: 100%;
+  background: $bg-primary;
+  border-radius: $radius-md;
+}
+
+.waveform-svg {
+  height: 120px;
+}
+
+.phasor-svg {
+  height: 120px;
+}
+
+.waveform-info,
+.phasor-info {
+  margin-top: $spacing-3;
+  display: flex;
+  justify-content: center;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.oscillator-info {
+  background: rgba($color-primary, 0.05);
+  border: 1px solid rgba($color-primary, 0.2);
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-item {
+  background: $bg-primary;
+  padding: $spacing-4;
+  border-radius: $radius-md;
+}
+
+.info-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+  margin-bottom: $spacing-2;
+}
+
+.info-formula {
+  background: $bg-secondary;
+  padding: $spacing-3;
+  border-radius: $radius-sm;
+  text-align: center;
+}
+
+.info-specs {
+  background: $bg-primary;
+  padding: $spacing-4;
+  border-radius: $radius-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  padding: $spacing-2 0;
+  border-bottom: 1px solid $border-primary;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.spec-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.spec-value {
+  font-size: $font-size-xs;
+  color: $text-primary;
+  font-weight: $font-weight-semibold;
+}
