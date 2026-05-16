@@ -7,11 +7,12 @@ import { KatexDirective } from '../../../directives/katex.directive';
 import { ShockleyLabComponent } from '../../../components/shockley-lab/shockley-lab.component';
 import { TransformerSimulatorComponent } from '../../../components/circuit-simulator/transformer-simulator.component';
 import { PotentiometerSimulatorComponent } from '../../../components/circuit-simulator/potentiometer-simulator.component';
+import { AmplifierLabComponent } from '../../../components/amplifier-lab/amplifier-lab.component';
 
 @Component({
   selector: 'app-componente-detalle',
   standalone: true,
-  imports: [CommonModule, RouterLink, EquationChartComponent, KatexDirective, ShockleyLabComponent, TransformerSimulatorComponent, PotentiometerSimulatorComponent],
+  imports: [CommonModule, RouterLink, EquationChartComponent, KatexDirective, ShockleyLabComponent, TransformerSimulatorComponent, PotentiometerSimulatorComponent, AmplifierLabComponent],
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']
 })

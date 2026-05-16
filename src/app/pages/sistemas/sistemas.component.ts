@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { KatexDirective } from '../../directives/katex.directive';
+import { AmplifierLabComponent } from '../../components/amplifier-lab/amplifier-lab.component';
 import { AmplifierSimulatorComponent } from '../../components/circuit-simulator/amplifier-simulator.component';
 import { FilterSimulatorComponent } from '../../components/circuit-simulator/filter-simulator.component';
 import { OscillatorSimulatorComponent } from '../../components/circuit-simulator/oscillator-simulator.component';
@@ -10,7 +11,15 @@ import { OscillatorSimulatorComponent } from '../../components/circuit-simulator
 @Component({
   selector: 'app-sistemas',
   standalone: true,
-  imports: [CommonModule, RouterLink, KatexDirective, AmplifierSimulatorComponent, FilterSimulatorComponent, OscillatorSimulatorComponent],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    KatexDirective, 
+    AmplifierLabComponent,
+    AmplifierSimulatorComponent, 
+    FilterSimulatorComponent, 
+    OscillatorSimulatorComponent
+  ],
   templateUrl: './sistemas.component.html',
   styleUrls: ['./sistemas.component.scss']
 })

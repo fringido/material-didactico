@@ -260,6 +260,35 @@
                                 "descripcion": "Permite el control de corriente alterna en ambos ciclos. Común en dimmers de luz."
                             }
                         ]
+                    },
+                    {
+                        "id": "amplificador",
+                        "nombre": "Amplificadores",
+                        "subtitulo": "Potenciando Señales",
+                        "descripcion": "Circuito que aumenta la amplitud de una señal de entrada utilizando energía de una fuente externa.",
+                        "conceptos_clave": [
+                            {
+                                "nombre": "Ganancia (A)",
+                                "descripcion": "Relación entre salida y entrada.",
+                                "formula": "A = \\frac{V_{out}}{V_{in}}"
+                            },
+                            {
+                                "nombre": "Ancho de Banda (BW)",
+                                "descripcion": "Rango de frecuencias eficiente.",
+                                "formula": "BW = f_H - f_L"
+                            }
+                        ],
+                        "configuraciones_bjt": [
+                            { "nombre": "Emisor Común", "ganancia": "Alta V, Alta I", "fase": "Invierte" },
+                            { "nombre": "Colector Común", "ganancia": "≈1 V, Alta I", "fase": "Mantiene" },
+                            { "nombre": "Base Común", "ganancia": "Alta V, ≈1 I", "fase": "Mantiene" }
+                        ],
+                        "clasificacion_clase": [
+                            { "clase": "A", "eficiencia": "25%", "uso": "Audio Hi-Fi" },
+                            { "clase": "B", "eficiencia": "78.5%", "uso": "Push-Pull" },
+                            { "clase": "AB", "eficiencia": "60-70%", "uso": "Audio Comercial" },
+                            { "clase": "C", "eficiencia": "90%+", "uso": "RF / Transmisores" }
+                        ]
                     }
                 ]
             },

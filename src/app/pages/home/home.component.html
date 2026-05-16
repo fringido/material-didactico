@@ -25,23 +25,7 @@
         </a>
       </div>
     </div>
-    <div class="hero__meta">
-      <div class="meta-card" *ngFor="let h of data.informacion_general?.horarios">
-        <span class="meta-card__icon">&#128197;</span>
-        <div>
-          <p class="meta-card__label">Módulo {{ h.modulo }}</p>
-          <p class="meta-card__value">{{ h.dia }} · {{ h.hora_inicio }}–{{ h.hora_fin }}</p>
-          <p class="meta-card__sub">{{ h.periodo_inicio | date:'d MMM':'':'es' }} → {{ h.periodo_fin | date:'d MMM, y':'':'es' }}</p>
-        </div>
-      </div>
-      <div class="meta-card">
-        <span class="meta-card__icon">&#128104;&zwj;&#127979;</span>
-        <div>
-          <p class="meta-card__label">Docente</p>
-          <p class="meta-card__value">{{ data.profesor }}</p>
-        </div>
-      </div>
-    </div>
+
   </header>
 
   <!-- ===== COMPETENCIAS ===== -->
@@ -150,7 +134,8 @@
         <div class="resource-group">
           <h4>Software de Simulación</h4>
           <div class="software-tags">
-            <span class="badge badge--info" *ngFor="let s of data.recursos?.software">{{ s.nombre }} ({{ s.licencia }})</span>
+            <span class="badge badge--info" *ngFor="let s of data.recursos?.software">{{ s.nombre }} ({{ s.licencia
+              }})</span>
           </div>
         </div>
         <div class="resource-group mt-4">

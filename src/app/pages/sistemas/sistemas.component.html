@@ -27,7 +27,7 @@
       <div class="sistema-card__equation" [appKatex]="sistemas().amplificadores.ecuacion_principal"></div>
       
       <!-- SIMULADOR DE AMPLIFICADOR -->
-      <app-amplifier-simulator></app-amplifier-simulator>
+      <app-amplifier-lab [data]="sistemas().amplificadores" [showHeader]="false"></app-amplifier-lab>
       
       <div class="sistema-card__section">
         <h3>Conceptos Clave</h3>

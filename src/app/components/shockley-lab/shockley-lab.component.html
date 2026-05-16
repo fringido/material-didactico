@@ -1,6 +1,6 @@
 <div class="shockley-lab">
   <!-- Intro Section -->
-  <section class="lab-intro">
+  <section class="lab-intro card card--elevated">
     <h2 class="lab-intro__title">Laboratorio Virtual: Ecuación de Shockley</h2>
     <p class="lab-intro__desc">
       En electrónica, la ecuación del diodo de Shockley modela matemáticamente el comportamiento de la corriente eléctrica que fluye a través de un diodo en función del voltaje que se le aplica. Nos permite entender por qué un diodo actúa como una "válvula de un solo sentido": bloquea la corriente en reversa y permite un flujo masivo en directa.
@@ -8,7 +8,7 @@
   </section>
 
   <!-- Interactive Formula Section -->
-  <section class="formula-section">
+  <section class="formula-section card card--elevated">
     <div class="formula-section__bg-icon">
       <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
     </div>
@@ -16,22 +16,22 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
       Explora la Fórmula Matemática
     </h3>
-    
+
     <div class="formula-container">
       <!-- Formula Visual -->
       <div class="formula-visual">
-        <button (mouseenter)="setActiveTerm('I')" [class.active]="activeTerm() === 'I'" class="term term-i">I</button>
+        <button type="button" (mouseenter)="setActiveTerm('I')" [class.active]="activeTerm() === 'I'" class="term term-i">I</button>
         <span class="operator">=</span>
-        <button (mouseenter)="setActiveTerm('Is')" [class.active]="activeTerm() === 'Is'" class="term term-is">I<sub>s</sub></button>
+        <button type="button" (mouseenter)="setActiveTerm('Is')" [class.active]="activeTerm() === 'Is'" class="term term-is">I<sub>s</sub></button>
         <span class="bracket">(</span>
-        <button (mouseenter)="setActiveTerm('e')" [class.active]="activeTerm() === 'e'" class="term term-e">e</button>
+        <button type="button" (mouseenter)="setActiveTerm('e')" [class.active]="activeTerm() === 'e'" class="term term-e">e</button>
         <div class="exponent">
           <div class="exponent-top">
-            <button (mouseenter)="setActiveTerm('Vd')" [class.active]="activeTerm() === 'Vd'" class="term term-vd">V<sub>D</sub></button>
+            <button type="button" (mouseenter)="setActiveTerm('Vd')" [class.active]="activeTerm() === 'Vd'" class="term term-vd">V<sub>D</sub></button>
           </div>
           <div class="exponent-bottom">
-            <button (mouseenter)="setActiveTerm('n')" [class.active]="activeTerm() === 'n'" class="term term-n">n</button>
-            <button (mouseenter)="setActiveTerm('Vt')" [class.active]="activeTerm() === 'Vt'" class="term term-vt">V<sub>T</sub></button>
+            <button type="button" (mouseenter)="setActiveTerm('n')" [class.active]="activeTerm() === 'n'" class="term term-n">n</button>
+            <button type="button" (mouseenter)="setActiveTerm('Vt')" [class.active]="activeTerm() === 'Vt'" class="term term-vt">V<sub>T</sub></button>
           </div>
         </div>
         <span class="operator">-</span>
@@ -54,9 +54,10 @@
 
   <!-- Graph and Controls Section -->
   <div class="grid-layout">
-    
+
     <!-- Controls -->
-    <div class="controls-panel">
+    <div class="controls-panel card card--bordered">
+      <div class="controls-header">
       <h3 class="controls-title">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         Parámetros del Diodo
@@ -69,7 +70,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-temp"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>
             Temperatura (T)
           </label>
-          <span class="control-value badge-red">{{ temperature() }} K</span>
+          <span class="control-value badge badge--info">{{ temperature() }} K</span>
         </div>
         <input type="range" min="200" max="400" step="5" [value]="temperature()" (input)="onTempChange($event)" class="slider slider-red"/>
         <p class="control-help">A mayor temperatura, los electrones tienen más energía. Observa cómo la curva se desplaza a la derecha.</p>
@@ -79,7 +80,7 @@
       <div class="control-group">
         <div class="control-header">
           <label class="control-label">Factor de Idealidad (n)</label>
-          <span class="control-value badge-orange">{{ ideality() | number:'1.2-2' }}</span>
+          <span class="control-value badge badge--warning">{{ ideality() | number:'1.2-2' }}</span>
         </div>
         <input type="range" min="1" max="2" step="0.05" [value]="ideality()" (input)="onIdealityChange($event)" class="slider slider-orange"/>
         <p class="control-help">n=1 es un diodo ideal. Valores mayores representan imperfecciones en el material real.</p>
@@ -89,12 +90,12 @@
       <div class="control-group">
         <div class="control-header">
           <label class="control-label">C. Saturación (Iₛ)</label>
-          <span class="control-value badge-purple">{{ is_pA() }} pA</span>
+          <span class="control-value badge badge--primary">{{ is_pA() }} pA</span>
         </div>
         <input type="range" min="0.1" max="10" step="0.1" [value]="is_pA()" (input)="onIsChange($event)" class="slider slider-purple"/>
         <p class="control-help">Magnitud de la fuga de corriente cuando el voltaje es negativo.</p>
       </div>
-      
+
       <!-- Live Stats -->
       <div class="live-stats">
         <h4 class="stats-title">Valores Calculados</h4>
@@ -106,7 +107,7 @@
     </div>
 
     <!-- Graph -->
-    <div class="graph-panel">
+    <div class="graph-panel card card--bordered">
       <div class="graph-header">
         <h3>Curva Característica I-V</h3>
         <p>Representación gráfica de Corriente (mA) vs Voltaje (V)</p>
@@ -132,10 +133,10 @@
             <text [attr.x]="mapX(-0.05)" [attr.y]="mapY(20)" class="axis-label axis-label-right">20mA</text>
 
             <!-- Curva de Shockley -->
-            <path 
-              [attr.d]="pathData()" 
-              fill="none" 
-              stroke="#3b82f6" 
+            <path
+              [attr.d]="pathData()"
+              fill="none"
+              stroke="#3b82f6"
               stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
