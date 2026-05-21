@@ -1,0 +1,268 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.simulator-container {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-xl;
+  padding: $spacing-6;
+  margin: $spacing-6 0;
+}
+
+.simulator-header {
+  margin-bottom: $spacing-6;
+  text-align: center;
+}
+
+.simulator-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin-bottom: $spacing-2;
+}
+
+.simulator-desc {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+/* Tabs styles */
+.circuit-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  margin-bottom: $spacing-6;
+  border-bottom: 1px solid $border-primary;
+  padding-bottom: $spacing-3;
+}
+
+.tab-btn {
+  padding: $spacing-2 $spacing-4;
+  border-radius: $radius-md;
+  border: 1px solid $border-primary;
+  background: $bg-secondary;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    color: $text-primary;
+    background: $bg-tertiary;
+    border-color: $border-secondary;
+  }
+
+  &--active {
+    background: $color-primary;
+    color: white !important;
+    border-color: $color-primary;
+    box-shadow: $shadow-glow-primary;
+  }
+}
+
+.simulator-body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+/* Grid workspace */
+.workspace-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: $spacing-6;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.diagram-panel {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  border: 1px solid $border-primary;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.panel-subtitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-4;
+  width: 100%;
+}
+
+.svg-diagram-wrapper {
+  width: 100%;
+  max-width: 320px;
+  background: $bg-primary;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $border-secondary;
+}
+
+.circuit-svg {
+  width: 100%;
+  height: auto;
+  color: $text-secondary;
+
+  rect, circle, polygon {
+    transition: all $transition-base;
+  }
+}
+
+/* Controls panel */
+.controls-panel {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  justify-content: center;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.control-label {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  display: flex;
+  justify-content: space-between;
+}
+
+.control-value {
+  color: $color-primary-light;
+  font-weight: $font-weight-bold;
+}
+
+.control-slider {
+  width: 100%;
+  accent-color: $color-primary;
+  cursor: pointer;
+}
+
+.btn-play {
+  padding: $spacing-2 $spacing-4;
+  background: $bg-tertiary;
+  color: $text-primary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-md;
+  cursor: pointer;
+  font-weight: $font-weight-medium;
+  transition: all $transition-base;
+
+  &:hover {
+    background: $bg-hover-solid;
+    border-color: $border-secondary;
+  }
+}
+
+/* Waves Panel */
+.waves-panel {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+}
+
+.waves-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wave-box {
+  background: $bg-primary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-md;
+  padding: $spacing-3;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &__tag {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    padding: $spacing-1 $spacing-2;
+    border-radius: $radius-sm;
+    align-self: flex-start;
+
+    &--vin {
+      background: rgba($color-info, 0.15);
+      color: $color-info-light;
+    }
+
+    &--vout {
+      background: rgba($color-success, 0.15);
+      color: $color-success-light;
+    }
+  }
+}
+
+.wave-svg {
+  width: 100%;
+  height: 100px;
+  background: $bg-primary;
+}
+
+/* Metrics panel */
+.metrics-panel {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+}
+
+.metric-card {
+  background: $bg-primary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.metric-label {
+  font-size: $font-size-xs;
+  color: $text-tertiary;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-value {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-success;
+}
+
+.metric-formula {
+  font-size: $font-size-xs;
+  color: $color-accent-yellow;
+  padding: $spacing-1 0;
+  border-top: 1px dashed $border-primary;
+}

@@ -214,3 +214,398 @@
 .mb-3 {
   margin-bottom: $spacing-3;
 }
+
+// Pros and Cons
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-6;
+  margin-top: $spacing-6;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pros, .cons {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-3;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    li {
+      padding-left: $spacing-5;
+      position: relative;
+      color: $text-secondary;
+      line-height: $line-height-relaxed;
+      font-size: $font-size-sm;
+
+      &::before {
+        position: absolute;
+        left: 0;
+        font-size: $font-size-base;
+      }
+    }
+  }
+}
+
+.pros {
+  border-left: 3px solid $color-success;
+
+  &__title { color: $color-success; }
+  &__list li::before { content: "✓"; color: $color-success; }
+}
+
+.cons {
+  border-left: 3px solid $color-warning;
+
+  &__title { color: $color-warning; }
+  &__list li::before { content: "⚠"; color: $color-warning; }
+}
+
+// Formulas Section
+.formulas-section, .parametros-section {
+  margin-top: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+// Punto Q
+.punto-q {
+  margin-top: $spacing-6;
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-3;
+  }
+}
+
+// Factor Q
+.factor-q {
+  margin-top: $spacing-6;
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-3;
+  }
+
+  .q-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    li {
+      color: $text-secondary;
+      line-height: $line-height-relaxed;
+    }
+  }
+}
+
+// Implementaciones
+.implementaciones, .tipos-section {
+  margin-top: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.impl-grid, .tipos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-5;
+}
+
+.impl-card, .tipo-card {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+
+  h4 {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-3;
+  }
+
+  .text-secondary {
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-2;
+  }
+}
+
+.pros-cons-mini {
+  margin-top: $spacing-4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+
+  .label-success, .label-error {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: $spacing-2;
+  }
+
+  .label-success { color: $color-success; }
+  .label-error { color: $color-warning; }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-1;
+
+    li {
+      font-size: $font-size-xs;
+      color: $text-secondary;
+      padding-left: $spacing-4;
+      position: relative;
+
+      &::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: $text-tertiary;
+      }
+    }
+  }
+}
+
+// Control de Amplitud
+.control-amplitud {
+  margin-top: $spacing-6;
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-3;
+  }
+
+  ul {
+    list-style: disc;
+    padding-left: $spacing-6;
+    color: $text-secondary;
+
+    li {
+      margin-bottom: $spacing-2;
+      line-height: $line-height-relaxed;
+    }
+  }
+}
+
+// Variantes
+.variantes {
+  margin-top: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.variantes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-4;
+}
+
+.variante-card {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+
+  h4 {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  .text-secondary {
+    font-size: $font-size-xs;
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-1;
+  }
+}
+
+// Tipos de Cristal
+.tipos-cristal {
+  margin-top: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.cristal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-5;
+}
+
+.cristal-card {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+
+  h4 {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-3;
+  }
+
+  .text-secondary {
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-2;
+  }
+}
+
+// Configuraciones
+.configuraciones {
+  margin-top: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+  }
+
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-5;
+  }
+
+  .config-card {
+    background: $bg-card;
+    border: 1px solid $border-primary;
+    border-radius: $radius-lg;
+    padding: $spacing-5;
+
+    h4 {
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+      margin-bottom: $spacing-3;
+    }
+
+    .text-secondary {
+      font-size: $font-size-sm;
+      line-height: $line-height-relaxed;
+      margin-bottom: $spacing-2;
+    }
+  }
+}
+
+// Diseño
+.diseno {
+  margin-top: $spacing-6;
+  background: rgba($color-info, 0.05);
+  border: 1px solid rgba($color-info, 0.2);
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-info;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.diseno-steps {
+  list-style: none;
+  counter-reset: step-counter;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+
+  li {
+    counter-increment: step-counter;
+    padding-left: $spacing-10;
+    position: relative;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+
+    &::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 32px;
+      height: 32px;
+      background: $color-info;
+      color: $text-primary;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.mb-2 {
+  margin-bottom: $spacing-2;
+}

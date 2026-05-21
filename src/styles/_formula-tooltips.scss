@@ -1,0 +1,82 @@
+@use 'variables' as *;
+
+// Tooltips para fórmulas
+.formula-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: $bg-elevated;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-md;
+  padding: $spacing-2 $spacing-3;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all $transition-base $ease-out;
+  z-index: $z-tooltip;
+  box-shadow: $shadow-lg;
+  font-family: $font-primary;
+
+  // Flecha del tooltip
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: $bg-elevated;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top-color: $border-secondary;
+    margin-top: 1px;
+  }
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// Estilos para elementos interactivos en fórmulas
+.katex {
+  .mord, .mbin, .mrel, .mop {
+    &[style*="cursor: help"] {
+      transition: all $transition-fast;
+      border-radius: 3px;
+      padding: 2px 4px;
+      margin: -2px -4px;
+
+      &:hover {
+        background: rgba($color-primary, 0.15);
+        color: $color-primary-light;
+      }
+    }
+  }
+
+  .vlist-t {
+    &[style*="cursor: help"] {
+      transition: all $transition-fast;
+      border-radius: 3px;
+      padding: 2px 4px;
+      margin: -2px -4px;
+
+      &:hover {
+        background: rgba($color-primary, 0.15);
+      }
+    }
+  }
+}

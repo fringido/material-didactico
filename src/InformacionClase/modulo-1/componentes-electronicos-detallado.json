@@ -41,13 +41,13 @@
                         "id": "diodo",
                         "nombre": "Diodo",
                         "subtitulo": "La Puerta de un Solo Sentido",
-                        "descripcion": "Dispositivo electrónico de dos terminales que permite el flujo de corriente eléctrica en una dirección mientras bloquea el flujo en la dirección opuesta.",
+                        "descripcion": "Dispositivo electrónico de dos terminales que permite el flujo de corriente eléctrica in una dirección mientras bloquea el flujo en la dirección opuesta.",
                         "clasificacion": "Activo (por su comportamiento no lineal y capacidad de rectificación)",
                         "terminales": [
                             "Ánodo (positivo)",
                             "Cátodo (negativo)"
                         ],
-                        "ecuacion_principal": "I = I_S(e^{\\frac{V_D}{nV_T}} - 1)",
+                        "ecuacion_principal": "I = I_S\\left(e^{\\frac{V_D}{nV_T}} - 1\\right)",
                         "principio_operacion": {
                             "polarizacion_directa": "Permite el flujo de corriente desde el ánodo hacia el cátodo.",
                             "polarizacion_inversa": "Bloquea el paso de los electrones, actúa como aislante.",
@@ -58,13 +58,13 @@
                             {
                                 "id": "diodo_rectificador",
                                 "nombre": "Diodo Rectificador",
-                                "descripcion": "Diseñado para convertir corriente alterna (CA) en corriente continua (CC) pulsante. Es el tipo más común.",
+                                "descripcion": "Diseñado para convertir corriente alterna (CA) en corriente continua (CC) pulsante.",
                                 "funcion": "Rectificación: convierte AC a DC.",
                                 "ecuacion_principal": "I_D = I_S \\left(e^{\\frac{V_D}{V_T}} - 1\\right)",
                                 "parametros": {
-                                    "V_umbral": "≈ 0.6 – 0.7 V (Si) / 0.2 – 0.3 V (Ge)",
-                                    "V_inversa_max": "Voltage de ruptura inversa (PIV)",
-                                    "I_directa_max": "Corriente máxima continua"
+                                    "V_{umbral}": "≈ 0.6 – 0.7 V (Si) / 0.2 – 0.3 V (Ge)",
+                                    "V_{PIV}": "Voltaje de ruptura inversa máximo",
+                                    "I_{max}": "Corriente directa máxima continua"
                                 },
                                 "aplicaciones": ["Fuentes de alimentación", "Rectificadores de onda completa", "Protección de polaridad inversa"],
                                 "configuraciones": ["Media onda", "Onda completa (puente de diodos)"]
@@ -76,26 +76,25 @@
                                 "funcion": "Regulación de voltaje de referencia.",
                                 "ecuacion_principal": "V_{salida} = V_Z = \\text{constante}",
                                 "parametros": {
-                                    "V_Z": "Voltaje Zener (voltaje de ruptura)",
-                                    "I_Z": "Corriente Zener de operación",
-                                    "I_{Z,min}": "Corriente mínima para entrar en conducción inversa",
+                                    "V_Z": "Voltaje Zener (ruptura inversa)",
+                                    "I_{Z,min}": "Corriente mínima para conducción inversa",
                                     "I_{Z,max}": "Corriente máxima antes del daño",
                                     "P_Z": "Potencia de disipación máxima"
                                 },
-                                "aplicaciones": ["Regulación de voltaje en fuentes", "Referencia para comparadores", "Protección contra sobretensiones", "Limitador de señal"],
+                                "aplicaciones": ["Regulación de voltaje en fuentes", "Referencia para comparadores", "Protección contra sobretensiones"],
                                 "ventajas": ["Estabilidad de voltaje bajo carga variable", "Bajo costo", "Amplia disponibilidad"],
                                 "desventajas": ["Limitación de corriente manejable", "Ruido en zona de ruptura", "Dependencia térmica del Vz"],
-                                "criterios_seleccion": ["Vz debe coincidir con voltaje de regulación deseado", "Corriente máxima Iz", "Potencia de disipación", "Tolerancia y estabilidad térmica"]
+                                "criterios_seleccion": ["Vz debe coincidir con voltaje deseado", "Corriente máxima Iz", "Potencia de disipación suficiente", "Tolerancia y estabilidad térmica"]
                             },
                             {
                                 "id": "diodo_schottky",
                                 "nombre": "Diodo Schottky",
-                                "descripcion": "Unión metal-semiconductor en lugar de PN. Tiene una caída de voltaje directa muy baja (0.15–0.45 V) y conmuta extremadamente rápido.",
+                                "descripcion": "Unión metal-semiconductor. Caída de voltaje directa muy baja (0.15–0.45 V) y conmutación extremadamente rápida.",
                                 "funcion": "Conmutación de alta velocidad y rectificación eficiente.",
                                 "ecuacion_principal": "V_F \\approx 0.2 \\sim 0.4 \\text{ V}",
                                 "parametros": {
-                                    "V_F": "0.15 – 0.45 V (muy inferior al diodo normal)",
-                                    "t_rr": "Tiempo de recuperación inversa ≈ ns",
+                                    "V_F": "0.15 – 0.45 V (muy inferior al diodo PN normal)",
+                                    "t_{rr}": "Tiempo de recuperación inversa ≈ ns",
                                     "I_R": "Corriente de fuga inversa mayor que diodo PN"
                                 },
                                 "aplicaciones": ["Fuentes conmutadas (SMPS)", "Circuitos de alta frecuencia", "Clamp de voltaje", "RF y microondas"],
@@ -105,9 +104,9 @@
                                 "id": "led",
                                 "nombre": "LED (Diodo Emisor de Luz)",
                                 "nombre_completo": "Light Emitting Diode",
-                                "descripcion": "Convierte energía eléctrica en fotones. Los electrones se recombinan con huecos cruzando la unión PN, liberando energía en forma de luz.",
+                                "descripcion": "Convierte energía eléctrica en fotones. Los electrones se recombinan con huecos en la unión PN, liberando energía como luz.",
                                 "funcion": "Iluminación, indicación visual y transmisión óptica.",
-                                "ecuacion_principal": "E_{foton} = h \\cdot f = \\frac{hc}{\\lambda}",
+                                "ecuacion_principal": "E_{fot\\acute{o}n} = h \\cdot f = \\frac{hc}{\\lambda}",
                                 "parametros": {
                                     "V_F": "1.2 – 3.6 V (según color/material)",
                                     "I_F": "10 – 30 mA (típico 12 – 20 mA)",
@@ -126,27 +125,27 @@
                             {
                                 "id": "diodo_varactor",
                                 "nombre": "Diodo Varactor (Varicap)",
-                                "descripcion": "Su capacitancia de unión varía de forma controlada al cambiar el voltaje de polarización inversa. Se usa como capacitor variable controlado por voltaje.",
+                                "descripcion": "Su capacitancia de unión varía controladamente al cambiar el voltaje de polarización inversa. Actúa como capacitor variable controlado por voltaje.",
                                 "funcion": "Sintonización electrónica de circuitos resonantes.",
                                 "ecuacion_principal": "C_j = \\frac{C_0}{\\left(1 + \\frac{V_R}{\\phi}\\right)^n}",
                                 "parametros": {
-                                    "C_0": "Capacitancia en V_R = 0",
-                                    "V_R": "Voltaje de polarización inversa",
-                                    "\\phi": "Potencial de contacto (≈ 0.6 V para Si)",
-                                    "n": "Índice de gradación de unión (0.3 – 0.5 típico)"
+                                    "C_0": "Capacitancia con V_R = 0",
+                                    "V_R": "Voltaje de polarización inversa (ajuste)",
+                                    "\\phi": "Potencial de contacto ≈ 0.6 V (Si)",
+                                    "n": "Índice de gradación de unión (0.3 – 0.5)"
                                 },
-                                "aplicaciones": ["Sintonizadores de radio y TV", "Moduladores de frecuencia (FM)", "PLL (Phase-Locked Loop)", "Osciladores controlados por voltaje (VCO)"]
+                                "aplicaciones": ["Sintonizadores de radio y TV", "Moduladores FM", "PLL (Phase-Locked Loop)", "VCO (Osciladores controlados por voltaje)"]
                             },
                             {
                                 "id": "fotodiodo",
                                 "nombre": "Fotodiodo",
-                                "descripcion": "Opera en polarización inversa. La luz incidente genera pares electrón-hueco, produciendo una fotocorriente proporcional a la intensidad lumínica.",
+                                "descripcion": "Opera en polarización inversa. La luz incidente genera pares electrón-hueco produciendo una fotocorriente proporcional a la intensidad lumínica.",
                                 "funcion": "Detección y medición de luz.",
-                                "ecuacion_principal": "I_{foto} = R_\\lambda \\cdot P_{opt}",
+                                "ecuacion_principal": "I_{foto} = R_{\\lambda} \\cdot P_{opt}",
                                 "parametros": {
-                                    "R_\\lambda": "Responsividad (A/W) — corriente por watt de luz",
+                                    "R_{\\lambda}": "Responsividad (A/W)",
                                     "P_{opt}": "Potencia óptica incidente",
-                                    "I_{oscuro}": "Corriente en ausencia de luz (ruido)"
+                                    "I_{oscuro}": "Corriente en ausencia de luz (ruido de fondo)"
                                 },
                                 "aplicaciones": ["Sensores de luz", "Receptores de fibra óptica", "Detectores en cámaras", "Control de iluminación automático"]
                             }
@@ -169,7 +168,7 @@
                                     "Colector (C)",
                                     "Emisor (E)"
                                 ],
-                                "ecuacion_fundamental": "I_C = \\beta \\cdot I_B",
+                                "ecuacion_fundamental": "I_C = β × I_B",
                                 "variables": {
                                     "I_C": "Corriente de Colector",
                                     "I_B": "Corriente de Base",
@@ -221,8 +220,8 @@
                     {
                         "id": "opamp",
                         "nombre": "Amplificadores Operacionales (Op-Amps)",
-                        "descripcion": "Circuitos integrados que contienen docenas de transistores, diseñados para realizar operaciones matemáticas y amplificación de señales.",
                         "ecuacion_principal": "V_{out} = A_{OL}(V_+ - V_-)",
+                        "descripcion": "Circuitos integrados que contienen docenas de transistores, diseñados para realizar operaciones matemáticas y amplificación de señales.",
                         "caracteristicas_ideales": [
                             "Ganancia de voltaje infinita",
                             "Impedancia de entrada infinita",
@@ -235,7 +234,7 @@
                             "Integradores"
                         ],
                         "formula_ganancia_inversor": {
-                            "formula": "A_v = -\\dfrac{R_f}{R_{in}}",
+                            "formula": "Av = -(Rf / Rin)",
                             "variables": {
                                 "Av": "Ganancia de voltaje",
                                 "Rf": "Resistencia de retroalimentación",
@@ -450,7 +449,7 @@
                         "nombre": "Capacitor (C)",
                         "descripcion": "Dispositivo que almacena energía en un campo eléctrico mediante la acumulación de carga en dos placas conductoras separadas por un dieléctrico.",
                         "unidad": "Faradio (F)",
-                        "ecuacion_principal": "Q = C \\cdot V",
+                        "ecuacion_principal": "i(t) = C \\frac{dv(t)}{dt}",
                         "ecuacion_caracteristica": "i(t) = C \\frac{dv(t)}{dt}",
                         "ecuacion_impedancia": "Z = \\frac{1}{j\\omega C}",
                         "reactancia_capacitiva": {
@@ -642,17 +641,246 @@
         "otros_componentes": [
             {
                 "id": "transformador",
-                "nombre": "Transformadores",
+                "nombre": "Transformador",
                 "tipo": "Pasivo",
-                "ecuacion_principal": "\\frac{V_P}{V_S} = \\frac{N_P}{N_S}",
-                "descripcion": "Dispositivos basados en la inducción mutua entre dos bobinas. Vitales en señales analógicas para el acoplamiento de impedancias y la elevación o reducción de niveles de voltaje AC."
+                "descripcion": "Dispositivo basado en la inducción electromagnética que transfiere energía eléctrica entre dos o más circuitos mediante inducción mutua entre bobinas.",
+                "subtitulo": "Transferencia de Energía por Inducción",
+                "principio_funcionamiento": "Un conductor portador de corriente produce un campo magnético a su alrededor y viceversa. La corriente alterna en el primario genera un flujo magnético variable que induce voltaje en el secundario.",
+                "componentes": [
+                    {
+                        "nombre": "Bobinado Primario",
+                        "simbolo": "N1",
+                        "funcion": "Recibe potencia de la fuente de alimentación alterna"
+                    },
+                    {
+                        "nombre": "Devanado Secundario",
+                        "simbolo": "N2",
+                        "funcion": "Proporciona energía a la carga"
+                    },
+                    {
+                        "nombre": "Núcleo Magnético",
+                        "material": "Hierro laminado",
+                        "funcion": "Canaliza el flujo magnético entre bobinas, reduce pérdidas del núcleo"
+                    }
+                ],
+                "ecuacion_principal": "\\frac{V_1}{V_2} = \\frac{N_1}{N_2} = \\frac{I_2}{I_1}",
+                "variables": {
+                    "V_1": "Tensión aplicada al devanado primario",
+                    "V_2": "Tensión producida en el devanado secundario (carga)",
+                    "N_1": "Número de vueltas del devanado primario",
+                    "N_2": "Número de vueltas del devanado secundario",
+                    "I_1": "Corriente en el devanado primario",
+                    "I_2": "Corriente en el devanado secundario"
+                },
+                "relacion_transformacion": {
+                    "formula": "a = \\frac{N_1}{N_2}",
+                    "descripcion": "Relación de transformación que determina si es elevador o reductor"
+                },
+                "tipos": [
+                    {
+                        "nombre": "Transformador Elevador",
+                        "condicion": "N2 > N1",
+                        "efecto": "Aumenta el voltaje, disminuye la corriente",
+                        "aplicaciones": ["Transmisión de energía eléctrica", "Sistemas de distribución"]
+                    },
+                    {
+                        "nombre": "Transformador Reductor",
+                        "condicion": "N2 < N1",
+                        "efecto": "Disminuye el voltaje, aumenta la corriente",
+                        "aplicaciones": ["Fuentes de alimentación", "Adaptadores", "Cargadores"]
+                    },
+                    {
+                        "nombre": "Transformador de Aislamiento",
+                        "condicion": "N2 = N1",
+                        "efecto": "Mantiene el voltaje, proporciona aislamiento galvánico",
+                        "aplicaciones": ["Protección de equipos", "Seguridad eléctrica"]
+                    }
+                ],
+                "perdidas": [
+                    {
+                        "tipo": "Pérdidas del Núcleo",
+                        "causa": "Flujo magnético alterno en el material del núcleo",
+                        "componentes": ["Histéresis magnética", "Corrientes de Foucault"],
+                        "solucion": "Laminaciones del núcleo para reducir corrientes parásitas"
+                    },
+                    {
+                        "tipo": "Pérdidas en el Cobre",
+                        "causa": "Resistencia óhmica de los devanados",
+                        "formula": "P_{Cu} = I^2 R",
+                        "efecto": "Calentamiento de las bobinas"
+                    },
+                    {
+                        "tipo": "Pérdidas por Dispersión",
+                        "causa": "Flujo magnético que no enlaza ambos devanados",
+                        "efecto": "Reducción de eficiencia"
+                    }
+                ],
+                "eficiencia": {
+                    "formula": "\\eta = \\frac{P_{out}}{P_{in}} \\times 100\\%",
+                    "rango_tipico": "95% - 99% en transformadores de potencia"
+                },
+                "aplicaciones": [
+                    "Transmisión y distribución de energía eléctrica",
+                    "Fuentes de alimentación AC/DC",
+                    "Acoplamiento de impedancias en audio",
+                    "Aislamiento galvánico entre circuitos",
+                    "Instrumentación y medición",
+                    "Sistemas de audio profesional"
+                ],
+                "caracteristicas_diseno": [
+                    {
+                        "parametro": "Potencia Nominal",
+                        "descripcion": "Capacidad máxima de transferencia de potencia (VA o kVA)"
+                    },
+                    {
+                        "parametro": "Frecuencia de Operación",
+                        "descripcion": "Típicamente 50/60 Hz para red eléctrica, kHz para SMPS"
+                    },
+                    {
+                        "parametro": "Regulación de Voltaje",
+                        "descripcion": "Variación del voltaje secundario con la carga"
+                    },
+                    {
+                        "parametro": "Impedancia de Cortocircuito",
+                        "descripcion": "Limita la corriente de falla"
+                    }
+                ]
             },
             {
                 "id": "potenciometro",
-                "nombre": "Potenciómetros",
-                "tipo": "Pasivo",
-                "ecuacion_principal": "R_{var} = [0, R_{max}]",
-                "descripcion": "Resistores variables. Se utilizan para controlar parámetros como el volumen (ganancia), el tono o el umbral de disparo de un circuito."
+                "nombre": "Potenciómetro",
+                "tipo": "Pasivo Variable",
+                "descripcion": "Componente electrónico pasivo que permite controlar y ajustar la resistencia eléctrica en un circuito mediante un contacto móvil deslizante.",
+                "subtitulo": "Resistencia Variable Ajustable",
+                "unidad": "Ohm (Ω)",
+                "terminales": [
+                    "Terminal 1 (extremo fijo)",
+                    "Terminal 2 (cursor/wiper móvil)",
+                    "Terminal 3 (extremo fijo)"
+                ],
+                "principio_funcionamiento": "Consiste en una resistencia fija con un contacto móvil (cursor) que se desliza a lo largo de ella, dividiendo la resistencia total en dos partes variables.",
+                "ecuacion_principal": "R_{total} = R_1 + R_2",
+                "division_voltaje": {
+                    "formula": "V_{out} = V_{in} \\times \\frac{R_2}{R_1 + R_2}",
+                    "descripcion": "Permite dividir la tensión en una proporción específica según la posición del cursor"
+                },
+                "tipos_por_variacion": [
+                    {
+                        "nombre": "Lineal",
+                        "codigo": "B",
+                        "descripcion": "La resistencia varía proporcionalmente con el ángulo de rotación",
+                        "aplicaciones": ["Control de volumen", "Ajuste de brillo", "Control de velocidad"]
+                    },
+                    {
+                        "nombre": "Logarítmico (Audio)",
+                        "codigo": "A",
+                        "descripcion": "Variación exponencial, coincide con la percepción auditiva humana",
+                        "aplicaciones": ["Control de volumen en audio", "Ecualizadores", "Mezcladores"]
+                    },
+                    {
+                        "nombre": "Antilogarítmico",
+                        "codigo": "C",
+                        "descripcion": "Variación inversa al logarítmico",
+                        "aplicaciones": ["Aplicaciones especializadas", "Balance de audio"]
+                    }
+                ],
+                "tipos_por_construccion": [
+                    {
+                        "nombre": "Rotativo",
+                        "descripcion": "Ajuste mediante rotación de una perilla",
+                        "giros": "Simple (270°) o múltiple (10+ vueltas para precisión)",
+                        "aplicaciones": ["Paneles de control", "Equipos de audio", "Instrumentos"]
+                    },
+                    {
+                        "nombre": "Deslizante (Slider)",
+                        "descripcion": "Ajuste lineal mediante deslizamiento",
+                        "aplicaciones": ["Mezcladores de audio", "Ecualizadores gráficos", "Controles de iluminación"]
+                    },
+                    {
+                        "nombre": "Trimmer (Preset)",
+                        "descripcion": "Ajuste fino con destornillador, montaje en PCB",
+                        "aplicaciones": ["Calibración de circuitos", "Ajustes de fábrica", "Prototipos"]
+                    },
+                    {
+                        "nombre": "Digital",
+                        "descripcion": "Control electrónico mediante señales digitales",
+                        "aplicaciones": ["Sistemas automatizados", "Control remoto", "Interfaces digitales"]
+                    }
+                ],
+                "caracteristicas": [
+                    {
+                        "parametro": "Resistencia Total",
+                        "descripcion": "Valor máximo entre los extremos (ej: 1kΩ, 10kΩ, 100kΩ)"
+                    },
+                    {
+                        "parametro": "Tolerancia",
+                        "descripcion": "Variación permitida del valor nominal (típicamente ±20%)"
+                    },
+                    {
+                        "parametro": "Potencia Nominal",
+                        "descripcion": "Máxima potencia que puede disipar sin daño (0.1W - 2W típico)"
+                    },
+                    {
+                        "parametro": "Linealidad",
+                        "descripcion": "Precisión de la curva de variación respecto al ideal"
+                    },
+                    {
+                        "parametro": "Vida Útil",
+                        "descripcion": "Número de ciclos de operación (10,000 - 100,000+ ciclos)"
+                    },
+                    {
+                        "parametro": "Resolución",
+                        "descripcion": "Cambio mínimo detectable (infinita en analógicos, discreta en digitales)"
+                    }
+                ],
+                "con_interruptor": {
+                    "descripcion": "Algunos potenciómetros integran un interruptor ON/OFF",
+                    "aplicacion": "Control de volumen con encendido/apagado en radios y amplificadores"
+                },
+                "aplicaciones": [
+                    {
+                        "categoria": "Audio",
+                        "usos": ["Control de volumen", "Balance estéreo", "Tono (graves/agudos)", "Ganancia en amplificadores"]
+                    },
+                    {
+                        "categoria": "Iluminación",
+                        "usos": ["Reguladores de intensidad (dimmers)", "Control de brillo en pantallas", "Iluminación escénica"]
+                    },
+                    {
+                        "categoria": "Control de Motores",
+                        "usos": ["Velocidad de ventiladores", "Control de RPM", "Cintas transportadoras"]
+                    },
+                    {
+                        "categoria": "Instrumentación",
+                        "usos": ["Ajuste de parámetros en osciloscopios", "Calibración de equipos", "Mediciones precisas"]
+                    },
+                    {
+                        "categoria": "Control de Temperatura",
+                        "usos": ["Termostatos ajustables", "Sistemas HVAC", "Hornos y estufas"]
+                    },
+                    {
+                        "categoria": "Radiofrecuencia",
+                        "usos": ["Sintonización de frecuencia", "Ajuste de ganancia RF", "Control de antena"]
+                    }
+                ],
+                "ventajas": [
+                    "Ajuste continuo y preciso",
+                    "Interfaz intuitiva para el usuario",
+                    "No requiere programación",
+                    "Bajo costo",
+                    "Amplia disponibilidad"
+                ],
+                "desventajas": [
+                    "Desgaste mecánico con el uso",
+                    "Susceptible a polvo y suciedad",
+                    "Ruido de contacto (crackling)",
+                    "Deriva con temperatura y humedad"
+                ],
+                "lectura_valor": {
+                    "codigo_impreso": "Valor en Ω, kΩ o MΩ impreso en el cuerpo",
+                    "codigo_letra": "Letra indica la curva: A (log), B (lineal), C (antilog)",
+                    "ejemplo": "B10K = Lineal, 10 kΩ"
+                }
             }
         ],
         "tabla_comparativa_frecuencia": {

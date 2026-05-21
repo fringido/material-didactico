@@ -1,0 +1,193 @@
+<div class="symbols-container">
+  <div class="symbols-header">
+    <h3 class="symbols-title">🔣 Símbolos de Componentes Electrónicos</h3>
+    <p class="symbols-desc">Símbolos estándar IEC/IEEE — Haz clic en un componente para ver su detalle</p>
+  </div>
+
+  <div class="symbols-grid">
+    @for (sym of displaySymbols; track sym.id) {
+      <div class="symbol-card"
+           [class.symbol-card--active]="selectedSymbol() === sym.id"
+           [style.--sym-color]="sym.color"
+           (click)="selectSymbol(sym.id)">
+        
+        <div class="symbol-card__svg">
+          <!-- RESISTENCIA -->
+          @if (sym.id === 'resistencia') {
+            <svg viewBox="0 0 120 60" class="symbol-svg">
+              <line x1="0" y1="30" x2="20" y2="30" stroke="currentColor" stroke-width="2"/>
+              <polyline points="20,30 25,15 35,45 45,15 55,45 65,15 75,45 80,30" 
+                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <line x1="80" y1="30" x2="120" y2="30" stroke="currentColor" stroke-width="2"/>
+              <circle cx="0" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+              <circle cx="120" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+            </svg>
+          }
+
+          <!-- CAPACITOR -->
+          @if (sym.id === 'capacitor') {
+            <svg viewBox="0 0 120 60" class="symbol-svg">
+              <line x1="0" y1="30" x2="45" y2="30" stroke="currentColor" stroke-width="2"/>
+              <line x1="45" y1="8" x2="45" y2="52" stroke="currentColor" stroke-width="3"/>
+              <line x1="55" y1="8" x2="55" y2="52" stroke="currentColor" stroke-width="3"/>
+              <line x1="55" y1="30" x2="120" y2="30" stroke="currentColor" stroke-width="2"/>
+              <text x="38" y="6" fill="currentColor" font-size="10" font-weight="bold" text-anchor="middle">+</text>
+              <text x="62" y="6" fill="currentColor" font-size="10" font-weight="bold" text-anchor="middle">−</text>
+              <circle cx="0" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+              <circle cx="120" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+            </svg>
+          }
+
+          <!-- INDUCTOR -->
+          @if (sym.id === 'inductor') {
+            <svg viewBox="0 0 120 60" class="symbol-svg">
+              <line x1="0" y1="30" x2="20" y2="30" stroke="currentColor" stroke-width="2"/>
+              <path d="M20,30 Q28,10 36,30 Q44,10 52,30 Q60,10 68,30 Q76,10 84,30" 
+                    fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="84" y1="30" x2="120" y2="30" stroke="currentColor" stroke-width="2"/>
+              <circle cx="0" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+              <circle cx="120" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+            </svg>
+          }
+
+          <!-- DIODO -->
+          @if (sym.id === 'diodo') {
+            <svg viewBox="0 0 120 60" class="symbol-svg">
+              <line x1="0" y1="30" x2="40" y2="30" stroke="currentColor" stroke-width="2"/>
+              <polygon points="40,12 40,48 70,30" fill="currentColor" opacity="0.3" stroke="currentColor" stroke-width="2"/>
+              <line x1="70" y1="12" x2="70" y2="48" stroke="currentColor" stroke-width="3"/>
+              <line x1="70" y1="30" x2="120" y2="30" stroke="currentColor" stroke-width="2"/>
+              <text x="30" y="56" fill="currentColor" font-size="8" text-anchor="middle" opacity="0.6">A</text>
+              <text x="82" y="56" fill="currentColor" font-size="8" text-anchor="middle" opacity="0.6">K</text>
+              <circle cx="0" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+              <circle cx="120" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+            </svg>
+          }
+
+          <!-- TRANSISTOR BJT NPN -->
+          @if (sym.id === 'transistor') {
+            <svg viewBox="0 0 120 80" class="symbol-svg">
+              <!-- Base line -->
+              <line x1="10" y1="40" x2="45" y2="40" stroke="currentColor" stroke-width="2"/>
+              <!-- Vertical bar -->
+              <line x1="45" y1="18" x2="45" y2="62" stroke="currentColor" stroke-width="3"/>
+              <!-- Collector -->
+              <line x1="45" y1="25" x2="80" y2="8" stroke="currentColor" stroke-width="2"/>
+              <line x1="80" y1="8" x2="80" y2="0" stroke="currentColor" stroke-width="2"/>
+              <!-- Emitter with arrow -->
+              <line x1="45" y1="55" x2="80" y2="72" stroke="currentColor" stroke-width="2"/>
+              <line x1="80" y1="72" x2="80" y2="80" stroke="currentColor" stroke-width="2"/>
+              <polygon points="70,68 80,72 72,62" fill="currentColor"/>
+              <!-- Labels -->
+              <text x="6" y="36" fill="currentColor" font-size="9" font-weight="600" opacity="0.6">B</text>
+              <text x="88" y="8" fill="currentColor" font-size="9" font-weight="600" opacity="0.6">C</text>
+              <text x="88" y="78" fill="currentColor" font-size="9" font-weight="600" opacity="0.6">E</text>
+              <!-- Circle -->
+              <circle cx="55" cy="40" r="22" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          }
+
+          <!-- OP-AMP -->
+          @if (sym.id === 'opamp') {
+            <svg viewBox="0 0 140 80" class="symbol-svg">
+              <!-- Triangle body -->
+              <polygon points="25,5 25,75 115,40" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="2"/>
+              <!-- Input + -->
+              <line x1="0" y1="25" x2="25" y2="25" stroke="currentColor" stroke-width="2"/>
+              <text x="30" y="29" fill="currentColor" font-size="12" font-weight="bold">+</text>
+              <!-- Input - -->
+              <line x1="0" y1="55" x2="25" y2="55" stroke="currentColor" stroke-width="2"/>
+              <text x="30" y="59" fill="currentColor" font-size="12" font-weight="bold">−</text>
+              <!-- Output -->
+              <line x1="115" y1="40" x2="140" y2="40" stroke="currentColor" stroke-width="2"/>
+              <!-- Supply -->
+              <line x1="70" y1="0" x2="70" y2="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <line x1="70" y1="62" x2="70" y2="80" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="76" y="8" fill="currentColor" font-size="8" opacity="0.5">V+</text>
+              <text x="76" y="76" fill="currentColor" font-size="8" opacity="0.5">V−</text>
+              <!-- Output label -->
+              <text x="126" y="36" fill="currentColor" font-size="8" opacity="0.6">Vout</text>
+            </svg>
+          }
+
+          <!-- TRANSFORMADOR -->
+          @if (sym.id === 'transformador') {
+            <svg viewBox="0 0 120 70" class="symbol-svg">
+              <!-- Primary coil -->
+              <line x1="0" y1="10" x2="30" y2="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M30,10 Q38,-2 46,10 Q54,-2 62,10" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(90 30 10) translate(-20 -20)"/>
+              <path d="M30,10 Q36,0 30,10" fill="none" stroke="currentColor" stroke-width="0"/>
+              <!-- Simplified primary -->
+              <line x1="0" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M20,10 Q27,0 20,10 M20,10 Q20,-4 28,10 Q20,24 20,10" fill="none" stroke="currentColor" stroke-width="0"/>
+              <!-- Primary arcs -->
+              <path d="M20,10 C24,10 26,18 20,18 C24,18 26,26 20,26 C24,26 26,34 20,34 C24,34 26,42 20,42 C24,42 26,50 20,50 C24,50 26,58 20,58" 
+                    fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="0" y1="58" x2="20" y2="58" stroke="currentColor" stroke-width="2"/>
+              <!-- Core lines -->
+              <line x1="32" y1="5" x2="32" y2="63" stroke="currentColor" stroke-width="2"/>
+              <line x1="38" y1="5" x2="38" y2="63" stroke="currentColor" stroke-width="2"/>
+              <!-- Secondary arcs -->
+              <path d="M50,10 C46,10 44,18 50,18 C46,18 44,26 50,26 C46,26 44,34 50,34 C46,34 44,42 50,42 C46,42 44,50 50,50 C46,50 44,58 50,58" 
+                    fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="50" y1="10" x2="70" y2="10" stroke="currentColor" stroke-width="2"/>
+              <line x1="50" y1="58" x2="70" y2="58" stroke="currentColor" stroke-width="2"/>
+              <!-- Dots (polarity) -->
+              <circle cx="24" cy="14" r="2.5" fill="currentColor"/>
+              <circle cx="46" cy="14" r="2.5" fill="currentColor"/>
+            </svg>
+          }
+
+          <!-- POTENCIÓMETRO -->
+          @if (sym.id === 'potenciometro') {
+            <svg viewBox="0 0 120 70" class="symbol-svg">
+              <line x1="0" y1="40" x2="20" y2="40" stroke="currentColor" stroke-width="2"/>
+              <polyline points="20,40 25,25 35,55 45,25 55,55 65,25 75,55 80,40" 
+                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <line x1="80" y1="40" x2="120" y2="40" stroke="currentColor" stroke-width="2"/>
+              <!-- Arrow (wiper) -->
+              <line x1="50" y1="10" x2="50" y2="22" stroke="currentColor" stroke-width="2"/>
+              <polygon points="45,22 55,22 50,28" fill="currentColor"/>
+              <line x1="50" y1="10" x2="70" y2="10" stroke="currentColor" stroke-width="2"/>
+              <circle cx="70" cy="10" r="3" fill="currentColor" opacity="0.5"/>
+              <circle cx="0" cy="40" r="3" fill="currentColor" opacity="0.5"/>
+              <circle cx="120" cy="40" r="3" fill="currentColor" opacity="0.5"/>
+            </svg>
+          }
+        </div>
+
+        <p class="symbol-card__name">{{ sym.nombre }}</p>
+        <span class="symbol-card__badge" [class]="'badge badge--' + (sym.categoria === 'activo' ? 'success' : 'info') + ' badge--sm'">
+          {{ sym.categoria | titlecase }}
+        </span>
+      </div>
+    }
+  </div>
+
+  <!-- DETAIL PANEL -->
+  @if (selectedSymbol() && getSymbol(selectedSymbol()!)) {
+    @let sym = getSymbol(selectedSymbol()!)!;
+    <div class="symbol-detail" [style.--sym-color]="sym.color">
+      <div class="symbol-detail__header">
+        <h4 class="symbol-detail__title">{{ sym.nombre }}</h4>
+        <span class="badge badge--primary badge--lg">{{ sym.unidad }}</span>
+      </div>
+
+      <p class="symbol-detail__desc">{{ sym.descripcion }}</p>
+
+      <div class="symbol-detail__equation">
+        <p class="symbol-detail__label">Ecuación Característica</p>
+        <div class="equation-display" [appKatex]="sym.ecuacion"></div>
+      </div>
+
+      <div class="symbol-detail__terminals">
+        <p class="symbol-detail__label">Terminales</p>
+        <div class="terminals-row">
+          @for (t of sym.terminales; track t) {
+            <span class="badge badge--neutral">{{ t }}</span>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

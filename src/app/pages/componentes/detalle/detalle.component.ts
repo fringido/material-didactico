@@ -8,11 +8,24 @@ import { ShockleyLabComponent } from '../../../components/shockley-lab/shockley-
 import { TransformerSimulatorComponent } from '../../../components/circuit-simulator/transformer-simulator.component';
 import { PotentiometerSimulatorComponent } from '../../../components/circuit-simulator/potentiometer-simulator.component';
 import { AmplifierLabComponent } from '../../../components/amplifier-lab/amplifier-lab.component';
+import { ComponentSymbolsComponent } from '../../../components/component-symbols/component-symbols.component';
+import { CircuitBuilderComponent } from '../../../components/circuit-builder/circuit-builder.component';
 
 @Component({
   selector: 'app-componente-detalle',
   standalone: true,
-  imports: [CommonModule, RouterLink, EquationChartComponent, KatexDirective, ShockleyLabComponent, TransformerSimulatorComponent, PotentiometerSimulatorComponent, AmplifierLabComponent],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    EquationChartComponent, 
+    KatexDirective, 
+    ShockleyLabComponent, 
+    TransformerSimulatorComponent, 
+    PotentiometerSimulatorComponent, 
+    AmplifierLabComponent,
+    ComponentSymbolsComponent,
+    CircuitBuilderComponent
+  ],
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']
 })

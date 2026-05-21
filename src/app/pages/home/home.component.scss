@@ -301,13 +301,14 @@
   &__body {
     padding: $spacing-4;
     background: $bg-primary;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: $spacing-4;
+  }
 
-    @media (max-width: $breakpoint-sm) {
-      grid-template-columns: 1fr;
-    }
+  &__temas,
+  &__ejercicios {
+    display: block;
   }
 
   &__sublabel {

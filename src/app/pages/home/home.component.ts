@@ -37,11 +37,28 @@ export class HomeComponent implements OnInit {
 
   getRouteForTema(tema: string): string | null {
     const t = tema.toLowerCase();
-    if (t.includes('componentes')) return '/componentes';
-    if (t.includes('amplificadores') || t.includes('bjt') || t.includes('mosfet')) return '/sistemas';
-    if (t.includes('filtros')) return '/sistemas';
-    if (t.includes('osciladores')) return '/sistemas';
+    
+    // Componentes electrónicos
+    if (t.includes('componentes') || t.includes('características') || t.includes('propiedades')) return '/componentes';
+    
+    // Circuitos básicos: amplificadores, filtros, osciladores
+    if (t.includes('amplificadores') || t.includes('filtros') || t.includes('osciladores')) return '/sistemas';
+    if (t.includes('circuitos básicos')) return '/sistemas';
+    
+    // Componentes específicos
     if (t.includes('diodos')) return '/componentes/activos/diodo';
+    if (t.includes('transistor') || t.includes('bjt') || t.includes('mosfet')) return '/componentes/activos/transistor';
+    if (t.includes('op-amp') || t.includes('operacional')) return '/componentes/activos/opamp';
+    
+    // Componentes pasivos
+    if (t.includes('resistencia')) return '/componentes/pasivos/resistencia';
+    if (t.includes('capacitor')) return '/componentes/pasivos/capacitor';
+    if (t.includes('inductor') || t.includes('bobina')) return '/componentes/pasivos/inductor';
+    
+    // Otros componentes
+    if (t.includes('transformador')) return '/componentes/otros/transformador';
+    if (t.includes('potenciómetro') || t.includes('potenciometro')) return '/componentes/otros/potenciometro';
+    
     return null;
   }
 }

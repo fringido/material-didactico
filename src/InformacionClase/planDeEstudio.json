@@ -5,10 +5,12 @@
     "cuatrimestre": "Sexto",
     "clave": "LIM-029",
     "profesor": "Camacho Ríos Maximiliano Alfredo",
-
     "informacion_general": {
       "modalidad": "Ejecutivo",
-      "plantel": ["Torres", "Zinacantepec"],
+      "plantel": [
+        "Torres",
+        "Zinacantepec"
+      ],
       "horarios": [
         {
           "modulo": 1,
@@ -28,9 +30,7 @@
         }
       ]
     },
-
     "objetivo": "Al término del curso, el estudiante adquirirá conocimientos básicos sobre los principios y fundamentos de los circuitos electrónicos analógicos, así como desarrollar habilidades para diseñar y analizar circuitos simples que se aplican en sistemas mecatrónicos.",
-
     "competencias": [
       "Analizar y diseñar circuitos electrónicos analógicos básicos",
       "Aplicar leyes y teoremas fundamentales en análisis de circuitos",
@@ -38,7 +38,6 @@
       "Utilizar herramientas de simulación para diseño de circuitos",
       "Implementar y probar circuitos en laboratorio"
     ],
-
     "modulos": [
       {
         "numero": 1,
@@ -56,9 +55,18 @@
               "Circuitos básicos: amplificadores, filtros, osciladores"
             ],
             "ejercicios": [
-              { "numero": 1, "descripcion": "Identificar componentes en diagramas esquemáticos" },
-              { "numero": 2, "descripcion": "Clasificar circuitos según su función" },
-              { "numero": 3, "descripcion": "Investigar aplicaciones de amplificadores en mecatrónica" }
+              {
+                "numero": 1,
+                "descripcion": "Identificar componentes en diagramas esquemáticos"
+              },
+              {
+                "numero": 2,
+                "descripcion": "Clasificar circuitos según su función"
+              },
+              {
+                "numero": 3,
+                "descripcion": "Investigar aplicaciones de amplificadores en mecatrónica"
+              }
             ]
           },
           {
@@ -72,10 +80,22 @@
               "Teoremas de Thevenin y Norton"
             ],
             "ejercicios": [
-              { "numero": 4, "descripcion": "Resolver 5 circuitos usando análisis de nodos" },
-              { "numero": 5, "descripcion": "Resolver 5 circuitos usando análisis de mallas" },
-              { "numero": 6, "descripcion": "Encontrar equivalentes de Thevenin en 3 circuitos" },
-              { "numero": 7, "descripcion": "Simular circuitos en software (LTSpice o Proteus)" }
+              {
+                "numero": 4,
+                "descripcion": "Resolver 5 circuitos usando análisis de nodos"
+              },
+              {
+                "numero": 5,
+                "descripcion": "Resolver 5 circuitos usando análisis de mallas"
+              },
+              {
+                "numero": 6,
+                "descripcion": "Encontrar equivalentes de Thevenin en 3 circuitos"
+              },
+              {
+                "numero": 7,
+                "descripcion": "Simular circuitos en software (LTSpice o Proteus)"
+              }
             ]
           },
           {
@@ -89,10 +109,22 @@
               "Análisis de respuesta transitoria y estable"
             ],
             "ejercicios": [
-              { "numero": 8,  "descripcion": "Diseñar filtros pasa-bajas, pasa-altas y pasa-banda" },
-              { "numero": 9,  "descripcion": "Calcular frecuencias de corte" },
-              { "numero": 10, "descripcion": "Graficar diagramas de Bode" },
-              { "numero": 11, "descripcion": "Laboratorio: Construir y medir filtros RC" }
+              {
+                "numero": 8,
+                "descripcion": "Diseñar filtros pasa-bajas, pasa-altas y pasa-banda"
+              },
+              {
+                "numero": 9,
+                "descripcion": "Calcular frecuencias de corte"
+              },
+              {
+                "numero": 10,
+                "descripcion": "Graficar diagramas de Bode"
+              },
+              {
+                "numero": 11,
+                "descripcion": "Laboratorio: Construir y medir filtros RC"
+              }
             ]
           }
         ]
@@ -114,10 +146,22 @@
               "Etapas de potencia y aplicaciones"
             ],
             "ejercicios": [
-              { "numero": 12, "descripcion": "Calcular ganancia en amplificadores BJT" },
-              { "numero": 13, "descripcion": "Diseñar amplificador emisor común con ganancia de 50" },
-              { "numero": 14, "descripcion": "Comparar eficiencia entre clases de amplificadores" },
-              { "numero": 15, "descripcion": "Simular amplificadores en Proteus" }
+              {
+                "numero": 12,
+                "descripcion": "Calcular ganancia en amplificadores BJT"
+              },
+              {
+                "numero": 13,
+                "descripcion": "Diseñar amplificador emisor común con ganancia de 50"
+              },
+              {
+                "numero": 14,
+                "descripcion": "Comparar eficiencia entre clases de amplificadores"
+              },
+              {
+                "numero": 15,
+                "descripcion": "Simular amplificadores en Proteus"
+              }
             ]
           },
           {
@@ -131,9 +175,18 @@
               "Estabilidad y ajuste de frecuencia"
             ],
             "ejercicios": [
-              { "numero": 16, "descripcion": "Diseñar oscilador RC a 1 kHz" },
-              { "numero": 17, "descripcion": "Calcular componentes para oscilador de cristal" },
-              { "numero": 18, "descripcion": "Construir y probar oscilador de relajación con 555" }
+              {
+                "numero": 16,
+                "descripcion": "Diseñar oscilador RC a 1 kHz"
+              },
+              {
+                "numero": 17,
+                "descripcion": "Calcular componentes para oscilador de cristal"
+              },
+              {
+                "numero": 18,
+                "descripcion": "Construir y probar oscilador de relajación con 555"
+              }
             ]
           },
           {
@@ -148,17 +201,31 @@
               "Aplicaciones en instrumentación"
             ],
             "ejercicios": [
-              { "numero": 19, "descripcion": "Diseñar amplificador inversor con ganancia -10" },
-              { "numero": 20, "descripcion": "Implementar sumador de 3 entradas" },
-              { "numero": 21, "descripcion": "Diseñar filtro activo pasa-bajas Butterworth de 2do orden" },
-              { "numero": 22, "descripcion": "Construir integrador y medir respuesta" },
-              { "numero": 23, "descripcion": "Proyecto final: Sistema de acondicionamiento de señales" }
+              {
+                "numero": 19,
+                "descripcion": "Diseñar amplificador inversor con ganancia -10"
+              },
+              {
+                "numero": 20,
+                "descripcion": "Implementar sumador de 3 entradas"
+              },
+              {
+                "numero": 21,
+                "descripcion": "Diseñar filtro activo pasa-bajas Butterworth de 2do orden"
+              },
+              {
+                "numero": 22,
+                "descripcion": "Construir integrador y medir respuesta"
+              },
+              {
+                "numero": 23,
+                "descripcion": "Proyecto final: Sistema de acondicionamiento de señales"
+              }
             ]
           }
         ]
       }
     ],
-
     "metodologia": {
       "clases_teoricas": [
         "Exposición de conceptos fundamentales",
@@ -176,12 +243,20 @@
         "Elaboración de mapas mentales y reportes"
       ]
     },
-
     "recursos": {
       "software": [
-        { "nombre": "LTSpice",  "licencia": "Gratuito" },
-        { "nombre": "Proteus",  "licencia": "Institucional" },
-        { "nombre": "Multisim", "licencia": "Alternativa" }
+        {
+          "nombre": "LTSpice",
+          "licencia": "Gratuito"
+        },
+        {
+          "nombre": "Proteus",
+          "licencia": "Institucional"
+        },
+        {
+          "nombre": "Multisim",
+          "licencia": "Alternativa"
+        }
       ],
       "material_laboratorio": [
         "Protoboards y cables",
@@ -198,13 +273,23 @@
         "Floyd - Dispositivos Electrónicos"
       ]
     },
-
     "evaluacion": [
-      { "criterio": "Ejercicios en la antología didáctica", "porcentaje": 40 },
-      { "criterio": "Exámenes parciales",                  "porcentaje": 30 },
-      { "criterio": "Simulación, ejercicios y esquemas",   "porcentaje": 10 },
-      { "criterio": "Discusiones y mesas de trabajo",      "porcentaje": 10 },
-      { "criterio": "Mapas mentales y trabajo escrito",    "porcentaje": 10 }
+      {
+        "criterio": "Ejercicios en la antología didáctica",
+        "porcentaje": 40
+      },
+      {
+        "criterio": "Exámenes parciales",
+        "porcentaje": 30
+      },
+      {
+        "criterio": "Simulación, ejercicios y esquemas",
+        "porcentaje": 15
+      },
+      {
+        "criterio": "Mapas mentales y trabajo escrito",
+        "porcentaje": 15
+      }
     ]
   }
 }

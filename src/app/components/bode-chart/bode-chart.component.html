@@ -1,0 +1,73 @@
+<div class="bode-chart-container">
+  <div class="bode-chart-header">
+    <h3 class="bode-title">📈 Diagrama de Bode Interactivo</h3>
+    <p class="bode-desc">Visualiza la respuesta en frecuencia (Magnitud en decibelios y Fase en grados) en escala logarítmica.</p>
+  </div>
+
+  <!-- Tabs/Buttons to switch filters -->
+  <div class="filter-selector">
+    <button class="filter-btn" [class.filter-btn--active]="filterType() === 'lowpass'" (click)="setFilterType('lowpass')">RC Pasa-Bajas</button>
+    <button class="filter-btn" [class.filter-btn--active]="filterType() === 'highpass'" (click)="setFilterType('highpass')">RC Pasa-Altas</button>
+    <button class="filter-btn" [class.filter-btn--active]="filterType() === 'bandpass'" (click)="setFilterType('bandpass')">RLC Pasa-Banda (Serie)</button>
+  </div>
+
+  <div class="bode-body-layout">
+    <!-- Graph Canvas Side -->
+    <div class="canvas-panel">
+      <div class="canvas-wrapper">
+        <h4 class="canvas-title">Magnitud (dB)</h4>
+        <canvas #magnitudeChart class="bode-canvas"></canvas>
+      </div>
+
+      <div class="canvas-wrapper mt-4">
+        <h4 class="canvas-title">Fase (Grados)</h4>
+        <canvas #phaseChart class="bode-canvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Sliders and details side -->
+    <div class="controls-panel">
+      <h4 class="controls-title">Configuración del Filtro</h4>
+
+      <div class="param-slider-group">
+        <label class="slider-label">Resistencia (R): <span class="param-val">{{ rValue() }} Ω</span></label>
+        <input type="range" [(ngModel)]="rValue" (ngModelChange)="onParamChange()" min="50" max="10000" step="50" class="bode-slider">
+      </div>
+
+      <div class="param-slider-group">
+        <label class="slider-label">Capacitancia (C): <span class="param-val">{{ cValue() }} µF</span></label>
+        <input type="range" [(ngModel)]="cValue" (ngModelChange)="onParamChange()" min="0.01" max="10" step="0.05" class="bode-slider">
+      </div>
+
+      @if (filterType() === 'bandpass') {
+        <div class="param-slider-group">
+          <label class="slider-label">Inductancia (L): <span class="param-val">{{ lValue() }} mH</span></label>
+          <input type="range" [(ngModel)]="lValue" (ngModelChange)="onParamChange()" min="1" max="500" step="5" class="bode-slider">
+        </div>
+      }
+
+      <div class="math-panel">
+        <h5 class="math-title">Función de Transferencia</h5>
+        <div class="tf-equation" [appKatex]="getTransferFunctionEquation()"></div>
+
+        <div class="metrics-block">
+          <div class="metric-row">
+            <span class="m-label">{{ filterType() === 'bandpass' ? 'Frecuencia de Resonancia (f₀):' : 'Frecuencia de Corte (fc):' }}</span>
+            <span class="m-val">{{ cutoffFreq().toFixed(1) }} Hz</span>
+          </div>
+
+          @if (filterType() === 'bandpass') {
+            <div class="metric-row">
+              <span class="m-label">Factor de Calidad (Q):</span>
+              <span class="m-val">{{ qFactor().toFixed(2) }}</span>
+            </div>
+            <div class="metric-row">
+              <span class="m-label">Ancho de Banda (BW):</span>
+              <span class="m-val">{{ bandwidth().toFixed(1) }} Hz</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

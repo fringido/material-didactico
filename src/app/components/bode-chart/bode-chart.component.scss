@@ -1,0 +1,192 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.bode-chart-container {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-xl;
+  padding: $spacing-6;
+  margin: $spacing-6 0;
+}
+
+.bode-chart-header {
+  margin-bottom: $spacing-6;
+  text-align: center;
+}
+
+.bode-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin-bottom: $spacing-2;
+}
+
+.bode-desc {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+/* Filter selector tabs */
+.filter-selector {
+  display: flex;
+  gap: $spacing-2;
+  margin-bottom: $spacing-6;
+  border-bottom: 1px solid $border-primary;
+  padding-bottom: $spacing-3;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: $spacing-2 $spacing-4;
+  border-radius: $radius-md;
+  border: 1px solid $border-primary;
+  background: $bg-secondary;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    color: $text-primary;
+    background: $bg-tertiary;
+    border-color: $border-secondary;
+  }
+
+  &--active {
+    background: $color-primary;
+    color: white !important;
+    border-color: $color-primary;
+    box-shadow: $shadow-glow-primary;
+  }
+}
+
+/* Bode body layout split */
+.bode-body-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: $spacing-6;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Canvas panel */
+.canvas-panel {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.canvas-wrapper {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+}
+
+.canvas-title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+  margin-bottom: $spacing-2;
+}
+
+.bode-canvas {
+  width: 100%;
+  height: 180px;
+  background: #0d1117;
+  border-radius: $radius-md;
+  display: block;
+}
+
+/* Controls panel */
+.controls-panel {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.controls-title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.param-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.slider-label {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  display: flex;
+  justify-content: space-between;
+}
+
+.param-val {
+  color: $color-primary-light;
+  font-weight: $font-weight-bold;
+}
+
+.bode-slider {
+  width: 100%;
+  accent-color: $color-primary;
+  cursor: pointer;
+}
+
+/* Math block */
+.math-panel {
+  margin-top: $spacing-2;
+  background: $bg-primary;
+  border: 1px dashed $border-primary;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+}
+
+.math-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-tertiary;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tf-equation {
+  font-size: $font-size-sm;
+  color: $color-accent-yellow;
+  text-align: center;
+  padding: $spacing-2 0;
+}
+
+.metrics-block {
+  border-top: 1px solid $border-primary;
+  padding-top: $spacing-3;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-size-xs;
+  
+  .m-label {
+    color: $text-secondary;
+  }
+  .m-val {
+    font-weight: $font-weight-semibold;
+    color: $color-success;
+  }
+}

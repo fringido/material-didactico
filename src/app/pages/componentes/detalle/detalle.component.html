@@ -31,6 +31,15 @@
     </div>
   </header>
 
+  <!-- SECCIÓN DE SÍMBOLOS Y SIMULACIONES DE CIRCUITOS -->
+  <section class="section">
+    <app-component-symbols [filterId]="componente().id"></app-component-symbols>
+  </section>
+
+  <section class="section" *ngIf="['resistencia', 'capacitor', 'inductor', 'diodo', 'transistor'].includes(componente().id)">
+    <app-circuit-builder></app-circuit-builder>
+  </section>
+
   <!-- OLD GRÁFICAS INTERACTIVAS SECTION REMOVED -->
 
   <!-- LEY / ECUACIÓN FUNDAMENTAL -->

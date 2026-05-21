@@ -45,13 +45,71 @@
         <p class="spec-card__value">{{ detalle().impedancia_salida }}</p>
       </div>
     </div>
+
+    <!-- Fórmulas adicionales -->
+    <div class="formulas-section" *ngIf="detalle().formula_ganancia || detalle().formula_impedancia_entrada">
+      <h3>Fórmulas</h3>
+      <div class="formulas-grid">
+        <div class="formula-card" *ngIf="detalle().formula_ganancia">
+          <p class="formula-card__label">Ganancia</p>
+          <div class="equation-display equation-display--sm" 
+               [appKatex]="detalle().formula_ganancia"
+               appFormulaTooltip></div>
+        </div>
+        <div class="formula-card" *ngIf="detalle().formula_impedancia_entrada">
+          <p class="formula-card__label">Impedancia de Entrada</p>
+          <div class="equation-display equation-display--sm" 
+               [appKatex]="detalle().formula_impedancia_entrada"
+               appFormulaTooltip></div>
+        </div>
+        <div class="formula-card" *ngIf="detalle().formula_impedancia_salida">
+          <p class="formula-card__label">Impedancia de Salida</p>
+          <div class="equation-display equation-display--sm" 
+               [appKatex]="detalle().formula_impedancia_salida"
+               appFormulaTooltip></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ventajas y Desventajas -->
+    <div class="pros-cons" *ngIf="detalle().ventajas || detalle().desventajas">
+      <div class="pros" *ngIf="detalle().ventajas">
+        <h3 class="pros__title">✅ Ventajas</h3>
+        <ul class="pros__list">
+          <li *ngFor="let v of detalle().ventajas">{{ v }}</li>
+        </ul>
+      </div>
+      <div class="cons" *ngIf="detalle().desventajas">
+        <h3 class="cons__title">⚠️ Desventajas</h3>
+        <ul class="cons__list">
+          <li *ngFor="let d of detalle().desventajas">{{ d }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Punto Q -->
+    <div class="punto-q" *ngIf="detalle().punto_q">
+      <h3>Punto de Operación Q</h3>
+      <p class="text-secondary mb-3">{{ detalle().punto_q.descripcion }}</p>
+      <p class="text-secondary mb-3"><strong>Objetivo:</strong> {{ detalle().punto_q.objetivo }}</p>
+      <div class="formulas-grid" *ngIf="detalle().punto_q.formulas">
+        <div class="formula-card" *ngFor="let key of objectKeys(detalle().punto_q.formulas)">
+          <p class="formula-card__label">{{ key }}</p>
+          <div class="equation-display equation-display--sm" 
+               [appKatex]="detalle().punto_q.formulas[key]"
+               appFormulaTooltip></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- FORMULA -->
   <section class="section" *ngIf="detalle().formula || detalle().formula_frecuencia">
     <h2 class="section__title">Ecuación</h2>
-    <div class="equation-display" [appKatex]="detalle().formula || detalle().formula_frecuencia"></div>
-    
+    <div class="equation-display" 
+         [appKatex]="detalle().formula || detalle().formula_frecuencia"
+         appFormulaTooltip></div>
+
     <div class="variables-list" *ngIf="detalle().variables">
       <div class="var-item" *ngFor="let key of objectKeys(detalle().variables)">
         <span class="var-key" [appKatex]="key" [inline]="true"></span>
@@ -61,31 +119,129 @@
   </section>
 
   <!-- FILTROS ESPECÍFICOS -->
-  <section class="section" *ngIf="sistema() === 'filtros' && detalle().frecuencia_corte">
-    <h2 class="section__title">Frecuencia de Corte</h2>
-    <div class="equation-display" [appKatex]="detalle().frecuencia_corte"></div>
-  </section>
+  <section class="section" *ngIf="sistema() === 'filtros'">
+    <h2 class="section__title">Características del Filtro</h2>
 
-  <section class="section" *ngIf="sistema() === 'filtros' && detalle().parametros">
-    <h2 class="section__title">Parámetros</h2>
-    <div class="formulas-grid">
-      <div class="formula-card" *ngFor="let key of objectKeys(detalle().parametros)">
-        <p class="formula-card__label">{{ formatLabel(key) }}</p>
-        <div class="equation-display equation-display--sm" [appKatex]="detalle().parametros[key]"></div>
+    <div class="filter-specs" *ngIf="detalle().pendiente || detalle().respuesta_fase">
+      <div class="spec-card" *ngIf="detalle().pendiente">
+        <p class="spec-card__label">Pendiente</p>
+        <p class="spec-card__value">{{ detalle().pendiente }}</p>
+      </div>
+      <div class="spec-card" *ngIf="detalle().respuesta_fase">
+        <p class="spec-card__label">Respuesta de Fase</p>
+        <p class="spec-card__value">{{ detalle().respuesta_fase }}</p>
+      </div>
+    </div>
+
+    <div class="formulas-section" *ngIf="detalle().frecuencia_corte || detalle().funcion_transferencia">
+      <h3>Fórmulas</h3>
+      <div class="formulas-grid">
+        <div class="formula-card" *ngIf="detalle().frecuencia_corte">
+          <p class="formula-card__label">Frecuencia de Corte</p>
+          <div class="equation-display equation-display--sm" 
+               [appKatex]="detalle().frecuencia_corte"
+               appFormulaTooltip></div>
+        </div>
+        <div class="formula-card" *ngIf="detalle().funcion_transferencia">
+          <p class="formula-card__label">Función de Transferencia</p>
+          <div class="equation-display equation-display--sm" 
+               [appKatex]="detalle().funcion_transferencia"
+               appFormulaTooltip></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parámetros -->
+    <div class="parametros-section" *ngIf="detalle().parametros">
+      <h3>Parámetros</h3>
+      <div class="formulas-grid">
+        <div class="formula-card" *ngFor="let key of objectKeys(detalle().parametros)">
+          <p class="formula-card__label">{{ formatLabel(key) }}</p>
+          <div class="equation-display equation-display--sm" 
+               [appKatex]="detalle().parametros[key]"
+               appFormulaTooltip></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Factor Q -->
+    <div class="factor-q" *ngIf="detalle().factor_q">
+      <h3>Factor de Calidad (Q)</h3>
+      <p class="text-secondary mb-3">{{ detalle().factor_q.descripcion }}</p>
+      <ul class="q-list">
+        <li *ngIf="detalle().factor_q.q_bajo"><strong>Q Bajo:</strong> {{ detalle().factor_q.q_bajo }}</li>
+        <li *ngIf="detalle().factor_q.q_medio"><strong>Q Medio:</strong> {{ detalle().factor_q.q_medio }}</li>
+        <li *ngIf="detalle().factor_q.q_alto"><strong>Q Alto:</strong> {{ detalle().factor_q.q_alto }}</li>
+      </ul>
+    </div>
+
+    <!-- Tipos de Implementación -->
+    <div class="implementaciones" *ngIf="detalle().tipos_implementacion">
+      <h3>Tipos de Implementación</h3>
+      <div class="impl-grid">
+        <div class="impl-card" *ngFor="let impl of detalle().tipos_implementacion">
+          <h4>{{ impl.tipo || impl.nombre }}</h4>
+          <p class="text-secondary" *ngIf="impl.descripcion">{{ impl.descripcion }}</p>
+          <p class="text-secondary" *ngIf="impl.caracteristica"><strong>Característica:</strong> {{ impl.caracteristica }}</p>
+          <p class="text-secondary" *ngIf="impl.orden"><strong>Orden:</strong> {{ impl.orden }}</p>
+          <p class="text-secondary" *ngIf="impl.componentes"><strong>Componentes:</strong> {{ impl.componentes }}</p>
+          <div class="pros-cons-mini" *ngIf="impl.ventajas || impl.desventajas">
+            <div *ngIf="impl.ventajas">
+              <p class="label-success">✅ Ventajas</p>
+              <ul><li *ngFor="let v of impl.ventajas">{{ v }}</li></ul>
+            </div>
+            <div *ngIf="impl.desventajas">
+              <p class="label-error">⚠️ Desventajas</p>
+              <ul><li *ngFor="let d of impl.desventajas">{{ d }}</li></ul>
+            </div>
+          </div>
+          <p class="text-secondary" *ngIf="impl.aplicacion"><strong>Aplicación:</strong> {{ impl.aplicacion }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tipos (para rechaza banda) -->
+    <div class="tipos-section" *ngIf="detalle().tipos">
+      <h3>Tipos</h3>
+      <div class="tipos-grid">
+        <div class="tipo-card" *ngFor="let tipo of detalle().tipos">
+          <h4>{{ tipo.tipo }}</h4>
+          <p class="text-secondary">{{ tipo.descripcion }}</p>
+          <p class="text-secondary" *ngIf="tipo.ventaja"><strong>Ventaja:</strong> {{ tipo.ventaja }}</p>
+          <p class="text-secondary" *ngIf="tipo.q_tipico"><strong>Q Típico:</strong> {{ tipo.q_tipico }}</p>
+          <p class="text-secondary" *ngIf="tipo.aplicacion"><strong>Aplicación:</strong> {{ tipo.aplicacion }}</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- OSCILADORES ESPECÍFICOS -->
   <section class="section" *ngIf="sistema() === 'osciladores'">
+    <h2 class="section__title">Características</h2>
     <div class="osc-specs">
       <div class="osc-spec-item" *ngIf="detalle().componentes">
         <p class="osc-spec-item__label">Componentes</p>
         <p class="osc-spec-item__value">{{ detalle().componentes }}</p>
       </div>
+      <div class="osc-spec-item" *ngIf="detalle().fase_amplificador">
+        <p class="osc-spec-item__label">Fase Amplificador</p>
+        <p class="osc-spec-item__value">{{ detalle().fase_amplificador }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().fase_red_rc">
+        <p class="osc-spec-item__label">Fase Red RC</p>
+        <p class="osc-spec-item__value">{{ detalle().fase_red_rc }}</p>
+      </div>
       <div class="osc-spec-item" *ngIf="detalle().fase_total">
         <p class="osc-spec-item__label">Fase Total</p>
         <p class="osc-spec-item__value">{{ detalle().fase_total }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().ganancia_minima">
+        <p class="osc-spec-item__label">Ganancia Mínima</p>
+        <p class="osc-spec-item__value">{{ detalle().ganancia_minima }}</p>
+      </div>
+      <div class="osc-spec-item" *ngIf="detalle().ganancia_requerida">
+        <p class="osc-spec-item__label">Ganancia Requerida</p>
+        <p class="osc-spec-item__value">{{ detalle().ganancia_requerida }}</p>
       </div>
       <div class="osc-spec-item" *ngIf="detalle().rango_frecuencia">
         <p class="osc-spec-item__label">Rango de Frecuencia</p>
@@ -103,6 +259,89 @@
         <p class="osc-spec-item__label">Precisión</p>
         <p class="osc-spec-item__value">{{ detalle().precision }}</p>
       </div>
+      <div class="osc-spec-item" *ngIf="detalle().factor_q">
+        <p class="osc-spec-item__label">Factor Q</p>
+        <p class="osc-spec-item__value">{{ detalle().factor_q }}</p>
+      </div>
+    </div>
+
+    <!-- Ventajas y Desventajas -->
+    <div class="pros-cons" *ngIf="detalle().ventajas || detalle().desventajas">
+      <div class="pros" *ngIf="detalle().ventajas">
+        <h3 class="pros__title">✅ Ventajas</h3>
+        <ul class="pros__list">
+          <li *ngFor="let v of detalle().ventajas">{{ v }}</li>
+        </ul>
+      </div>
+      <div class="cons" *ngIf="detalle().desventajas">
+        <h3 class="cons__title">⚠️ Desventajas</h3>
+        <ul class="cons__list">
+          <li *ngFor="let d of detalle().desventajas">{{ d }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Control de Amplitud (Wien) -->
+    <div class="control-amplitud" *ngIf="detalle().control_amplitud">
+      <h3>Control de Amplitud</h3>
+      <p class="text-secondary mb-3"><strong>Objetivo:</strong> {{ detalle().control_amplitud.objetivo }}</p>
+      <p class="text-secondary mb-2"><strong>Métodos:</strong></p>
+      <ul>
+        <li *ngFor="let metodo of detalle().control_amplitud.metodos">{{ metodo }}</li>
+      </ul>
+    </div>
+
+    <!-- Variantes (Colpitts) -->
+    <div class="variantes" *ngIf="detalle().variantes">
+      <h3>Variantes</h3>
+      <div class="variantes-grid">
+        <div class="variante-card" *ngFor="let variante of detalle().variantes">
+          <h4>{{ variante.nombre }}</h4>
+          <p class="text-secondary" *ngIf="variante.configuracion"><strong>Configuración:</strong> {{ variante.configuracion }}</p>
+          <p class="text-secondary" *ngIf="variante.ventaja"><strong>Ventaja:</strong> {{ variante.ventaja }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tipos de Cristal -->
+    <div class="tipos-cristal" *ngIf="detalle().tipos_cristal">
+      <h3>Tipos de Cristal</h3>
+      <div class="cristal-grid">
+        <div class="cristal-card" *ngFor="let tipo of detalle().tipos_cristal">
+          <h4>{{ tipo.tipo }}</h4>
+          <p class="text-secondary" *ngIf="tipo.angulo"><strong>Ángulo:</strong> {{ tipo.angulo }}</p>
+          <p class="text-secondary" *ngIf="tipo.rango"><strong>Rango:</strong> {{ tipo.rango }}</p>
+          <p class="text-secondary" *ngIf="tipo.forma"><strong>Forma:</strong> {{ tipo.forma }}</p>
+          <p class="text-secondary" *ngIf="tipo.caracteristica"><strong>Característica:</strong> {{ tipo.caracteristica }}</p>
+          <p class="text-secondary" *ngIf="tipo.aplicacion"><strong>Aplicación:</strong> {{ tipo.aplicacion }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuraciones (Cristal) -->
+    <div class="configuraciones" *ngIf="detalle().configuraciones">
+      <h3>Configuraciones</h3>
+      <div class="config-grid">
+        <div class="config-card" *ngFor="let config of detalle().configuraciones">
+          <h4>{{ config.nombre }}</h4>
+          <p class="text-secondary">{{ config.descripcion }}</p>
+          <p class="text-secondary" *ngIf="config.ventaja"><strong>Ventaja:</strong> {{ config.ventaja }}</p>
+          <p class="text-secondary" *ngIf="config.estabilidad"><strong>Estabilidad:</strong> {{ config.estabilidad }}</p>
+          <p class="text-secondary" *ngIf="config.aplicacion"><strong>Aplicación:</strong> {{ config.aplicacion }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diseño -->
+    <div class="diseno" *ngIf="detalle().diseno">
+      <h3>Procedimiento de Diseño</h3>
+      <ol class="diseno-steps">
+        <li *ngIf="detalle().diseno.paso_1">{{ detalle().diseno.paso_1 }}</li>
+        <li *ngIf="detalle().diseno.paso_2">{{ detalle().diseno.paso_2 }}</li>
+        <li *ngIf="detalle().diseno.paso_3">{{ detalle().diseno.paso_3 }}</li>
+        <li *ngIf="detalle().diseno.paso_4">{{ detalle().diseno.paso_4 }}</li>
+        <li *ngIf="detalle().diseno.paso_5">{{ detalle().diseno.paso_5 }}</li>
+      </ol>
     </div>
   </section>
 

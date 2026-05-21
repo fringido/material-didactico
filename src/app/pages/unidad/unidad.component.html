@@ -1,0 +1,131 @@
+<div class="unidad-container">
+  @if (loading()) {
+    <div class="loading">Cargando...</div>
+  } @else if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (unidadData()) {
+    <div class="unidad-content">
+      <header class="unidad-header">
+        <h1>{{ unidadData().metadata.titulo }}</h1>
+        <p class="descripcion">{{ unidadData().metadata.descripcion }}</p>
+        <div class="metadata">
+          <span class="badge badge--neutral">Módulo {{ unidadData().metadata.modulo }}</span>
+          <span class="badge badge--neutral">Unidad {{ unidadData().metadata.numero_unidad }}</span>
+          <span class="badge badge--info">{{ unidadData().metadata.duracion_estimada }}</span>
+        </div>
+      </header>
+
+      @if (unidadData().objetivos) {
+        <section class="objetivos">
+          <h2>Objetivos de Aprendizaje</h2>
+          <ul>
+            @for (objetivo of unidadData().objetivos; track objetivo) {
+              <li>{{ objetivo }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (unidadData().temas) {
+        <section class="temas">
+          <h2>Temas</h2>
+          @for (tema of unidadData().temas; track tema.titulo) {
+            <div class="tema">
+              <h3>{{ tema.titulo }}</h3>
+              <p>{{ tema.descripcion }}</p>
+              
+              @if (tema.subtemas) {
+                <ul class="subtemas">
+                  @for (subtema of tema.subtemas; track subtema) {
+                    <li>{{ subtema }}</li>
+                  }
+                </ul>
+              }
+
+              @if (tema.ecuaciones) {
+                <div class="ecuaciones">
+                  @for (ecuacion of tema.ecuaciones; track ecuacion.nombre) {
+                    <div class="ecuacion">
+                      <strong>{{ ecuacion.nombre }}:</strong>
+                      <span [appKatex]="ecuacion.formula"></span>
+                    </div>
+                  }
+                </div>
+              }
+
+              @if (tema.enlaces) {
+                <div class="enlaces">
+                  @for (enlace of tema.enlaces; track enlace.texto) {
+                    <a [routerLink]="enlace.ruta">{{ enlace.texto }}</a>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </section>
+      }
+
+      @if (unidadData().ejercicios) {
+        <section class="ejercicios">
+          <h2>Ejercicios</h2>
+          @for (ejercicio of unidadData().ejercicios; track ejercicio.titulo) {
+            <div class="ejercicio">
+              <h4>{{ ejercicio.titulo }}</h4>
+              <p>{{ ejercicio.descripcion }}</p>
+              @if (ejercicio.dificultad) {
+                <span class="dificultad">Dificultad: {{ ejercicio.dificultad }}</span>
+              }
+            </div>
+          }
+        </section>
+      }
+
+      @if (unidadData().evaluacion) {
+        <section class="evaluacion">
+          <h2>Evaluación</h2>
+          @for (item of unidadData().evaluacion; track item.tipo) {
+            <div class="evaluacion-item">
+              <strong>{{ item.tipo }}:</strong> {{ item.descripcion }}
+              @if (item.peso) {
+                <span>({{ item.peso }})</span>
+              }
+            </div>
+          }
+        </section>
+      }
+
+      @if (unidadData().recursos_adicionales) {
+        <section class="recursos">
+          <h2>Recursos Adicionales</h2>
+          <ul>
+            @for (recurso of unidadData().recursos_adicionales; track recurso.titulo) {
+              <li>
+                <strong>{{ recurso.titulo }}:</strong>
+                @if (recurso.url) {
+                  <a [href]="recurso.url" target="_blank">{{ recurso.descripcion }}</a>
+                } @else {
+                  {{ recurso.descripcion }}
+                }
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (unidadData().referencias) {
+        <section class="referencias">
+          <h2>Referencias</h2>
+          <ul>
+            @for (ref of unidadData().referencias; track ref) {
+              <li>{{ ref }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      <div class="navigation">
+        <a routerLink="/" class="btn btn--ghost btn--lg">← Volver al Inicio</a>
+      </div>
+    </div>
+  }
+</div>
