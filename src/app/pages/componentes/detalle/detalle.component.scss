@@ -15,25 +15,9 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .detalle-wrapper {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: $spacing-8 $spacing-6 $spacing-16;
   display: flex;
   flex-direction: column;
   gap: $spacing-10;
-}
-
-// Breadcrumb
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  font-size: $font-size-sm;
-  color: $text-tertiary;
-
-  &__link { color: $text-secondary; transition: color $transition-base; &:hover { color: $color-primary; } }
-  &__sep { color: $border-secondary; }
-  &__current { color: $text-primary; font-weight: $font-weight-medium; }
 }
 
 // Component hero

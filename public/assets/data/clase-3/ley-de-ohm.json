@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "clase": 3,
+    "modulo": 1,
+    "unidad": 2,
+    "id": "ley-de-ohm",
+    "titulo": "La Ley de Ohm",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-21",
+    "ruta": "/clase/3/tema/ley-de-ohm",
+    "orden": 1
+  },
+  "introduccion": "La Ley de Ohm es el cimiento de toda la electrónica analógica. Establece que la corriente que atraviesa un conductor es directamente proporcional a la tensión (voltaje) aplicada e inversamente proporcional a la resistencia del circuito.",
+  "ecuaciones": [
+    {
+      "nombre": "Ley de Ohm (forma principal)",
+      "formula": "V = I \\cdot R",
+      "descripcion": "Voltaje igual a corriente por resistencia."
+    },
+    {
+      "nombre": "Despeje — Corriente",
+      "formula": "I = \\frac{V}{R}",
+      "descripcion": "Corriente cuando se conocen V y R."
+    },
+    {
+      "nombre": "Despeje — Resistencia",
+      "formula": "R = \\frac{V}{I}",
+      "descripcion": "Resistencia cuando se conocen V e I."
+    }
+  ],
+  "variables": [
+    {
+      "simbolo": "V",
+      "nombre": "Voltaje o Tensión",
+      "unidad": "Voltios (V)",
+      "descripcion": "Diferencia de potencial que empuja los electrones a través del circuito."
+    },
+    {
+      "simbolo": "I",
+      "nombre": "Corriente o Intensidad",
+      "unidad": "Amperios (A)",
+      "descripcion": "Flujo de carga eléctrica por el conductor."
+    },
+    {
+      "simbolo": "R",
+      "nombre": "Resistencia",
+      "unidad": "Ohmios (\\Omega)",
+      "descripcion": "Oposición del material al flujo de corriente."
+    }
+  ],
+  "secciones": [
+    {
+      "id": "triangulo-ohm",
+      "titulo": "Triángulo de Ohm",
+      "contenido": "Recurso visual para despejar la fórmula: tapa con el dedo la variable que deseas calcular. Si las otras dos quedan juntas en la base, se multiplican (I × R). Si queda una arriba de la otra, se dividen (V/I o V/R).",
+      "ilustracion": {
+        "id": "triangulo-ohm",
+        "titulo": "Triángulo de la Ley de Ohm",
+        "archivo": "/assets/illustrations/clase-3/triangulo-ohm.svg",
+        "credito": "Adaptado de recursos didácticos — petrroudny / Getty Images (referencia visual)"
+      }
+    },
+    {
+      "id": "analogia-tuberia",
+      "titulo": "Analogía de la tubería de agua",
+      "contenido": "El voltaje es como la presión del agua; la corriente, el caudal que circula; la resistencia, el estrechamiento de la tubería. A mayor presión (V) con la misma R, mayor caudal (I). A mayor estrechamiento (R), menor caudal para la misma presión."
+    }
+  ],
+  "tips_ensenanza": [
+    "Usa el triángulo de Ohm antes de sustituir números en la calculadora.",
+    "Verifica unidades: V en voltios, I en amperios, R en ohmios.",
+    "La analogía hidráulica ayuda a intuir por qué R limita I sin confundir causa y efecto."
+  ],
+  "interactivos": [
+    {
+      "id": "ohm-calculator",
+      "tipo": "ohm-law-lab",
+      "titulo": "Calculadora interactiva V – I – R",
+      "descripcion": "Ingresa dos magnitudes y calcula la tercera; observa el triángulo de Ohm."
+    },
+    {
+      "id": "ohm-grafica",
+      "tipo": "equation-chart",
+      "chartType": "ohm",
+      "titulo": "Gráfica V vs I (parametrizada por R)",
+      "ecuacion": "V = I \\cdot R"
+    },
+    {
+      "id": "analogia-tuberia",
+      "tipo": "pipe-analogy",
+      "titulo": "Analogía presión–caudal–estrechamiento",
+      "descripcion": "Ajusta presión y resistencia hidráulica y observa el caudal equivalente a I."
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Lámpara de 12 V",
+      "enunciado": "Una resistencia de 24 \\, \\Omega se conecta a 12 \\, V. ¿Qué corriente circula?",
+      "solucion_pasos": [
+        "I = V/R = 12/24 = 0{,}5 \\, A"
+      ],
+      "resultado": "0{,}5 \\, A (500 \\, mA)"
+    },
+    {
+      "titulo": "Caída en conductor",
+      "enunciado": "Circulan 2 \\, A por una resistencia de 3 \\, \\Omega. ¿Cuál es la caída de tensión?",
+      "solucion_pasos": [
+        "V = I \\cdot R = 2 \\times 3 = 6 \\, V"
+      ],
+      "resultado": "6 \\, V"
+    }
+  ],
+  "enlaces": [
+    {
+      "texto": "Componente Resistencia (catálogo)",
+      "ruta": "/componentes/pasivos/resistencia"
+    },
+    {
+      "texto": "Volver a Clase 3",
+      "ruta": "/clase/3"
+    }
+  ]
+}

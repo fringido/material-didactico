@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "clase": 3,
+    "modulo": 1,
+    "unidad": 2,
+    "titulo": "Análisis de Circuitos en DC — Fundamentos",
+    "semanas": "3-4",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-21",
+    "descripcion": "Ley de Ohm, topologías serie/paralelo/mixtas y leyes de Kirchhoff como base del análisis de redes en corriente continua.",
+    "ruta": "/clase/3"
+  },
+  "objetivos": [
+    "Aplicar la Ley de Ohm para relacionar voltaje, corriente y resistencia",
+    "Distinguir y analizar circuitos en serie, en paralelo y mixtos",
+    "Formular ecuaciones con la Ley de Corrientes (LCK) y la Ley de Voltajes (LVK) de Kirchhoff",
+    "Usar convenciones de signo coherentes al recorrer mallas y nodos"
+  ],
+  "temas": [
+    {
+      "id": "ley-de-ohm",
+      "nombre": "La Ley de Ohm",
+      "descripcion": "Relación fundamental entre tensión, corriente y resistencia.",
+      "icono": "⚡",
+      "ruta": "/clase/3/tema/ley-de-ohm",
+      "archivo": "ley-de-ohm.json"
+    },
+    {
+      "id": "tipos-circuitos",
+      "nombre": "Tipos de Circuitos (Topologías Básicas)",
+      "descripcion": "Conexión en serie, en paralelo y combinaciones serie-paralelo.",
+      "icono": "🔀",
+      "ruta": "/clase/3/tema/tipos-circuitos",
+      "archivo": "tipos-circuitos.json"
+    },
+    {
+      "id": "leyes-kirchhoff",
+      "nombre": "Leyes de Kirchhoff",
+      "descripcion": "Conservación de carga (LCK) y de energía (LVK) en redes interconectadas.",
+      "icono": "🔗",
+      "ruta": "/clase/3/tema/leyes-kirchhoff",
+      "archivo": "leyes-kirchhoff.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "unidad_completa": "/modulo/1/unidad/2",
+    "resistencia_componente": "/componentes/pasivos/resistencia"
+  }
+}

@@ -45,6 +45,13 @@ export class HomeComponent implements OnInit {
     if (t.includes('amplificadores') || t.includes('filtros') || t.includes('osciladores')) return '/sistemas';
     if (t.includes('circuitos básicos')) return '/sistemas';
     
+    // Clase 3 — Análisis DC
+    if (t.includes('ohm')) return '/clase/3/tema/ley-de-ohm';
+    if (t.includes('kirchhoff') || t.includes('teoremas fundamentales')) return '/clase/3';
+    if (t.includes('nodos') || t.includes('mallas') || t.includes('thevenin') || t.includes('norton')) return '/modulo/1/unidad/2';
+    if (t.includes('resistencias equivalentes') || t.includes('corrientes, voltajes')) return '/clase/3/tema/tipos-circuitos';
+    if (t.includes('leyes y teoremas')) return '/clase/3';
+
     // Componentes específicos
     if (t.includes('diodos')) return '/componentes/activos/diodo';
     if (t.includes('transistor') || t.includes('bjt') || t.includes('mosfet')) return '/componentes/activos/transistor';

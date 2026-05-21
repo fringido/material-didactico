@@ -1,0 +1,163 @@
+@use '../../../styles/variables' as *;
+
+.lab {
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  margin: 0;
+
+  &__header h4 {
+    margin: 0 0 $spacing-2;
+    color: $text-primary;
+  }
+
+  &__sub {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin: 0 0 $spacing-4;
+  }
+
+  &__controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: $spacing-3;
+    margin-bottom: $spacing-4;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-1;
+      font-size: $font-size-sm;
+      color: $text-secondary;
+    }
+
+    input[type='number'] {
+      padding: $spacing-2;
+      border-radius: $radius-md;
+      border: 1px solid $border-primary;
+      background: $bg-secondary;
+      color: $text-primary;
+    }
+  }
+
+  &__result {
+    padding: $spacing-3;
+    border-radius: $radius-md;
+    background: $bg-secondary;
+    color: $text-primary;
+
+    &--ok { border-left: 4px solid #20c997; }
+    &--warn { border-left: 4px solid #f0b429; }
+  }
+
+  &__tabs {
+    display: flex;
+    gap: $spacing-2;
+    margin-bottom: $spacing-4;
+
+    button {
+      flex: 1;
+      padding: $spacing-2 $spacing-3;
+      border-radius: $radius-md;
+      border: 1px solid $border-primary;
+      background: $bg-secondary;
+      color: $text-secondary;
+      cursor: pointer;
+
+      &.active {
+        background: rgba($color-primary, 0.2);
+        border-color: $color-primary;
+        color: $text-primary;
+      }
+    }
+  }
+
+  &__metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: $spacing-3;
+
+    div {
+      background: $bg-secondary;
+      padding: $spacing-3;
+      border-radius: $radius-md;
+      text-align: center;
+
+      span { display: block; font-size: $font-size-xs; color: $text-secondary; }
+      strong, em { color: $text-primary; }
+    }
+  }
+
+  &__triangle {
+    text-align: center;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.tri-btn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: $radius-md;
+  border: 2px solid $color-primary;
+  background: $bg-secondary;
+  color: $text-primary;
+  font-weight: bold;
+  cursor: pointer;
+
+  &--top { margin-bottom: $spacing-2; }
+  &--hidden {
+    opacity: 0.35;
+    box-shadow: inset 0 0 0 2px #20c997;
+  }
+}
+
+.tri-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-3;
+}
+
+.tri-op { color: #20c997; font-size: 1.25rem; }
+.tri-hint { font-size: $font-size-xs; color: $text-secondary; }
+
+.pipe-viz {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  height: 4rem;
+  margin: $spacing-4 0;
+  background: $bg-secondary;
+  border-radius: $radius-md;
+  padding: $spacing-3;
+}
+
+.pipe-in {
+  width: 12px;
+  background: #7c6af7;
+  border-radius: 4px;
+  max-height: 100%;
+}
+
+.pipe-narrow {
+  height: 100%;
+  min-width: 20%;
+  max-width: 80%;
+  background: #f05a7e;
+  opacity: 0.5;
+}
+
+.pipe-flow {
+  height: 8px;
+  background: #20c997;
+  border-radius: 4px;
+  transition: width 0.2s;
+}
+
+.source-label {
+  display: block;
+  margin-bottom: $spacing-4;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}

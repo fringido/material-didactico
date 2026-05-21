@@ -10,6 +10,7 @@ import { PotentiometerSimulatorComponent } from '../../../components/circuit-sim
 import { AmplifierLabComponent } from '../../../components/amplifier-lab/amplifier-lab.component';
 import { ComponentSymbolsComponent } from '../../../components/component-symbols/component-symbols.component';
 import { CircuitBuilderComponent } from '../../../components/circuit-builder/circuit-builder.component';
+import { PageBackBarComponent } from '../../../components/page-back-bar/page-back-bar.component';
 
 @Component({
   selector: 'app-componente-detalle',
@@ -24,7 +25,8 @@ import { CircuitBuilderComponent } from '../../../components/circuit-builder/cir
     PotentiometerSimulatorComponent, 
     AmplifierLabComponent,
     ComponentSymbolsComponent,
-    CircuitBuilderComponent
+    CircuitBuilderComponent,
+    PageBackBarComponent
   ],
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']

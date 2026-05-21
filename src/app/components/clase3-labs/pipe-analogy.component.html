@@ -1,0 +1,22 @@
+<div class="lab">
+  <div class="lab__header">
+    <h4>Analogía: tubería de agua</h4>
+    <p class="lab__sub">Presión ↔ Voltaje · Caudal ↔ Corriente · Estrechamiento ↔ Resistencia</p>
+  </div>
+  <div class="lab__controls">
+    <label>Presión (V)
+      <input type="range" min="1" max="24" [ngModel]="pressure()" (ngModelChange)="pressure.set(+$event)">
+      <span>{{ pressure() }} V</span>
+    </label>
+    <label>Estrechamiento (R)
+      <input type="range" min="5" max="100" [ngModel]="restriction()" (ngModelChange)="restriction.set(+$event)">
+      <span>{{ restriction() }} Ω</span>
+    </label>
+  </div>
+  <div class="pipe-viz">
+    <div class="pipe-in" [style.height.%]="pressure() * 3"></div>
+    <div class="pipe-narrow" [style.width.%]="restriction()"></div>
+    <div class="pipe-flow" [style.width.%]="flowPercent()"></div>
+  </div>
+  <p class="lab__result"><strong>Caudal equivalente I ∝</strong> {{ flow() | number:'1.1-1' }} (unidades relativas)</p>
+</div>

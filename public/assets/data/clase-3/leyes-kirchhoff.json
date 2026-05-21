@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "clase": 3,
+    "modulo": 1,
+    "unidad": 2,
+    "id": "leyes-kirchhoff",
+    "titulo": "Leyes de Kirchhoff",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-21",
+    "ruta": "/clase/3/tema/leyes-kirchhoff",
+    "orden": 3
+  },
+  "introduccion": "Las leyes de Gustav Kirchhoff (1845) son el corazón del análisis de redes. Mientras la Ley de Ohm describe un componente aislado (V = I \\cdot R), las leyes de Kirchhoff gobiernan cómo se distribuyen corrientes y voltajes en toda una red interconectada. Descansan en la conservación de la carga y de la energía.",
+  "leyes": [
+    {
+      "id": "lck",
+      "nombre": "Primera Ley — Ley de Corrientes de Kirchhoff (LCK)",
+      "principio": "Conservación de la carga eléctrica",
+      "definicion": "La suma algebraica de todas las corrientes que entran y salen de un nodo es igual a cero. Toda la corriente que entra a un nodo debe salir por las demás ramas: la carga no se acumula en el nodo.",
+      "ecuacion": "\\sum_{k=1}^{n} I_k = 0",
+      "forma_practica": "\\sum I_{entrada} = \\sum I_{salida}",
+      "ilustracion": {
+        "archivo": "/assets/illustrations/clase-3/kcl-nodo.svg"
+      },
+      "analogia": "Imagina un nodo como una cruceta de tuberías: el caudal que llega debe igualar el caudal que sale. Si entran 5 A, deben salir 5 A en total.",
+      "convencion_signos": "Corriente que entra al nodo: signo positivo. Corriente que sale: signo negativo (o viceversa, siempre que sea consistente en todo el circuito)."
+    },
+    {
+      "id": "lvk",
+      "nombre": "Segunda Ley — Ley de Voltajes de Kirchhoff (LVK)",
+      "principio": "Conservación de la energía",
+      "definicion": "En cualquier malla (camino cerrado), la suma algebraica de todas las caídas y subidas de tensión es igual a cero. La energía que entrega la fuente se balancea con las caídas en los elementos de esa malla.",
+      "ecuacion": "\\sum_{k=1}^{n} V_k = 0",
+      "ilustracion": {
+        "archivo": "/assets/illustrations/clase-3/kvl-malla.svg"
+      },
+      "convencion_signos": [
+        {
+          "caso": "Batería",
+          "regla": "Al recorrer la malla de − a + en una fuente: subida de tensión (+V). De + a −: caída (−V)."
+        },
+        {
+          "caso": "Resistencia",
+          "regla": "Si se recorre la resistencia en el mismo sentido que la corriente: caída de tensión (−I \\cdot R). En sentido contrario: +I \\cdot R."
+        }
+      ],
+      "nota_dificultad": "La convención de signos es la fuente más común de error. Elige una dirección de recorrido de malla y mantén la misma regla en todo el circuito."
+    }
+  ],
+  "tips_ensenanza": [
+    "LCK en nodos, LVK en mallas: no intercambiar el nivel de análisis.",
+    "Antes de escribir ecuaciones, marca en el diagrama las corrientes asumidas y el sentido de recorrido.",
+    "Comprueba con Ohm que V = I·R en cada resistencia después de resolver."
+  ],
+  "interactivos": [
+    {
+      "id": "kcl-demo",
+      "tipo": "kirchhoff-lab",
+      "modo": "kcl",
+      "titulo": "Simulador LCK en un nodo",
+      "descripcion": "Ajusta las corrientes de entrada y salida y verifica que la suma algebraica sea cero."
+    },
+    {
+      "id": "kvl-demo",
+      "tipo": "kirchhoff-lab",
+      "modo": "kvl",
+      "titulo": "Simulador LVK en una malla",
+      "descripcion": "Recorre una malla con fuente y resistencias; observa la suma de tensiones con convención de signos."
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "LCK en nodo simple",
+      "enunciado": "Entran I_1=3\\,A e I_2=2\\,A; sale I_3 por una tercera rama. ¿Cuánto es I_3?",
+      "solucion_pasos": [
+        "I_1 + I_2 = I_3 \\Rightarrow 3+2 = 5\\,A"
+      ],
+      "resultado": "I_3 = 5\\,A"
+    },
+    {
+      "titulo": "LVK — malla con dos resistencias",
+      "enunciado": "Fuente 10\\,V, R_1=4\\,\\Omega, R_2=6\\,\\Omega en serie. Verificar LVK.",
+      "solucion_pasos": [
+        "I = 10/(4+6) = 1\\,A",
+        "V_{R1}=4\\,V, V_{R2}=6\\,V",
+        "+10 - 4 - 6 = 0"
+      ],
+      "resultado": "La suma de tensiones en la malla es cero."
+    }
+  ],
+  "enlaces": [
+    { "texto": "Ley de Ohm", "ruta": "/clase/3/tema/ley-de-ohm" },
+    { "texto": "Tipos de circuitos", "ruta": "/clase/3/tema/tipos-circuitos" },
+    { "texto": "Volver a Clase 3", "ruta": "/clase/3" }
+  ]
+}

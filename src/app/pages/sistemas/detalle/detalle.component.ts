@@ -1,21 +1,21 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule, TitleCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { KatexDirective } from '../../../directives/katex.directive';
 import { FormulaTooltipDirective } from '../../../directives/formula-tooltip.directive';
+import { PageBackBarComponent } from '../../../components/page-back-bar/page-back-bar.component';
 
 @Component({
   selector: 'app-sistema-detalle',
   standalone: true,
-  imports: [CommonModule, RouterLink, KatexDirective, FormulaTooltipDirective],
+  imports: [CommonModule, RouterLink, KatexDirective, FormulaTooltipDirective, PageBackBarComponent],
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']
 })
 export class SistemaDetalleComponent implements OnInit {
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
-  private titleCase = inject(TitleCasePipe);
 
   sistema = signal<string | null>(null);
   tipo = signal<string | null>(null);
@@ -68,6 +68,8 @@ export class SistemaDetalleComponent implements OnInit {
   }
 
   formatLabel(key: string): string {
-    return this.titleCase.transform(key.replace(/_/g, ' '));
+    return key
+      .replace(/_/g, ' ')
+      .replace(/(^|\s)\S/g, (match) => match.toUpperCase());
   }
 }

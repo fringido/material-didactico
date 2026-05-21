@@ -1,0 +1,40 @@
+<div class="lab">
+  @if (modo() === 'kcl') {
+    <div class="lab__header">
+      <h4>LCK — Ley de Corrientes</h4>
+      <div class="equation-display equation-display--sm" appKatex="\\sum I_k = 0"></div>
+    </div>
+    <div class="lab__controls">
+      <label>I₁ entra (A) <input type="number" step="0.1" [ngModel]="iIn1()" (ngModelChange)="iIn1.set(+$event)"></label>
+      <label>I₂ entra (A) <input type="number" step="0.1" [ngModel]="iIn2()" (ngModelChange)="iIn2.set(+$event)"></label>
+      <label>I₃ sale (A) <input type="number" step="0.1" [ngModel]="iOut1()" (ngModelChange)="iOut1.set(+$event)"></label>
+      <label>I₄ sale (A) <input type="number" step="0.1" [ngModel]="iOut2()" (ngModelChange)="iOut2.set(+$event)"></label>
+    </div>
+    <p class="lab__result" [class.lab__result--ok]="Math.abs(kclSum()) < 0.001" [class.lab__result--warn]="Math.abs(kclSum()) >= 0.001">
+      ΣI = {{ kclSum() | number:'1.2-3' }} A
+      @if (Math.abs(kclSum()) >= 0.001) {
+        — Para equilibrio, ajusta salidas hasta ΣI = 0. Corriente faltante ≈ {{ iOutCalc() | number:'1.2-3' }} A
+      } @else {
+        — ¡Nodo balanceado!
+      }
+    </p>
+  } @else {
+    <div class="lab__header">
+      <h4>LVK — Ley de Voltajes</h4>
+      <div class="equation-display equation-display--sm" appKatex="\\sum V_k = 0"></div>
+    </div>
+    <div class="lab__controls">
+      <label>V fuente <input type="number" [ngModel]="vSource()" (ngModelChange)="vSource.set(+$event)"> V</label>
+      <label>R₁ <input type="number" [ngModel]="r1()" (ngModelChange)="r1.set(+$event)"> Ω</label>
+      <label>R₂ <input type="number" [ngModel]="r2()" (ngModelChange)="r2.set(+$event)"> Ω</label>
+    </div>
+    <div class="lab__metrics">
+      <div>I = {{ iLoop() | number:'1.3-3' }} A</div>
+      <div>V<sub>R1</sub> = {{ vR1() | number:'1.2-2' }} V</div>
+      <div>V<sub>R2</sub> = {{ vR2() | number:'1.2-2' }} V</div>
+    </div>
+    <p class="lab__result lab__result--ok">
+      +V − I·R₁ − I·R₂ = {{ kvlSum() | number:'1.3-3' }} V (debe ser ≈ 0)
+    </p>
+  }
+</div>

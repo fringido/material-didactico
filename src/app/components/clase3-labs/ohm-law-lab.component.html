@@ -1,0 +1,38 @@
+<div class="lab">
+  <div class="lab__header">
+    <h4>Calculadora y triángulo de Ohm</h4>
+    <p class="lab__sub">Elige qué variable despejar; las otras dos definen el resultado.</p>
+  </div>
+
+  <div class="lab__triangle">
+    <button type="button" class="tri-btn tri-btn--top" [class.tri-btn--hidden]="isHidden('V')" (click)="setSolveFor('V')">V</button>
+    <div class="tri-row">
+      <button type="button" class="tri-btn" [class.tri-btn--hidden]="isHidden('I')" (click)="setSolveFor('I')">I</button>
+      <span class="tri-op">×</span>
+      <button type="button" class="tri-btn" [class.tri-btn--hidden]="isHidden('R')" (click)="setSolveFor('R')">R</button>
+    </div>
+    <p class="tri-hint">Haz clic en la variable que quieres calcular (se “tapa” en el triángulo).</p>
+  </div>
+
+  <div class="equation-display equation-display--sm mb-3" [appKatex]="formulaDisplay()"></div>
+
+  <div class="lab__controls">
+    @if (!isHidden('V')) {
+      <label>V (V) <input type="number" step="0.1" [ngModel]="v()" (ngModelChange)="v.set(+$event)" [disabled]="solveFor() === 'V'"></label>
+    }
+    @if (!isHidden('I')) {
+      <label>I (A) <input type="number" step="0.01" [ngModel]="i()" (ngModelChange)="i.set(+$event)" [disabled]="solveFor() === 'I'"></label>
+    }
+    @if (!isHidden('R')) {
+      <label>R (Ω) <input type="number" step="1" [ngModel]="r()" (ngModelChange)="r.set(+$event)" [disabled]="solveFor() === 'R'"></label>
+    }
+  </div>
+
+  <div class="lab__result">
+    <strong>Resultado:</strong>
+    {{ solveFor() }} = {{ result() | number:'1.2-4' }}
+    @if (solveFor() === 'V') { V }
+    @if (solveFor() === 'I') { A }
+    @if (solveFor() === 'R') { Ω }
+  </div>
+</div>

@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "clase": 3,
+    "modulo": 1,
+    "unidad": 2,
+    "id": "tipos-circuitos",
+    "titulo": "Tipos de Circuitos (Topologías Básicas)",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-21",
+    "ruta": "/clase/3/tema/tipos-circuitos",
+    "orden": 2
+  },
+  "introduccion": "Existen tres formas principales de conectar componentes (resistencias, fuentes, etc.) en una red analógica: en serie, en paralelo o en una combinación mixta (serie-paralelo).",
+  "topologias": [
+    {
+      "id": "serie",
+      "nombre": "Circuito en Serie",
+      "descripcion": "Los componentes están conectados uno detrás de otro, formando un único camino para la corriente.",
+      "ilustracion": {
+        "archivo": "/assets/illustrations/clase-3/circuito-serie.svg",
+        "credito": "Referencia visual — ttsz / Getty Images"
+      },
+      "reglas": [
+        {
+          "magnitud": "Corriente",
+          "formula": "I_T = I_1 = I_2 = \\cdots = I_n",
+          "descripcion": "La misma corriente circula por todos los elementos."
+        },
+        {
+          "magnitud": "Voltaje",
+          "formula": "V_T = V_1 + V_2 + \\cdots + V_n",
+          "descripcion": "El voltaje de la fuente se reparte entre los componentes."
+        },
+        {
+          "magnitud": "Resistencia equivalente",
+          "formula": "R_T = R_1 + R_2 + \\cdots + R_n",
+          "descripcion": "Las resistencias en serie se suman directamente."
+        }
+      ],
+      "comportamiento_clave": "Si un elemento se abre o falla, se interrumpe todo el camino y deja de circular corriente en el circuito."
+    },
+    {
+      "id": "paralelo",
+      "nombre": "Circuito en Paralelo",
+      "descripcion": "Los componentes comparten los mismos dos nodos, creando ramas independientes para la corriente.",
+      "ilustracion": {
+        "archivo": "/assets/illustrations/clase-3/circuito-paralelo.svg",
+        "credito": "Referencia visual — ttsz / Getty Images"
+      },
+      "reglas": [
+        {
+          "magnitud": "Corriente",
+          "formula": "I_T = I_1 + I_2 + \\cdots + I_n",
+          "descripcion": "La corriente de la fuente se reparte entre las ramas."
+        },
+        {
+          "magnitud": "Voltaje",
+          "formula": "V_T = V_1 = V_2 = \\cdots = V_n",
+          "descripcion": "Mismo voltaje en todas las ramas en paralelo."
+        },
+        {
+          "magnitud": "Resistencia equivalente",
+          "formula": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\cdots + \\frac{1}{R_n}",
+          "descripcion": "La resistencia total es siempre menor que la menor resistencia individual."
+        },
+        {
+          "magnitud": "Caso dos resistencias",
+          "formula": "R_T = \\frac{R_1 R_2}{R_1 + R_2}",
+          "descripcion": "Forma compacta muy usada en ejercicios."
+        }
+      ],
+      "comportamiento_clave": "Si una rama se abre, las demás siguen conduciendo. Principio de las instalaciones eléctricas residenciales (cada carga en paralelo con la fuente)."
+    },
+    {
+      "id": "mixto",
+      "nombre": "Circuito Mixto (Serie-Paralelo)",
+      "descripcion": "Combinación de bloques en serie y en paralelo dentro de la misma red.",
+      "ilustracion": {
+        "archivo": "/assets/illustrations/clase-3/circuito-mixto.svg"
+      },
+      "metodo_reduccion": [
+        "Identificar bloques puramente en paralelo o en serie.",
+        "Reemplazar cada bloque por su resistencia equivalente.",
+        "Repetir hasta obtener un solo R_{eq} entre los terminales de la fuente."
+      ],
+      "comportamiento_clave": "El análisis sistemático por reducción evita errores al mezclar reglas de serie y paralelo en un mismo paso."
+    }
+  ],
+  "tips_ensenanza": [
+    "Pregunta siempre: ¿comparten la misma corriente (serie) o el mismo voltaje (paralelo)?",
+    "En paralelo, R_T siempre es menor que la resistencia más pequeña.",
+    "En circuitos mixtos, dibuja cajas alrededor de cada bloque antes de calcular."
+  ],
+  "interactivos": [
+    {
+      "id": "topology-lab",
+      "tipo": "topology-lab",
+      "titulo": "Laboratorio de topologías",
+      "descripcion": "Calcula R_T, corrientes y voltajes en serie, paralelo y un circuito mixto guiado."
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Serie — tres resistencias",
+      "enunciado": "R_1=100\\,\\Omega, R_2=220\\,\\Omega, R_3=330\\,\\Omega en serie.",
+      "solucion_pasos": ["R_T = 100+220+330 = 650\\,\\Omega"],
+      "resultado": "650\\,\\Omega"
+    },
+    {
+      "titulo": "Paralelo — dos resistencias",
+      "enunciado": "R_1=12\\,\\Omega y R_2=6\\,\\Omega en paralelo.",
+      "solucion_pasos": [
+        "R_T = \\frac{12\\cdot6}{12+6} = \\frac{72}{18} = 4\\,\\Omega"
+      ],
+      "resultado": "4\\,\\Omega"
+    }
+  ],
+  "enlaces": [
+    { "texto": "Ley de Ohm", "ruta": "/clase/3/tema/ley-de-ohm" },
+    { "texto": "Leyes de Kirchhoff", "ruta": "/clase/3/tema/leyes-kirchhoff" },
+    { "texto": "Volver a Clase 3", "ruta": "/clase/3" }
+  ]
+}

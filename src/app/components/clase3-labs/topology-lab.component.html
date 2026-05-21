@@ -1,0 +1,47 @@
+<div class="lab">
+  <div class="lab__tabs">
+    <button type="button" [class.active]="mode() === 'serie'" (click)="setMode('serie')">Serie</button>
+    <button type="button" [class.active]="mode() === 'paralelo'" (click)="setMode('paralelo')">Paralelo</button>
+    <button type="button" [class.active]="mode() === 'mixto'" (click)="setMode('mixto')">Mixto</button>
+  </div>
+
+  <div class="equation-display equation-display--sm mb-3" [appKatex]="formula()"></div>
+
+  <label class="source-label">Fuente V<sub>T</sub> (V)
+    <input type="range" min="1" max="24" [ngModel]="vSource()" (ngModelChange)="vSource.set(+$event)">
+    {{ vSource() }} V
+  </label>
+
+  @if (mode() === 'serie') {
+    <div class="lab__controls">
+      <label>R₁ <input type="number" [ngModel]="r1()" (ngModelChange)="r1.set(+$event)"> Ω</label>
+      <label>R₂ <input type="number" [ngModel]="r2()" (ngModelChange)="r2.set(+$event)"> Ω</label>
+      <label>R₃ <input type="number" [ngModel]="r3()" (ngModelChange)="r3.set(+$event)"> Ω</label>
+    </div>
+  }
+  @if (mode() === 'paralelo') {
+    <div class="lab__controls">
+      <label>R₁ <input type="number" [ngModel]="r1()" (ngModelChange)="r1.set(+$event)"> Ω</label>
+      <label>R₂ <input type="number" [ngModel]="r2()" (ngModelChange)="r2.set(+$event)"> Ω</label>
+    </div>
+  }
+  @if (mode() === 'mixto') {
+    <div class="lab__controls">
+      <label>R₁ (serie) <input type="number" [ngModel]="rSeries1()" (ngModelChange)="rSeries1.set(+$event)"> Ω</label>
+      <label>R₂ ∥ <input type="number" [ngModel]="rPar2()" (ngModelChange)="rPar2.set(+$event)"> Ω</label>
+      <label>R₃ ∥ <input type="number" [ngModel]="rPar3()" (ngModelChange)="rPar3.set(+$event)"> Ω</label>
+      <label>R₄ (serie) <input type="number" [ngModel]="rSeries4()" (ngModelChange)="rSeries4.set(+$event)"> Ω</label>
+    </div>
+  }
+
+  <div class="lab__metrics">
+    <div><span>R<sub>eq</sub></span><strong>{{ rEq() | number:'1.1-2' }} Ω</strong></div>
+    <div><span>I<sub>T</sub></span><strong>{{ iTotal() | number:'1.3-4' }} A</strong></div>
+    @if (mode() === 'serie') {
+      <div><span>Nota</span><em>I igual en todos los elementos</em></div>
+    }
+    @if (mode() === 'paralelo') {
+      <div><span>Nota</span><em>V igual en cada rama</em></div>
+    }
+  </div>
+</div>

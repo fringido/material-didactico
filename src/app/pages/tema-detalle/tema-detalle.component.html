@@ -1,0 +1,225 @@
+<div class="page-shell tema-page">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando tema…</p>
+    </div>
+  } @else if (error()) {
+    <app-page-back-bar backLink="/clase/3" backLabel="Volver a Clase 3" />
+    <p class="text-body">{{ error() }}</p>
+  } @else if (tema()) {
+    <app-page-back-bar
+      backLink="/clase/3"
+      backLabel="Volver a Clase 3"
+      [breadcrumb]="[
+        { label: 'Inicio', link: '/' },
+        { label: 'Clase 3', link: '/clase/3' },
+        { label: tema().metadata.titulo }
+      ]" />
+
+    <header class="page-hero">
+      <span class="badge badge--primary badge--lg">Clase {{ tema().metadata.clase }}</span>
+      <h1 class="page-hero__title">{{ tema().metadata.titulo }}</h1>
+      <p class="page-hero__lead">{{ tema().introduccion }}</p>
+    </header>
+
+    @if (tema().ecuaciones?.length) {
+      <section class="section">
+        <h2 class="section__title">Ecuaciones fundamentales</h2>
+        <div class="content-grid content-grid--3">
+          @for (eq of tema().ecuaciones; track eq.nombre) {
+            <div class="formula-card card card--bordered">
+              <p class="formula-card__label">{{ eq.nombre }}</p>
+              <div class="equation-display equation-display--sm" [appKatex]="eq.formula"></div>
+              @if (eq.descripcion) {
+                <p class="formula-card__desc">{{ eq.descripcion }}</p>
+              }
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    @if (tema().variables?.length) {
+      <section class="section">
+        <h2 class="section__title">Variables</h2>
+        <div class="content-grid">
+          @for (v of tema().variables; track v.simbolo) {
+            <div class="var-card">
+              <span class="var-card__symbol">{{ v.simbolo }}</span>
+              <span class="var-card__meta">{{ v.nombre }}</span>
+              <span class="var-card__meta" [appKatex]="v.unidad" [inline]="true"></span>
+              <p class="var-card__desc">{{ v.descripcion }}</p>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    @if (tema().topologias) {
+      @for (top of tema().topologias; track top.id) {
+        <section class="section">
+          <h2 class="section__title">{{ top.nombre }}</h2>
+          <p class="text-body">{{ top.descripcion }}</p>
+          @if (top.ilustracion?.archivo) {
+            <figure class="figure-card">
+              <img [src]="top.ilustracion.archivo" [alt]="top.nombre" loading="lazy" />
+              @if (top.ilustracion.credito) {
+                <figcaption>{{ top.ilustracion.credito }}</figcaption>
+              }
+            </figure>
+          }
+          <div class="content-grid">
+            @for (regla of top.reglas; track regla.magnitud) {
+              <div class="formula-card">
+                <p class="formula-card__label">{{ regla.magnitud }}</p>
+                <div class="equation-display equation-display--sm" [appKatex]="regla.formula"></div>
+                <p class="formula-card__desc">{{ regla.descripcion }}</p>
+              </div>
+            }
+          </div>
+          @if (top.metodo_reduccion) {
+            <div class="content-panel">
+              <h3 class="content-panel__title">Método de reducción</h3>
+              <ol class="text-body ordered-list">
+                @for (paso of top.metodo_reduccion; track paso) {
+                  <li>{{ paso }}</li>
+                }
+              </ol>
+            </div>
+          }
+          <div class="content-panel content-panel--highlight">
+            <p class="text-body">{{ top.comportamiento_clave }}</p>
+          </div>
+        </section>
+      }
+    }
+
+    @if (tema().leyes) {
+      @for (ley of tema().leyes; track ley.id) {
+        <section class="section">
+          <h2 class="section__title">{{ ley.nombre }}</h2>
+          <div class="content-panel">
+            <p class="text-body"><strong>Principio:</strong> {{ ley.principio }}</p>
+            <p class="text-body">{{ ley.definicion }}</p>
+            <div class="equation-display" [appKatex]="ley.ecuacion"></div>
+          </div>
+          @if (ley.ilustracion?.archivo) {
+            <figure class="figure-card">
+              <img [src]="ley.ilustracion.archivo" [alt]="ley.nombre" loading="lazy" />
+            </figure>
+          }
+          @if (ley.analogia) {
+            <div class="content-panel content-panel--highlight">
+              <p class="text-body">{{ ley.analogia }}</p>
+            </div>
+          }
+          @if (ley.convencion_signos?.length) {
+            <ul class="text-body bullet-list">
+              @for (c of ley.convencion_signos; track c.caso) {
+                <li><strong>{{ c.caso }}:</strong> {{ c.regla }}</li>
+              }
+            </ul>
+          }
+        </section>
+      }
+    }
+
+    @if (tema().secciones) {
+      @for (sec of tema().secciones; track sec.id) {
+        <section class="section">
+          <h2 class="section__title">{{ sec.titulo }}</h2>
+          <div class="content-panel">
+            <p class="text-body">{{ sec.contenido }}</p>
+          </div>
+          @if (sec.ilustracion?.archivo) {
+            <figure class="figure-card">
+              <img [src]="sec.ilustracion.archivo" [alt]="sec.ilustracion.titulo || sec.titulo" loading="lazy" />
+              @if (sec.ilustracion.credito) {
+                <figcaption>{{ sec.ilustracion.credito }}</figcaption>
+              }
+            </figure>
+          }
+        </section>
+      }
+    }
+
+    @if (tema().interactivos?.length) {
+      <section class="section">
+        <h2 class="section__title">Demostraciones interactivas</h2>
+        @for (inter of tema().interactivos; track inter.id) {
+          <div class="interactive-panel">
+            <div class="interactive-panel__header">
+              <h3>{{ inter.titulo }}</h3>
+              @if (inter.descripcion) { <p>{{ inter.descripcion }}</p> }
+            </div>
+            @switch (inter.tipo) {
+              @case ('ohm-law-lab') { <app-ohm-law-lab /> }
+              @case ('pipe-analogy') { <app-pipe-analogy /> }
+              @case ('topology-lab') { <app-topology-lab /> }
+              @case ('kirchhoff-lab') {
+                <app-kirchhoff-lab [modo]="inter.modo || 'kcl'" />
+              }
+              @case ('equation-chart') {
+                <app-equation-chart
+                  [chartType]="chartType(inter)"
+                  [title]="inter.titulo"
+                  [equation]="inter.ecuacion || 'V = I \\cdot R'">
+                </app-equation-chart>
+              }
+            }
+          </div>
+        }
+      </section>
+    }
+
+    @if (tema().tips_ensenanza?.length) {
+      <section class="section">
+        <h2 class="section__title">Tips de enseñanza</h2>
+        <div class="content-panel">
+          <ul class="text-body bullet-list">
+            @for (tip of tema().tips_ensenanza; track tip) {
+              <li>{{ tip }}</li>
+            }
+          </ul>
+        </div>
+      </section>
+    }
+
+    @if (tema().ejemplos?.length) {
+      <section class="section">
+        <h2 class="section__title">Ejemplos resueltos</h2>
+        <div class="content-grid">
+          @for (ej of tema().ejemplos; track ej.titulo) {
+            <div class="formula-card card card--bordered">
+              <p class="formula-card__label">{{ ej.titulo }}</p>
+              <div class="equation-display equation-display--sm" [appKatex]="ej.enunciado"></div>
+              <ol class="text-body ordered-list">
+                @for (paso of ej.solucion_pasos; track paso) {
+                  <li><span [appKatex]="paso" [inline]="true"></span></li>
+                }
+              </ol>
+              <p class="formula-card__desc">
+                <strong>Resultado:</strong> <span [appKatex]="ej.resultado" [inline]="true"></span>
+              </p>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <footer class="page-footer-nav">
+      <a routerLink="/clase/3" class="page-back">
+        <span class="page-back__icon" aria-hidden="true">←</span>
+        <span class="page-back__label">Volver a Clase 3</span>
+      </a>
+      @if (tema().enlaces?.length) {
+        @for (e of tema().enlaces; track e.ruta) {
+          @if (e.ruta !== '/clase/3') {
+            <a [routerLink]="e.ruta" class="btn btn--ghost btn--sm">{{ e.texto }}</a>
+          }
+        }
+      }
+    </footer>
+  }
+</div>

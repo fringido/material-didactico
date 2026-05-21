@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "modulo": 1,
+    "unidad": 2,
+    "numero_unidad": 2,
+    "titulo": "Análisis de Circuitos en DC",
+    "semanas": "3-4",
+    "clase": 3,
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-21",
+    "descripcion": "Leyes fundamentales, topologías y análisis básico de redes en corriente continua.",
+    "duracion_estimada": "4 semanas (parcial)"
+  },
+  "objetivos": [
+    "Aplicar la Ley de Ohm y despejar sus variables con el triángulo mnemotécnico",
+    "Calcular resistencias equivalentes en serie, paralelo y circuitos mixtos",
+    "Plantear ecuaciones con las leyes de Kirchhoff (LCK y LVK)",
+    "Respetar convenciones de signo al analizar nodos y mallas"
+  ],
+  "temas": [
+    {
+      "id": "ley-de-ohm",
+      "titulo": "La Ley de Ohm",
+      "descripcion": "Relación V = I·R, triángulo de Ohm y analogía pedagógica.",
+      "ruta": "/clase/3/tema/ley-de-ohm",
+      "ecuaciones": [
+        { "nombre": "Ohm", "formula": "V = I \\cdot R" }
+      ],
+      "enlaces": [
+        { "texto": "Ver tema interactivo", "ruta": "/clase/3/tema/ley-de-ohm" }
+      ]
+    },
+    {
+      "id": "tipos-circuitos",
+      "titulo": "Tipos de Circuitos (Topologías Básicas)",
+      "descripcion": "Serie, paralelo y reducción de circuitos mixtos.",
+      "subtemas": [
+        "Circuito en serie",
+        "Circuito en paralelo",
+        "Circuito mixto (serie-paralelo)"
+      ],
+      "ecuaciones": [
+        { "nombre": "Serie", "formula": "R_T = R_1 + R_2 + \\cdots" },
+        { "nombre": "Paralelo", "formula": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\cdots" }
+      ],
+      "enlaces": [
+        { "texto": "Ver tema interactivo", "ruta": "/clase/3/tema/tipos-circuitos" }
+      ]
+    },
+    {
+      "id": "leyes-kirchhoff",
+      "titulo": "Leyes de Kirchhoff",
+      "descripcion": "LCK (nodos) y LVK (mallas) basadas en conservación de carga y energía.",
+      "subtemas": [
+        "Ley de Corrientes (LCK)",
+        "Ley de Voltajes (LVK)",
+        "Convención de signos"
+      ],
+      "ecuaciones": [
+        { "nombre": "LCK", "formula": "\\sum I_k = 0" },
+        { "nombre": "LVK", "formula": "\\sum V_k = 0" }
+      ],
+      "enlaces": [
+        { "texto": "Ver tema interactivo", "ruta": "/clase/3/tema/leyes-kirchhoff" }
+      ]
+    }
+  ],
+  "ejercicios": [
+    {
+      "numero": 4,
+      "titulo": "Análisis de nodos",
+      "descripcion": "Resolver 5 circuitos usando análisis de nodos.",
+      "dificultad": "intermedio"
+    },
+    {
+      "numero": 5,
+      "titulo": "Análisis de mallas",
+      "descripcion": "Resolver 5 circuitos usando análisis de mallas.",
+      "dificultad": "intermedio"
+    }
+  ],
+  "recursos_adicionales": [
+    {
+      "titulo": "Clase 3 — Material interactivo",
+      "descripcion": "Temas con simuladores y diagramas",
+      "url": "/clase/3"
+    },
+    {
+      "titulo": "Resistencia (componente)",
+      "descripcion": "Catálogo y gráfica de Ohm",
+      "url": "/componentes/pasivos/resistencia"
+    }
+  ],
+  "referencias": [
+    "Boylestad & Nashelsky — Capítulos de corriente continua y leyes de Kirchhoff",
+    "Floyd — Análisis de circuitos en DC"
+  ],
+  "notas_profesor": {
+    "enfasis": [
+      "Corregir la fórmula de paralelo (inversos, no suma directa de R)",
+      "Practicar convención de signos antes de sistemas de ecuaciones grandes"
+    ]
+  }
+}

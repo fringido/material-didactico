@@ -2,17 +2,18 @@
   <div class="spinner"></div>
 </div>
 
-<div class="detalle-wrapper" *ngIf="!loading() && detalle()">
+<div class="page-shell detalle-wrapper" *ngIf="!loading() && detalle()">
 
-  <nav class="breadcrumb">
-    <a routerLink="/" class="breadcrumb__link">Inicio</a>
-    <span class="breadcrumb__sep">›</span>
-    <a routerLink="/sistemas" class="breadcrumb__link">Sistemas</a>
-    <span class="breadcrumb__sep">›</span>
-    <span class="breadcrumb__current">{{ detalle().nombre }}</span>
-  </nav>
+  <app-page-back-bar
+    backLink="/sistemas"
+    backLabel="Volver a Sistemas"
+    [breadcrumb]="[
+      { label: 'Inicio', link: '/' },
+      { label: 'Sistemas', link: '/sistemas' },
+      { label: detalle().nombre }
+    ]" />
 
-  <header class="detalle-hero">
+  <header class="detalle-hero page-hero">
     <div>
       <span class="badge badge--primary badge--lg mb-3">{{ detalle().categoria }}</span>
       <h1 class="detalle-hero__title">{{ detalle().nombre }}</h1>
@@ -93,10 +94,10 @@
       <p class="text-secondary mb-3">{{ detalle().punto_q.descripcion }}</p>
       <p class="text-secondary mb-3"><strong>Objetivo:</strong> {{ detalle().punto_q.objetivo }}</p>
       <div class="formulas-grid" *ngIf="detalle().punto_q.formulas">
-        <div class="formula-card" *ngFor="let key of objectKeys(detalle().punto_q.formulas)">
-          <p class="formula-card__label">{{ key }}</p>
+        <div class="formula-card" *ngFor="let k of objectKeys(detalle().punto_q.formulas)">
+          <p class="formula-card__label">{{ k }}</p>
           <div class="equation-display equation-display--sm" 
-               [appKatex]="detalle().punto_q.formulas[key]"
+               [appKatex]="detalle().punto_q.formulas[k]"
                appFormulaTooltip></div>
         </div>
       </div>
@@ -111,9 +112,9 @@
          appFormulaTooltip></div>
 
     <div class="variables-list" *ngIf="detalle().variables">
-      <div class="var-item" *ngFor="let key of objectKeys(detalle().variables)">
-        <span class="var-key" [appKatex]="key" [inline]="true"></span>
-        <span class="var-desc">{{ detalle().variables[key] }}</span>
+      <div class="v-item" *ngFor="let k of objectKeys(detalle().variables)">
+        <span class="v-key" [appKatex]="k" [inline]="true"></span>
+        <span class="v-desc">{{ detalle().variables[k] }}</span>
       </div>
     </div>
   </section>
@@ -155,10 +156,10 @@
     <div class="parametros-section" *ngIf="detalle().parametros">
       <h3>Parámetros</h3>
       <div class="formulas-grid">
-        <div class="formula-card" *ngFor="let key of objectKeys(detalle().parametros)">
-          <p class="formula-card__label">{{ formatLabel(key) }}</p>
+        <div class="formula-card" *ngFor="let k of objectKeys(detalle().parametros)">
+          <p class="formula-card__label">{{ formatLabel(k) }}</p>
           <div class="equation-display equation-display--sm" 
-               [appKatex]="detalle().parametros[key]"
+               [appKatex]="detalle().parametros[k]"
                appFormulaTooltip></div>
         </div>
       </div>
@@ -287,7 +288,7 @@
       <p class="text-secondary mb-3"><strong>Objetivo:</strong> {{ detalle().control_amplitud.objetivo }}</p>
       <p class="text-secondary mb-2"><strong>Métodos:</strong></p>
       <ul>
-        <li *ngFor="let metodo of detalle().control_amplitud.metodos">{{ metodo }}</li>
+        <li *ngFor="let m of detalle().control_amplitud.metodos">{{ m }}</li>
       </ul>
     </div>
 
@@ -295,10 +296,10 @@
     <div class="variantes" *ngIf="detalle().variantes">
       <h3>Variantes</h3>
       <div class="variantes-grid">
-        <div class="variante-card" *ngFor="let variante of detalle().variantes">
-          <h4>{{ variante.nombre }}</h4>
-          <p class="text-secondary" *ngIf="variante.configuracion"><strong>Configuración:</strong> {{ variante.configuracion }}</p>
-          <p class="text-secondary" *ngIf="variante.ventaja"><strong>Ventaja:</strong> {{ variante.ventaja }}</p>
+        <div class="variante-card" *ngFor="let v of detalle().variantes">
+          <h4>{{ v.nombre }}</h4>
+          <p class="text-secondary" *ngIf="v.configuracion"><strong>Configuración:</strong> {{ v.configuracion }}</p>
+          <p class="text-secondary" *ngIf="v.ventaja"><strong>Ventaja:</strong> {{ v.ventaja }}</p>
         </div>
       </div>
     </div>
@@ -322,12 +323,12 @@
     <div class="configuraciones" *ngIf="detalle().configuraciones">
       <h3>Configuraciones</h3>
       <div class="config-grid">
-        <div class="config-card" *ngFor="let config of detalle().configuraciones">
-          <h4>{{ config.nombre }}</h4>
-          <p class="text-secondary">{{ config.descripcion }}</p>
-          <p class="text-secondary" *ngIf="config.ventaja"><strong>Ventaja:</strong> {{ config.ventaja }}</p>
-          <p class="text-secondary" *ngIf="config.estabilidad"><strong>Estabilidad:</strong> {{ config.estabilidad }}</p>
-          <p class="text-secondary" *ngIf="config.aplicacion"><strong>Aplicación:</strong> {{ config.aplicacion }}</p>
+        <div class="config-card" *ngFor="let c of detalle().configuraciones">
+          <h4>{{ c.nombre }}</h4>
+          <p class="text-secondary">{{ c.descripcion }}</p>
+          <p class="text-secondary" *ngIf="c.ventaja"><strong>Ventaja:</strong> {{ c.ventaja }}</p>
+          <p class="text-secondary" *ngIf="c.estabilidad"><strong>Estabilidad:</strong> {{ c.estabilidad }}</p>
+          <p class="text-secondary" *ngIf="c.aplicacion"><strong>Aplicación:</strong> {{ c.aplicacion }}</p>
         </div>
       </div>
     </div>

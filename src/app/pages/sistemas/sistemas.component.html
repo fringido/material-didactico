@@ -5,7 +5,10 @@
 <div class="sistemas-wrapper" *ngIf="!loading() && sistemas()">
 
   <header class="sistemas-header">
-    <a routerLink="/" class="btn btn--ghost btn--sm">← Inicio</a>
+    <a routerLink="/" class="page-back">
+      <span class="page-back__icon" aria-hidden="true">←</span>
+      <span class="page-back__label">Volver al inicio</span>
+    </a>
     <div class="sistemas-header__text">
       <h1 class="sistemas-header__title">Sistemas Analógicos</h1>
       <p class="sistemas-header__sub">Amplificadores, Filtros y Osciladores — Los pilares de comunicación y procesamiento de señales</p>

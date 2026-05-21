@@ -5,6 +5,8 @@ import { DetalleComponent } from './pages/componentes/detalle/detalle.component'
 import { SistemasComponent } from './pages/sistemas/sistemas.component';
 import { SistemaDetalleComponent } from './pages/sistemas/detalle/detalle.component';
 import { UnidadComponent } from './pages/unidad/unidad.component';
+import { Clase3Component } from './pages/clase3/clase3.component';
+import { TemaDetalleComponent } from './pages/tema-detalle/tema-detalle.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
@@ -14,6 +16,9 @@ export const routes: Routes = [
   { path: 'sistemas', component: SistemasComponent },
   { path: 'sistemas/:sistema/opamp/:tipo', component: SistemaDetalleComponent },
   { path: 'sistemas/:sistema/:tipo', component: SistemaDetalleComponent },
+  { path: 'clase/3', component: Clase3Component },
+  { path: 'clase/3/tema/:id', component: TemaDetalleComponent },
+  { path: 'modulo/:modulo/unidad/:unidad/tema/:id', component: TemaDetalleComponent },
   { path: 'modulo/:modulo/unidad/:unidad', component: UnidadComponent },
   { path: '**', component: NotFoundComponent }
 ];

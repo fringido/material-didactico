@@ -948,3 +948,301 @@
         border-top: 1px dashed $border-primary;
     }
 }
+
+// ============================================
+// LAYOUT DE PÁGINA (detalle, clase, unidad)
+// ============================================
+
+.page-shell {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: $spacing-6 $spacing-6 $spacing-16;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-10;
+
+    @media (min-width: $breakpoint-md) {
+        padding: $spacing-8 $spacing-8 $spacing-16;
+    }
+}
+
+.page-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-4;
+    width: 100%;
+
+    @media (min-width: $breakpoint-md) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.page-back {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-2;
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    border: 1px solid $border-primary;
+    background: $bg-card;
+    color: $text-primary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: border-color $transition-base, background $transition-base, transform $transition-base;
+    flex-shrink: 0;
+
+    &:hover {
+        border-color: $color-primary;
+        background: $bg-hover-solid;
+        transform: translateX(-2px);
+    }
+
+    &__icon {
+        font-size: $font-size-lg;
+        line-height: 1;
+        color: $color-primary-light;
+    }
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-2;
+    font-size: $font-size-sm;
+    color: $text-tertiary;
+
+    &--compact {
+        @media (max-width: $breakpoint-sm) {
+            display: none;
+        }
+    }
+
+    &__link {
+        color: $text-secondary;
+        text-decoration: none;
+        transition: color $transition-base;
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
+    &__sep {
+        color: $border-secondary;
+    }
+
+    &__current {
+        color: $text-primary;
+        font-weight: $font-weight-medium;
+    }
+}
+
+.page-hero {
+    padding-bottom: $spacing-8;
+    border-bottom: 1px solid $border-primary;
+
+    &__title {
+        font-size: $font-size-4xl;
+        font-weight: $font-weight-extrabold;
+        color: $text-primary;
+        line-height: $line-height-tight;
+        margin: $spacing-3 0 $spacing-4;
+        letter-spacing: -0.02em;
+    }
+
+    &__lead {
+        font-size: $font-size-base;
+        color: $text-secondary;
+        line-height: $line-height-relaxed;
+        max-width: 42rem;
+        margin: 0;
+    }
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-5;
+
+    &__title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $text-primary;
+        margin: 0;
+        padding-bottom: $spacing-3;
+        border-bottom: 1px solid $border-primary;
+    }
+}
+
+.text-body {
+    font-size: $font-size-base;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+    margin: 0;
+    white-space: normal;
+    word-spacing: normal;
+}
+
+.content-grid {
+    display: grid;
+    gap: $spacing-5;
+
+    @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--3 {
+        @media (min-width: $breakpoint-lg) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
+.formula-card {
+    padding: $spacing-5;
+    background: $bg-card;
+    border: 1px solid $border-primary;
+    border-radius: $radius-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3;
+
+    &__label {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $text-secondary;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    &__desc {
+        font-size: $font-size-sm;
+        color: $text-tertiary;
+        margin: 0;
+        line-height: $line-height-relaxed;
+    }
+}
+
+.equation-display {
+    padding: $spacing-4;
+    background: $bg-secondary;
+    border-radius: $radius-md;
+    text-align: center;
+    overflow-x: auto;
+
+    &--sm {
+        padding: $spacing-3;
+    }
+}
+
+.var-card {
+    padding: $spacing-5;
+    background: $bg-card;
+    border: 1px solid $border-primary;
+    border-radius: $radius-lg;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: $spacing-2 $spacing-4;
+    align-items: start;
+
+    &__symbol {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        color: $color-primary-light;
+        grid-row: span 2;
+        min-width: 2rem;
+        text-align: center;
+    }
+
+    &__meta {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+    }
+
+    &__desc {
+        grid-column: 2;
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        line-height: $line-height-relaxed;
+        margin: 0;
+    }
+}
+
+.figure-card {
+    margin: $spacing-4 0 0;
+    padding: $spacing-5;
+    background: $bg-secondary;
+    border: 1px solid $border-primary;
+    border-radius: $radius-lg;
+    text-align: center;
+
+    img {
+        max-width: 100%;
+        max-height: 220px;
+        height: auto;
+        object-fit: contain;
+    }
+
+    figcaption {
+        margin-top: $spacing-3;
+        font-size: $font-size-xs;
+        color: $text-tertiary;
+    }
+}
+
+.content-panel {
+    padding: $spacing-5;
+    background: $bg-card;
+    border: 1px solid $border-primary;
+    border-radius: $radius-lg;
+
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        margin: 0 0 $spacing-3;
+    }
+
+    &--highlight {
+        border-left: 4px solid $color-primary;
+    }
+}
+
+.interactive-panel {
+    padding: $spacing-5;
+    background: $bg-card;
+    border: 1px solid $border-primary;
+    border-radius: $radius-xl;
+    margin-bottom: $spacing-5;
+
+    &__header {
+        margin-bottom: $spacing-4;
+
+        h3 {
+            margin: 0 0 $spacing-2;
+            font-size: $font-size-lg;
+            color: $text-primary;
+        }
+
+        p {
+            margin: 0;
+            font-size: $font-size-sm;
+            color: $text-secondary;
+        }
+    }
+}
+
+.page-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-3;
+    padding-top: $spacing-8;
+    border-top: 1px solid $border-primary;
+}

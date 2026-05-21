@@ -2,19 +2,19 @@
   <div class="spinner"></div>
 </div>
 
-<div class="detalle-wrapper" *ngIf="componente()">
+<div class="page-shell detalle-wrapper" *ngIf="componente()">
 
-  <!-- BREADCRUMB -->
-  <nav class="breadcrumb">
-    <a routerLink="/" class="breadcrumb__link">Inicio</a>
-    <span class="breadcrumb__sep">›</span>
-    <a routerLink="/componentes" class="breadcrumb__link">Componentes</a>
-    <span class="breadcrumb__sep">›</span>
-    <span class="breadcrumb__current">{{ componente().nombre }}</span>
-  </nav>
+  <app-page-back-bar
+    backLink="/componentes"
+    backLabel="Volver a Componentes"
+    [breadcrumb]="[
+      { label: 'Inicio', link: '/' },
+      { label: 'Componentes', link: '/componentes' },
+      { label: componente().nombre }
+    ]" />
 
   <!-- HERO DEL COMPONENTE -->
-  <header class="comp-hero">
+  <header class="comp-hero page-hero">
     <div>
       <span class="badge badge--primary badge--lg mb-3" *ngIf="categoriaId()">{{ categoriaId() | titlecase }}</span>
       <h1 class="comp-hero__title">{{ componente().nombre }}</h1>
@@ -96,9 +96,9 @@
         <div class="equation-display equation-display--sm" [appKatex]="componente().formula_ganancia_inversor.formula">
         </div>
         <div class="variables-list mt-3" *ngIf="componente().formula_ganancia_inversor.variables">
-          <div class="var-item" *ngFor="let key of objectKeys(componente().formula_ganancia_inversor.variables)">
-            <span class="var-key" [appKatex]="key" [inline]="true"></span>
-            <span class="var-desc">{{ componente().formula_ganancia_inversor.variables[key] }}</span>
+          <div class="v-item" *ngFor="let k of objectKeys(componente().formula_ganancia_inversor.variables)">
+            <span class="v-key" [appKatex]="k" [inline]="true"></span>
+            <span class="v-desc">{{ componente().formula_ganancia_inversor.variables[k] }}</span>
           </div>
         </div>
         <div class="mt-4" *ngIf="getChartForContext('ganancia_inversor') as chart">
@@ -160,8 +160,8 @@
           <div class="param-table" *ngIf="s.parametros">
             <p class="unidad__sublabel mt-3">Parámetros</p>
             <div class="param-row" *ngFor="let k of objectKeys(s.parametros)">
-              <span class="var-key" [appKatex]="k" [inline]="true"></span>
-              <span class="var-desc">{{ s.parametros[k] }}</span>
+              <span class="v-key" [appKatex]="k" [inline]="true"></span>
+              <span class="v-desc">{{ s.parametros[k] }}</span>
             </div>
           </div>
 
