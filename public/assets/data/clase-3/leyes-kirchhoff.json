@@ -71,18 +71,19 @@
   "ejemplos": [
     {
       "titulo": "LCK en nodo simple",
-      "enunciado": "Entran I_1=3\\,A e I_2=2\\,A; sale I_3 por una tercera rama. ¿Cuánto es I_3?",
+      "enunciado": "Entran I_1 = 3 A e I_2 = 2 A; sale I_3 por una tercera rama. ¿Cuánto es I_3?",
       "solucion_pasos": [
-        "I_1 + I_2 = I_3 \\Rightarrow 3+2 = 5\\,A"
+        "I_1 + I_2 = I_3",
+        "3 + 2 = 5 A"
       ],
-      "resultado": "I_3 = 5\\,A"
+      "resultado": "I_3 = 5 A"
     },
     {
       "titulo": "LVK — malla con dos resistencias",
-      "enunciado": "Fuente 10\\,V, R_1=4\\,\\Omega, R_2=6\\,\\Omega en serie. Verificar LVK.",
+      "enunciado": "Fuente de 10 V, R_1 = 4 Ω y R_2 = 6 Ω en serie. Verificar LVK.",
       "solucion_pasos": [
-        "I = 10/(4+6) = 1\\,A",
-        "V_{R1}=4\\,V, V_{R2}=6\\,V",
+        "I = \\frac{10}{4+6} = 1 A",
+        "V_{R1} = 4 V, V_{R2} = 6 V",
         "+10 - 4 - 6 = 0"
       ],
       "resultado": "La suma de tensiones en la malla es cero."

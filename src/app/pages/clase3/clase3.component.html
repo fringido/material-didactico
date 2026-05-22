@@ -32,27 +32,168 @@
         <h2 class="section__title">Objetivos de aprendizaje</h2>
         <div class="content-panel">
           <ul class="text-body bullet-list">
-            @for (o of data().objetivos; track o) {
+            <ng-container *ngFor="let o of data().objetivos">
               <li>{{ o }}</li>
-            }
+            </ng-container>
           </ul>
         </div>
       </section>
     }
 
-    <section class="section">
-      <h2 class="section__title">Temas de la clase</h2>
-      <div class="tema-grid">
-        @for (t of data().temas; track t.id) {
-          <a [routerLink]="t.ruta" class="tema-card card card--bordered">
-            <span class="tema-card__icon">{{ t.icono }}</span>
-            <h3 class="tema-card__title">{{ t.nombre }}</h3>
-            <p class="tema-card__desc">{{ t.descripcion }}</p>
-            <span class="tema-card__cta">Explorar tema interactivo →</span>
-          </a>
-        }
-      </div>
-    </section>
+    <!-- Contenido interactivo de cada tema -->
+    @for (tema of temasDetallados(); track tema.id) {
+      @if (tema.detalle) {
+        <section class="section tema-section">
+          <div class="tema-header">
+            <span class="tema-icon">{{ tema.icono }}</span>
+            <div>
+              <h2 class="section__title">{{ tema.nombre }}</h2>
+              <p class="text-secondary">{{ tema.descripcion }}</p>
+            </div>
+          </div>
+
+          <!-- Introducción -->
+          @if (tema.detalle.introduccion) {
+            <div class="content-panel">
+              <p class="text-body">{{ tema.detalle.introduccion }}</p>
+            </div>
+          }
+
+          <!-- Ecuaciones principales -->
+          @if (tema.detalle.ecuaciones?.length) {
+            <div class="formulas-section">
+              <h3>Ecuaciones principales</h3>
+              <div class="content-grid content-grid--2">
+                <ng-container *ngFor="let eq of $any(tema.detalle.ecuaciones) | slice: 0:2">
+                  <div class="formula-card card card--bordered">
+                    <p class="formula-card__label">{{ $any(eq).nombre || 'Ecuación' }}</p>
+                    <ng-container *ngIf="$any(eq).formula">
+                      <div class="equation-display equation-display--sm" [appKatex]="$any(eq).formula"></div>
+                    </ng-container>
+                    <ng-container *ngIf="$any(eq).descripcion">
+                      <p class="formula-card__desc">{{ $any(eq).descripcion }}</p>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          }
+
+          <!-- Leyes (para Kirchhoff) -->
+              @if ($any(tema.detalle.leyes)?.length) {
+            <div class="leyes-section">
+              <h3>Leyes fundamentales</h3>
+              <ng-container *ngFor="let ley of $any(tema.detalle.leyes)">
+                <div class="content-panel content-panel--bordered">
+                  <h4>{{ $any(ley).nombre || 'Ley' }}</h4>
+                  <ng-container *ngIf="$any(ley).principio">
+                    <p class="text-secondary"><strong>Principio:</strong> {{ $any(ley).principio }}</p>
+                  </ng-container>
+                  <ng-container *ngIf="$any(ley).ecuacion">
+                    <div class="equation-display equation-display--sm" [appKatex]="$any(ley).ecuacion"></div>
+                  </ng-container>
+                  <ng-container *ngIf="$any(ley).analogia">
+                    <div class="analogia-box">
+                      <p class="text-body"><strong>💡 Analogía:</strong> {{ $any(ley).analogia }}</p>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          }
+
+          <!-- Topologías (para Tipos de Circuitos) -->
+          @if ($any(tema.detalle.topologias)?.length) {
+            <div class="topologias-section">
+              <h3>Topologías de circuitos</h3>
+              <ng-container *ngFor="let topo of $any(tema.detalle.topologias)">
+                <div class="content-panel content-panel--bordered">
+                  <h4>{{ $any(topo).nombre || 'Topología' }}</h4>
+                  <p class="text-body">{{ $any(topo).descripcion }}</p>
+                  <ng-container *ngIf="$any(topo).ilustracion?.archivo">
+                    <figure class="figure-card mt-3">
+                      <img [src]="$any(topo).ilustracion.archivo" [alt]="$any(topo).nombre" [title]="$any(topo).nombre" loading="lazy" />
+                    </figure>
+                  </ng-container>
+                  <ng-container *ngIf="$any(topo).reglas?.length">
+                    <div class="reglas-grid mt-3">
+                      <ng-container *ngFor="let regla of $any(topo).reglas | slice: 0:2">
+                        <div class="regla-card">
+                          <p class="regla-title">{{ $any(regla).magnitud || 'Regla' }}</p>
+                          <ng-container *ngIf="$any(regla).formula">
+                            <div class="equation-display equation-display--xs" [appKatex]="$any(regla).formula"></div>
+                          </ng-container>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          }
+
+          <!-- Ejemplos resueltos -->
+          @if ($any(tema.detalle.ejemplos)?.length) {
+            <div class="ejemplos-section">
+              <h3>Ejemplos resueltos</h3>
+              <div class="content-grid content-grid--2">
+                <ng-container *ngFor="let ej of $any(tema.detalle.ejemplos) | slice: 0:2">
+                  <div class="formula-card card card--bordered">
+                    <p class="formula-card__label">{{ $any(ej).titulo || 'Ejemplo' }}</p>
+                    <ng-container *ngIf="$any(ej).enunciado">
+                      <div class="equation-display equation-display--xs" [appKatex]="$any(ej).enunciado"></div>
+                    </ng-container>
+                    <ng-container *ngIf="$any(ej).resultado">
+                      <p class="text-body text-secondary">
+                        <strong>Resultado:</strong><br />
+                        <span [appKatex]="$any(ej).resultado" [inline]="true"></span>
+                      </p>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          }
+
+          <!-- Interactivos / Simuladores -->
+          @if ($any(tema.detalle.interactivos)?.length) {
+            <div class="interactivos-section">
+              <h3>Demostraciones interactivas</h3>
+              <div class="interactive-grid">
+                <ng-container *ngFor="let inter of $any(tema.detalle.interactivos)">
+                  <div class="interactive-panel">
+                    <div class="interactive-panel__header">
+                      <h4>{{ $any(inter).titulo || 'Demo' }}</h4>
+                      <ng-container *ngIf="$any(inter).descripcion">
+                        <p class="text-secondary">{{ $any(inter).descripcion }}</p>
+                      </ng-container>
+                    </div>
+                    <ng-container [ngSwitch]="$any(inter).tipo">
+                      <ng-container *ngSwitchCase="'ohm-law-lab'">
+                        <app-ohm-law-lab />
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'topology-lab'">
+                        <app-topology-lab />
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'kirchhoff-lab'">
+                        <app-kirchhoff-lab [modo]="$any(inter).modo || 'kcl'" />
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          }
+
+          <!-- Link a tema completo -->
+          <div class="tema-cta">
+            <a [routerLink]="tema.ruta" class="btn btn--primary btn--sm">
+              Explorar tema completo con más ejemplos →
+            </a>
+          </div>
+        </section>
+      }
+    }
 
     <footer class="page-footer-nav">
       <app-page-back-bar backLink="/" backLabel="Volver al inicio" />

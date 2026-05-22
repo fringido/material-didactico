@@ -63,21 +63,23 @@
           <p class="text-body">{{ top.descripcion }}</p>
           @if (top.ilustracion?.archivo) {
             <figure class="figure-card">
-              <img [src]="top.ilustracion.archivo" [alt]="top.nombre" loading="lazy" />
+              <img [src]="top.ilustracion.archivo" [alt]="top.nombre" loading="lazy" (error)="onImageError($event, top.ilustracion.archivo)" />
               @if (top.ilustracion.credito) {
                 <figcaption>{{ top.ilustracion.credito }}</figcaption>
               }
             </figure>
           }
-          <div class="content-grid">
-            @for (regla of top.reglas; track regla.magnitud) {
-              <div class="formula-card">
-                <p class="formula-card__label">{{ regla.magnitud }}</p>
-                <div class="equation-display equation-display--sm" [appKatex]="regla.formula"></div>
-                <p class="formula-card__desc">{{ regla.descripcion }}</p>
-              </div>
-            }
-          </div>
+          @if (top.reglas?.length) {
+            <div class="content-grid">
+              @for (regla of top.reglas; track regla.magnitud) {
+                <div class="formula-card">
+                  <p class="formula-card__label">{{ regla.magnitud }}</p>
+                  <div class="equation-display equation-display--sm" [appKatex]="regla.formula"></div>
+                  <p class="formula-card__desc">{{ regla.descripcion }}</p>
+                </div>
+              }
+            </div>
+          }
           @if (top.metodo_reduccion) {
             <div class="content-panel">
               <h3 class="content-panel__title">Método de reducción</h3>
@@ -103,10 +105,16 @@
             <p class="text-body"><strong>Principio:</strong> {{ ley.principio }}</p>
             <p class="text-body">{{ ley.definicion }}</p>
             <div class="equation-display" [appKatex]="ley.ecuacion"></div>
+            @if (ley.forma_practica) {
+              <div class="equation-display equation-display--sm" [appKatex]="ley.forma_practica"></div>
+            }
+            @if (ley.nota_dificultad) {
+              <p class="text-body"><strong>Nota:</strong> {{ ley.nota_dificultad }}</p>
+            }
           </div>
           @if (ley.ilustracion?.archivo) {
             <figure class="figure-card">
-              <img [src]="ley.ilustracion.archivo" [alt]="ley.nombre" loading="lazy" />
+              <img [src]="ley.ilustracion.archivo" [alt]="ley.nombre" loading="lazy" (error)="onImageError($event, ley.ilustracion.archivo)" />
             </figure>
           }
           @if (ley.analogia) {
@@ -117,7 +125,7 @@
           @if (ley.convencion_signos?.length) {
             <ul class="text-body bullet-list">
               @for (c of ley.convencion_signos; track c.caso) {
-                <li><strong>{{ c.caso }}:</strong> {{ c.regla }}</li>
+                <li><strong>{{ c.caso }}:</strong> <span [appKatex]="c.regla" [inline]="true"></span></li>
               }
             </ul>
           }
@@ -134,7 +142,7 @@
           </div>
           @if (sec.ilustracion?.archivo) {
             <figure class="figure-card">
-              <img [src]="sec.ilustracion.archivo" [alt]="sec.ilustracion.titulo || sec.titulo" loading="lazy" />
+              <img [src]="sec.ilustracion.archivo" [alt]="sec.ilustracion.titulo || sec.titulo" loading="lazy" (error)="onImageError($event, sec.ilustracion.archivo)" />
               @if (sec.ilustracion.credito) {
                 <figcaption>{{ sec.ilustracion.credito }}</figcaption>
               }
@@ -193,7 +201,7 @@
           @for (ej of tema().ejemplos; track ej.titulo) {
             <div class="formula-card card card--bordered">
               <p class="formula-card__label">{{ ej.titulo }}</p>
-              <div class="equation-display equation-display--sm" [appKatex]="ej.enunciado"></div>
+              <p class="text-body">{{ ej.enunciado }}</p>
               <ol class="text-body ordered-list">
                 @for (paso of ej.solucion_pasos; track paso) {
                   <li><span [appKatex]="paso" [inline]="true"></span></li>

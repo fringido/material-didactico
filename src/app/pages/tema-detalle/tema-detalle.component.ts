@@ -48,6 +48,15 @@ export class TemaDetalleComponent implements OnInit {
       this.loading.set(true);
       this.http.get<any>(`/assets/data/clase-3/${id}.json`).subscribe({
         next: (data) => {
+          // Normalizar convencion_signos a siempre ser array
+          if (data.leyes) {
+            data.leyes = data.leyes.map((ley: any) => {
+              if (ley.convencion_signos && typeof ley.convencion_signos === 'string') {
+                ley.convencion_signos = [{ caso: 'General', regla: ley.convencion_signos }];
+              }
+              return ley;
+            });
+          }
           this.tema.set(data);
           this.loading.set(false);
         },
@@ -61,5 +70,9 @@ export class TemaDetalleComponent implements OnInit {
 
   chartType(inter: { chartType?: string }): ChartType {
     return (inter.chartType as ChartType) || 'ohm';
+  }
+
+  onImageError(event: Event, src: string): void {
+    console.error('Error loading image:', src, event);
   }
 }

@@ -1,8 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" role="img" aria-label="Triángulo de Ohm">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" role="img" aria-label="Triangulo de Ohm">
   <polygon points="100,20 180,160 20,160" fill="none" stroke="#7c6af7" stroke-width="3"/>
   <text x="100" y="55" text-anchor="middle" font-size="22" font-weight="bold" fill="#e8e6f0">V</text>
   <text x="55" y="145" text-anchor="middle" font-size="22" font-weight="bold" fill="#e8e6f0">I</text>
   <text x="145" y="145" text-anchor="middle" font-size="22" font-weight="bold" fill="#e8e6f0">R</text>
   <line x1="72" y1="118" x2="128" y2="118" stroke="#20c997" stroke-width="2"/>
-  <text x="100" y="112" text-anchor="middle" font-size="14" fill="#20c997">×</text>
 </svg>

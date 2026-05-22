@@ -18,5 +18,5 @@
   <line x1="275" y1="75" x2="305" y2="75" stroke="#e8e6f0" stroke-width="2"/>
   <rect x="305" y="65" width="30" height="20" fill="none" stroke="#7c6af7" stroke-width="2"/>
   <text x="320" y="79" text-anchor="middle" font-size="10" fill="#e8e6f0">R4</text>
-  <text x="215" y="18" text-anchor="middle" font-size="12" fill="#f0b429">R2 % R3 ’ luego + R1 + R4</text>
+  <text x="215" y="18" text-anchor="middle" font-size="12" fill="#f0b429">R2 // R3 luego + R1 + R4</text>
 </svg>

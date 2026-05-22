@@ -74,6 +74,230 @@
   margin-top: $spacing-3;
 }
 
+.tema-section {
+  border-top: 2px solid $border-secondary;
+  padding-top: $spacing-8;
+
+  .tema-header {
+    display: flex;
+    gap: $spacing-4;
+    align-items: flex-start;
+    margin-bottom: $spacing-6;
+
+    .tema-icon {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+  }
+}
+
+.formulas-section,
+.leyes-section,
+.topologias-section,
+.ejemplos-section,
+.interactivos-section {
+  margin: $spacing-6 0;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-4;
+    color: $text-primary;
+  }
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-4;
+  margin-bottom: $spacing-4;
+
+  &--2 {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  &--3 {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+.formula-card {
+  padding: $spacing-5;
+
+  &__label {
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-3;
+  }
+
+  &__desc {
+    margin-top: $spacing-3;
+    font-size: $font-size-sm;
+    color: $text-secondary;
+  }
+}
+
+.analogia-box {
+  background-color: rgba($color-primary, 0.05);
+  border-left: 3px solid $color-primary;
+  padding: $spacing-4;
+  margin-top: $spacing-4;
+  border-radius: 4px;
+}
+
+.figure-card {
+  margin: $spacing-4 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: $bg-secondary;
+  padding: $spacing-4;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  figcaption {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    text-align: center;
+    margin-top: $spacing-2;
+  }
+}
+
+.reglas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-3;
+}
+
+.regla-card {
+  background-color: $bg-secondary;
+  padding: $spacing-4;
+  border-radius: 6px;
+  border: 1px solid $border-secondary;
+
+  .regla-title {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+}
+
+.interactive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: $spacing-6;
+  margin-bottom: $spacing-6;
+}
+
+.interactive-panel {
+  border: 2px solid $border-primary;
+  border-radius: 8px;
+  padding: $spacing-6;
+  background-color: $bg-secondary;
+
+  &__header {
+    margin-bottom: $spacing-5;
+
+    h4 {
+      margin: 0 0 $spacing-2 0;
+      font-size: $font-size-base;
+      font-weight: $font-weight-bold;
+      color: $text-primary;
+    }
+
+    p {
+      margin: 0;
+      font-size: $font-size-sm;
+      color: $text-secondary;
+    }
+  }
+}
+
+.content-panel {
+  background-color: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: 6px;
+  padding: $spacing-5;
+  margin-bottom: $spacing-4;
+
+  &--bordered {
+    border: 2px solid $border-secondary;
+  }
+
+  &--highlight {
+    background-color: rgba($color-primary, 0.08);
+    border-left: 4px solid $color-primary;
+  }
+
+  h4 {
+    margin: 0 0 $spacing-3 0;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+  }
+
+  p {
+    margin: $spacing-2 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.equation-display {
+  margin: $spacing-3 0;
+  padding: $spacing-3;
+  background-color: rgba($color-primary, 0.03);
+  border-radius: 4px;
+  overflow-x: auto;
+
+  &--sm {
+    padding: $spacing-2;
+    font-size: 0.9em;
+  }
+
+  &--xs {
+    padding: $spacing-1;
+    font-size: 0.8em;
+  }
+}
+
+.bullet-list,
+.ordered-list {
+  margin: 0;
+  padding-left: $spacing-6;
+
+  li + li {
+    margin-top: $spacing-2;
+  }
+}
+
+.text-body {
+  line-height: $line-height-relaxed;
+  font-size: $font-size-base;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.tema-cta {
+  text-align: center;
+  margin-top: $spacing-8;
+  padding-top: $spacing-6;
+  border-top: 1px solid $border-secondary;
+}
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }

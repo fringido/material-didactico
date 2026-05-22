@@ -95,11 +95,11 @@
   "ejemplos": [
     {
       "titulo": "Lámpara de 12 V",
-      "enunciado": "Una resistencia de 24 \\, \\Omega se conecta a 12 \\, V. ¿Qué corriente circula?",
+      "enunciado": "Una resistencia de 24\\,\\Omega se conecta a una fuente de 12\\,V. ¿Qué corriente circula?",
       "solucion_pasos": [
-        "I = V/R = 12/24 = 0{,}5 \\, A"
+        "I = \\frac{V}{R} = \\frac{12\\,V}{24\\,\\Omega} = 0{,}5\\,A"
       ],
-      "resultado": "0{,}5 \\, A (500 \\, mA)"
+      "resultado": "I = 0{,}5\\,A \\text{ (500 mA)}"
     },
     {
       "titulo": "Caída en conductor",
