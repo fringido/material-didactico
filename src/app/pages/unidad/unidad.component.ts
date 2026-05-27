@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { KatexDirective } from '../../directives/katex.directive';
 import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
+import { EquationChartComponent } from '../../components/equation-chart/equation-chart.component';
 
 @Component({
   selector: 'app-unidad',
   standalone: true,
-  imports: [CommonModule, RouterLink, KatexDirective, PageBackBarComponent],
+  imports: [CommonModule, RouterLink, KatexDirective, PageBackBarComponent, EquationChartComponent],
   templateUrl: './unidad.component.html',
   styleUrls: ['./unidad.component.scss']
 })

@@ -30,7 +30,10 @@
           @for (eq of tema().ecuaciones; track eq.nombre) {
             <div class="formula-card card card--bordered">
               <p class="formula-card__label">{{ eq.nombre }}</p>
-              <div class="equation-display equation-display--sm" [appKatex]="eq.formula"></div>
+              <div class="equation-display equation-display--sm"
+                   [appKatex]="eq.formula"
+                   appFormulaTooltip
+                   [variables]="tema().variables || []"></div>
               @if (eq.descripcion) {
                 <p class="formula-card__desc">{{ eq.descripcion }}</p>
               }
@@ -74,7 +77,10 @@
               @for (regla of top.reglas; track regla.magnitud) {
                 <div class="formula-card">
                   <p class="formula-card__label">{{ regla.magnitud }}</p>
-                  <div class="equation-display equation-display--sm" [appKatex]="regla.formula"></div>
+                  <div class="equation-display equation-display--sm"
+                       [appKatex]="regla.formula"
+                       appFormulaTooltip
+                       [variables]="tema().variables || []"></div>
                   <p class="formula-card__desc">{{ regla.descripcion }}</p>
                 </div>
               }
@@ -104,9 +110,15 @@
           <div class="content-panel">
             <p class="text-body"><strong>Principio:</strong> {{ ley.principio }}</p>
             <p class="text-body">{{ ley.definicion }}</p>
-            <div class="equation-display" [appKatex]="ley.ecuacion"></div>
+            <div class="equation-display"
+                 [appKatex]="ley.ecuacion"
+                 appFormulaTooltip
+                 [variables]="tema().variables || []"></div>
             @if (ley.forma_practica) {
-              <div class="equation-display equation-display--sm" [appKatex]="ley.forma_practica"></div>
+              <div class="equation-display equation-display--sm"
+                   [appKatex]="ley.forma_practica"
+                   appFormulaTooltip
+                   [variables]="tema().variables || []"></div>
             }
             @if (ley.nota_dificultad) {
               <p class="text-body"><strong>Nota:</strong> {{ ley.nota_dificultad }}</p>
@@ -125,7 +137,7 @@
           @if (ley.convencion_signos?.length) {
             <ul class="text-body bullet-list">
               @for (c of ley.convencion_signos; track c.caso) {
-                <li><strong>{{ c.caso }}:</strong> <span [appKatex]="c.regla" [inline]="true"></span></li>
+                <li><strong>{{ c.caso }}:</strong> <span [appKatex]="c.regla" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span></li>
               }
             </ul>
           }
@@ -204,11 +216,11 @@
               <p class="text-body">{{ ej.enunciado }}</p>
               <ol class="text-body ordered-list">
                 @for (paso of ej.solucion_pasos; track paso) {
-                  <li><span [appKatex]="paso" [inline]="true"></span></li>
+                  <li><span [appKatex]="paso" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span></li>
                 }
               </ol>
               <p class="formula-card__desc">
-                <strong>Resultado:</strong> <span [appKatex]="ej.resultado" [inline]="true"></span>
+                <strong>Resultado:</strong> <span [appKatex]="ej.resultado" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span>
               </p>
             </div>
           }

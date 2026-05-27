@@ -24,7 +24,11 @@
       "descripcion": "Relación V = I·R, triángulo de Ohm y analogía pedagógica.",
       "ruta": "/clase/3/tema/ley-de-ohm",
       "ecuaciones": [
-        { "nombre": "Ohm", "formula": "V = I \\cdot R" }
+        {
+          "nombre": "Ley de Ohm",
+          "formula": "V = I \\cdot R",
+          "grafica": { "tipo": "ohm", "titulo": "Relación V–I — Ley de Ohm" }
+        }
       ],
       "enlaces": [
         { "texto": "Ver tema interactivo", "ruta": "/clase/3/tema/ley-de-ohm" }

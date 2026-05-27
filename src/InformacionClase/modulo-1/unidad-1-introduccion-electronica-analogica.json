@@ -19,6 +19,10 @@
       "id": "conceptos-basicos",
       "nombre": "Conceptos Básicos de Electrónica Analógica",
       "descripcion": "Fundamentos de señales analógicas, diferencia con digital, y principios de operación",
+      "ecuaciones": [
+        { "nombre": "Frecuencia", "formula": "f = \\frac{1}{T}" },
+        { "nombre": "Período", "formula": "T = \\frac{1}{f}" }
+      ],
       "contenido": {
         "conceptos_clave": [
           {
@@ -106,6 +110,22 @@
       "id": "circuitos-basicos",
       "nombre": "Circuitos Básicos: Amplificadores, Filtros, Osciladores",
       "descripcion": "Introducción a los tres pilares de sistemas analógicos",
+      "ecuaciones": [
+        {
+          "nombre": "Ganancia de Amplificador",
+          "formula": "A = \\frac{V_{out}}{V_{in}}",
+          "grafica": { "tipo": "opamp_gain", "titulo": "Función de Transferencia — Amplificador de Voltaje" }
+        },
+        {
+          "nombre": "Función de Filtro Pasa-Bajas",
+          "formula": "H(j\\omega) = \\frac{V_{out}}{V_{in}}",
+          "grafica": { "tipo": "capacitor_reactance", "titulo": "Reactancia del Capacitor Xc vs Frecuencia" }
+        },
+        {
+          "nombre": "Condición de Oscilación (Barkhausen)",
+          "formula": "|A\\beta| \\geq 1"
+        }
+      ],
       "contenido": {
         "amplificadores": {
           "definicion": "Circuito que aumenta la amplitud de una señal de entrada",

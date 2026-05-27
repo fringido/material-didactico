@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { KatexDirective } from '../../directives/katex.directive';
+import { FormulaTooltipDirective } from '../../directives/formula-tooltip.directive';
 import { EquationChartComponent, ChartType } from '../../components/equation-chart/equation-chart.component';
 import { OhmLawLabComponent } from '../../components/clase3-labs/ohm-law-lab.component';
 import { PipeAnalogyComponent } from '../../components/clase3-labs/pipe-analogy.component';
@@ -19,6 +20,7 @@ const TEMA_IDS = ['ley-de-ohm', 'tipos-circuitos', 'leyes-kirchhoff'] as const;
     CommonModule,
     RouterLink,
     KatexDirective,
+    FormulaTooltipDirective,
     EquationChartComponent,
     OhmLawLabComponent,
     PipeAnalogyComponent,

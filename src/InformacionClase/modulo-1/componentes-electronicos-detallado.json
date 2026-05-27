@@ -3,7 +3,7 @@
         "metadata": {
             "title": "Componentes Electrónicos",
             "description": "Clasificación completa de componentes activos y pasivos en electrónica analógica",
-            "version": "1.0.0"
+            "version": "1.2.0"
         },
         "comparison": {
             "title": "Componentes Activos vs Pasivos",
@@ -278,15 +278,122 @@
                             }
                         ],
                         "configuraciones_bjt": [
-                            { "nombre": "Emisor Común", "ganancia": "Alta V, Alta I", "fase": "Invierte" },
-                            { "nombre": "Colector Común", "ganancia": "≈1 V, Alta I", "fase": "Mantiene" },
-                            { "nombre": "Base Común", "ganancia": "Alta V, ≈1 I", "fase": "Mantiene" }
+                            {
+                                "nombre": "Emisor Común (EC)",
+                                "conexion": "La señal entra por la Base y sale por el Colector. El Emisor es la pata común (usualmente conectada a tierra a través de una resistencia).",
+                                "comportamiento_clave": "Es el amplificador 'total'. Es el único que ofrece ganancia tanto de voltaje como de corriente, lo que resulta en una ganancia de potencia altísima.",
+                                "particularidad": "La señal de salida sale invertida 180° respecto a la entrada (si la entrada sube, la salida baja).",
+                                "uso_tipico": "Amplificación de audio general, etapas de ganancia de voltaje intermedias.",
+                                "ganancia_voltaje": "Alta",
+                                "ganancia_corriente": "Alta",
+                                "impedancia_entrada": "Moderada",
+                                "impedancia_salida": "Alta",
+                                "inversion_fase": "Sí (180°)"
+                            },
+                            {
+                                "nombre": "Colector Común (CC) / Seguidor de Emisor",
+                                "conexion": "La señal entra por la Base y sale por el Emisor. El Colector es común (conectado directamente a la fuente de alimentación V_{CC} que actúa como tierra en señal alterna).",
+                                "comportamiento_clave": "Su ganancia de voltaje es prácticamente 1 (la salida 'sigue' fielmente el voltaje de la entrada, de ahí su nombre). Sin embargo, tiene una ganancia de corriente enorme.",
+                                "impedancia": "Tiene una alta impedancia de entrada (no le exige esfuerzo a la etapa anterior) y una muy baja impedancia de salida (puede entregar mucha fuerza a la carga).",
+                                "uso_tipico": "Adaptador de impedancias. Es la etapa final ideal para conectarse a una bocina (baja impedancia) sin distorsionar las etapas previas.",
+                                "ganancia_voltaje": "Baja (≈1)",
+                                "ganancia_corriente": "Alta",
+                                "impedancia_entrada": "Muy Alta",
+                                "impedancia_salida": "Muy Baja",
+                                "inversion_fase": "No (0°)"
+                            },
+                            {
+                                "nombre": "Base Común (BC)",
+                                "conexion": "La señal entra por el Emisor y sale por el Colector. La Base está conectada a tierra (en términos de señal alterna).",
+                                "comportamiento_clave": "Ofrece ganancia de voltaje alta, pero su ganancia de corriente es menor a 1.",
+                                "impedancia": "Su comportamiento es inverso al Colector Común: muy baja impedancia de entrada y alta impedancia de salida.",
+                                "ventaja_secreta": "Al tener la base en medio de la entrada y la salida, actúa como un escudo que elimina el Efecto Miller (una capacitancia parásita interna que frena a los transistores a altas frecuencias).",
+                                "uso_tipico": "Amplificadores de muy alta frecuencia, como antenas de radio (RF) y preamplificadores de micrófonos de baja impedancia.",
+                                "ganancia_voltaje": "Alta",
+                                "ganancia_corriente": "Baja (< 1)",
+                                "impedancia_entrada": "Muy Baja",
+                                "impedancia_salida": "Muy Alta",
+                                "inversion_fase": "No (0°)"
+                            }
                         ],
+                        "tabla_resumen_configuraciones": {
+                            "titulo": "Resumen rápido de propiedades para contrastar",
+                            "headers": [
+                                "Configuración",
+                                "Ganancia Voltaje (Av)",
+                                "Ganancia Corriente (Ai)",
+                                "Impedancia Entrada (Zin)",
+                                "Impedancia Salida (Zout)",
+                                "Inversión de Fase"
+                            ],
+                            "filas": [
+                                {
+                                    "configuracion": "Emisor Común",
+                                    "ganancia_voltaje": "Alta",
+                                    "ganancia_corriente": "Alta",
+                                    "impedancia_entrada": "Moderada",
+                                    "impedancia_salida": "Alta",
+                                    "inversion_fase": "Sí (180°)"
+                                },
+                                {
+                                    "configuracion": "Colector Común",
+                                    "ganancia_voltaje": "Baja (≈1)",
+                                    "ganancia_corriente": "Alta",
+                                    "impedancia_entrada": "Muy Alta",
+                                    "impedancia_salida": "Muy Baja",
+                                    "inversion_fase": "No (0°)"
+                                },
+                                {
+                                    "configuracion": "Base Común",
+                                    "ganancia_voltaje": "Alta",
+                                    "ganancia_corriente": "Baja (< 1)",
+                                    "impedancia_entrada": "Muy Baja",
+                                    "impedancia_salida": "Muy Alta",
+                                    "inversion_fase": "No (0°)"
+                                }
+                            ]
+                        },
                         "clasificacion_clase": [
-                            { "clase": "A", "eficiencia": "25%", "uso": "Audio Hi-Fi" },
-                            { "clase": "B", "eficiencia": "78.5%", "uso": "Push-Pull" },
-                            { "clase": "AB", "eficiencia": "60-70%", "uso": "Audio Comercial" },
-                            { "clase": "C", "eficiencia": "90%+", "uso": "RF / Transmisores" }
+                            {
+                                "clase": "A",
+                                "nombre": "Clase A: Fidelidad Absoluta",
+                                "conduccion": "360° (conduce todo el tiempo)",
+                                "punto_q": "Exactamente en el centro de la zona activa",
+                                "eficiencia_teorica": "25% - 50%",
+                                "ventajas": "Sin distorsión por cruce; señal de salida réplica exacta y limpia de la entrada.",
+                                "desventajas": "Consume energía constantemente aunque no haya señal. El resto se disipa como calor puro.",
+                                "uso_tipico": "Audio Hi-Fi de alta calidad (etapas de voltaje)"
+                            },
+                            {
+                                "clase": "B",
+                                "nombre": "Clase B: El Relevo",
+                                "conduccion": "180° por transistor (uno el ciclo positivo, otro el negativo)",
+                                "punto_q": "Justo en el corte",
+                                "eficiencia_teorica": "78.5%",
+                                "ventajas": "Sin señal, los transistores no conducen. Eficiencia muy alta.",
+                                "desventajas": "Genera distorsión por cruce (punto muerto al pasar por cero, los 0.7V de silicio).",
+                                "uso_tipico": "Etapas de salida push-pull en sistemas de PA"
+                            },
+                            {
+                                "clase": "AB",
+                                "nombre": "Clase AB: El Estándar Comercial",
+                                "conduccion": "Entre 180° y 360° (ligera superposición al pasar por cero)",
+                                "punto_q": "Ligeramente por encima del corte",
+                                "eficiencia_teorica": "60% - 65%",
+                                "ventajas": "Elimina la distorsión por cruce de la Clase B, excelente eficiencia.",
+                                "desventajas": "Consumo en reposo (pequeño) respecto a Clase B pura.",
+                                "uso_tipico": "Amplificadores de audio de alta fidelidad comerciales (el rey en audio)"
+                            },
+                            {
+                                "clase": "C",
+                                "nombre": "Clase C: Potencia Pura (No apto para audio)",
+                                "conduccion": "Menos de 180° (solo pulso de la cresta de la onda)",
+                                "punto_q": "Por debajo del corte",
+                                "eficiencia_teorica": "> 80% (hasta 90%+)",
+                                "ventajas": "Eficiencia altísima.",
+                                "desventajas": "Destruye por completo la forma de la onda original. Requiere circuito resonante LC para reconstruir la onda.",
+                                "uso_tipico": "Radiofrecuencia (RF), transmisores, osciladores"
+                            }
                         ]
                     }
                 ]

@@ -36,6 +36,36 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Deploying to Firebase Hosting
+
+This project is configured for Firebase Hosting with `firebase.json`.
+
+1. Install the Firebase CLI if you do not have it already:
+
+```bash
+npm install -g firebase-tools
+```
+
+2. Log in to Firebase:
+
+```bash
+firebase login
+```
+
+3. (Optional) Select or add your Firebase project:
+
+```bash
+firebase use --add
+```
+
+4. Build and deploy the application:
+
+```bash
+npm run deploy
+```
+
+The deploy script builds the app in production mode and uploads the hosting files to Firebase.
+
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:

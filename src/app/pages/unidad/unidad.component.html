@@ -56,11 +56,21 @@
               }
 
               @if (tema.ecuaciones) {
-                <div class="ecuaciones">
+                <div class="ecuaciones-grid">
                   @for (ecuacion of tema.ecuaciones; track ecuacion.nombre) {
-                    <div class="ecuacion">
-                      <strong>{{ ecuacion.nombre }}:</strong>
-                      <span [appKatex]="ecuacion.formula"></span>
+                    <div class="ecuacion-card">
+                      <div class="ecuacion-info">
+                        <strong>{{ ecuacion.nombre }}:</strong>
+                        <span [appKatex]="ecuacion.formula"></span>
+                      </div>
+                      @if (ecuacion.grafica) {
+                        <div class="ecuacion-grafica-wrapper">
+                          <app-equation-chart
+                            [chartType]="ecuacion.grafica.tipo"
+                            [title]="ecuacion.grafica.titulo || ecuacion.nombre"
+                            [equation]="ecuacion.formula" />
+                        </div>
+                      }
                     </div>
                   }
                 </div>

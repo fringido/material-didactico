@@ -11,12 +11,13 @@
     </a>
     <div class="sistemas-header__text">
       <h1 class="sistemas-header__title">Sistemas Analógicos</h1>
-      <p class="sistemas-header__sub">Amplificadores, Filtros y Osciladores — Los pilares de comunicación y procesamiento de señales</p>
+      <p class="sistemas-header__sub">Amplificadores, Filtros y Osciladores — Los pilares de comunicación y
+        procesamiento de señales</p>
     </div>
   </header>
 
   <div class="sistemas-grid">
-    
+
     <!-- AMPLIFICADORES -->
     <div class="sistema-card">
       <div class="sistema-card__header">
@@ -26,18 +27,18 @@
           <p class="sistema-card__desc">{{ sistemas().amplificadores.descripcion }}</p>
         </div>
       </div>
-      
+
       <div class="sistema-card__equation" [appKatex]="sistemas().amplificadores.ecuacion_principal"></div>
-      
+
       <!-- SIMULADOR DE AMPLIFICADOR -->
       <app-amplifier-lab [data]="sistemas().amplificadores" [showHeader]="false"></app-amplifier-lab>
-      
+
       <div class="sistema-card__section">
         <h3>Conceptos Clave</h3>
         <div class="conceptos-list">
           <div class="concepto-item" *ngFor="let c of sistemas().amplificadores.conceptos">
             <div class="concepto-item__header">
-              <span class="badge badge--primary badge--sm">{{ c.simbolo }}</span>
+              <span class="badge badge--primary badge--lg">{{ c.simbolo }}</span>
               <strong>{{ c.nombre }}</strong>
             </div>
             <p>{{ c.descripcion }}</p>
@@ -50,7 +51,7 @@
         <h3>Configuraciones BJT</h3>
         <div class="config-grid">
           <a class="config-card" *ngFor="let cfg of sistemas().amplificadores.configuraciones"
-             [routerLink]="['/sistemas/amplificadores', cfg.id]">
+            [routerLink]="['/sistemas/amplificadores', cfg.id]">
             <p class="config-card__name">{{ cfg.nombre }}</p>
             <p class="config-card__desc">{{ cfg.descripcion }}</p>
             <div class="config-card__specs">
@@ -68,7 +69,7 @@
         <p class="text-secondary mb-3">{{ sistemas().amplificadores.opamps.descripcion }}</p>
         <div class="opamp-grid">
           <a class="opamp-card" *ngFor="let op of sistemas().amplificadores.opamps.tipos"
-             [routerLink]="['/sistemas/amplificadores/opamp', op.id]">
+            [routerLink]="['/sistemas/amplificadores/opamp', op.id]">
             <p class="opamp-card__name">{{ op.nombre }}</p>
             <div class="opamp-card__formula" [appKatex]="op.formula"></div>
             <p class="opamp-card__desc">{{ op.descripcion }}</p>
@@ -87,7 +88,7 @@
           <p class="sistema-card__desc">{{ sistemas().filtros.descripcion }}</p>
         </div>
       </div>
-      
+
       <div class="sistema-card__equation" [appKatex]="sistemas().filtros.ecuacion_principal"></div>
 
       <!-- SIMULADOR DE FILTROS -->
@@ -100,7 +101,7 @@
         <h3>Por Rango de Frecuencia</h3>
         <div class="filtros-grid">
           <a class="filtro-card" *ngFor="let f of sistemas().filtros.por_frecuencia"
-             [routerLink]="['/sistemas/filtros', f.id]">
+            [routerLink]="['/sistemas/filtros', f.id]">
             <p class="filtro-card__name">{{ f.nombre }}</p>
             <p class="filtro-card__desc">{{ f.descripcion }}</p>
             <div class="filtro-card__formula" *ngIf="f.formula_rc" [appKatex]="f.formula_rc"></div>
@@ -146,7 +147,7 @@
           <p class="sistema-card__desc">{{ sistemas().osciladores.descripcion }}</p>
         </div>
       </div>
-      
+
       <div class="sistema-card__equation" [appKatex]="sistemas().osciladores.ecuacion_principal"></div>
 
       <!-- SIMULADOR DE OSCILADORES -->
@@ -168,7 +169,7 @@
         <h3>Tipos de Osciladores</h3>
         <div class="osc-grid">
           <a class="osc-card" *ngFor="let osc of sistemas().osciladores.tipos"
-             [routerLink]="['/sistemas/osciladores', osc.id]">
+            [routerLink]="['/sistemas/osciladores', osc.id]">
             <p class="osc-card__name">{{ osc.nombre }}</p>
             <p class="osc-card__desc">{{ osc.descripcion }}</p>
             <div class="osc-card__formula" [appKatex]="osc.formula_frecuencia"></div>

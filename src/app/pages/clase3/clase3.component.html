@@ -79,6 +79,36 @@
             </div>
           }
 
+          <!-- Secciones (triángulo de Ohm, etc.) -->
+          @if ($any(tema.detalle.secciones)?.length) {
+            <div class="secciones-section">
+              <ng-container *ngFor="let seccion of $any(tema.detalle.secciones)">
+                <div class="content-panel content-panel--bordered">
+                  <h3>{{ $any(seccion).titulo || 'Sección' }}</h3>
+                  <p class="text-body">{{ $any(seccion).contenido }}</p>
+                  <ng-container *ngIf="$any(seccion).ilustracion?.archivo">
+                    <figure class="figure-card figure-card--ohm mt-3">
+                      <div class="ohm-image-container">
+                        <img
+                          [src]="$any(seccion).ilustracion.archivo"
+                          [alt]="$any(seccion).ilustracion.titulo || $any(seccion).titulo"
+                          [title]="$any(seccion).ilustracion.titulo || $any(seccion).titulo"
+                          loading="lazy"
+                          class="ohm-image" />
+                        <div class="ohm-hand-overlay">
+                          <img src="/assets/illustrations/clase-3/mano-ohm.svg" alt="Mano" class="ohm-hand" />
+                        </div>
+                      </div>
+                      <ng-container *ngIf="$any(seccion).ilustracion?.credito">
+                        <figcaption>{{ $any(seccion).ilustracion.credito }}</figcaption>
+                      </ng-container>
+                    </figure>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          }
+
           <!-- Leyes (para Kirchhoff) -->
               @if ($any(tema.detalle.leyes)?.length) {
             <div class="leyes-section">

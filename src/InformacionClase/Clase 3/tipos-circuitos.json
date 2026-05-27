@@ -17,7 +17,7 @@
       "nombre": "Circuito en Serie",
       "descripcion": "Los componentes están conectados uno detrás de otro, formando un único camino para la corriente.",
       "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/circuito-serie.svg",
+        "archivo": "/assets/illustrations/clase-3/circuito_serie.svg",
         "credito": "Referencia visual — ttsz / Getty Images"
       },
       "reglas": [
@@ -44,7 +44,7 @@
       "nombre": "Circuito en Paralelo",
       "descripcion": "Los componentes comparten los mismos dos nodos, creando ramas independientes para la corriente.",
       "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/circuito-paralelo.svg",
+        "archivo": "/assets/illustrations/clase-3/circuito_paralelo.svg",
         "credito": "Referencia visual — ttsz / Getty Images"
       },
       "reglas": [
@@ -76,7 +76,7 @@
       "nombre": "Circuito Mixto (Serie-Paralelo)",
       "descripcion": "Combinación de bloques en serie y en paralelo dentro de la misma red.",
       "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/circuito-mixto.svg"
+        "archivo": "/assets/illustrations/clase-3/circuito_mixto.svg"
       },
       "metodo_reduccion": [
         "Identificar bloques puramente en paralelo o en serie.",

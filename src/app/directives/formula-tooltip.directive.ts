@@ -4,6 +4,13 @@ interface SymbolDefinition {
   [key: string]: string;
 }
 
+interface VariableDefinition {
+  simbolo: string;
+  nombre: string;
+  unidad: string;
+  descripcion: string;
+}
+
 @Directive({
   selector: '[appFormulaTooltip]',
   standalone: true
@@ -13,6 +20,7 @@ export class FormulaTooltipDirective implements OnInit {
   private renderer = inject(Renderer2);
 
   @Input() symbols: SymbolDefinition = {};
+  @Input() variables: VariableDefinition[] = [];
 
   // Diccionario global de símbolos comunes
   private commonSymbols: SymbolDefinition = {
@@ -109,8 +117,14 @@ export class FormulaTooltipDirective implements OnInit {
   };
 
   ngOnInit() {
-    // Combinar símbolos comunes con símbolos específicos
-    const allSymbols = { ...this.commonSymbols, ...this.symbols };
+    // Convertir variables del formato JSON a SymbolDefinition
+    const variableSymbols: SymbolDefinition = {};
+    this.variables.forEach(v => {
+      variableSymbols[v.simbolo] = `${v.nombre} (${v.unidad}): ${v.descripcion}`;
+    });
+
+    // Combinar símbolos comunes con símbolos específicos y variables
+    const allSymbols = { ...this.commonSymbols, ...this.symbols, ...variableSymbols };
 
     // Esperar a que KaTeX renderice
     setTimeout(() => {
