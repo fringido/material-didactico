@@ -267,5 +267,97 @@
       "Modo de conexión (serie/paralelo)",
       "Voltaje de fuente"
     ]
-  }
+  },
+  "ejercicios": [
+    {
+      "id": "ejercicio-1",
+      "categoria": "nodos",
+      "titulo": "Ejercicio 1: Divisor de corriente básico",
+      "descripcion": "Un circuito con un nodo de voltaje principal V_1 y un nodo de referencia (tierra). Una fuente de corriente independiente de 5 A entra al nodo V_1. Existen dos resistencias conectadas en paralelo entre V_1 y tierra: la primera es de 10 Ω y la segunda es de 40 Ω.",
+      "solucion": "Aplicando la Ley de Corrientes de Kirchhoff (LCK) en V_1: 5 = V_1/10 + V_1/40. Despejando, el voltaje en el nodo es V_1 = 40 V.",
+      "explicacion": "La suma de las corrientes que salen del nodo debe ser igual a la corriente que entra. La corriente a través de cada resistencia es V_1/R. Al sumar las corrientes y despejar V_1, obtenemos 40 V.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-2",
+      "categoria": "nodos",
+      "titulo": "Ejercicio 2: Sistema de dos nodos independientes",
+      "descripcion": "El circuito tiene dos nodos de no referencia, V_1 y V_2. Una fuente de corriente de 3 A entra a V_1. Una resistencia de 2 Ω conecta V_1 a tierra. Entre V_1 y V_2 hay una resistencia de 4 Ω. Desde V_2 hacia tierra hay otra resistencia de 4 Ω. Finalmente, una fuente de corriente de 2 A sale del nodo V_2 hacia tierra.",
+      "solucion": "El sistema de ecuaciones nodales es: 3 = V_1/2 + (V_1 - V_2)/4 y -2 = (V_2 - V_1)/4 + V_2/4. Simplificando y resolviendo el sistema, los resultados son V_1 = 3.2 V y V_2 = -2.4 V.",
+      "explicacion": "Para V_1: la corriente que entra (3 A) se divide entre la resistencia a tierra (V_1/2) y la resistencia hacia V_2 ((V_1 - V_2)/4). Para V_2: la corriente que sale (-2 A) es la suma de la corriente que viene de V_1 ((V_2 - V_1)/4) y la que va a tierra (V_2/4). Resolviendo el sistema 2x2 obtenemos los valores.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-3",
+      "categoria": "nodos",
+      "titulo": "Ejercicio 3: Nodos con una fuente de voltaje a tierra",
+      "descripcion": "Dos nodos principales, V_1 y V_2. Una fuente de voltaje de 12 V está conectada directamente entre V_1 y tierra (polo positivo en V_1). Una resistencia de 3 Ω une V_1 con V_2. Una resistencia de 6 Ω une V_2 con tierra. Una fuente de corriente de 4 A entra al nodo V_2.",
+      "solucion": "Al estar la fuente a tierra, V_1 = 12 V directamente. Para el nodo 2: 4 = (V_2 - 12)/3 + V_2/6. Multiplicando por 6 y despejando, el resultado es V_2 = 16 V.",
+      "explicacion": "Cuando una fuente de voltaje está conectada directamente a tierra, el voltaje en ese nodo es conocido. Solo necesitamos aplicar LCK en el nodo desconocido (V_2). La corriente que entra (4 A) se divide entre la resistencia hacia V_1 y la resistencia a tierra.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-4",
+      "categoria": "nodos",
+      "titulo": "Ejercicio 4: Introducción al Supernodo",
+      "descripcion": "Dos nodos principales, V_1 y V_2. Una fuente de corriente de 5 A entra a V_1. Una resistencia de 2 Ω conecta V_1 con tierra y otra de 4 Ω conecta V_2 con tierra. Entre V_1 y V_2 existe una fuente de voltaje independiente de 10 V (polo positivo en V_1), sin resistencias en serie o paralelo a ella, obligando a crear un supernodo.",
+      "solucion": "Ecuación de restricción del supernodo: V_1 - V_2 = 10. Ecuación LCK del supernodo: 5 = V_1/2 + V_2/4. Resolviendo el sistema de 2x2, las respuestas son V_1 = 10 V y V_2 = 0 V.",
+      "explicacion": "Cuando una fuente de voltaje conecta dos nodos sin resistencia en serie, formamos un supernodo. La ecuación de restricción relaciona los voltajes de los dos nodos (V_1 - V_2 = 10). Aplicamos LCK al supernodo considerando las corrientes que entran y salen del conjunto.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-5",
+      "categoria": "nodos",
+      "titulo": "Ejercicio 5: Nodos con fuente de corriente dependiente",
+      "descripcion": "Dos nodos principales, V_1 y V_2. Una fuente de corriente de 10 A entra a V_1. Una resistencia de 4 Ω va de V_1 a tierra, y una de 2 Ω conecta V_1 con V_2. De V_2 hacia tierra hay una resistencia de 4 Ω. También desde V_2 sale hacia tierra una fuente de corriente dependiente cuyo valor es 2I_x, siendo I_x la corriente que baja por la resistencia de 4 Ω del primer nodo.",
+      "solucion": "Sabiendo que I_x = V_1/4, las ecuaciones son: 10 = V_1/4 + (V_1 - V_2)/2 y 0 = (V_2 - V_1)/2 + V_2/4 + 2(V_1/4). Al agrupar y resolver matricialmente o por sustitución, V_1 = 13.33 V y V_2 = 0 V.",
+      "explicacion": "Primero expresamos la corriente dependiente en términos de V_1: I_x = V_1/4. Luego aplicamos LCK en ambos nodos. En V_2, la corriente dependiente 2I_x sale del nodo. Resolviendo el sistema obtenemos los voltajes.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-6",
+      "categoria": "mallas",
+      "titulo": "Ejercicio 6: Dos mallas estándar",
+      "descripcion": "Circuito con forma de ventana de dos paneles. Malla izquierda (i_1): fuente de voltaje de 10 V (aumento de potencial en sentido horario) en la rama externa, resistencia de 2 Ω en la rama superior, y resistencia de 3 Ω en la rama central compartida. Malla derecha (i_2): la misma resistencia compartida de 3 Ω, resistencia de 5 Ω en la rama superior, y fuente de voltaje de 5 V en la rama derecha externa (caída de potencial en sentido horario).",
+      "solucion": "Aplicando la Ley de Voltajes de Kirchhoff (LVK): -10 + 2i_1 + 3(i_1 - i_2) = 0 y 3(i_2 - i_1) + 5i_2 + 5 = 0. El sistema se reduce a 5i_1 - 3i_2 = 10 y -3i_1 + 8i_2 = -5. Las corrientes son i_1 ≈ 2.09 A e i_2 ≈ 0.16 A.",
+      "explicacion": "En cada malla, sumamos las caídas de voltaje en las resistencias y las fuentes. La corriente en la resistencia compartida es la diferencia entre las corrientes de malla (i_1 - i_2). Resolvemos el sistema 2x2 para obtener las corrientes.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-7",
+      "categoria": "mallas",
+      "titulo": "Ejercicio 7: Matriz de tres mallas",
+      "descripcion": "Tres mallas cuadradas adyacentes de izquierda a derecha (i_1, i_2, i_3). Malla 1: Fuente de 24 V en rama izquierda, R_1= 2 Ω superior, R_2= 4 Ω compartida con i_2. Malla 2: R_2= 4 Ω compartida, R_3= 6 Ω superior, R_4= 8 Ω compartida con i_3. Malla 3: R_4= 8 Ω compartida, R_5= 2 Ω derecha exterior, y una fuente de 12 V en la rama derecha que genera una caída en sentido horario.",
+      "solucion": "Los alumnos deben llegar a la forma matricial simétrica: 6i_1 - 4i_2 = 24, -4i_1 + 18i_2 - 8i_3 = 0, -8i_2 + 10i_3 = -12.",
+      "explicacion": "Para cada malla, la diagonal contiene la suma de todas las resistencias de esa malla. Los términos fuera de la diagonal son negativos y representan las resistencias compartidas entre mallas. El lado derecho contiene las fuentes de voltaje de cada malla.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-8",
+      "categoria": "mallas",
+      "titulo": "Ejercicio 8: Malla con fuente de corriente periférica",
+      "descripcion": "Dos mallas (i_1, i_2). En la rama izquierda exterior (perteneciente solo a la malla 1) hay una fuente de corriente de 5 A apuntando hacia arriba. En la rama superior de la malla 1 hay 4 Ω, y en la rama central compartida hay 6 Ω. En la malla 2, además de la rama central, hay 2 Ω en la rama derecha y una fuente de 10 V (caída de potencial).",
+      "solucion": "La fuente exterior define inmediatamente i_1 = 5 A. Sustituyendo en la ecuación de la malla 2: 6(i_2 - 5) + 2i_2 + 10 = 0. Despejando: 8i_2 - 30 + 10 = 0 → 8i_2 = 20 → i_2 = 2.5 A.",
+      "explicacion": "Cuando una fuente de corriente está en una rama que pertenece solo a una malla, esa corriente de malla es conocida directamente. Solo necesitamos resolver la ecuación para la malla desconocida sustituyendo el valor conocido.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-9",
+      "categoria": "mallas",
+      "titulo": "Ejercicio 9: Introducción a la Supermalla",
+      "descripcion": "Dos mallas adyacentes (i_1, i_2). La malla 1 tiene una fuente de 20 V (aumento de potencial) a la izquierda y una resistencia de 5 Ω en la parte superior. La rama central que divide las mallas consiste exclusivamente en una fuente de corriente de 3 A apuntando hacia arriba. La malla 2 tiene 10 Ω en su parte superior y 5 Ω en su rama exterior derecha.",
+      "solucion": "Restricción en la rama central: i_2 - i_1 = 3. LVK en la supermalla exterior: -20 + 5i_1 + 10i_2 + 5i_2 = 0 → 5i_1 + 15i_2 = 20. Resolviendo el sistema, los alumnos deben obtener i_1 = -1.25 A e i_2 = 1.75 A.",
+      "explicacion": "Cuando una fuente de corriente está en una rama compartida, formamos una supermalla que excluye esa rama. La ecuación de restricción relaciona las corrientes de malla (i_2 - i_1 = 3). Aplicamos LVK a la supermalla y resolvemos el sistema.",
+      "tiempo_minutos": 5
+    },
+    {
+      "id": "ejercicio-10",
+      "categoria": "mallas",
+      "titulo": "Ejercicio 10: Mallas con fuente de voltaje dependiente",
+      "descripcion": "Dos mallas (i_1, i_2). Malla 1: Fuente de 15 V (aumento), resistencia de 3 Ω arriba, resistencia de 2 Ω en la rama central. Malla 2: La resistencia central de 2 Ω, y en la rama derecha exterior una fuente de voltaje dependiente con valor 4V_x (polaridad positiva arriba). El valor V_x se define como la caída de voltaje en la resistencia central de 2 Ω de arriba hacia abajo (V_x = 2(i_1 - i_2)).",
+      "solucion": "Ecuación Malla 1: -15 + 3i_1 + 2(i_1 - i_2) = 0 → 5i_1 - 2i_2 = 15. Ecuación Malla 2: 2(i_2 - i_1) + 4(2(i_1 - i_2)) = 0. Al simplificar la Malla 2 se obtiene 6i_1 - 6i_2 = 0, lo que significa que i_1 = i_2. Sustituyendo en la primera ecuación: 5i_1 - 2i_1 = 15 → 3i_1 = 15. El resultado final es i_1 = 5 A e i_2 = 5 A.",
+      "explicacion": "Primero expresamos la fuente dependiente en términos de las corrientes: V_x = 2(i_1 - i_2). Aplicamos LVK en ambas mallas. La segunda ecuación se simplifica mostrando que las corrientes son iguales. Sustituyendo en la primera obtenemos el valor final.",
+      "tiempo_minutos": 5
+    }
+  ]
 }

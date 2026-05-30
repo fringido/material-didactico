@@ -67,15 +67,19 @@
             "semanas": "3-4",
             "temas": [
               "Leyes y teoremas fundamentales (Ohm, Kirchhoff)",
+              "Resistencia equivalente en serie y paralelo",
               "Métodos de análisis: nodos y mallas",
               "Cálculo de corrientes, voltajes y resistencias equivalentes",
-              "Teoremas de Thevenin y Norton"
+              "Teoremas de Thevenin y Norton",
+              "Teorema de máxima transferencia de potencia"
             ],
             "ejercicios": [
-              { "numero": 4, "descripcion": "Resolver 5 circuitos usando análisis de nodos" },
-              { "numero": 5, "descripcion": "Resolver 5 circuitos usando análisis de mallas" },
-              { "numero": 6, "descripcion": "Encontrar equivalentes de Thevenin en 3 circuitos" },
-              { "numero": 7, "descripcion": "Simular circuitos en software (LTSpice o Proteus)" }
+              { "numero": 4, "descripcion": "Calcular resistencias equivalentes en circuitos serie y paralelo" },
+              { "numero": 5, "descripcion": "Resolver 5 circuitos usando análisis de nodos" },
+              { "numero": 6, "descripcion": "Resolver 5 circuitos usando análisis de mallas" },
+              { "numero": 7, "descripcion": "Encontrar equivalentes de Thevenin en 3 circuitos" },
+              { "numero": 8, "descripcion": "Aplicar teorema de máxima transferencia de potencia" },
+              { "numero": 9, "descripcion": "Simular circuitos en software (LTSpice o Proteus)" }
             ]
           },
           {

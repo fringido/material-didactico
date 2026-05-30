@@ -1,0 +1,215 @@
+{
+  "id": "maximum-power-transfer",
+  "nombre": "Teorema de Máxima Transferencia de Potencia",
+  "descripcion": "El Teorema de Máxima Transferencia de Potencia establece que la potencia transferida a la carga es máxima cuando la resistencia de carga es igual a la resistencia de Thevenin del circuito fuente (R_L = R_th).",
+  "conceptos_clave": [
+    {
+      "nombre": "Teorema de Máxima Transferencia de Potencia",
+      "descripcion": "Establece que para obtener la máxima potencia de transferencia de una fuente a una carga, la resistencia de la carga debe ser igual a la resistencia interna de la fuente (R_L = R_th).",
+      "variable_principal": "Resistencia de carga (R_L)",
+      "principio_fisico": "Maximización de la transferencia de energía entre fuente y carga.",
+      "cuando_usarlo": "Es fundamental en diseño de amplificadores, antenas y sistemas de transmisión de señales donde se requiere máxima transferencia de potencia."
+    },
+    {
+      "nombre": "Circuito Equivalente de Thevenin",
+      "descripcion": "Cualquier circuito lineal puede ser representado por una fuente de voltaje V_th en serie con una resistencia R_th.",
+      "variable_principal": "Voltaje de Thevenin (V_th) y Resistencia de Thevenin (R_th)",
+      "principio_fisico": "Equivalencia de circuitos lineales desde el punto de vista de dos terminales.",
+      "cuando_usarlo": "Para simplificar el análisis de circuitos complejos y determinar la máxima potencia transferible."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Corriente de Carga",
+      "katex": "I_L = \\frac{V_{th}}{R_{th} + R_L}",
+      "variables_tooltip": "variablesCorriente"
+    },
+    {
+      "titulo": "Potencia en la Carga",
+      "katex": "P_L = I_L^2 \\cdot R_L = \\left(\\frac{V_{th}}{R_{th} + R_L}\\right)^2 \\cdot R_L",
+      "variables_tooltip": "variablesPotencia"
+    },
+    {
+      "titulo": "Condición de Máxima Potencia",
+      "katex": "P_{L,max} = \\frac{V_{th}^2}{4R_{th}} \\quad \\text{cuando} \\quad R_L = R_{th}",
+      "variables_tooltip": "variablesMaxima"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesCorriente": [
+      {
+        "simbolo": "I_L",
+        "nombre": "Corriente de Carga",
+        "unidad": "Amperios (A)",
+        "descripcion": "Corriente que circula a través de la resistencia de carga.",
+        "category": "current"
+      },
+      {
+        "simbolo": "V_{th}",
+        "nombre": "Voltaje de Thevenin",
+        "unidad": "Voltios (V)",
+        "descripcion": "Voltaje de circuito abierto del equivalente de Thevenin.",
+        "category": "voltage"
+      },
+      {
+        "simbolo": "R_{th}",
+        "nombre": "Resistencia de Thevenin",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Resistencia equivalente vista desde los terminales de la carga.",
+        "category": "resistance"
+      },
+      {
+        "simbolo": "R_L",
+        "nombre": "Resistencia de Carga",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Resistencia conectada a la salida del circuito.",
+        "category": "resistance"
+      }
+    ],
+    "variablesPotencia": [
+      {
+        "simbolo": "P_L",
+        "nombre": "Potencia en la Carga",
+        "unidad": "Watts (W)",
+        "descripcion": "Potencia disipada por la resistencia de carga.",
+        "category": "power"
+      },
+      {
+        "simbolo": "I_L",
+        "nombre": "Corriente de Carga",
+        "unidad": "Amperios (A)",
+        "descripcion": "Corriente que circula a través de la resistencia de carga.",
+        "category": "current"
+      },
+      {
+        "simbolo": "R_L",
+        "nombre": "Resistencia de Carga",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Resistencia conectada a la salida del circuito.",
+        "category": "resistance"
+      }
+    ],
+    "variablesMaxima": [
+      {
+        "simbolo": "P_{L,max}",
+        "nombre": "Potencia Máxima",
+        "unidad": "Watts (W)",
+        "descripcion": "Máxima potencia que puede transferirse a la carga.",
+        "category": "power"
+      },
+      {
+        "simbolo": "V_{th}",
+        "nombre": "Voltaje de Thevenin",
+        "unidad": "Voltios (V)",
+        "descripcion": "Voltaje de circuito abierto del equivalente de Thevenin.",
+        "category": "voltage"
+      },
+      {
+        "simbolo": "R_{th}",
+        "nombre": "Resistencia de Thevenin",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Resistencia equivalente vista desde los terminales de la carga.",
+        "category": "resistance"
+      }
+    ]
+  },
+  "grafica_interactiva": {
+    "title": "Teorema de Máxima Transferencia de Potencia",
+    "chartType": "power_transfer",
+    "equation": "P_L = \\left(\\frac{V_{th}}{R_{th} + R_L}\\right)^2 \\cdot R_L",
+    "hasControls": true,
+    "params": {
+      "R_L": { "value": 4.0, "min": 0.1, "max": 20.0, "step": 0.1, "label": "Load Resistance (Ω)" },
+      "V_th": { "value": 12.0, "min": 1.0, "max": 24.0, "step": 0.5, "label": "Thevenin Voltage (V)" },
+      "R_th": { "value": 4.0, "min": 0.5, "max": 10.0, "step": 0.1, "label": "Thevenin Resistance (Ω)" }
+    }
+  },
+  "simulacion_dinamica": {
+    "tipo": "Circuito Thevenin",
+    "titulo": "Visualización Interactiva de Máxima Transferencia de Potencia",
+    "descripcion": "Ajusta los valores de resistencia de carga, voltaje de Thevenin y resistencia de Thevenin para observar cómo varía la potencia transferida. La potencia máxima se alcanza cuando R_L = R_th.",
+    "ancho": 800,
+    "alto": 500,
+    "diagrama": [
+      { "tipo": "fuente", "id": "V_th", "valor": "12V", "x": 100, "y": 200, "rotacion": 90 },
+      { "tipo": "resistor", "id": "R_th", "valor": "4Ω", "x": 200, "y": 100, "rotacion": 0 },
+      { "tipo": "resistor", "id": "R_L", "valor": "4Ω", "x": 400, "y": 100, "rotacion": 0 },
+      { "tipo": "tierra", "id": "GND", "x": 300, "y": 300 },
+      { "tipo": "linea", "x1": 100, "y1": 100, "x2": 200, "y2": 100 },
+      { "tipo": "linea", "x1": 200, "y1": 100, "x2": 400, "y2": 100 },
+      { "tipo": "linea", "x1": 100, "y1": 300, "x2": 400, "y2": 300 },
+      { "tipo": "linea", "x1": 100, "y1": 100, "x2": 100, "y2": 200 },
+      { "tipo": "linea", "x1": 100, "y1": 200, "x2": 100, "y2": 300 },
+      { "tipo": "linea", "x1": 400, "y1": 100, "x2": 400, "y2": 300 },
+      { "tipo": "nodo", "x": 300, "y": 100, "valor": "V_L" }
+    ],
+    "controles": [
+      { "id": "val_RL", "label": "Resistencia de Carga (R_L)", "min": 0.1, "max": 20.0, "step": 0.1, "default": 4.0, "unidad": "Ω" },
+      { "id": "val_Vth", "label": "Voltaje de Thevenin (V_th)", "min": 1.0, "max": 24.0, "step": 0.5, "default": 12.0, "unidad": "V" },
+      { "id": "val_Rth", "label": "Resistencia de Thevenin (R_th)", "min": 0.5, "max": 10.0, "step": 0.1, "default": 4.0, "unidad": "Ω" }
+    ],
+    "metricas": [
+      {
+        "label": "Corriente de Carga (I_L)",
+        "formula_katex": "I_L = \\frac{V_{th}}{R_{th} + R_L}",
+        "calculo": "val_Vth / (val_Rth + val_RL)",
+        "unidad": "A"
+      },
+      {
+        "label": "Voltaje de Carga (V_L)",
+        "formula_katex": "V_L = I_L \\cdot R_L",
+        "calculo": "(val_Vth / (val_Rth + val_RL)) * val_RL",
+        "unidad": "V"
+      },
+      {
+        "label": "Potencia en la Carga (P_L)",
+        "formula_katex": "P_L = I_L^2 \\cdot R_L",
+        "calculo": "Math.pow(val_Vth / (val_Rth + val_RL), 2) * val_RL",
+        "unidad": "W"
+      },
+      {
+        "label": "Eficiencia de Transferencia",
+        "formula_katex": "\\eta = \\frac{R_L}{R_{th} + R_L} \\times 100\\%",
+        "calculo": "(val_RL / (val_Rth + val_RL)) * 100",
+        "unidad": "%"
+      }
+    ],
+    "graficas": [
+      {
+        "id": "graf_potencia",
+        "label": "Potencia vs Resistencia de Carga",
+        "color": "#5292f9",
+        "calculo_y": "Math.pow(val_Vth / (val_Rth + x), 2) * x"
+      }
+    ]
+  },
+  "aplicaciones_reales": [
+    {
+      "titulo": "Diseño de Amplificadores de RF",
+      "descripcion": "En sistemas de radiofrecuencia, el matching de impedancias es crítico para maximizar la transferencia de potencia entre etapas amplificadoras y antenas."
+    },
+    {
+      "titulo": "Sistemas de Audio",
+      "descripcion": "El matching de impedancias entre amplificadores y altavoces asegura máxima transferencia de potencia y calidad de sonido óptima."
+    },
+    {
+      "titulo": "Transmisión de Energía Eléctrica",
+      "descripcion": "En líneas de transmisión de potencia, el principio se aplica pero con consideraciones de eficiencia versus máxima transferencia."
+    },
+    {
+      "titulo": "Diseño de Antenas",
+      "descripcion": "Las antenas deben estar adaptadas a la impedancia característica de la línea de transmisión (generalmente 50Ω o 75Ω) para máxima transferencia de potencia."
+    }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-power-transfer-visualizer",
+    "justificacion": "La visualización interactiva de la curva de potencia vs resistencia de carga ayuda a los estudiantes a comprender intuitivamente el concepto de matching de impedancias.",
+    "utilidad": "Permite a los estudiantes experimentar con diferentes valores de R_L y observar cómo la potencia varía, reforzando el concepto teórico de que R_L = R_th para máxima potencia.",
+    "interfaz_requerida": "Gráfica interactiva con curva de potencia, controles deslizantes para R_L, V_th y R_th, y visualización del punto de operación actual.",
+    "inputs": [
+      "Valores de R_L, V_th, R_th",
+      "Visualización de la curva P_L vs R_L",
+      "Indicador del punto de máxima potencia"
+    ]
+  }
+}

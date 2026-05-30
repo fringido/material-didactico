@@ -18,12 +18,28 @@
   ],
   "temas": [
     {
+      "id": "resistencia-equivalente",
+      "nombre": "Resistencia Equivalente",
+      "descripcion": "Cálculo de resistencia equivalente para simplificar redes complejas de resistores en configuraciones serie y paralelo.",
+      "icono": "🔌",
+      "ruta": "/clase/4/tema/resistencia-equivalente",
+      "archivo": "resistencia-equivalente.json"
+    },
+    {
       "id": "nodos-mallas",
       "nombre": "Análisis de Nodos y Mallas",
       "descripcion": "Métodos fundamentales para resolver circuitos complejos mediante sistemas de ecuaciones.",
       "icono": "🔢",
       "ruta": "/clase/4/tema/nodos-mallas",
       "archivo": "NodosYMallas.json"
+    },
+    {
+      "id": "maximum-power-transfer",
+      "nombre": "Teorema de Máxima Transferencia de Potencia",
+      "descripcion": "Condición óptima para máxima transferencia de potencia entre fuente y carga (R_L = R_th).",
+      "icono": "⚡",
+      "ruta": "/clase/4/tema/maximum-power-transfer",
+      "archivo": "maximum-power-transfer.json"
     }
   ],
   "rutas_relacionadas": {

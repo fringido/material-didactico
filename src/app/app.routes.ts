@@ -22,7 +22,7 @@ export const routes: Routes = [
   { path: 'clase/3', component: Clase3Component },
   { path: 'clase/3/tema/:id', component: TemaDetalleComponent },
   { path: 'clase/4', component: Clase4Component },
-  { path: 'clase/4/tema/:id', component: TemaDetalleComponent },
+  { path: 'clase/4/tema/:id', component: Clase4Component },
   { path: 'modulo/:modulo/unidad/:unidad/tema/:id', component: TemaDetalleComponent },
   { path: 'modulo/:modulo/unidad/:unidad', component: UnidadComponent },
   { path: '**', component: NotFoundComponent }

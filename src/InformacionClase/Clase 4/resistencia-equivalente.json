@@ -1,0 +1,224 @@
+{
+  "id": "resistencia-equivalente",
+  "nombre": "Resistencia Equivalente",
+  "descripcion": "El cálculo de resistencia equivalente permite simplificar redes complejas de resistores en un único resistor que demanda la misma corriente y disipa la misma potencia de la fuente original.",
+  "conceptos_clave": [
+    {
+      "nombre": "Conexión en Serie",
+      "descripcion": "Los componentes comparten el mismo nodo secuencial, por lo que la corriente que los atraviesa es la misma, pero el voltaje se divide entre ellos (Divisor de Tensión).",
+      "variable_principal": "Resistencia Equivalente (R_eq)",
+      "principio_fisico": "La corriente es constante a través de todos los componentes en serie.",
+      "cuando_usarlo": "Cuando los resistores están conectados uno después del otro en un solo camino de corriente."
+    },
+    {
+      "nombre": "Conexión en Paralelo",
+      "descripcion": "Los componentes comparten los mismos dos nodos superior e inferior. El voltaje es igual en todas sus terminales, pero la corriente total se divide entre las distintas ramas (Divisor de Corriente).",
+      "variable_principal": "Resistencia Equivalente (R_eq)",
+      "principio_fisico": "El voltaje es constante a través de todas las ramas paralelas.",
+      "cuando_usarlo": "Cuando los resistores están conectados entre los mismos dos puntos, proporcionando múltiples caminos para la corriente."
+    },
+    {
+      "nombre": "Ley de Ohm Generalizada",
+      "descripcion": "Relaciona el voltaje total del sistema con la corriente total a través de la resistencia equivalente.",
+      "variable_principal": "Corriente Total (I_total)",
+      "principio_fisico": "La relación lineal entre voltaje, corriente y resistencia.",
+      "cuando_usarlo": "Para calcular la corriente total en el circuito equivalente simplificado."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Ley de Ohm Generalizada",
+      "katex": "I_{total} = \\frac{V_s}{R_{eq}}",
+      "variables_tooltip": "variablesCorriente"
+    },
+    {
+      "titulo": "Resistencia Equivalente en Serie",
+      "katex": "R_{eq(serie)} = R_1 + R_2 + \\dots + R_n",
+      "variables_tooltip": "variablesSerie"
+    },
+    {
+      "titulo": "Resistencia Equivalente en Paralelo",
+      "katex": "R_{eq(paralelo)} = \\left( \\frac{1}{R_1} + \\frac{1}{R_2} + \\dots + \\frac{1}{R_n} \\right)^{-1}",
+      "variables_tooltip": "variablesParalelo"
+    },
+    {
+      "titulo": "Dos Resistencias en Paralelo",
+      "katex": "R_{eq} = \\frac{R_1 \\cdot R_2}{R_1 + R_2}",
+      "variables_tooltip": "variablesParalelo"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesCorriente": [
+      {
+        "simbolo": "I_{total}",
+        "nombre": "Corriente Total",
+        "unidad": "Amperios (A)",
+        "descripcion": "Flujo total de electrones suministrado por la fuente de alimentación al circuito equivalente.",
+        "category": "current",
+        "ejemplo": "En un circuito de 10 V con Req de 5 ohmios, la corriente total es de 2 A."
+      },
+      {
+        "simbolo": "V_s",
+        "nombre": "Voltaje de la Fuente",
+        "unidad": "Voltios (V)",
+        "descripcion": "Fuerza electromotriz total aplicada al circuito.",
+        "category": "voltage"
+      },
+      {
+        "simbolo": "R_{eq}",
+        "nombre": "Resistencia Equivalente",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Valor único de resistencia que representa el efecto combinado de todos los resistores en la red.",
+        "category": "resistance"
+      }
+    ],
+    "variablesSerie": [
+      {
+        "simbolo": "R_{eq(serie)}",
+        "nombre": "Resistencia Equivalente en Serie",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Suma algebraica de todas las resistencias conectadas en serie.",
+        "category": "resistance"
+      },
+      {
+        "simbolo": "R_n",
+        "nombre": "Resistencia Individual",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Valor resistivo de un componente individual dentro de la red en serie.",
+        "category": "resistance"
+      }
+    ],
+    "variablesParalelo": [
+      {
+        "simbolo": "R_{eq(paralelo)}",
+        "nombre": "Resistencia Equivalente en Paralelo",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Recíproco de la suma de recíprocos de todas las resistencias en paralelo.",
+        "category": "resistance"
+      },
+      {
+        "simbolo": "R_1",
+        "nombre": "Resistencia 1",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Primera resistencia en la configuración paralelo.",
+        "category": "resistance"
+      },
+      {
+        "simbolo": "R_2",
+        "nombre": "Resistencia 2",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Segunda resistencia en la configuración paralelo.",
+        "category": "resistance"
+      }
+    ]
+  },
+  "grafica_interactiva": {
+    "title": "Comportamiento de la Corriente vs Resistencia Equivalente",
+    "chartType": "ohm",
+    "equation": "I = \\frac{V_s}{R_{eq}}",
+    "hasControls": true,
+    "rValue": 1000,
+    "vValue": 12
+  },
+  "simulacion_dinamica": {
+    "tipo": "Circuito Mixto Básico",
+    "titulo": "Calculadora Interactiva de Equivalencias DC",
+    "descripcion": "Simulación interactiva para calcular Req, caídas de voltaje y divisores de corriente en configuraciones serie y paralelo.",
+    "ancho": 900,
+    "alto": 500,
+    "diagrama": [
+      { "tipo": "fuente", "id": "V1", "x": 100, "y": 250, "valor": "V_s" },
+      { "tipo": "resistor", "id": "R1", "x": 300, "y": 150, "valor": "R_1" },
+      { "tipo": "resistor", "id": "R2", "x": 500, "y": 150, "valor": "R_2" },
+      { "tipo": "tierra", "id": "GND", "x": 100, "y": 400 }
+    ],
+    "controles": [
+      {
+        "id": "v_source",
+        "label": "Voltaje de Fuente (Vs)",
+        "min": 1,
+        "max": 24,
+        "step": 1,
+        "default": 12,
+        "unidad": "V"
+      },
+      {
+        "id": "r1_val",
+        "label": "Resistencia 1 (R1)",
+        "min": 10,
+        "max": 10000,
+        "step": 10,
+        "default": 1000,
+        "unidad": "Ω"
+      },
+      {
+        "id": "r2_val",
+        "label": "Resistencia 2 (R2)",
+        "min": 10,
+        "max": 10000,
+        "step": 10,
+        "default": 2200,
+        "unidad": "Ω"
+      }
+    ],
+    "metricas": [
+      {
+        "label": "Req (Serie)",
+        "formula_katex": "R_{eq} = R_1 + R_2",
+        "calculo": "r1_val + r2_val",
+        "unidad": "Ω"
+      },
+      {
+        "label": "Req (Paralelo)",
+        "formula_katex": "R_{eq} = \\frac{R_1 \\cdot R_2}{R_1 + R_2}",
+        "calculo": "(r1_val * r2_val) / (r1_val + r2_val)",
+        "unidad": "Ω"
+      },
+      {
+        "label": "Corriente Total (Paralelo)",
+        "formula_katex": "I_T = \\frac{V_s}{R_{eq}}",
+        "calculo": "v_source / ((r1_val * r2_val) / (r1_val + r2_val))",
+        "unidad": "A"
+      },
+      {
+        "label": "Corriente Total (Serie)",
+        "formula_katex": "I_T = \\frac{V_s}{R_{eq}}",
+        "calculo": "v_source / (r1_val + r2_val)",
+        "unidad": "A"
+      }
+    ],
+    "graficas": [
+      {
+        "id": "potencia_vs_r",
+        "label": "Potencia Disipada vs R1",
+        "color": "#ff5722",
+        "calculo_y": "(v_source * v_source) / r1_val"
+      }
+    ]
+  },
+  "aplicaciones_reales": [
+    {
+      "titulo": "Acondicionamiento de Sensores",
+      "descripcion": "Los sensores resistivos (como fotoresistencias LDR o termistores NTC) se utilizan frecuentemente en circuitos de 'divisor de tensión' en serie con una resistencia fija. El cálculo del voltaje de salida equivalente es vital para que un microcontrolador pueda leer el entorno físico."
+    },
+    {
+      "titulo": "Ajuste de Impedancias y Rangos",
+      "descripcion": "A menudo, en el laboratorio, no tenemos el valor exacto de resistencia requerido. Calculando equivalencias en paralelo o serie, los ingenieros pueden crear valores 'a la medida' sumando o dividiendo capacidades de resistores comerciales."
+    },
+    {
+      "titulo": "Distribución de Corriente",
+      "descripcion": "En iluminación LED, comprender el cálculo de resistencias equivalentes permite diseñar arreglos en paralelo donde la corriente se divide adecuadamente para no quemar los diodos."
+    }
+  ],
+  "observaciones_pedagogicas": {
+    "error_frecuente": "Los estudiantes suelen sumar las resistencias en paralelo de forma lineal (como si estuvieran en serie). Es crucial enfatizar visualmente que agregar caminos paralelos disminuye la resistencia total (el agua tiene más tuberías por donde fluir).",
+    "intuicion_fisica": "Recomiendo explicar el divisor de voltaje imaginando una caída de presión en una serie de tuberías angostas. Si una resistencia es mucho más grande que la otra, acaparará la mayor caída de voltaje.",
+    "sugerencia_componente": "app-current-flow-animation",
+    "justificacion": "Una interfaz visual donde el grosor y velocidad de los 'electrones' (puntos moviéndose por las líneas del circuito) dependa de la magnitud de la corriente en esa rama. Esto destruye instantáneamente la confusión matemática al darles una representación puramente física e intuitiva de cómo se divide la corriente en un nodo de malla.",
+    "interfaz_requerida": "Animador de Flujo de Corriente con visualización de electrones que varía en grosor y velocidad según la corriente.",
+    "inputs": [
+      "Grafo de nodos con valores de voltaje (V) y corriente (I)",
+      "Configuración del circuito (serie/paralelo/mixto)"
+    ]
+  }
+}

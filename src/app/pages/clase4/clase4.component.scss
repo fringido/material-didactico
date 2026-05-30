@@ -129,3 +129,115 @@
     margin-top: $spacing-2;
   }
 }
+
+.exercises-section {
+  margin-bottom: $spacing-6;
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.exercises-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.exercise-card {
+  padding: $spacing-5;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-3;
+  }
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+
+  &__description {
+    color: $text-secondary;
+    margin-bottom: $spacing-4;
+    line-height: 1.6;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3;
+  }
+}
+
+.exercise-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-4;
+  background: rgba($color-primary-light, 0.1);
+  border-radius: $radius-md;
+  margin-bottom: $spacing-3;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $color-primary-dark;
+  margin-bottom: $spacing-2;
+}
+
+.timer-icon {
+  font-size: $font-size-2xl;
+}
+
+.timer-value {
+  font-family: monospace;
+  font-size: $font-size-3xl;
+}
+
+.timer-message {
+  font-size: $font-size-sm;
+  text-align: center;
+}
+
+.exercise-solution {
+  padding: $spacing-4;
+  background: rgba($color-success, 0.1);
+  border-radius: $radius-md;
+  border-left: 4px solid $color-success;
+}
+
+.solution-title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-success-dark;
+  margin-bottom: $spacing-2;
+}
+
+.solution-text {
+  color: $text-primary;
+  margin-bottom: $spacing-3;
+  line-height: 1.6;
+}
+
+.solution-explanation {
+  padding-top: $spacing-3;
+  border-top: 1px solid $border-secondary;
+}
+
+.exercise-start-btn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}

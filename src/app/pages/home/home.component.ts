@@ -48,8 +48,10 @@ export class HomeComponent implements OnInit {
     // Clase 3 — Análisis DC
     if (t.includes('ohm')) return '/clase/3/tema/ley-de-ohm';
     if (t.includes('kirchhoff') || t.includes('teoremas fundamentales')) return '/clase/3';
+    if (t.includes('resistencia equivalente') || t.includes('equivalente') || t.includes('serie') || t.includes('paralelo')) return '/clase/4/tema/resistencia-equivalente';
     if (t.includes('nodos') || t.includes('mallas')) return '/clase/4';
-    if (t.includes('thevenin') || t.includes('norton')) return '/modulo/1/unidad/2';
+    if (t.includes('máxima transferencia') || t.includes('maximum power') || t.includes('potencia máxima')) return '/clase/4/tema/maximum-power-transfer';
+    if (t.includes('thevenin') || t.includes('norton')) return '/clase/4/tema/maximum-power-transfer';
     if (t.includes('resistencias equivalentes') || t.includes('corrientes, voltajes')) return '/clase/3/tema/tipos-circuitos';
     if (t.includes('leyes y teoremas')) return '/clase/3';
 
