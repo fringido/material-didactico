@@ -40,6 +40,10 @@
     <app-circuit-builder></app-circuit-builder>
   </section>
 
+  <section class="section" *ngIf="componente().simulacion_dinamica">
+    <app-dynamic-circuit-simulator [simulacion]="componente().simulacion_dinamica"></app-dynamic-circuit-simulator>
+  </section>
+
   <!-- OLD GRÁFICAS INTERACTIVAS SECTION REMOVED -->
 
   <!-- LEY / ECUACIÓN FUNDAMENTAL -->
@@ -154,6 +158,11 @@
           <div class="mt-4 mb-2" *ngIf="getChartForContext(s.id) as chart">
             <app-equation-chart [chartType]="chart.type" [title]="chart.title"
               [equation]="chart.equation"></app-equation-chart>
+          </div>
+
+          <!-- Dynamic Simulator -->
+          <div class="mt-4 mb-2" *ngIf="s.simulacion_dinamica">
+            <app-dynamic-circuit-simulator [simulacion]="s.simulacion_dinamica"></app-dynamic-circuit-simulator>
           </div>
 
           <!-- Parámetros técnicos -->

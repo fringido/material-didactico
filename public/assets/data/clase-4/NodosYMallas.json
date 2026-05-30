@@ -1,0 +1,271 @@
+﻿{
+  "id": "nodos-mallas",
+  "nombre": "Análisis de Nodos y Mallas",
+  "descripcion": "El análisis de circuitos eléctricos requiere métodos sistemáticos para resolver redes complejas donde la simple reducción de resistencias en serie y paralelo no es suficiente. Los dos métodos fundamentales son el Análisis de Nodos y el Análisis de Mallas.",
+  "conceptos_clave": [
+    {
+      "nombre": "Análisis de Nodos",
+      "descripcion": "Se fundamenta en la Ley de Corrientes de Kirchhoff (LCK), la cual establece que la suma algebraica de las corrientes que entran y salen de un nodo es igual a cero (\\(\\sum I = 0\\)).",
+      "variable_principal": "Voltajes de nodo (respecto a un nodo de referencia o tierra).",
+      "principio_fisico": "Conservación de la carga eléctrica. La corriente no se acumula en las uniones.",
+      "cuando_usarlo": "Es ideal cuando el circuito tiene muchas fuentes de corriente en paralelo o cuando hay menos nodos que mallas."
+    },
+    {
+      "nombre": "Análisis de Mallas",
+      "descripcion": "Se fundamenta en la Ley de Voltajes de Kirchhoff (LVK), que establece que la suma algebraica de las caídas y subidas de tensión en un lazo cerrado es igual a cero (\\(\\sum V = 0\\)).",
+      "variable_principal": "Corrientes de malla (corrientes ficticias que circulan en lazos cerrados independientes).",
+      "principio_fisico": "Conservación de la energía. El trabajo realizado para mover una carga en un circuito cerrado es cero.",
+      "cuando_usarlo": "Es altamente eficiente en circuitos planos (que se pueden dibujar sin cruce de cables) con predominancia de fuentes de voltaje en serie."
+    }
+  ],
+  "variables": [
+    {
+      "simbolo": "V",
+      "nombre": "Voltaje",
+      "unidad": "Voltios (V)",
+      "descripcion": "Diferencia de potencial eléctrico aplicada a una rama o fuente."
+    },
+    {
+      "simbolo": "I",
+      "nombre": "Corriente",
+      "unidad": "Amperios (A)",
+      "descripcion": "Magnitud de carga que circula por un conductor."
+    },
+    {
+      "simbolo": "R_{eq}",
+      "nombre": "Resistencia equivalente",
+      "unidad": "Ohmios (Ω)",
+      "descripcion": "Resistencia total que reemplaza una red de resistencias."
+    },
+    {
+      "simbolo": "R_x",
+      "nombre": "Resistencia de la rama",
+      "unidad": "Ohmios (Ω)",
+      "descripcion": "Resistencia individual dentro de una red en serie o paralelo."
+    },
+    {
+      "simbolo": "V_x",
+      "nombre": "Voltaje parcial",
+      "unidad": "Voltios (V)",
+      "descripcion": "Caída de tensión sobre una rama específica del circuito."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Resistencia equivalente en serie",
+      "katex": "R_{eq} = R_1 + R_2 + \\\dots + R_n",
+      "variables_tooltip": "variablesReduccion"
+    },
+    {
+      "titulo": "Resistencia equivalente en paralelo",
+      "katex": "\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\\dots + \\frac{1}{R_n}",
+      "variables_tooltip": "variablesReduccion"
+    },
+    {
+      "titulo": "Divisor de voltaje para una rama",
+      "katex": "V_x = V_{fuente} \\cdot \\frac{R_x}{R_{eq}}",
+      "variables_tooltip": "variablesReduccion"
+    },
+    {
+      "titulo": "Ley de Ohm",
+      "katex": "V = I \\cdot R",
+      "variables_tooltip": "variablesReduccion"
+    },
+    {
+      "titulo": "Ecuación de Nodos (LCK en el nodo i)",
+      "katex": "\\sum_{j=1}^{N} \\frac{V_i - V_j}{R_{ij}} - I_{fuentes} = 0",
+      "variables_tooltip": "variablesNodos"
+    },
+    {
+      "titulo": "Ecuación de Mallas (LVK en la malla i)",
+      "katex": "\\sum_{j=1}^{M} (I_i - I_j)R_{ij} - V_{fuentes} = 0",
+      "variables_tooltip": "variablesMallas"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesReduccion": [
+      {
+        "simbolo": "R_{eq}",
+        "nombre": "Resistencia equivalente",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Resistencia total resultante de combinar varias resistencias."
+      },
+      {
+        "simbolo": "R_x",
+        "nombre": "Resistencia de la rama",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Resistencia individual dentro de una red de serie o paralelo."
+      },
+      {
+        "simbolo": "V_{fuente}",
+        "nombre": "Voltaje de la fuente",
+        "unidad": "Voltios (V)",
+        "descripcion": "Diferencia de potencial que impulsa la corriente en la red."
+      },
+      {
+        "simbolo": "V_x",
+        "nombre": "Voltaje sobre la rama",
+        "unidad": "Voltios (V)",
+        "descripcion": "Caída de tensión en una resistencia específica del circuito."
+      },
+      {
+        "simbolo": "I",
+        "nombre": "Corriente",
+        "unidad": "Amperios (A)",
+        "descripcion": "Flujo de carga eléctrica que recorre el circuito."
+      }
+    ],
+    "variablesNodos": [
+      {
+        "simbolo": "V_i",
+        "nombre": "Voltaje del Nodo Analizado",
+        "unidad": "Voltios (V)",
+        "descripcion": "Potencial eléctrico absoluto en el nodo de interés respecto a tierra.",
+        "category": "voltage"
+      },
+      {
+        "simbolo": "V_j",
+        "nombre": "Voltaje del Nodo Adyacente",
+        "unidad": "Voltios (V)",
+        "descripcion": "Potencial eléctrico en los nodos conectados directamente al nodo i.",
+        "category": "voltage"
+      },
+      {
+        "simbolo": "R_{ij}",
+        "nombre": "Resistencia de Rama",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Oposición al flujo de corriente en la rama que conecta el nodo i con el nodo j.",
+        "category": "resistance"
+      },
+      {
+        "simbolo": "I_{fuentes}",
+        "nombre": "Corriente de Fuente",
+        "unidad": "Amperios (A)",
+        "descripcion": "Corrientes inyectadas o extraídas directamente al nodo por fuentes independientes.",
+        "category": "current"
+      }
+    ],
+    "variablesMallas": [
+      {
+        "simbolo": "I_i",
+        "nombre": "Corriente de la Malla Analizada",
+        "unidad": "Amperios (A)",
+        "descripcion": "Corriente circulante asumida para el lazo cerrado principal.",
+        "category": "current"
+      },
+      {
+        "simbolo": "I_j",
+        "nombre": "Corriente de Malla Adyacente",
+        "unidad": "Amperios (A)",
+        "descripcion": "Corriente de un lazo vecino que comparte un componente con la malla i.",
+        "category": "current"
+      },
+      {
+        "simbolo": "R_{ij}",
+        "nombre": "Resistencia Compartida",
+        "unidad": "Ohmios (Ω)",
+        "descripcion": "Resistencia ubicada en la frontera entre la malla i y la malla j.",
+        "category": "resistance"
+      },
+      {
+        "simbolo": "V_{fuentes}",
+        "nombre": "Voltaje de Fuente",
+        "unidad": "Voltios (V)",
+        "descripcion": "Suma algebraica de las fuentes de tensión dentro de la malla.",
+        "category": "voltage"
+      }
+    ]
+  },
+  "grafica_interactiva": {
+    "title": "Comportamiento Lineal: Ley de Ohm",
+    "chartType": "ohm",
+    "equation": "V = I \\cdot R",
+    "hasControls": true,
+    "rValue": 100
+  },
+  "simulacion_dinamica": {
+    "tipo": "Circuito Divisor de Voltaje DC",
+    "titulo": "Divisor de Voltaje Interactivo",
+    "descripcion": "Ajusta los valores de resistencia y observa cómo cambia la corriente total, la resistencia equivalente y la caída de tensión en R2.",
+    "ancho": 900,
+    "alto": 600,
+    "diagrama": [
+      { "tipo": "fuente_ac", "id": "V1", "valor": "10V", "x": 180, "y": 60, "rotacion": 90 },
+      { "tipo": "resistencia", "id": "R1", "valor": "220 Ω", "x": 180, "y": 160, "rotacion": 0 },
+      { "tipo": "resistencia", "id": "R2", "valor": "470 Ω", "x": 180, "y": 280, "rotacion": 0 },
+      { "tipo": "tierra", "id": "GND", "x": 180, "y": 360 },
+      { "tipo": "linea", "x1": 180, "y1": 20, "x2": 180, "y2": 60 },
+      { "tipo": "linea", "x1": 180, "y1": 100, "x2": 180, "y2": 160 },
+      { "tipo": "linea", "x1": 180, "y1": 200, "x2": 180, "y2": 280 },
+      { "tipo": "linea", "x1": 180, "y1": 320, "x2": 180, "y2": 360 },
+      { "tipo": "linea", "x1": 180, "y1": 160, "x2": 280, "y2": 160 },
+      { "tipo": "linea", "x1": 180, "y1": 280, "x2": 280, "y2": 280 },
+      { "tipo": "nodo", "x": 180, "y": 20, "valor": "V_{fuente}" }
+    ],
+    "controles": [
+      { "id": "R2", "label": "Resistencia de salida R2", "min": 100, "max": 10000, "step": 50, "default": 470, "unidad": "Ω" },
+      { "id": "R1", "label": "Resistencia de entrada R1", "min": 100, "max": 10000, "step": 50, "default": 220, "unidad": "Ω" }
+    ],
+    "metricas": [
+      {
+        "label": "Resistencia equivalente total",
+        "formula_katex": "R_{eq} = R_1 + R_2",
+        "calculo": "R1 + R2",
+        "unidad": "Ω"
+      },
+      {
+        "label": "Corriente total",
+        "formula_katex": "I = \\frac{V}{R_{eq}}",
+        "calculo": "10 / (R1 + R2)",
+        "unidad": "A"
+      },
+      {
+        "label": "Voltaje sobre R2",
+        "formula_katex": "V_{R2} = 10 \\cdot \\frac{R2}{R1 + R2}",
+        "calculo": "10 * (R2 / (R1 + R2))",
+        "unidad": "V"
+      }
+    ],
+    "graficas": [
+      {
+        "id": "graf_VR2",
+        "label": "Voltaje en R2 vs R2",
+        "color": "#2563eb",
+        "calculo_y": "10 * (x / (R1 + x))"
+      }
+    ],
+    "matriz_dinamica": {
+      "tipo": "nodos",
+      "filas": [
+        [ "R1 + R2", "-R2", "10" ],
+        [ "-R2", "R2", "0" ]
+      ],
+      "variables": [ "V_1", "V_2" ]
+    }
+  },
+  "aplicaciones_reales": [
+    {
+      "titulo": "Distribución de energía eléctrica",
+      "descripcion": "El análisis nodal se utiliza en estudios de flujo de carga para redes de potencia, donde cada nodo corresponde a subestaciones y transformadores en sistemas eléctricos reales."
+    },
+    {
+      "titulo": "Detección de bucles de tierra en PCBs",
+      "descripcion": "El análisis de mallas ayuda a identificar bucles de corriente de retorno que pueden causar ruido en tarjetas de circuito impreso y sistemas mecatrónicos."
+    },
+    {
+      "titulo": "Diseño de divisores de voltaje",
+      "descripcion": "Los divisores de voltaje se usan en sensores, acondicionadores de señal y redes de referencia para garantizar que la electrónica reciba el nivel de tensión correcto."
+    }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-current-flow-animator",
+    "justificacion": "Un animador de flujo de corriente ayuda a visualizar de forma intuitiva el efecto de cambiar resistencias en serie y paralelo sin depender únicamente del álgebra.",
+    "utilidad": "Permite relacionar el análisis abstracto de nodos y mallas con el comportamiento observable de la corriente y la caída de tensión.",
+    "interfaz_requerida": "Una vista interactiva que muestre la red y el flujo de corriente con controles para resistencias y modos de circuito.",
+    "inputs": [
+      "Valores de resistencia R1 y R2",
+      "Modo de conexión (serie/paralelo)",
+      "Voltaje de fuente"
+    ]
+  }
+}

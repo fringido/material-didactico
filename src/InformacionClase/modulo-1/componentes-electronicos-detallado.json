@@ -66,8 +66,15 @@
                                     "V_{PIV}": "Voltaje de ruptura inversa máximo",
                                     "I_{max}": "Corriente directa máxima continua"
                                 },
-                                "aplicaciones": ["Fuentes de alimentación", "Rectificadores de onda completa", "Protección de polaridad inversa"],
-                                "configuraciones": ["Media onda", "Onda completa (puente de diodos)"]
+                                "aplicaciones": [
+                                    "Fuentes de alimentación",
+                                    "Rectificadores de onda completa",
+                                    "Protección de polaridad inversa"
+                                ],
+                                "configuraciones": [
+                                    "Media onda",
+                                    "Onda completa (puente de diodos)"
+                                ]
                             },
                             {
                                 "id": "diodo_zener",
@@ -81,10 +88,27 @@
                                     "I_{Z,max}": "Corriente máxima antes del daño",
                                     "P_Z": "Potencia de disipación máxima"
                                 },
-                                "aplicaciones": ["Regulación de voltaje en fuentes", "Referencia para comparadores", "Protección contra sobretensiones"],
-                                "ventajas": ["Estabilidad de voltaje bajo carga variable", "Bajo costo", "Amplia disponibilidad"],
-                                "desventajas": ["Limitación de corriente manejable", "Ruido en zona de ruptura", "Dependencia térmica del Vz"],
-                                "criterios_seleccion": ["Vz debe coincidir con voltaje deseado", "Corriente máxima Iz", "Potencia de disipación suficiente", "Tolerancia y estabilidad térmica"]
+                                "aplicaciones": [
+                                    "Regulación de voltaje en fuentes",
+                                    "Referencia para comparadores",
+                                    "Protección contra sobretensiones"
+                                ],
+                                "ventajas": [
+                                    "Estabilidad de voltaje bajo carga variable",
+                                    "Bajo costo",
+                                    "Amplia disponibilidad"
+                                ],
+                                "desventajas": [
+                                    "Limitación de corriente manejable",
+                                    "Ruido en zona de ruptura",
+                                    "Dependencia térmica del Vz"
+                                ],
+                                "criterios_seleccion": [
+                                    "Vz debe coincidir con voltaje deseado",
+                                    "Corriente máxima Iz",
+                                    "Potencia de disipación suficiente",
+                                    "Tolerancia y estabilidad térmica"
+                                ]
                             },
                             {
                                 "id": "diodo_schottky",
@@ -97,7 +121,12 @@
                                     "t_{rr}": "Tiempo de recuperación inversa ≈ ns",
                                     "I_R": "Corriente de fuga inversa mayor que diodo PN"
                                 },
-                                "aplicaciones": ["Fuentes conmutadas (SMPS)", "Circuitos de alta frecuencia", "Clamp de voltaje", "RF y microondas"],
+                                "aplicaciones": [
+                                    "Fuentes conmutadas (SMPS)",
+                                    "Circuitos de alta frecuencia",
+                                    "Clamp de voltaje",
+                                    "RF y microondas"
+                                ],
                                 "ventaja_clave": "Sin carga de portadores minoritarios — conmuta a frecuencias del orden de GHz."
                             },
                             {
@@ -113,14 +142,37 @@
                                     "\\lambda": "Longitud de onda — determina el color emitido"
                                 },
                                 "tipos_por_material": [
-                                    { "material": "Arseniuro de Galio (GaAs)", "color": "Infrarrojo" },
-                                    { "material": "GaAsP", "color": "Rojo / Naranja" },
-                                    { "material": "GaP", "color": "Rojo, amarillo, verde" },
-                                    { "material": "GaN", "color": "Verde, azul" },
-                                    { "material": "GaInN", "color": "Azul, UV" },
-                                    { "material": "AlGaN", "color": "Ultravioleta" }
+                                    {
+                                        "material": "Arseniuro de Galio (GaAs)",
+                                        "color": "Infrarrojo"
+                                    },
+                                    {
+                                        "material": "GaAsP",
+                                        "color": "Rojo / Naranja"
+                                    },
+                                    {
+                                        "material": "GaP",
+                                        "color": "Rojo, amarillo, verde"
+                                    },
+                                    {
+                                        "material": "GaN",
+                                        "color": "Verde, azul"
+                                    },
+                                    {
+                                        "material": "GaInN",
+                                        "color": "Azul, UV"
+                                    },
+                                    {
+                                        "material": "AlGaN",
+                                        "color": "Ultravioleta"
+                                    }
                                 ],
-                                "aplicaciones": ["Iluminación de estado sólido", "Pantallas (matrices LED)", "Transmisores IR", "Indicadores en circuitos"]
+                                "aplicaciones": [
+                                    "Iluminación de estado sólido",
+                                    "Pantallas (matrices LED)",
+                                    "Transmisores IR",
+                                    "Indicadores en circuitos"
+                                ]
                             },
                             {
                                 "id": "diodo_varactor",
@@ -134,7 +186,12 @@
                                     "\\phi": "Potencial de contacto ≈ 0.6 V (Si)",
                                     "n": "Índice de gradación de unión (0.3 – 0.5)"
                                 },
-                                "aplicaciones": ["Sintonizadores de radio y TV", "Moduladores FM", "PLL (Phase-Locked Loop)", "VCO (Osciladores controlados por voltaje)"]
+                                "aplicaciones": [
+                                    "Sintonizadores de radio y TV",
+                                    "Moduladores FM",
+                                    "PLL (Phase-Locked Loop)",
+                                    "VCO (Osciladores controlados por voltaje)"
+                                ]
                             },
                             {
                                 "id": "fotodiodo",
@@ -147,7 +204,12 @@
                                     "P_{opt}": "Potencia óptica incidente",
                                     "I_{oscuro}": "Corriente en ausencia de luz (ruido de fondo)"
                                 },
-                                "aplicaciones": ["Sensores de luz", "Receptores de fibra óptica", "Detectores en cámaras", "Control de iluminación automático"]
+                                "aplicaciones": [
+                                    "Sensores de luz",
+                                    "Receptores de fibra óptica",
+                                    "Detectores en cámaras",
+                                    "Control de iluminación automático"
+                                ]
                             }
                         ]
                     },
@@ -168,7 +230,7 @@
                                     "Colector (C)",
                                     "Emisor (E)"
                                 ],
-                                "ecuacion_fundamental": "I_C = β × I_B",
+                                "ecuacion_fundamental": "I_C = \\beta \\cdot I_B",
                                 "variables": {
                                     "I_C": "Corriente de Colector",
                                     "I_B": "Corriente de Base",
@@ -410,7 +472,7 @@
                         "unidad": "Ohm (Ω)",
                         "ecuacion_principal": "V = I \\cdot R",
                         "ecuacion_impedancia": "Z = R",
-                        "ley_fundamental": "Ley de Ohm: V = I × R",
+                        "ley_fundamental": "Ley de Ohm: V = I \\cdot R",
                         "comportamiento": "Lineal. Su resistencia no varía idealmente con la frecuencia.",
                         "respuesta_frecuencia": "Constante — no varía con la frecuencia.",
                         "funciones": [
@@ -788,26 +850,39 @@
                         "nombre": "Transformador Elevador",
                         "condicion": "N2 > N1",
                         "efecto": "Aumenta el voltaje, disminuye la corriente",
-                        "aplicaciones": ["Transmisión de energía eléctrica", "Sistemas de distribución"]
+                        "aplicaciones": [
+                            "Transmisión de energía eléctrica",
+                            "Sistemas de distribución"
+                        ]
                     },
                     {
                         "nombre": "Transformador Reductor",
                         "condicion": "N2 < N1",
                         "efecto": "Disminuye el voltaje, aumenta la corriente",
-                        "aplicaciones": ["Fuentes de alimentación", "Adaptadores", "Cargadores"]
+                        "aplicaciones": [
+                            "Fuentes de alimentación",
+                            "Adaptadores",
+                            "Cargadores"
+                        ]
                     },
                     {
                         "nombre": "Transformador de Aislamiento",
                         "condicion": "N2 = N1",
                         "efecto": "Mantiene el voltaje, proporciona aislamiento galvánico",
-                        "aplicaciones": ["Protección de equipos", "Seguridad eléctrica"]
+                        "aplicaciones": [
+                            "Protección de equipos",
+                            "Seguridad eléctrica"
+                        ]
                     }
                 ],
                 "perdidas": [
                     {
                         "tipo": "Pérdidas del Núcleo",
                         "causa": "Flujo magnético alterno en el material del núcleo",
-                        "componentes": ["Histéresis magnética", "Corrientes de Foucault"],
+                        "componentes": [
+                            "Histéresis magnética",
+                            "Corrientes de Foucault"
+                        ],
                         "solucion": "Laminaciones del núcleo para reducir corrientes parásitas"
                     },
                     {
@@ -876,19 +951,30 @@
                         "nombre": "Lineal",
                         "codigo": "B",
                         "descripcion": "La resistencia varía proporcionalmente con el ángulo de rotación",
-                        "aplicaciones": ["Control de volumen", "Ajuste de brillo", "Control de velocidad"]
+                        "aplicaciones": [
+                            "Control de volumen",
+                            "Ajuste de brillo",
+                            "Control de velocidad"
+                        ]
                     },
                     {
                         "nombre": "Logarítmico (Audio)",
                         "codigo": "A",
                         "descripcion": "Variación exponencial, coincide con la percepción auditiva humana",
-                        "aplicaciones": ["Control de volumen en audio", "Ecualizadores", "Mezcladores"]
+                        "aplicaciones": [
+                            "Control de volumen en audio",
+                            "Ecualizadores",
+                            "Mezcladores"
+                        ]
                     },
                     {
                         "nombre": "Antilogarítmico",
                         "codigo": "C",
                         "descripcion": "Variación inversa al logarítmico",
-                        "aplicaciones": ["Aplicaciones especializadas", "Balance de audio"]
+                        "aplicaciones": [
+                            "Aplicaciones especializadas",
+                            "Balance de audio"
+                        ]
                     }
                 ],
                 "tipos_por_construccion": [
@@ -896,22 +982,38 @@
                         "nombre": "Rotativo",
                         "descripcion": "Ajuste mediante rotación de una perilla",
                         "giros": "Simple (270°) o múltiple (10+ vueltas para precisión)",
-                        "aplicaciones": ["Paneles de control", "Equipos de audio", "Instrumentos"]
+                        "aplicaciones": [
+                            "Paneles de control",
+                            "Equipos de audio",
+                            "Instrumentos"
+                        ]
                     },
                     {
                         "nombre": "Deslizante (Slider)",
                         "descripcion": "Ajuste lineal mediante deslizamiento",
-                        "aplicaciones": ["Mezcladores de audio", "Ecualizadores gráficos", "Controles de iluminación"]
+                        "aplicaciones": [
+                            "Mezcladores de audio",
+                            "Ecualizadores gráficos",
+                            "Controles de iluminación"
+                        ]
                     },
                     {
                         "nombre": "Trimmer (Preset)",
                         "descripcion": "Ajuste fino con destornillador, montaje en PCB",
-                        "aplicaciones": ["Calibración de circuitos", "Ajustes de fábrica", "Prototipos"]
+                        "aplicaciones": [
+                            "Calibración de circuitos",
+                            "Ajustes de fábrica",
+                            "Prototipos"
+                        ]
                     },
                     {
                         "nombre": "Digital",
                         "descripcion": "Control electrónico mediante señales digitales",
-                        "aplicaciones": ["Sistemas automatizados", "Control remoto", "Interfaces digitales"]
+                        "aplicaciones": [
+                            "Sistemas automatizados",
+                            "Control remoto",
+                            "Interfaces digitales"
+                        ]
                     }
                 ],
                 "caracteristicas": [
@@ -947,27 +1049,52 @@
                 "aplicaciones": [
                     {
                         "categoria": "Audio",
-                        "usos": ["Control de volumen", "Balance estéreo", "Tono (graves/agudos)", "Ganancia en amplificadores"]
+                        "usos": [
+                            "Control de volumen",
+                            "Balance estéreo",
+                            "Tono (graves/agudos)",
+                            "Ganancia en amplificadores"
+                        ]
                     },
                     {
                         "categoria": "Iluminación",
-                        "usos": ["Reguladores de intensidad (dimmers)", "Control de brillo en pantallas", "Iluminación escénica"]
+                        "usos": [
+                            "Reguladores de intensidad (dimmers)",
+                            "Control de brillo en pantallas",
+                            "Iluminación escénica"
+                        ]
                     },
                     {
                         "categoria": "Control de Motores",
-                        "usos": ["Velocidad de ventiladores", "Control de RPM", "Cintas transportadoras"]
+                        "usos": [
+                            "Velocidad de ventiladores",
+                            "Control de RPM",
+                            "Cintas transportadoras"
+                        ]
                     },
                     {
                         "categoria": "Instrumentación",
-                        "usos": ["Ajuste de parámetros en osciloscopios", "Calibración de equipos", "Mediciones precisas"]
+                        "usos": [
+                            "Ajuste de parámetros en osciloscopios",
+                            "Calibración de equipos",
+                            "Mediciones precisas"
+                        ]
                     },
                     {
                         "categoria": "Control de Temperatura",
-                        "usos": ["Termostatos ajustables", "Sistemas HVAC", "Hornos y estufas"]
+                        "usos": [
+                            "Termostatos ajustables",
+                            "Sistemas HVAC",
+                            "Hornos y estufas"
+                        ]
                     },
                     {
                         "categoria": "Radiofrecuencia",
-                        "usos": ["Sintonización de frecuencia", "Ajuste de ganancia RF", "Control de antena"]
+                        "usos": [
+                            "Sintonización de frecuencia",
+                            "Ajuste de ganancia RF",
+                            "Control de antena"
+                        ]
                     }
                 ],
                 "ventajas": [

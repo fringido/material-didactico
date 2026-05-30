@@ -11,6 +11,7 @@ import { AmplifierLabComponent } from '../../../components/amplifier-lab/amplifi
 import { ComponentSymbolsComponent } from '../../../components/component-symbols/component-symbols.component';
 import { CircuitBuilderComponent } from '../../../components/circuit-builder/circuit-builder.component';
 import { PageBackBarComponent } from '../../../components/page-back-bar/page-back-bar.component';
+import { DynamicCircuitSimulatorComponent } from '../../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
 
 @Component({
   selector: 'app-componente-detalle',
@@ -26,7 +27,8 @@ import { PageBackBarComponent } from '../../../components/page-back-bar/page-bac
     AmplifierLabComponent,
     ComponentSymbolsComponent,
     CircuitBuilderComponent,
-    PageBackBarComponent
+    PageBackBarComponent,
+    DynamicCircuitSimulatorComponent
   ],
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']

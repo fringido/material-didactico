@@ -66,8 +66,43 @@
                                     "V_{PIV}": "Voltaje de ruptura inversa máximo",
                                     "I_{max}": "Corriente directa máxima continua"
                                 },
-                                "aplicaciones": ["Fuentes de alimentación", "Rectificadores de onda completa", "Protección de polaridad inversa"],
-                                "configuraciones": ["Media onda", "Onda completa (puente de diodos)"]
+                                "aplicaciones": [
+                                    "Fuentes de alimentación",
+                                    "Rectificadores de onda completa",
+                                    "Protección de polaridad inversa"
+                                ],
+                                "configuraciones": [
+                                    "Media onda",
+                                    "Onda completa (puente de diodos)"
+                                ],
+                                "simulacion_dinamica": {
+                                    "tipo": "rectificador",
+                                    "titulo": "Rectificador de Media Onda",
+                                    "descripcion": "Simulación interactiva de un circuito rectificador con carga resistiva.",
+                                    "ancho": 220,
+                                    "alto": 200,
+                                    "diagrama": [
+                                        { "tipo": "fuente_ac", "x": 30, "y": 100 },
+                                        { "tipo": "linea", "x1": 30, "y1": 30, "x2": 70, "y2": 30 },
+                                        { "tipo": "diodo", "x": 70, "y": 20, "id": "D1", "valor": "Si" },
+                                        { "tipo": "linea", "x1": 85, "y1": 30, "x2": 140, "y2": 30 },
+                                        { "tipo": "nodo", "x": 140, "y": 30, "valor": "Vout" },
+                                        { "tipo": "resistencia", "x": 130, "y": 60, "id": "RL" },
+                                        { "tipo": "tierra", "x": 85, "y": 170 }
+                                    ],
+                                    "controles": [
+                                        { "id": "vin", "label": "Voltaje AC Pico", "min": 1, "max": 15, "step": 0.5, "default": 6, "unidad": "V" },
+                                        { "id": "vd", "label": "Caída Diodo (Vd)", "min": 0.2, "max": 1.2, "step": 0.1, "default": 0.7, "unidad": "V" }
+                                    ],
+                                    "metricas": [
+                                        { "label": "Vout Pico", "formula_katex": "V_{o,p} = V_{in,p} - V_D", "calculo": "Math.max(0, vin - vd)", "unidad": "V" },
+                                        { "label": "Vout Promedio", "formula_katex": "V_{dc} = \\frac{V_{o,p}}{\\pi}", "calculo": "Math.max(0, vin - vd) / Math.PI", "unidad": "V" }
+                                    ],
+                                    "graficas": [
+                                        { "id": "vin_wave", "label": "Entrada (Vin)", "color": "#3b82f6", "calculo_y": "vin * Math.sin(x)" },
+                                        { "id": "vout_wave", "label": "Salida (Vout)", "color": "#10b981", "calculo_y": "Math.max(0, vin * Math.sin(x) - vd)" }
+                                    ]
+                                }
                             },
                             {
                                 "id": "diodo_zener",
@@ -81,10 +116,27 @@
                                     "I_{Z,max}": "Corriente máxima antes del daño",
                                     "P_Z": "Potencia de disipación máxima"
                                 },
-                                "aplicaciones": ["Regulación de voltaje en fuentes", "Referencia para comparadores", "Protección contra sobretensiones"],
-                                "ventajas": ["Estabilidad de voltaje bajo carga variable", "Bajo costo", "Amplia disponibilidad"],
-                                "desventajas": ["Limitación de corriente manejable", "Ruido en zona de ruptura", "Dependencia térmica del Vz"],
-                                "criterios_seleccion": ["Vz debe coincidir con voltaje deseado", "Corriente máxima Iz", "Potencia de disipación suficiente", "Tolerancia y estabilidad térmica"]
+                                "aplicaciones": [
+                                    "Regulación de voltaje en fuentes",
+                                    "Referencia para comparadores",
+                                    "Protección contra sobretensiones"
+                                ],
+                                "ventajas": [
+                                    "Estabilidad de voltaje bajo carga variable",
+                                    "Bajo costo",
+                                    "Amplia disponibilidad"
+                                ],
+                                "desventajas": [
+                                    "Limitación de corriente manejable",
+                                    "Ruido en zona de ruptura",
+                                    "Dependencia térmica del Vz"
+                                ],
+                                "criterios_seleccion": [
+                                    "Vz debe coincidir con voltaje deseado",
+                                    "Corriente máxima Iz",
+                                    "Potencia de disipación suficiente",
+                                    "Tolerancia y estabilidad térmica"
+                                ]
                             },
                             {
                                 "id": "diodo_schottky",
@@ -97,7 +149,12 @@
                                     "t_{rr}": "Tiempo de recuperación inversa ≈ ns",
                                     "I_R": "Corriente de fuga inversa mayor que diodo PN"
                                 },
-                                "aplicaciones": ["Fuentes conmutadas (SMPS)", "Circuitos de alta frecuencia", "Clamp de voltaje", "RF y microondas"],
+                                "aplicaciones": [
+                                    "Fuentes conmutadas (SMPS)",
+                                    "Circuitos de alta frecuencia",
+                                    "Clamp de voltaje",
+                                    "RF y microondas"
+                                ],
                                 "ventaja_clave": "Sin carga de portadores minoritarios — conmuta a frecuencias del orden de GHz."
                             },
                             {
@@ -113,14 +170,37 @@
                                     "\\lambda": "Longitud de onda — determina el color emitido"
                                 },
                                 "tipos_por_material": [
-                                    { "material": "Arseniuro de Galio (GaAs)", "color": "Infrarrojo" },
-                                    { "material": "GaAsP", "color": "Rojo / Naranja" },
-                                    { "material": "GaP", "color": "Rojo, amarillo, verde" },
-                                    { "material": "GaN", "color": "Verde, azul" },
-                                    { "material": "GaInN", "color": "Azul, UV" },
-                                    { "material": "AlGaN", "color": "Ultravioleta" }
+                                    {
+                                        "material": "Arseniuro de Galio (GaAs)",
+                                        "color": "Infrarrojo"
+                                    },
+                                    {
+                                        "material": "GaAsP",
+                                        "color": "Rojo / Naranja"
+                                    },
+                                    {
+                                        "material": "GaP",
+                                        "color": "Rojo, amarillo, verde"
+                                    },
+                                    {
+                                        "material": "GaN",
+                                        "color": "Verde, azul"
+                                    },
+                                    {
+                                        "material": "GaInN",
+                                        "color": "Azul, UV"
+                                    },
+                                    {
+                                        "material": "AlGaN",
+                                        "color": "Ultravioleta"
+                                    }
                                 ],
-                                "aplicaciones": ["Iluminación de estado sólido", "Pantallas (matrices LED)", "Transmisores IR", "Indicadores en circuitos"]
+                                "aplicaciones": [
+                                    "Iluminación de estado sólido",
+                                    "Pantallas (matrices LED)",
+                                    "Transmisores IR",
+                                    "Indicadores en circuitos"
+                                ]
                             },
                             {
                                 "id": "diodo_varactor",
@@ -134,7 +214,12 @@
                                     "\\phi": "Potencial de contacto ≈ 0.6 V (Si)",
                                     "n": "Índice de gradación de unión (0.3 – 0.5)"
                                 },
-                                "aplicaciones": ["Sintonizadores de radio y TV", "Moduladores FM", "PLL (Phase-Locked Loop)", "VCO (Osciladores controlados por voltaje)"]
+                                "aplicaciones": [
+                                    "Sintonizadores de radio y TV",
+                                    "Moduladores FM",
+                                    "PLL (Phase-Locked Loop)",
+                                    "VCO (Osciladores controlados por voltaje)"
+                                ]
                             },
                             {
                                 "id": "fotodiodo",
@@ -147,7 +232,12 @@
                                     "P_{opt}": "Potencia óptica incidente",
                                     "I_{oscuro}": "Corriente en ausencia de luz (ruido de fondo)"
                                 },
-                                "aplicaciones": ["Sensores de luz", "Receptores de fibra óptica", "Detectores en cámaras", "Control de iluminación automático"]
+                                "aplicaciones": [
+                                    "Sensores de luz",
+                                    "Receptores de fibra óptica",
+                                    "Detectores en cámaras",
+                                    "Control de iluminación automático"
+                                ]
                             }
                         ]
                     },
@@ -168,7 +258,7 @@
                                     "Colector (C)",
                                     "Emisor (E)"
                                 ],
-                                "ecuacion_fundamental": "I_C = β × I_B",
+                                "ecuacion_fundamental": "I_C = \\beta \\cdot I_B",
                                 "variables": {
                                     "I_C": "Corriente de Colector",
                                     "I_B": "Corriente de Base",
@@ -278,15 +368,43 @@
                             }
                         ],
                         "configuraciones_bjt": [
-                            { "nombre": "Emisor Común", "ganancia": "Alta V, Alta I", "fase": "Invierte" },
-                            { "nombre": "Colector Común", "ganancia": "≈1 V, Alta I", "fase": "Mantiene" },
-                            { "nombre": "Base Común", "ganancia": "Alta V, ≈1 I", "fase": "Mantiene" }
+                            {
+                                "nombre": "Emisor Común",
+                                "ganancia": "Alta V, Alta I",
+                                "fase": "Invierte"
+                            },
+                            {
+                                "nombre": "Colector Común",
+                                "ganancia": "≈1 V, Alta I",
+                                "fase": "Mantiene"
+                            },
+                            {
+                                "nombre": "Base Común",
+                                "ganancia": "Alta V, ≈1 I",
+                                "fase": "Mantiene"
+                            }
                         ],
                         "clasificacion_clase": [
-                            { "clase": "A", "eficiencia": "25%", "uso": "Audio Hi-Fi" },
-                            { "clase": "B", "eficiencia": "78.5%", "uso": "Push-Pull" },
-                            { "clase": "AB", "eficiencia": "60-70%", "uso": "Audio Comercial" },
-                            { "clase": "C", "eficiencia": "90%+", "uso": "RF / Transmisores" }
+                            {
+                                "clase": "A",
+                                "eficiencia": "25%",
+                                "uso": "Audio Hi-Fi"
+                            },
+                            {
+                                "clase": "B",
+                                "eficiencia": "78.5%",
+                                "uso": "Push-Pull"
+                            },
+                            {
+                                "clase": "AB",
+                                "eficiencia": "60-70%",
+                                "uso": "Audio Comercial"
+                            },
+                            {
+                                "clase": "C",
+                                "eficiencia": "90%+",
+                                "uso": "RF / Transmisores"
+                            }
                         ]
                     }
                 ]
@@ -303,7 +421,7 @@
                         "unidad": "Ohm (Ω)",
                         "ecuacion_principal": "V = I \\cdot R",
                         "ecuacion_impedancia": "Z = R",
-                        "ley_fundamental": "Ley de Ohm: V = I × R",
+                        "ley_fundamental": "Ley de Ohm: V = I \\cdot R",
                         "comportamiento": "Lineal. Su resistencia no varía idealmente con la frecuencia.",
                         "respuesta_frecuencia": "Constante — no varía con la frecuencia.",
                         "funciones": [
@@ -640,6 +758,105 @@
         ],
         "otros_componentes": [
             {
+                "id": "nodos-mallas",
+                "nombre": "Análisis de Nodos y Mallas",
+                "descripcion": "El análisis de circuitos eléctricos requiere métodos sistemáticos para resolver redes complejas donde la simple reducción de resistencias en serie y paralelo no es suficiente.",
+                "conceptos_clave_arr": [
+                    {
+                        "nombre": "Análisis de Nodos",
+                        "descripcion": "Se fundamenta en la Ley de Corrientes de Kirchhoff (LCK) (\\(\\sum I = 0\\)).",
+                        "variable_principal": "Voltajes de nodo (respecto a un nodo de referencia o tierra).",
+                        "principio_fisico": "Conservación de la carga eléctrica.",
+                        "cuando_usarlo": "Es ideal cuando el circuito tiene muchas fuentes de corriente en paralelo o cuando hay menos nodos que mallas."
+                    },
+                    {
+                        "nombre": "Análisis de Mallas",
+                        "descripcion": "Se fundamenta en la Ley de Voltajes de Kirchhoff (LVK) (\\(\\sum V = 0\\)).",
+                        "variable_principal": "Corrientes de malla.",
+                        "principio_fisico": "Conservación de la energía.",
+                        "cuando_usarlo": "Es altamente eficiente en circuitos planos con predominancia de fuentes de voltaje en serie."
+                    }
+                ],
+                "formulas": [
+                    {
+                        "titulo": "Ecuación de Nodos (LCK en el nodo i)",
+                        "katex": "\\sum_{j=1}^{N} \\frac{V_i - V_j}{R_{ij}} - I_{fuentes} = 0",
+                        "variables_tooltip": "variablesNodos"
+                    },
+                    {
+                        "titulo": "Ecuación de Mallas (LVK en la malla i)",
+                        "katex": "\\sum_{j=1}^{M} (I_i - I_j)R_{ij} - V_{fuentes} = 0",
+                        "variables_tooltip": "variablesMallas"
+                    }
+                ],
+                "variables_tooltips": {
+                    "variablesNodos": [
+                        { "simbolo": "V_i", "nombre": "Voltaje del Nodo Analizado", "unidad": "Voltios (V)", "descripcion": "Potencial eléctrico absoluto en el nodo de interés respecto a tierra.", "category": "voltage" },
+                        { "simbolo": "V_j", "nombre": "Voltaje del Nodo Adyacente", "unidad": "Voltios (V)", "descripcion": "Potencial eléctrico en los nodos conectados directamente al nodo i.", "category": "voltage" },
+                        { "simbolo": "R_{ij}", "nombre": "Resistencia de Rama", "unidad": "Ohmios (Ω)", "descripcion": "Oposición al flujo de corriente en la rama.", "category": "resistance" },
+                        { "simbolo": "I_{fuentes}", "nombre": "Corriente de Fuente", "unidad": "Amperios (A)", "descripcion": "Corrientes inyectadas o extraídas directamente al nodo por fuentes independientes.", "category": "current" }
+                    ],
+                    "variablesMallas": [
+                        { "simbolo": "I_i", "nombre": "Corriente de la Malla Analizada", "unidad": "Amperios (A)", "descripcion": "Corriente circulante asumida para el lazo cerrado principal.", "category": "current" },
+                        { "simbolo": "I_j", "nombre": "Corriente de Malla Adyacente", "unidad": "Amperios (A)", "descripcion": "Corriente de un lazo vecino que comparte un componente con la malla i.", "category": "current" },
+                        { "simbolo": "R_{ij}", "nombre": "Resistencia Compartida", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia ubicada en la frontera entre la malla i y la malla j.", "category": "resistance" },
+                        { "simbolo": "V_{fuentes}", "nombre": "Voltaje de Fuente", "unidad": "Voltios (V)", "descripcion": "Suma algebraica de las fuentes de tensión dentro de la malla.", "category": "voltage" }
+                    ]
+                },
+                "simulacion_dinamica": {
+                    "tipo": "Circuito DC Multilazo",
+                    "titulo": "Comparativa de Nodos y Mallas en Tiempo Real",
+                    "descripcion": "Simulación interactiva de un circuito puente simple. Altera los valores de las resistencias y observa cómo cambian simultáneamente los voltajes de nodo y las corrientes de malla.",
+                    "ancho": 600,
+                    "alto": 400,
+                    "diagrama": [
+                        { "tipo": "fuente", "id": "V1", "valor": "12V", "x": 100, "y": 200, "rotacion": 90 },
+                        { "tipo": "resistor", "id": "R1", "valor": "1kΩ", "x": 200, "y": 100, "rotacion": 0 },
+                        { "tipo": "resistor", "id": "R2", "valor": "2.2kΩ", "x": 300, "y": 200, "rotacion": 90 },
+                        { "tipo": "resistor", "id": "R3", "valor": "1kΩ", "x": 400, "y": 100, "rotacion": 0 },
+                        { "tipo": "fuente", "id": "V2", "valor": "5V", "x": 500, "y": 200, "rotacion": 90 },
+                        { "tipo": "tierra", "id": "GND", "x": 300, "y": 300 },
+                        { "tipo": "linea", "x1": 100, "y1": 100, "x2": 200, "y2": 100 },
+                        { "tipo": "linea", "x1": 200, "y1": 100, "x2": 400, "y2": 100 },
+                        { "tipo": "linea", "x1": 400, "y1": 100, "x2": 500, "y2": 100 },
+                        { "tipo": "linea", "x1": 100, "y1": 300, "x2": 500, "y2": 300 },
+                        { "tipo": "linea", "x1": 100, "y1": 100, "x2": 100, "y2": 200 },
+                        { "tipo": "linea", "x1": 100, "y1": 200, "x2": 100, "y2": 300 },
+                        { "tipo": "linea", "x1": 300, "y1": 100, "x2": 300, "y2": 200 },
+                        { "tipo": "linea", "x1": 300, "y1": 200, "x2": 300, "y2": 300 },
+                        { "tipo": "linea", "x1": 500, "y1": 100, "x2": 500, "y2": 200 },
+                        { "tipo": "linea", "x1": 500, "y1": 200, "x2": 500, "y2": 300 },
+                        { "tipo": "nodo", "x": 300, "y": 100, "valor": "V_A" }
+                    ],
+                    "controles": [
+                        { "id": "val_R2", "label": "Resistencia Central (R2)", "min": 100, "max": 5000, "step": 100, "default": 2200, "unidad": "Ω" },
+                        { "id": "val_V1", "label": "Fuente Izquierda (V1)", "min": -24, "max": 24, "step": 1, "default": 12, "unidad": "V" }
+                    ],
+                    "metricas": [
+                        {
+                            "label": "Voltaje en el Nodo Superior (V_A)",
+                            "formula_katex": "V_A = \\frac{\\frac{V_1}{R_1} + \\frac{V_2}{R_3}}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}",
+                            "calculo": "(val_V1/1000 + 5/1000) / (1/1000 + 1/val_R2 + 1/1000)",
+                            "unidad": "V"
+                        },
+                        {
+                            "label": "Corriente Malla 1 (I_1)",
+                            "formula_katex": "I_1 = \\frac{V_1 - V_A}{R_1}",
+                            "calculo": "(val_V1 - ((val_V1/1000 + 5/1000) / (1/1000 + 1/val_R2 + 1/1000))) / 1000 * 1000",
+                            "unidad": "mA"
+                        }
+                    ],
+                    "matriz_dinamica": {
+                        "tipo": "mallas",
+                        "filas": [
+                            [ "1000 + val_R2", "-val_R2", "val_V1" ],
+                            [ "-val_R2", "val_R2 + 1000", "-5" ]
+                        ],
+                        "variables": [ "I_1", "I_2" ]
+                    }
+                }
+            },
+            {
                 "id": "transformador",
                 "nombre": "Transformador",
                 "tipo": "Pasivo",
@@ -681,26 +898,39 @@
                         "nombre": "Transformador Elevador",
                         "condicion": "N2 > N1",
                         "efecto": "Aumenta el voltaje, disminuye la corriente",
-                        "aplicaciones": ["Transmisión de energía eléctrica", "Sistemas de distribución"]
+                        "aplicaciones": [
+                            "Transmisión de energía eléctrica",
+                            "Sistemas de distribución"
+                        ]
                     },
                     {
                         "nombre": "Transformador Reductor",
                         "condicion": "N2 < N1",
                         "efecto": "Disminuye el voltaje, aumenta la corriente",
-                        "aplicaciones": ["Fuentes de alimentación", "Adaptadores", "Cargadores"]
+                        "aplicaciones": [
+                            "Fuentes de alimentación",
+                            "Adaptadores",
+                            "Cargadores"
+                        ]
                     },
                     {
                         "nombre": "Transformador de Aislamiento",
                         "condicion": "N2 = N1",
                         "efecto": "Mantiene el voltaje, proporciona aislamiento galvánico",
-                        "aplicaciones": ["Protección de equipos", "Seguridad eléctrica"]
+                        "aplicaciones": [
+                            "Protección de equipos",
+                            "Seguridad eléctrica"
+                        ]
                     }
                 ],
                 "perdidas": [
                     {
                         "tipo": "Pérdidas del Núcleo",
                         "causa": "Flujo magnético alterno en el material del núcleo",
-                        "componentes": ["Histéresis magnética", "Corrientes de Foucault"],
+                        "componentes": [
+                            "Histéresis magnética",
+                            "Corrientes de Foucault"
+                        ],
                         "solucion": "Laminaciones del núcleo para reducir corrientes parásitas"
                     },
                     {
@@ -769,19 +999,30 @@
                         "nombre": "Lineal",
                         "codigo": "B",
                         "descripcion": "La resistencia varía proporcionalmente con el ángulo de rotación",
-                        "aplicaciones": ["Control de volumen", "Ajuste de brillo", "Control de velocidad"]
+                        "aplicaciones": [
+                            "Control de volumen",
+                            "Ajuste de brillo",
+                            "Control de velocidad"
+                        ]
                     },
                     {
                         "nombre": "Logarítmico (Audio)",
                         "codigo": "A",
                         "descripcion": "Variación exponencial, coincide con la percepción auditiva humana",
-                        "aplicaciones": ["Control de volumen en audio", "Ecualizadores", "Mezcladores"]
+                        "aplicaciones": [
+                            "Control de volumen en audio",
+                            "Ecualizadores",
+                            "Mezcladores"
+                        ]
                     },
                     {
                         "nombre": "Antilogarítmico",
                         "codigo": "C",
                         "descripcion": "Variación inversa al logarítmico",
-                        "aplicaciones": ["Aplicaciones especializadas", "Balance de audio"]
+                        "aplicaciones": [
+                            "Aplicaciones especializadas",
+                            "Balance de audio"
+                        ]
                     }
                 ],
                 "tipos_por_construccion": [
@@ -789,22 +1030,38 @@
                         "nombre": "Rotativo",
                         "descripcion": "Ajuste mediante rotación de una perilla",
                         "giros": "Simple (270°) o múltiple (10+ vueltas para precisión)",
-                        "aplicaciones": ["Paneles de control", "Equipos de audio", "Instrumentos"]
+                        "aplicaciones": [
+                            "Paneles de control",
+                            "Equipos de audio",
+                            "Instrumentos"
+                        ]
                     },
                     {
                         "nombre": "Deslizante (Slider)",
                         "descripcion": "Ajuste lineal mediante deslizamiento",
-                        "aplicaciones": ["Mezcladores de audio", "Ecualizadores gráficos", "Controles de iluminación"]
+                        "aplicaciones": [
+                            "Mezcladores de audio",
+                            "Ecualizadores gráficos",
+                            "Controles de iluminación"
+                        ]
                     },
                     {
                         "nombre": "Trimmer (Preset)",
                         "descripcion": "Ajuste fino con destornillador, montaje en PCB",
-                        "aplicaciones": ["Calibración de circuitos", "Ajustes de fábrica", "Prototipos"]
+                        "aplicaciones": [
+                            "Calibración de circuitos",
+                            "Ajustes de fábrica",
+                            "Prototipos"
+                        ]
                     },
                     {
                         "nombre": "Digital",
                         "descripcion": "Control electrónico mediante señales digitales",
-                        "aplicaciones": ["Sistemas automatizados", "Control remoto", "Interfaces digitales"]
+                        "aplicaciones": [
+                            "Sistemas automatizados",
+                            "Control remoto",
+                            "Interfaces digitales"
+                        ]
                     }
                 ],
                 "caracteristicas": [
@@ -840,27 +1097,52 @@
                 "aplicaciones": [
                     {
                         "categoria": "Audio",
-                        "usos": ["Control de volumen", "Balance estéreo", "Tono (graves/agudos)", "Ganancia en amplificadores"]
+                        "usos": [
+                            "Control de volumen",
+                            "Balance estéreo",
+                            "Tono (graves/agudos)",
+                            "Ganancia en amplificadores"
+                        ]
                     },
                     {
                         "categoria": "Iluminación",
-                        "usos": ["Reguladores de intensidad (dimmers)", "Control de brillo en pantallas", "Iluminación escénica"]
+                        "usos": [
+                            "Reguladores de intensidad (dimmers)",
+                            "Control de brillo en pantallas",
+                            "Iluminación escénica"
+                        ]
                     },
                     {
                         "categoria": "Control de Motores",
-                        "usos": ["Velocidad de ventiladores", "Control de RPM", "Cintas transportadoras"]
+                        "usos": [
+                            "Velocidad de ventiladores",
+                            "Control de RPM",
+                            "Cintas transportadoras"
+                        ]
                     },
                     {
                         "categoria": "Instrumentación",
-                        "usos": ["Ajuste de parámetros en osciloscopios", "Calibración de equipos", "Mediciones precisas"]
+                        "usos": [
+                            "Ajuste de parámetros en osciloscopios",
+                            "Calibración de equipos",
+                            "Mediciones precisas"
+                        ]
                     },
                     {
                         "categoria": "Control de Temperatura",
-                        "usos": ["Termostatos ajustables", "Sistemas HVAC", "Hornos y estufas"]
+                        "usos": [
+                            "Termostatos ajustables",
+                            "Sistemas HVAC",
+                            "Hornos y estufas"
+                        ]
                     },
                     {
                         "categoria": "Radiofrecuencia",
-                        "usos": ["Sintonización de frecuencia", "Ajuste de ganancia RF", "Control de antena"]
+                        "usos": [
+                            "Sintonización de frecuencia",
+                            "Ajuste de ganancia RF",
+                            "Control de antena"
+                        ]
                     }
                 ],
                 "ventajas": [

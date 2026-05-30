@@ -182,7 +182,51 @@ src/InformacionClase/
   },
   "terminales": ["array"],
   "aplicaciones": ["array"],
-  "simulador": boolean
+  "simulador": true,
+  "simulacion_dinamica": {
+    "tipo": "string (opcional, ej. rc_serie, divisor)",
+    "titulo": "string (opcional)",
+    "descripcion": "string (opcional)",
+    "ancho": 200,
+    "alto": 200,
+    "diagrama": [
+      {
+        "tipo": "linea|fuente_ac|resistencia|capacitor|diodo|nodo|tierra|transistor_bjt",
+        "x": 30, "y": 100,
+        "x1": 30, "y1": 30, "x2": 70, "y2": 30,
+        "id": "R1",
+        "rotacion": 0,
+        "valor": "string (opcional, ej. {{ R1 }}Ω)"
+      }
+    ],
+    "controles": [
+      {
+        "id": "vin",
+        "label": "Voltaje Pico",
+        "min": 1,
+        "max": 15,
+        "step": 0.5,
+        "default": 5,
+        "unidad": "V"
+      }
+    ],
+    "metricas": [
+      {
+        "label": "Vout",
+        "formula_katex": "V_{out} = V_{in} - V_d",
+        "calculo": "vin - 0.7",
+        "unidad": "V"
+      }
+    ],
+    "graficas": [
+      {
+        "id": "vout",
+        "label": "Señal de Salida",
+        "color": "#10b981",
+        "calculo_y": "Math.max(0, vin * Math.sin(x) - vd)"
+      }
+    ]
+  }
 }
 ```
 

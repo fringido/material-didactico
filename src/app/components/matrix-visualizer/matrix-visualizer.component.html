@@ -1,0 +1,32 @@
+<div class="matrix-container">
+  <h4 class="matrix-title">Formulación Matricial: Análisis de {{ matriz.tipo | titlecase }}</h4>
+  <p class="matrix-subtitle">Valores calculados en tiempo real según el circuito [A][x] = [B]</p>
+
+  <div class="matrix-equation">
+    <!-- Matriz A -->
+    <div class="matrix-bracket left"></div>
+    <div class="matrix-grid" [style.grid-template-columns]="'repeat(' + matrizA()[0]?.length + ', 1fr)'">
+      <ng-container *ngFor="let fila of matrizA()">
+        <div class="matrix-cell" *ngFor="let celda of fila">{{ celda }}</div>
+      </ng-container>
+    </div>
+    <div class="matrix-bracket right"></div>
+
+    <!-- Vector Variables -->
+    <div class="matrix-bracket left ml-2"></div>
+    <div class="matrix-grid vector-variables">
+      <div class="matrix-cell cell-var" *ngFor="let variable of matriz.variables">{{ variable }}</div>
+    </div>
+    <div class="matrix-bracket right"></div>
+
+    <!-- Igual -->
+    <div class="matrix-equals">=</div>
+
+    <!-- Vector B -->
+    <div class="matrix-bracket left"></div>
+    <div class="matrix-grid vector-constants">
+      <div class="matrix-cell cell-const" *ngFor="let celda of vectorB()">{{ celda }}</div>
+    </div>
+    <div class="matrix-bracket right"></div>
+  </div>
+</div>

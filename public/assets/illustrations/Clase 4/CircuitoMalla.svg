@@ -1,0 +1,43 @@
+<svg width="500" height="300" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <style>
+    .line { stroke: #2c3e50; stroke-width: 3; fill: none; }
+    .resistor { stroke: #2c3e50; stroke-width: 3; fill: none; stroke-linejoin: bevel; }
+    .mesh-arrow { fill: none; stroke: #3498db; stroke-width: 2; stroke-dasharray: 4; marker-end: url(#arrowhead); }
+    .text { font-family: sans-serif; font-size: 16px; fill: #2c3e50; font-weight: bold; }
+    .mesh-text { font-family: sans-serif; font-size: 18px; fill: #2980b9; font-weight: bold; font-style: italic;}
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3498db" />
+    </marker>
+  </defs>
+
+  <path class="line" d="M 100 220 L 400 220" /> <path class="line" d="M 100 80 L 140 80" /> <path class="line" d="M 100 80 L 100 130" /> <path class="line" d="M 100 170 L 100 220" /> <path class="line" d="M 400 80 L 400 220" /> <circle cx="100" cy="150" r="20" class="line" fill="#fff"/>
+  <text x="94" y="145" class="text" font-size="12">+</text>
+  <text x="96" y="165" class="text" font-size="12">-</text>
+  <text x="60" y="155" class="text">Vs</text>
+
+  <polyline class="resistor" points="140,80 145,70 155,90 165,70 175,90 185,70 195,90 200,80" />
+  <path class="line" d="M 200 80 L 250 80" />
+  <text x="160" y="60" class="text">R1</text>
+
+  <path class="line" d="M 250 80 L 250 120" />
+  <polyline class="resistor" points="250,120 240,125 260,135 240,145 260,155 240,165 260,175 250,180" />
+  <path class="line" d="M 250 180 L 250 220" />
+  <text x="270" y="155" class="text">R2</text>
+
+  <path class="line" d="M 250 80 L 290 80" />
+  <polyline class="resistor" points="290,80 295,70 305,90 315,70 325,90 335,70 345,90 350,80" />
+  <path class="line" d="M 350 80 L 400 80" />
+  <text x="310" y="60" class="text">R3</text>
+
+  <path class="mesh-arrow" d="M 140 150 A 30 30 0 1 1 210 150" />
+  <path class="mesh-arrow" d="M 210 150 A 30 30 0 0 1 140 150" />
+  <text x="165" y="155" class="mesh-text">i1</text>
+
+  <path class="mesh-arrow" d="M 290 150 A 30 30 0 1 1 360 150" />
+  <path class="mesh-arrow" d="M 360 150 A 30 30 0 0 1 290 150" />
+  <text x="315" y="155" class="mesh-text">i2</text>
+</svg>

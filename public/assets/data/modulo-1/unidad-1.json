@@ -1,356 +1,443 @@
 {
-  "metadata": {
-    "modulo": 1,
-    "unidad": 1,
-    "titulo": "Introducción a la Electrónica Analógica",
-    "semanas": "1-2",
-    "version": "1.0.0",
-    "fecha_actualizacion": "2026-05-15",
-    "descripcion": "Fundamentos de electrónica analógica, clasificación de componentes y circuitos básicos"
-  },
-  "objetivos": [
-    "Comprender los conceptos básicos de electrónica analógica",
-    "Identificar y clasificar componentes electrónicos activos y pasivos",
-    "Reconocer las características y propiedades de los componentes",
-    "Entender el funcionamiento de circuitos básicos: amplificadores, filtros y osciladores"
-  ],
-  "temas": [
-    {
-      "id": "conceptos-basicos",
-      "nombre": "Conceptos Básicos de Electrónica Analógica",
-      "descripcion": "Fundamentos de señales analógicas, diferencia con digital, y principios de operación",
-      "ecuaciones": [
-        { "nombre": "Frecuencia", "formula": "f = \\frac{1}{T}" },
-        { "nombre": "Período", "formula": "T = \\frac{1}{f}" }
-      ],
-      "contenido": {
-        "conceptos_clave": [
-          {
-            "nombre": "Señal Analógica",
-            "descripcion": "Señal continua en tiempo y amplitud que puede tomar infinitos valores",
-            "ejemplo": "Voltaje de un micrófono, temperatura, luz"
-          },
-          {
-            "nombre": "Señal vs Digital",
-            "descripcion": "Analógica: continua | Digital: discreta (0s y 1s)",
-            "ventajas_analogica": ["Representación natural", "Alta resolución", "Procesamiento directo"],
-            "desventajas_analogica": ["Susceptible a ruido", "Degradación en transmisión", "Difícil almacenamiento"]
-          },
-          {
-            "nombre": "Parámetros de Señal",
-            "parametros": [
-              {"nombre": "Amplitud", "descripcion": "Valor máximo de la señal", "unidad": "V, A"},
-              {"nombre": "Frecuencia", "descripcion": "Ciclos por segundo", "unidad": "Hz", "formula": "f = \\frac{1}{T}"},
-              {"nombre": "Período", "descripcion": "Tiempo de un ciclo completo", "unidad": "s"},
-              {"nombre": "Fase", "descripcion": "Desplazamiento temporal", "unidad": "grados o radianes"}
-            ]
-          }
-        ]
-      }
+    "metadata": {
+        "modulo": 1,
+        "unidad": 1,
+        "titulo": "Introducción a la Electrónica Analógica",
+        "semanas": "1-2",
+        "version": "1.0.0",
+        "fecha_actualizacion": "2026-05-15",
+        "descripcion": "Fundamentos de electrónica analógica, clasificación de componentes y circuitos básicos"
     },
-    {
-      "id": "componentes-electronicos",
-      "nombre": "Características y Propiedades de los Componentes Electrónicos",
-      "descripcion": "Clasificación, función y comportamiento de componentes activos y pasivos",
-      "contenido": {
-        "clasificacion": {
-          "activos": {
-            "definicion": "Componentes capaces de controlar el flujo de electricidad y pueden amplificar señales",
-            "caracteristicas": [
-              "Requieren fuente externa de energía",
-              "Pueden introducir ganancia",
-              "Controlan corriente o voltaje"
-            ],
-            "ejemplos": ["Diodos", "Transistores", "Op-Amps", "Tiristores"]
-          },
-          "pasivos": {
-            "definicion": "Componentes que consumen, disipan o almacenan energía",
-            "caracteristicas": [
-              "No requieren fuente externa",
-              "No pueden amplificar",
-              "No controlan activamente el flujo"
-            ],
-            "ejemplos": ["Resistencias", "Capacitores", "Inductores", "Transformadores"]
-          }
-        },
-        "tabla_comparativa": {
-          "headers": ["Característica", "Componentes Activos", "Componentes Pasivos"],
-          "rows": [
-            {
-              "caracteristica": "Función Principal",
-              "activos": "Entregan potencia o ganancia al circuito",
-              "pasivos": "Consumen, disipan o almacenan energía"
-            },
-            {
-              "caracteristica": "Control",
-              "activos": "Pueden controlar el flujo de corriente",
-              "pasivos": "No pueden controlar la corriente por sí mismos"
-            },
-            {
-              "caracteristica": "Fuente de Energía",
-              "activos": "Requieren alimentación externa",
-              "pasivos": "No requieren alimentación"
-            },
-            {
-              "caracteristica": "Ejemplos",
-              "activos": "Transistores, Op-Amps, Diodos",
-              "pasivos": "Resistencias, Bobinas, Capacitores"
-            }
-          ]
-        }
-      },
-      "componentes_detallados": {
-        "referencia": "Ver componentes.json para información completa",
-        "activos": ["diodo", "transistor", "opamp", "tiristores"],
-        "pasivos": ["resistencia", "capacitor", "inductor"],
-        "otros": ["transformador", "potenciometro"]
-      }
-    },
-    {
-      "id": "circuitos-basicos",
-      "nombre": "Circuitos Básicos: Amplificadores, Filtros, Osciladores",
-      "descripcion": "Introducción a los tres pilares de sistemas analógicos",
-      "ecuaciones": [
+    "objetivos": [
+        "Comprender los conceptos básicos de electrónica analógica",
+        "Identificar y clasificar componentes electrónicos activos y pasivos",
+        "Reconocer las características y propiedades de los componentes",
+        "Entender el funcionamiento de circuitos básicos: amplificadores, filtros y osciladores"
+    ],
+    "temas": [
         {
-          "nombre": "Ganancia de Amplificador",
-          "formula": "A = \\frac{V_{out}}{V_{in}}",
-          "grafica": { "tipo": "opamp_gain", "titulo": "Ganancia del Amplificador (Op-Amp)" }
-        },
-        { "nombre": "Función de Transferencia — Filtro", "formula": "H(j\\omega) = \\frac{V_{out}}{V_{in}}" },
-        { "nombre": "Señal del Oscilador", "formula": "v_{out}(t) = A\\sin(\\omega t + \\phi)" }
-      ],
-      "contenido": {
-        "amplificadores": {
-          "definicion": "Circuito que aumenta la amplitud de una señal de entrada",
-          "ecuacion_basica": "A = \\frac{V_{out}}{V_{in}}",
-          "parametros_clave": [
-            {"nombre": "Ganancia (A)", "descripcion": "Relación salida/entrada"},
-            {"nombre": "Ancho de Banda (BW)", "descripcion": "Rango de frecuencias eficiente"},
-            {"nombre": "Impedancia de Entrada", "descripcion": "Resistencia vista desde la entrada"},
-            {"nombre": "Impedancia de Salida", "descripcion": "Resistencia vista desde la salida"}
-          ],
-          "tipos_basicos": [
-            "Amplificador de Voltaje",
-            "Amplificador de Corriente",
-            "Amplificador de Potencia"
-          ],
-          "aplicaciones": [
-            "Audio (micrófonos, altavoces)",
-            "Instrumentación (sensores)",
-            "Comunicaciones (RF)",
-            "Control (actuadores)"
-          ],
-          "simulador": true,
-          "ruta": "/sistemas"
-        },
-        "filtros": {
-          "definicion": "Redes que permiten el paso de ciertas frecuencias mientras atenúan otras",
-          "ecuacion_basica": "H(j\\omega) = \\frac{V_{out}}{V_{in}}",
-          "tipos_por_frecuencia": [
-            {
-              "nombre": "Pasa-Bajas (LPF)",
-              "descripcion": "Deja pasar frecuencias bajas, bloquea altas",
-              "aplicacion": "Eliminar ruido de alta frecuencia"
-            },
-            {
-              "nombre": "Pasa-Altas (HPF)",
-              "descripcion": "Deja pasar frecuencias altas, bloquea bajas",
-              "aplicacion": "Eliminar componente DC"
-            },
-            {
-              "nombre": "Pasa-Banda (BPF)",
-              "descripcion": "Solo permite un rango específico",
-              "aplicacion": "Sintonización de radio"
-            },
-            {
-              "nombre": "Rechaza-Banda (Notch)",
-              "descripcion": "Elimina una frecuencia específica",
-              "aplicacion": "Eliminar zumbido de 60Hz"
+            "id": "conceptos-basicos",
+            "nombre": "Conceptos Básicos de Electrónica Analógica",
+            "descripcion": "Fundamentos de señales analógicas, diferencia con digital, y principios de operación",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia",
+                    "formula": "f = \\frac{1}{T}"
+                },
+                {
+                    "nombre": "Período",
+                    "formula": "T = \\frac{1}{f}"
+                }
+            ],
+            "contenido": {
+                "conceptos_clave": [
+                    {
+                        "nombre": "Señal Analógica",
+                        "descripcion": "Señal continua en tiempo y amplitud que puede tomar infinitos valores",
+                        "ejemplo": "Voltaje de un micrófono, temperatura, luz"
+                    },
+                    {
+                        "nombre": "Señal vs Digital",
+                        "descripcion": "Analógica: continua | Digital: discreta (0s y 1s)",
+                        "ventajas_analogica": [
+                            "Representación natural",
+                            "Alta resolución",
+                            "Procesamiento directo"
+                        ],
+                        "desventajas_analogica": [
+                            "Susceptible a ruido",
+                            "Degradación en transmisión",
+                            "Difícil almacenamiento"
+                        ]
+                    },
+                    {
+                        "nombre": "Parámetros de Señal",
+                        "parametros": [
+                            {
+                                "nombre": "Amplitud",
+                                "descripcion": "Valor máximo de la señal",
+                                "unidad": "V, A"
+                            },
+                            {
+                                "nombre": "Frecuencia",
+                                "descripcion": "Ciclos por segundo",
+                                "unidad": "Hz",
+                                "formula": "f = \\frac{1}{T}"
+                            },
+                            {
+                                "nombre": "Período",
+                                "descripcion": "Tiempo de un ciclo completo",
+                                "unidad": "s"
+                            },
+                            {
+                                "nombre": "Fase",
+                                "descripcion": "Desplazamiento temporal",
+                                "unidad": "grados o radianes"
+                            }
+                        ]
+                    }
+                ]
             }
-          ],
-          "tipos_por_componentes": [
-            {
-              "tipo": "Pasivos",
-              "componentes": "R, L, C",
-              "ventaja": "No requieren alimentación",
-              "desventaja": "Sin ganancia, dependientes de carga"
-            },
-            {
-              "tipo": "Activos",
-              "componentes": "Op-Amps + R, L, C",
-              "ventaja": "Pueden amplificar, independientes de carga",
-              "desventaja": "Requieren alimentación"
-            }
-          ],
-          "simulador": true,
-          "ruta": "/sistemas"
         },
-        "osciladores": {
-          "definicion": "Circuito que genera señal periódica a partir de DC sin entrada externa",
-          "ecuacion_basica": "v_{out}(t) = A\\sin(\\omega t + \\phi)",
-          "criterio_barkhausen": {
-            "descripcion": "Condiciones para oscilación sostenida",
-            "condiciones": [
-              {
-                "numero": 1,
-                "descripcion": "Ganancia del lazo ≥ 1",
-                "formula": "|A\\beta| \\geq 1"
-              },
-              {
-                "numero": 2,
-                "descripcion": "Desfase total = 0° (o 360°)",
-                "formula": "\\angle(A\\beta) = 0° + n \\cdot 360°"
-              }
-            ]
-          },
-          "tipos_basicos": [
-            {
-              "nombre": "Oscilador RC",
-              "rango": "Audio (20Hz - 20kHz)",
-              "aplicacion": "Generadores de audio"
+        {
+            "id": "componentes-electronicos",
+            "nombre": "Características y Propiedades de los Componentes Electrónicos",
+            "descripcion": "Clasificación, función y comportamiento de componentes activos y pasivos",
+            "contenido": {
+                "clasificacion": {
+                    "activos": {
+                        "definicion": "Componentes capaces de controlar el flujo de electricidad y pueden amplificar señales",
+                        "caracteristicas": [
+                            "Requieren fuente externa de energía",
+                            "Pueden introducir ganancia",
+                            "Controlan corriente o voltaje"
+                        ],
+                        "ejemplos": [
+                            "Diodos",
+                            "Transistores",
+                            "Op-Amps",
+                            "Tiristores"
+                        ]
+                    },
+                    "pasivos": {
+                        "definicion": "Componentes que consumen, disipan o almacenan energía",
+                        "caracteristicas": [
+                            "No requieren fuente externa",
+                            "No pueden amplificar",
+                            "No controlan activamente el flujo"
+                        ],
+                        "ejemplos": [
+                            "Resistencias",
+                            "Capacitores",
+                            "Inductores",
+                            "Transformadores"
+                        ]
+                    }
+                },
+                "tabla_comparativa": {
+                    "headers": [
+                        "Característica",
+                        "Componentes Activos",
+                        "Componentes Pasivos"
+                    ],
+                    "rows": [
+                        {
+                            "caracteristica": "Función Principal",
+                            "activos": "Entregan potencia o ganancia al circuito",
+                            "pasivos": "Consumen, disipan o almacenan energía"
+                        },
+                        {
+                            "caracteristica": "Control",
+                            "activos": "Pueden controlar el flujo de corriente",
+                            "pasivos": "No pueden controlar la corriente por sí mismos"
+                        },
+                        {
+                            "caracteristica": "Fuente de Energía",
+                            "activos": "Requieren alimentación externa",
+                            "pasivos": "No requieren alimentación"
+                        },
+                        {
+                            "caracteristica": "Ejemplos",
+                            "activos": "Transistores, Op-Amps, Diodos",
+                            "pasivos": "Resistencias, Bobinas, Capacitores"
+                        }
+                    ]
+                }
             },
-            {
-              "nombre": "Oscilador LC",
-              "rango": "RF (MHz - GHz)",
-              "aplicacion": "Transmisores RF"
-            },
-            {
-              "nombre": "Oscilador de Cristal",
-              "rango": "kHz - MHz",
-              "aplicacion": "Relojes, microcontroladores"
+            "componentes_detallados": {
+                "referencia": "Ver componentes.json para información completa",
+                "activos": [
+                    "diodo",
+                    "transistor",
+                    "opamp",
+                    "tiristores"
+                ],
+                "pasivos": [
+                    "resistencia",
+                    "capacitor",
+                    "inductor"
+                ],
+                "otros": [
+                    "transformador",
+                    "potenciometro"
+                ]
             }
-          ],
-          "formas_onda": ["Senoidal", "Cuadrada", "Triangular"],
-          "simulador": true,
-          "ruta": "/sistemas"
+        },
+        {
+            "id": "circuitos-basicos",
+            "nombre": "Circuitos Básicos: Amplificadores, Filtros, Osciladores",
+            "descripcion": "Introducción a los tres pilares de sistemas analógicos",
+            "ecuaciones": [
+                {
+                    "nombre": "Ganancia de Amplificador",
+                    "formula": "A = \\frac{V_{out}}{V_{in}}",
+                    "grafica": {
+                        "tipo": "opamp_gain",
+                        "titulo": "Ganancia del Amplificador (Op-Amp)"
+                    }
+                },
+                {
+                    "nombre": "Función de Transferencia — Filtro",
+                    "formula": "H(j\\omega) = \\frac{V_{out}}{V_{in}}"
+                },
+                {
+                    "nombre": "Señal del Oscilador",
+                    "formula": "v_{out}(t) = A\\sin(\\omega t + \\phi)"
+                }
+            ],
+            "contenido": {
+                "amplificadores": {
+                    "definicion": "Circuito que aumenta la amplitud de una señal de entrada",
+                    "ecuacion_basica": "A = \\frac{V_{out}}{V_{in}}",
+                    "parametros_clave": [
+                        {
+                            "nombre": "Ganancia (A)",
+                            "descripcion": "Relación salida/entrada"
+                        },
+                        {
+                            "nombre": "Ancho de Banda (BW)",
+                            "descripcion": "Rango de frecuencias eficiente"
+                        },
+                        {
+                            "nombre": "Impedancia de Entrada",
+                            "descripcion": "Resistencia vista desde la entrada"
+                        },
+                        {
+                            "nombre": "Impedancia de Salida",
+                            "descripcion": "Resistencia vista desde la salida"
+                        }
+                    ],
+                    "tipos_basicos": [
+                        "Amplificador de Voltaje",
+                        "Amplificador de Corriente",
+                        "Amplificador de Potencia"
+                    ],
+                    "aplicaciones": [
+                        "Audio (micrófonos, altavoces)",
+                        "Instrumentación (sensores)",
+                        "Comunicaciones (RF)",
+                        "Control (actuadores)"
+                    ],
+                    "simulador": true,
+                    "ruta": "/sistemas"
+                },
+                "filtros": {
+                    "definicion": "Redes que permiten el paso de ciertas frecuencias mientras atenúan otras",
+                    "ecuacion_basica": "H(j\\omega) = \\frac{V_{out}}{V_{in}}",
+                    "tipos_por_frecuencia": [
+                        {
+                            "nombre": "Pasa-Bajas (LPF)",
+                            "descripcion": "Deja pasar frecuencias bajas, bloquea altas",
+                            "aplicacion": "Eliminar ruido de alta frecuencia"
+                        },
+                        {
+                            "nombre": "Pasa-Altas (HPF)",
+                            "descripcion": "Deja pasar frecuencias altas, bloquea bajas",
+                            "aplicacion": "Eliminar componente DC"
+                        },
+                        {
+                            "nombre": "Pasa-Banda (BPF)",
+                            "descripcion": "Solo permite un rango específico",
+                            "aplicacion": "Sintonización de radio"
+                        },
+                        {
+                            "nombre": "Rechaza-Banda (Notch)",
+                            "descripcion": "Elimina una frecuencia específica",
+                            "aplicacion": "Eliminar zumbido de 60Hz"
+                        }
+                    ],
+                    "tipos_por_componentes": [
+                        {
+                            "tipo": "Pasivos",
+                            "componentes": "R, L, C",
+                            "ventaja": "No requieren alimentación",
+                            "desventaja": "Sin ganancia, dependientes de carga"
+                        },
+                        {
+                            "tipo": "Activos",
+                            "componentes": "Op-Amps + R, L, C",
+                            "ventaja": "Pueden amplificar, independientes de carga",
+                            "desventaja": "Requieren alimentación"
+                        }
+                    ],
+                    "simulador": true,
+                    "ruta": "/sistemas"
+                },
+                "osciladores": {
+                    "definicion": "Circuito que genera señal periódica a partir de DC sin entrada externa",
+                    "ecuacion_basica": "v_{out}(t) = A\\sin(\\omega t + \\phi)",
+                    "criterio_barkhausen": {
+                        "descripcion": "Condiciones para oscilación sostenida",
+                        "condiciones": [
+                            {
+                                "numero": 1,
+                                "descripcion": "Ganancia del lazo ≥ 1",
+                                "formula": "|A\\beta| \\geq 1"
+                            },
+                            {
+                                "numero": 2,
+                                "descripcion": "Desfase total = 0° (o 360°)",
+                                "formula": "\\angle(A\\beta) = 0^\\circ + n \\cdot 360^\\circ"
+                            }
+                        ]
+                    },
+                    "tipos_basicos": [
+                        {
+                            "nombre": "Oscilador RC",
+                            "rango": "Audio (20Hz - 20kHz)",
+                            "aplicacion": "Generadores de audio"
+                        },
+                        {
+                            "nombre": "Oscilador LC",
+                            "rango": "RF (MHz - GHz)",
+                            "aplicacion": "Transmisores RF"
+                        },
+                        {
+                            "nombre": "Oscilador de Cristal",
+                            "rango": "kHz - MHz",
+                            "aplicacion": "Relojes, microcontroladores"
+                        }
+                    ],
+                    "formas_onda": [
+                        "Senoidal",
+                        "Cuadrada",
+                        "Triangular"
+                    ],
+                    "simulador": true,
+                    "ruta": "/sistemas"
+                }
+            }
         }
-      }
-    }
-  ],
-  "ejercicios": [
-    {
-      "numero": 1,
-      "descripcion": "Identificar componentes en diagramas esquemáticos",
-      "tipo": "teorico",
-      "dificultad": "basico",
-      "tiempo_estimado": "30 minutos",
-      "objetivos": [
-        "Reconocer símbolos de componentes activos y pasivos",
-        "Identificar terminales y polaridad",
-        "Leer valores de componentes"
-      ],
-      "recursos_necesarios": [
-        "Diagramas esquemáticos impresos o digitales",
-        "Tabla de símbolos electrónicos"
-      ],
-      "pasos": [
-        "Revisar tabla de símbolos estándar",
-        "Analizar cada componente en el diagrama",
-        "Identificar tipo (activo/pasivo)",
-        "Anotar valores y especificaciones"
-      ]
+    ],
+    "ejercicios": [
+        {
+            "numero": 1,
+            "descripcion": "Identificar componentes en diagramas esquemáticos",
+            "tipo": "teorico",
+            "dificultad": "basico",
+            "tiempo_estimado": "30 minutos",
+            "objetivos": [
+                "Reconocer símbolos de componentes activos y pasivos",
+                "Identificar terminales y polaridad",
+                "Leer valores de componentes"
+            ],
+            "recursos_necesarios": [
+                "Diagramas esquemáticos impresos o digitales",
+                "Tabla de símbolos electrónicos"
+            ],
+            "pasos": [
+                "Revisar tabla de símbolos estándar",
+                "Analizar cada componente en el diagrama",
+                "Identificar tipo (activo/pasivo)",
+                "Anotar valores y especificaciones"
+            ]
+        },
+        {
+            "numero": 2,
+            "descripcion": "Clasificar circuitos según su función",
+            "tipo": "teorico",
+            "dificultad": "basico",
+            "tiempo_estimado": "45 minutos",
+            "objetivos": [
+                "Distinguir entre amplificadores, filtros y osciladores",
+                "Identificar componentes clave de cada tipo",
+                "Predecir función básica del circuito"
+            ],
+            "recursos_necesarios": [
+                "Ejemplos de circuitos diversos",
+                "Material de referencia de cada tipo"
+            ]
+        },
+        {
+            "numero": 3,
+            "descripcion": "Investigar aplicaciones de amplificadores en mecatrónica",
+            "tipo": "investigacion",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "2 horas",
+            "objetivos": [
+                "Identificar aplicaciones reales en sistemas mecatrónicos",
+                "Comprender la importancia de amplificadores en sensores",
+                "Documentar casos de uso específicos"
+            ],
+            "recursos_necesarios": [
+                "Acceso a internet",
+                "Artículos técnicos",
+                "Datasheets de sensores"
+            ],
+            "entregable": "Reporte de 2-3 páginas con al menos 3 aplicaciones documentadas"
+        }
+    ],
+    "evaluacion": {
+        "criterios": [
+            "Identificación correcta de componentes",
+            "Comprensión de clasificación activo/pasivo",
+            "Reconocimiento de circuitos básicos",
+            "Calidad de investigación"
+        ],
+        "rubrica": {
+            "excelente": "Identifica todos los componentes correctamente y explica su función",
+            "bueno": "Identifica la mayoría de componentes con explicaciones básicas",
+            "suficiente": "Identifica componentes básicos sin explicación detallada",
+            "insuficiente": "No logra identificar componentes correctamente"
+        }
     },
-    {
-      "numero": 2,
-      "descripcion": "Clasificar circuitos según su función",
-      "tipo": "teorico",
-      "dificultad": "basico",
-      "tiempo_estimado": "45 minutos",
-      "objetivos": [
-        "Distinguir entre amplificadores, filtros y osciladores",
-        "Identificar componentes clave de cada tipo",
-        "Predecir función básica del circuito"
-      ],
-      "recursos_necesarios": [
-        "Ejemplos de circuitos diversos",
-        "Material de referencia de cada tipo"
-      ]
+    "recursos_adicionales": {
+        "simuladores": [
+            {
+                "nombre": "Catálogo de Componentes",
+                "ruta": "/componentes",
+                "descripcion": "Exploración interactiva de todos los componentes"
+            },
+            {
+                "nombre": "Sistemas Analógicos",
+                "ruta": "/sistemas",
+                "descripcion": "Simuladores de amplificadores, filtros y osciladores"
+            }
+        ],
+        "videos": [
+            "Introducción a señales analógicas",
+            "Componentes activos vs pasivos",
+            "Funcionamiento de amplificadores básicos"
+        ],
+        "lecturas": [
+            "Boylestad & Nashelsky - Capítulo 1: Introducción",
+            "Floyd - Capítulo 1: Componentes Semiconductores"
+        ]
     },
-    {
-      "numero": 3,
-      "descripcion": "Investigar aplicaciones de amplificadores en mecatrónica",
-      "tipo": "investigacion",
-      "dificultad": "intermedio",
-      "tiempo_estimado": "2 horas",
-      "objetivos": [
-        "Identificar aplicaciones reales en sistemas mecatrónicos",
-        "Comprender la importancia de amplificadores en sensores",
-        "Documentar casos de uso específicos"
-      ],
-      "recursos_necesarios": [
-        "Acceso a internet",
-        "Artículos técnicos",
-        "Datasheets de sensores"
-      ],
-      "entregable": "Reporte de 2-3 páginas con al menos 3 aplicaciones documentadas"
+    "referencias": [
+        {
+            "tipo": "libro",
+            "titulo": "Electrónica: Teoría de Circuitos",
+            "autores": [
+                "Boylestad",
+                "Nashelsky"
+            ],
+            "capitulo": "1-2"
+        },
+        {
+            "tipo": "libro",
+            "titulo": "Dispositivos Electrónicos",
+            "autores": [
+                "Floyd"
+            ],
+            "capitulo": "1"
+        }
+    ],
+    "notas_profesor": {
+        "enfasis": [
+            "Importancia de la clasificación activo/pasivo",
+            "Relación entre componentes y circuitos básicos",
+            "Aplicaciones prácticas en mecatrónica"
+        ],
+        "dificultades_comunes": [
+            "Confusión entre amplificador y filtro",
+            "Identificación de polaridad en diodos",
+            "Lectura de código de colores en resistencias"
+        ],
+        "sugerencias": [
+            "Usar componentes físicos para demostración",
+            "Mostrar aplicaciones reales en clase",
+            "Practicar con simuladores antes de laboratorio"
+        ]
     }
-  ],
-  "evaluacion": {
-    "criterios": [
-      "Identificación correcta de componentes",
-      "Comprensión de clasificación activo/pasivo",
-      "Reconocimiento de circuitos básicos",
-      "Calidad de investigación"
-    ],
-    "rubrica": {
-      "excelente": "Identifica todos los componentes correctamente y explica su función",
-      "bueno": "Identifica la mayoría de componentes con explicaciones básicas",
-      "suficiente": "Identifica componentes básicos sin explicación detallada",
-      "insuficiente": "No logra identificar componentes correctamente"
-    }
-  },
-  "recursos_adicionales": {
-    "simuladores": [
-      {
-        "nombre": "Catálogo de Componentes",
-        "ruta": "/componentes",
-        "descripcion": "Exploración interactiva de todos los componentes"
-      },
-      {
-        "nombre": "Sistemas Analógicos",
-        "ruta": "/sistemas",
-        "descripcion": "Simuladores de amplificadores, filtros y osciladores"
-      }
-    ],
-    "videos": [
-      "Introducción a señales analógicas",
-      "Componentes activos vs pasivos",
-      "Funcionamiento de amplificadores básicos"
-    ],
-    "lecturas": [
-      "Boylestad & Nashelsky - Capítulo 1: Introducción",
-      "Floyd - Capítulo 1: Componentes Semiconductores"
-    ]
-  },
-  "referencias": [
-    {
-      "tipo": "libro",
-      "titulo": "Electrónica: Teoría de Circuitos",
-      "autores": ["Boylestad", "Nashelsky"],
-      "capitulo": "1-2"
-    },
-    {
-      "tipo": "libro",
-      "titulo": "Dispositivos Electrónicos",
-      "autores": ["Floyd"],
-      "capitulo": "1"
-    }
-  ],
-  "notas_profesor": {
-    "enfasis": [
-      "Importancia de la clasificación activo/pasivo",
-      "Relación entre componentes y circuitos básicos",
-      "Aplicaciones prácticas en mecatrónica"
-    ],
-    "dificultades_comunes": [
-      "Confusión entre amplificador y filtro",
-      "Identificación de polaridad en diodos",
-      "Lectura de código de colores en resistencias"
-    ],
-    "sugerencias": [
-      "Usar componentes físicos para demostración",
-      "Mostrar aplicaciones reales en clase",
-      "Practicar con simuladores antes de laboratorio"
-    ]
-  }
 }

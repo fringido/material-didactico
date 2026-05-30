@@ -1,0 +1,44 @@
+<svg width="500" height="300" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <style>
+    .line { stroke: #333; stroke-width: 3; fill: none; }
+    .resistor { stroke: #333; stroke-width: 3; fill: none; stroke-linejoin: bevel; }
+    .node { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+    .text { font-family: sans-serif; font-size: 16px; fill: #333; font-weight: bold; }
+    .label { font-family: sans-serif; font-size: 14px; fill: #666; font-style: italic; }
+  </style>
+
+  <path class="line" d="M 100 200 L 400 200" /> <path class="line" d="M 100 100 L 250 100" /> <path class="line" d="M 250 100 L 400 100" /> <path class="line" d="M 100 100 L 100 130" /> <path class="line" d="M 100 170 L 100 200" />
+  
+  <circle cx="100" cy="150" r="20" class="line" fill="#fff"/>
+  <path class="line" d="M 100 160 L 100 140" stroke-width: 2/>
+  <polygon points="95,145 105,145 100,135" fill="#333"/>
+  <text x="50" y="155" class="text">Is</text>
+
+  <path class="line" d="M 250 100 L 250 120" />
+  <polyline class="resistor" points="250,120 240,125 260,135 240,145 260,155 240,165 260,175 250,180" />
+  <path class="line" d="M 250 180 L 250 200" />
+  <text x="270" y="155" class="text">R1</text>
+
+  <path class="line" d="M 250 100 L 280 100" />
+  <polyline class="resistor" points="280,100 285,90 295,110 305,90 315,110 325,90 335,110 340,100" />
+  <path class="line" d="M 340 100 L 400 100" />
+  <text x="300" y="80" class="text">R2</text>
+
+  <path class="line" d="M 400 100 L 400 120" />
+  <polyline class="resistor" points="400,120 390,125 410,135 390,145 410,155 390,165 410,175 400,180" />
+  <path class="line" d="M 400 180 L 400 200" />
+  <text x="420" y="155" class="text">R3</text>
+
+  <circle cx="250" cy="100" r="6" class="node"/>
+  <text x="235" y="80" class="text" fill="#e74c3c">V1</text>
+  
+  <circle cx="400" cy="100" r="6" class="node"/>
+  <text x="385" y="80" class="text" fill="#e74c3c">V2</text>
+
+  <path class="line" d="M 250 200 L 250 220" />
+  <path class="line" d="M 230 220 L 270 220" />
+  <path class="line" d="M 240 226 L 260 226" />
+  <path class="line" d="M 247 232 L 253 232" />
+  <text x="270" y="230" class="label">Ref (0V)</text>
+</svg>

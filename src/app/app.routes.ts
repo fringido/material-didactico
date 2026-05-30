@@ -6,18 +6,23 @@ import { SistemasComponent } from './pages/sistemas/sistemas.component';
 import { SistemaDetalleComponent } from './pages/sistemas/detalle/detalle.component';
 import { UnidadComponent } from './pages/unidad/unidad.component';
 import { Clase3Component } from './pages/clase3/clase3.component';
+import { Clase4Component } from './pages/clase4/clase4.component';
+import { NodosMallasComponent } from './pages/componentes/nodos-mallas.component';
 import { TemaDetalleComponent } from './pages/tema-detalle/tema-detalle.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'componentes', component: ComponentesComponent },
+  { path: 'componentes/nodos-mallas', component: NodosMallasComponent },
   { path: 'componentes/:categoria/:id', component: DetalleComponent },
   { path: 'sistemas', component: SistemasComponent },
   { path: 'sistemas/:sistema/opamp/:tipo', component: SistemaDetalleComponent },
   { path: 'sistemas/:sistema/:tipo', component: SistemaDetalleComponent },
   { path: 'clase/3', component: Clase3Component },
   { path: 'clase/3/tema/:id', component: TemaDetalleComponent },
+  { path: 'clase/4', component: Clase4Component },
+  { path: 'clase/4/tema/:id', component: TemaDetalleComponent },
   { path: 'modulo/:modulo/unidad/:unidad/tema/:id', component: TemaDetalleComponent },
   { path: 'modulo/:modulo/unidad/:unidad', component: UnidadComponent },
   { path: '**', component: NotFoundComponent }

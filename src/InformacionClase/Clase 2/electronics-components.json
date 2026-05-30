@@ -166,7 +166,7 @@
                                     "Colector (C)",
                                     "Emisor (E)"
                                 ],
-                                "ecuacion_fundamental": "I_C = β × I_B",
+                                "ecuacion_fundamental": "I_C = \\beta \\cdot I_B",
                                 "variables": {
                                     "I_C": "Corriente de Colector",
                                     "I_B": "Corriente de Base",
@@ -269,7 +269,7 @@
                         "nombre": "Resistencia (R)",
                         "descripcion": "El componente más básico. Se opone al flujo de corriente eléctrica, disipando energía en forma de calor.",
                         "unidad": "Ohm (Ω)",
-                        "ley_fundamental": "Ley de Ohm: V = I × R",
+                        "ley_fundamental": "Ley de Ohm: V = I \\cdot R",
                         "comportamiento": "Lineal. Su resistencia no varía idealmente con la frecuencia.",
                         "funciones": [
                             "Divisores de tensión: reducir niveles de amplitud de señal",
@@ -414,9 +414,9 @@
                         "nombre": "Capacitor (C)",
                         "descripcion": "Dispositivo que almacena energía en un campo eléctrico mediante la acumulación de carga en dos placas conductoras separadas por un dieléctrico.",
                         "unidad": "Faradio (F)",
-                        "ecuacion_caracteristica": "i(t) = C × (dv(t)/dt)",
+                        "ecuacion_caracteristica": "i(t) = C \\frac{dv(t)}{dt}",
                         "reactancia_capacitiva": {
-                            "formula": "Xc = 1 / (2π × f × C)",
+                            "formula": "X_C = \\frac{1}{2\\pi f C}",
                             "descripcion": "Su oposición al paso de la corriente varía inversamente con la frecuencia."
                         },
                         "comportamiento": {
@@ -522,9 +522,9 @@
                         "nombre": "Inductor / Bobina (L)",
                         "descripcion": "Almacena energía en un campo magnético generado por el paso de la corriente a través de un conductor enrollado.",
                         "unidad": "Henrio (H)",
-                        "ecuacion_caracteristica": "v(t) = L × (di(t)/dt)",
+                        "ecuacion_caracteristica": "v(t) = L \\frac{di(t)}{dt}",
                         "reactancia_inductiva": {
-                            "formula": "X_L = 2π × f × L",
+                            "formula": "X_L = 2\\pi f L",
                             "descripcion": "Su oposición aumenta proporcionalmente con la frecuencia."
                         },
                         "comportamiento": {

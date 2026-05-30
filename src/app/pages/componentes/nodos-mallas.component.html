@@ -1,0 +1,102 @@
+<div class="page-shell nodos-mallas-page">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando Nodos y Mallas…</p>
+    </div>
+  } @else if (error()) {
+    <app-page-back-bar backLink="/clase/4" backLabel="Volver a Clase 4" />
+    <p class="text-body error-text">{{ error() }}</p>
+  } @else if (data()) {
+    <app-page-back-bar
+      backLink="/clase/4"
+      backLabel="Volver a Clase 4"
+      [breadcrumb]="[
+        { label: 'Inicio', link: '/' },
+        { label: 'Clase 4', link: '/clase/4' },
+        { label: data().nombre }
+      ]" />
+
+    <header class="page-hero">
+      <span class="badge badge--primary badge--lg">Clase 4</span>
+      <h1 class="page-hero__title">{{ data().nombre }}</h1>
+      <p class="page-hero__lead">{{ data().descripcion }}</p>
+    </header>
+
+    <section class="section" *ngIf="data().conceptos_clave?.length">
+      <h2 class="section__title">Explicación Conceptual</h2>
+      <div class="content-grid content-grid--2">
+        <ng-container *ngFor="let concepto of data().conceptos_clave">
+          <div class="concept-card card card--bordered">
+            <h3 class="concept-card__title">{{ concepto.nombre }}</h3>
+            <p class="text-body concept-card__desc">{{ concepto.descripcion }}</p>
+            <div class="concept-details">
+              <p><strong>Variable principal:</strong> {{ concepto.variable_principal }}</p>
+              <p><strong>Principio físico:</strong> {{ concepto.principio_fisico }}</p>
+              <p><strong>Cuándo usarlo:</strong> {{ concepto.cuando_usarlo }}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+
+    <section class="section" *ngIf="data().formulas?.length">
+      <h2 class="section__title">Fórmulas en Angular + KaTeX</h2>
+      <div class="formulas-grid">
+        <ng-container *ngFor="let formula of data().formulas">
+          <div class="formula-card card card--bordered">
+            <h3 class="formula-card__label">{{ formula.titulo }}</h3>
+            <div class="equation-display equation-display--md"
+                 [appKatex]="formula.katex"
+                 appFormulaTooltip
+                 [variables]="getVariablesForFormula(formula)">
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+
+    <section class="section" *ngIf="data().grafica_interactiva">
+      <h2 class="section__title">Gráfica Interactiva</h2>
+      <div class="content-panel">
+        <app-equation-chart
+          [chartType]="data().grafica_interactiva.chartType"
+          [title]="data().grafica_interactiva.title"
+          [equation]="data().grafica_interactiva.equation">
+        </app-equation-chart>
+      </div>
+    </section>
+
+    <section class="section" *ngIf="data().simulacion_dinamica">
+      <h2 class="section__title">Simulación Dinámica</h2>
+      <div class="content-panel">
+        <app-dynamic-circuit-simulator [simulacion]="data().simulacion_dinamica"></app-dynamic-circuit-simulator>
+      </div>
+    </section>
+
+    <section class="section" *ngIf="data().aplicaciones_reales?.length">
+      <h2 class="section__title">Aplicaciones Reales</h2>
+      <div class="content-grid content-grid--3">
+        <ng-container *ngFor="let app of data().aplicaciones_reales">
+          <div class="application-card card card--bordered">
+            <h3 class="application-card__title">{{ app.titulo }}</h3>
+            <p class="text-body application-card__desc">{{ app.descripcion }}</p>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+
+    <section class="section" *ngIf="data().observaciones_pedagogicas">
+      <h2 class="section__title">Observaciones Pedagógicas</h2>
+      <div class="content-panel content-panel--bordered pedagogical-observations">
+        <p class="text-body"><strong>Sugerencia de componente:</strong> {{ data().observaciones_pedagogicas.sugerencia_componente }}</p>
+        <p class="text-body"><strong>Justificación:</strong> {{ data().observaciones_pedagogicas.justificacion }}</p>
+        <p class="text-body"><strong>Utilidad:</strong> {{ data().observaciones_pedagogicas.utilidad }}</p>
+        <p class="text-body"><strong>Interfaz requerida:</strong> {{ data().observaciones_pedagogicas.interfaz_requerida }}</p>
+        <ul class="text-body bullet-list">
+          <li *ngFor="let input of data().observaciones_pedagogicas.inputs">{{ input }}</li>
+        </ul>
+      </div>
+    </section>
+  }
+</div>

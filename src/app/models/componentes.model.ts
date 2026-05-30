@@ -7,6 +7,63 @@ export interface ColorBand {
   coef_temperatura: string | null;
 }
 
+export interface ElementoCircuito {
+  tipo: string;
+  x?: number;
+  y?: number;
+  x1?: number;
+  y1?: number;
+  x2?: number;
+  y2?: number;
+  id?: string;
+  rotacion?: number;
+  valor?: string;
+}
+
+export interface ControlCircuito {
+  id: string;
+  label: string;
+  min: number;
+  max: number;
+  step: number;
+  default: number;
+  unidad?: string;
+}
+
+export interface MetricaCircuito {
+  label: string;
+  formula_katex: string;
+  calculo: string; // expression string using control IDs
+  unidad?: string;
+}
+
+export interface GraficaCircuito {
+  id: string;
+  label: string;
+  color: string;
+  calculo_y: string; // formula for y given x, t, and controls
+}
+
+export interface MatricaDinamica {
+  tipo: string;
+  filas: string[][];
+  variables: string[];
+}
+
+export interface SimulacionDinamica {
+  tipo?: string;
+  titulo?: string;
+  descripcion?: string;
+  diagrama: ElementoCircuito[];
+  controles: ControlCircuito[];
+  metricas: MetricaCircuito[];
+  graficas?: GraficaCircuito[];
+  matriz_dinamica?: MatricaDinamica;
+  ancho?: number;
+  alto?: number;
+}
+
+
 export interface Subtipo {
   id?: string;
   nombre: string;
@@ -23,6 +80,7 @@ export interface Subtipo {
   nombre_completo?: string;
   parametros_operacion?: any;
   tipos_por_material?: any[];
+  simulacion_dinamica?: SimulacionDinamica;
 }
 
 export interface Componente {
@@ -65,6 +123,10 @@ export interface Componente {
   tipos_por_nucleo?: any[];
   ecuacion_fundamental?: string;
   variables?: any;
+  simulacion_dinamica?: SimulacionDinamica;
+  conceptos_clave_arr?: any[];
+  formulas?: any[];
+  variables_tooltips?: any;
   [key: string]: any;
 }
 

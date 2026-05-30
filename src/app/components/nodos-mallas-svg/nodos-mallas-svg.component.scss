@@ -1,0 +1,252 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+// ─── Container principal ────────────────────────────────────────────────────
+.nm-container {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+// ─── Tabs ────────────────────────────────────────────────────────────────────
+.nm-tabs {
+  display: flex;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-4 0;
+  border-bottom: 1px solid $border-primary;
+  background: $bg-primary;
+  flex-wrap: wrap;
+}
+
+.nm-tab {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-bottom: none;
+  border-radius: $radius-md $radius-md 0 0;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-family: $font-primary;
+  cursor: pointer;
+  transition: all $transition-base $ease-in-out;
+  margin-bottom: -1px;
+
+  &:hover {
+    color: $text-primary;
+    background: $bg-tertiary;
+  }
+
+  &--active {
+    background: $bg-secondary;
+    color: $color-primary-light;
+    border-color: $border-secondary;
+    border-bottom-color: $bg-secondary;
+    font-weight: $font-weight-semibold;
+  }
+
+  &__icon {
+    font-size: 1rem;
+  }
+
+  &__badge {
+    background: rgba($color-primary, 0.2);
+    color: $color-primary-light;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    padding: 2px 6px;
+    border-radius: $radius-full;
+    letter-spacing: 0.05em;
+  }
+
+  &--anim {
+    margin-left: auto;
+    background: rgba($color-accent-green, 0.1);
+    border-color: rgba($color-accent-green, 0.3);
+    color: $color-accent-green;
+    font-weight: $font-weight-semibold;
+
+    &:hover {
+      background: rgba($color-accent-green, 0.2);
+    }
+  }
+}
+
+// ─── Layout principal ─────────────────────────────────────────────────────────
+.nm-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  min-height: 480px;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Panel diagrama SVG ────────────────────────────────────────────────────────
+.nm-diagram-panel {
+  padding: $spacing-5;
+  border-right: 1px solid $border-primary;
+
+  @media (max-width: $breakpoint-lg) {
+    border-right: none;
+    border-bottom: 1px solid $border-primary;
+  }
+}
+
+.nm-panel-title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin: 0 0 $spacing-1;
+}
+
+.nm-panel-subtitle {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  margin: 0 0 $spacing-4;
+  font-family: $font-mono;
+}
+
+.nm-svg {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  border-radius: $radius-lg;
+  background: #0D1117;
+  border: 1px solid $border-primary;
+
+  // Animación del texto dinámico
+  text {
+    transition: all 0.2s ease;
+  }
+}
+
+// ─── Panel lateral (controles + métricas) ──────────────────────────────────────
+.nm-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: $bg-primary;
+}
+
+// ─── Controles ────────────────────────────────────────────────────────────────
+.nm-controls {
+  padding: $spacing-4;
+  border-bottom: 1px solid $border-primary;
+}
+
+.nm-ctrl-title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+  margin: 0 0 $spacing-3;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nm-ctrl-row {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  margin-bottom: $spacing-3;
+
+  label {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.nm-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.nm-slider {
+  flex: 1;
+  height: 4px;
+  border-radius: $radius-full;
+  background: $bg-tertiary;
+  accent-color: $color-primary;
+  cursor: pointer;
+
+  &--yellow { accent-color: $color-accent-yellow; }
+  &--blue   { accent-color: $color-accent-blue; }
+  &--green  { accent-color: $color-accent-green; }
+  &--purple { accent-color: $color-primary-light; }
+}
+
+.nm-val {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  font-family: $font-mono;
+  min-width: 48px;
+  text-align: right;
+}
+
+// ─── Métricas ──────────────────────────────────────────────────────────────────
+.nm-metrics {
+  padding: $spacing-4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  flex: 1;
+}
+
+.nm-metric-card {
+  background: $bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-3;
+  border-left: 3px solid transparent;
+  transition: transform $transition-fast $ease-in-out;
+
+  &:hover {
+    transform: translateX(2px);
+  }
+
+  &--purple { border-left-color: $color-primary; }
+  &--blue   { border-left-color: $color-accent-blue; }
+  &--green  { border-left-color: $color-accent-green; }
+  &--yellow { border-left-color: $color-accent-yellow; }
+  &--violet { border-left-color: $color-primary-light; }
+}
+
+.nm-metric-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  margin: 0 0 $spacing-1;
+}
+
+.nm-metric-value {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  font-family: $font-mono;
+  margin: 0 0 $spacing-2;
+  transition: color 0.3s ease;
+
+  &--neg {
+    color: $color-error-light;
+  }
+}
+
+.nm-unit {
+  font-size: $font-size-sm;
+  color: $text-tertiary;
+  font-weight: $font-weight-normal;
+}
+
+.nm-metric-formula {
+  font-size: $font-size-xs;
+  opacity: 0.7;
+}

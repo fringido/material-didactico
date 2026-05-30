@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "clase": 4,
+    "modulo": 1,
+    "unidad": 3,
+    "titulo": "Análisis de Nodos y Mallas",
+    "semanas": "5-6",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-28",
+    "descripcion": "Métodos sistemáticos para resolver redes complejas: Análisis de Nodos (LCK) y Análisis de Mallas (LVK).",
+    "ruta": "/clase/4"
+  },
+  "objetivos": [
+    "Aplicar el método de análisis de nodos basado en la Ley de Corrientes de Kirchhoff",
+    "Aplicar el método de análisis de mallas basado en la Ley de Voltajes de Kirchhoff",
+    "Formular matrices de conductancias y resistencias para sistemas de ecuaciones",
+    "Seleccionar el método más eficiente según la topología del circuito"
+  ],
+  "temas": [
+    {
+      "id": "nodos-mallas",
+      "nombre": "Análisis de Nodos y Mallas",
+      "descripcion": "Métodos fundamentales para resolver circuitos complejos mediante sistemas de ecuaciones.",
+      "icono": "🔢",
+      "ruta": "/clase/4/tema/nodos-mallas",
+      "archivo": "NodosYMallas.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "unidad_completa": "/modulo/1/unidad/3"
+  }
+}

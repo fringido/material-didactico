@@ -66,7 +66,7 @@
           <p class="text-body">{{ top.descripcion }}</p>
           @if (top.ilustracion?.archivo) {
             <figure class="figure-card">
-              <img [src]="top.ilustracion.archivo" [alt]="top.nombre" loading="lazy" (error)="onImageError($event, top.ilustracion.archivo)" />
+              <img [src]="top.ilustracion.archivo" [alt]="top.nombre" title="{{ top.nombre }}" loading="lazy" (error)="onImageError($event, top.ilustracion.archivo)" />
               @if (top.ilustracion.credito) {
                 <figcaption>{{ top.ilustracion.credito }}</figcaption>
               }
@@ -90,9 +90,7 @@
             <div class="content-panel">
               <h3 class="content-panel__title">Método de reducción</h3>
               <ol class="text-body ordered-list">
-                @for (paso of top.metodo_reduccion; track paso) {
-                  <li>{{ paso }}</li>
-                }
+                <li *ngFor="let paso of top.metodo_reduccion">{{ paso }}</li>
               </ol>
             </div>
           }
@@ -126,7 +124,7 @@
           </div>
           @if (ley.ilustracion?.archivo) {
             <figure class="figure-card">
-              <img [src]="ley.ilustracion.archivo" [alt]="ley.nombre" loading="lazy" (error)="onImageError($event, ley.ilustracion.archivo)" />
+              <img [src]="ley.ilustracion.archivo" [alt]="ley.nombre" title="{{ ley.nombre }}" loading="lazy" (error)="onImageError($event, ley.ilustracion.archivo)" />
             </figure>
           }
           @if (ley.analogia) {
@@ -136,9 +134,7 @@
           }
           @if (ley.convencion_signos?.length) {
             <ul class="text-body bullet-list">
-              @for (c of ley.convencion_signos; track c.caso) {
-                <li><strong>{{ c.caso }}:</strong> <span [appKatex]="c.regla" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span></li>
-              }
+              <li *ngFor="let c of ley.convencion_signos"><strong>{{ c.caso }}:</strong> <span [appKatex]="c.regla" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span></li>
             </ul>
           }
         </section>
@@ -154,7 +150,7 @@
           </div>
           @if (sec.ilustracion?.archivo) {
             <figure class="figure-card">
-              <img [src]="sec.ilustracion.archivo" [alt]="sec.ilustracion.titulo || sec.titulo" loading="lazy" (error)="onImageError($event, sec.ilustracion.archivo)" />
+              <img [src]="sec.ilustracion.archivo" [alt]="sec.ilustracion.titulo || sec.titulo" title="{{ sec.ilustracion.titulo || sec.titulo }}" loading="lazy" (error)="onImageError($event, sec.ilustracion.archivo)" />
               @if (sec.ilustracion.credito) {
                 <figcaption>{{ sec.ilustracion.credito }}</figcaption>
               }
@@ -198,9 +194,7 @@
         <h2 class="section__title">Tips de enseñanza</h2>
         <div class="content-panel">
           <ul class="text-body bullet-list">
-            @for (tip of tema().tips_ensenanza; track tip) {
-              <li>{{ tip }}</li>
-            }
+            <li *ngFor="let tip of tema().tips_ensenanza">{{ tip }}</li>
           </ul>
         </div>
       </section>
@@ -215,9 +209,7 @@
               <p class="formula-card__label">{{ ej.titulo }}</p>
               <p class="text-body">{{ ej.enunciado }}</p>
               <ol class="text-body ordered-list">
-                @for (paso of ej.solucion_pasos; track paso) {
-                  <li><span [appKatex]="paso" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span></li>
-                }
+                <li *ngFor="let paso of ej.solucion_pasos"><span [appKatex]="paso" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span></li>
               </ol>
               <p class="formula-card__desc">
                 <strong>Resultado:</strong> <span [appKatex]="ej.resultado" [inline]="true" appFormulaTooltip [variables]="tema().variables || []"></span>
