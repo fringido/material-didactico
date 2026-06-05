@@ -1,0 +1,178 @@
+{
+  "id": "thevenin-norton",
+  "nombre": "Teoremas de Thevenin y Norton",
+  "descripcion": "Reducción de redes lineales complejas a equivalentes simples: fuente de voltaje + resistencia (Thevenin) o fuente de corriente + resistencia (Norton).",
+  "introduccion": "Los Teoremas de Thevenin y Norton son herramientas extraordinariamente poderosas para simplificar el análisis de circuitos. Fueron desarrollados independientemente por Léon Charles Thévenin (1883) y Edward Lawry Norton (1926). Su importancia es radical: permiten reemplazar una red compleja —sin importar cuántos elementos tenga— por un circuito equivalente de solo DOS componentes. Esto es especialmente útil cuando se analiza el efecto de conectar diferentes cargas a un mismo circuito.",
+  "metadata": {
+    "clase": 4,
+    "orden": 3,
+    "titulo": "Teoremas de Thevenin y Norton"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Equivalente de Thevenin",
+      "descripcion": "CUALQUIER red lineal de dos terminales puede reemplazarse por una fuente de voltaje V_th en serie con una resistencia R_th. El circuito simplificado se comporta idénticamente al original respecto a la carga.",
+      "principio_fisico": "Teorema de superposición + principio de linealidad.",
+      "cuando_usarlo": "Cuando se necesita analizar el efecto de diferentes valores de carga en el mismo circuito. Más conveniente cuando hay pocas fuentes de corriente."
+    },
+    {
+      "nombre": "Equivalente de Norton",
+      "descripcion": "La red de dos terminales se reemplaza por una fuente de corriente I_n en paralelo con una resistencia R_n. Es el dual del Thevenin.",
+      "principio_fisico": "Dual del Teorema de Thevenin. R_n = R_th, I_n = V_th / R_th.",
+      "cuando_usarlo": "Más conveniente cuando hay fuentes de voltaje y se prefiere el análisis de nodos. Fácil de convertir a/de Thevenin."
+    },
+    {
+      "nombre": "Resistencia de Thevenin (R_th)",
+      "descripcion": "Es la resistencia equivalente vista desde los terminales de salida cuando TODAS las fuentes independientes están desactivadas: fuentes de voltaje → cortocircuito, fuentes de corriente → circuito abierto.",
+      "cuando_usarlo": "Si hay fuentes dependientes, NO se pueden desactivar. En ese caso usar: R_th = V_oc / I_sc."
+    },
+    {
+      "nombre": "Voltaje de Circuito Abierto (V_oc)",
+      "descripcion": "El voltaje medido en los terminales de la red cuando NO hay carga conectada (circuito abierto). Este voltaje es exactamente el Voltaje de Thevenin: V_th = V_oc.",
+      "cuando_usarlo": "Primer paso para obtener V_th."
+    },
+    {
+      "nombre": "Corriente de Cortocircuito (I_sc)",
+      "descripcion": "La corriente que fluye al poner los dos terminales en cortocircuito (R_L = 0). Es la Corriente de Norton: I_n = I_sc.",
+      "cuando_usarlo": "Necesario para calcular R_th cuando hay fuentes dependientes."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Voltaje de Thevenin",
+      "katex": "V_{th} = V_{oc} \\quad \\text{(voltaje de circuito abierto)}",
+      "derivacion": "Se mide el voltaje en los terminales AB con la carga desconectada."
+    },
+    {
+      "titulo": "Corriente de Norton",
+      "katex": "I_n = I_{sc} \\quad \\text{(corriente de cortocircuito)}",
+      "derivacion": "Se mide la corriente cuando los terminales AB se ponen en cortocircuito."
+    },
+    {
+      "titulo": "Resistencia de Thevenin (método directo)",
+      "katex": "R_{th} = R_n = \\frac{V_{oc}}{I_{sc}}",
+      "derivacion": "Relación universal entre los tres parámetros del equivalente. Válida SIEMPRE, incluso con fuentes dependientes."
+    },
+    {
+      "titulo": "Resistencia de Thevenin (método por desactivación)",
+      "katex": "R_{th} = R_{\\text{visto desde AB}}\\Big|_{\\text{fuentes independientes = 0}}",
+      "derivacion": "Desactivar fuentes independientes y calcular la resistencia equivalente vista desde los terminales. Solo válido sin fuentes dependientes."
+    },
+    {
+      "titulo": "Relación Thevenin-Norton",
+      "katex": "V_{th} = I_n \\cdot R_{th}, \\quad I_n = \\frac{V_{th}}{R_{th}}",
+      "derivacion": "Conversión directa entre ambos equivalentes usando la Ley de Ohm."
+    },
+    {
+      "titulo": "Corriente en la carga",
+      "katex": "I_L = \\frac{V_{th}}{R_{th} + R_L}",
+      "derivacion": "Con el equivalente de Thevenin, la corriente en la carga es trivial: divisor de corriente en serie."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Curva de carga: I_L vs R_L (Equivalente de Thevenin)",
+    "descripcion": "V_th = 12V, R_th = 3Ω. La curva I_L vs R_L muestra la relación hiperbólica.",
+    "data": {
+      "labels": [1, 2, 3, 5, 10, 20, 50, 100],
+      "datasets": [
+        {
+          "label": "Corriente de carga I_L (A)",
+          "data": [3.0, 2.4, 2.0, 1.5, 0.923, 0.522, 0.222, 0.117],
+          "borderColor": "#6366f1",
+          "tension": 0.4
+        },
+        {
+          "label": "Voltaje de carga V_L (V)",
+          "data": [3.0, 4.8, 6.0, 7.5, 9.23, 10.43, 11.11, 11.65],
+          "borderColor": "#10b981",
+          "tension": 0.4
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "R_L (Ω)",
+      "yLabel": "Magnitud"
+    }
+  },
+  "secciones": [
+    {
+      "id": "procedimiento-thevenin",
+      "titulo": "Procedimiento Paso a Paso — Thevenin",
+      "contenido": "Paso 1: Identificar los terminales A y B (donde se conectará la carga). Paso 2: DESCONECTAR la carga R_L. Paso 3: Calcular V_th = voltaje en AB con circuito abierto (puede requerir análisis de nodos o mallas). Paso 4: Desactivar fuentes independientes (V→corto, I→abierto). Paso 5: Calcular R_th = resistencia equivalente vista desde AB. Paso 6: Construir el circuito equivalente: V_th en serie con R_th."
+    },
+    {
+      "id": "fuentes-dependientes",
+      "titulo": "Circuitos con Fuentes Dependientes",
+      "contenido": "Si el circuito contiene fuentes dependientes (VCVS, CCCS, etc.): (1) Las fuentes dependientes NO se pueden desactivar al calcular R_th. (2) Método alternativo: aplicar una fuente de prueba V_x en los terminales AB, calcular la corriente I_x que fluye, entonces R_th = V_x/I_x. (3) También: calcular V_oc e I_sc por separado, luego R_th = V_oc/I_sc."
+    },
+    {
+      "id": "aplicaciones-practicas",
+      "titulo": "Aplicaciones en Electrónica Analógica",
+      "contenido": "1. Análisis de etapas amplificadoras: el equivalente de Thevenin de la fuente facilita calcular la ganancia con carga. 2. Diseño de polarización BJT: el circuito de base se reemplaza por su Thevenin para simplificar el análisis. 3. Matching de impedancia: condición R_L = R_th para máxima potencia. 4. Análisis de sensores con resistencia interna: el sensor se modela como V_th (FEM) con R_th (resistencia interna)."
+    }
+  ],
+  "ejemplos_resueltos": [
+    {
+      "id": "ex-th-1",
+      "titulo": "Ejemplo 1: Thevenin básico",
+      "enunciado": "Circuito: V_s = 12V, R₁ = 4Ω en serie. R₂ = 6Ω en paralelo con los terminales AB. Encontrar V_th y R_th.",
+      "pasos": [
+        "Desconectar carga en AB",
+        "V_th = V_oc = V_s × R₂/(R₁+R₂) = 12 × 6/(4+6) = 7.2 V",
+        "Desactivar fuente: V_s → corto",
+        "R_th = R₁ ‖ R₂ = (4×6)/(4+6) = 2.4 Ω",
+        "Equivalente: V_th=7.2V en serie con R_th=2.4Ω"
+      ],
+      "resultado_katex": "V_{th} = 7.2\\,\\text{V},\\quad R_{th} = 2.4\\,\\Omega",
+      "verificacion": "Si R_L = 6Ω: I_L = 7.2/(2.4+6) = 0.857 A. Verificar directamente: I_total = 12/(4+6||6) = 12/7 = 1.714A, V_AB = 12-1.714×4 = 5.14V (con carga), pero V_oc = 7.2V. ✓ distinto porque ahora hay carga."
+    },
+    {
+      "id": "ex-norton-1",
+      "titulo": "Ejemplo 2: Conversión Thevenin-Norton",
+      "enunciado": "Dado V_th = 7.2V y R_th = 2.4Ω del ejemplo anterior, convertir a equivalente Norton.",
+      "pasos": [
+        "I_n = V_th / R_th = 7.2 / 2.4 = 3 A",
+        "R_n = R_th = 2.4 Ω",
+        "Equivalente Norton: I_n=3A en paralelo con R_n=2.4Ω"
+      ],
+      "resultado_katex": "I_n = \\frac{7.2}{2.4} = 3\\,\\text{A},\\quad R_n = 2.4\\,\\Omega"
+    },
+    {
+      "id": "ex-th-carga",
+      "titulo": "Ejemplo 3: Usar Thevenin con diferentes cargas",
+      "enunciado": "Con el equivalente de Thevenin anterior (V_th=7.2V, R_th=2.4Ω), calcular I_L y V_L para R_L = 3Ω, 6Ω y 12Ω.",
+      "pasos": [
+        "R_L = 3Ω: I_L = 7.2/(2.4+3) = 1.333A; V_L = 1.333×3 = 4.0V",
+        "R_L = 6Ω: I_L = 7.2/(2.4+6) = 0.857A; V_L = 0.857×6 = 5.14V",
+        "R_L = 12Ω: I_L = 7.2/(2.4+12) = 0.5A; V_L = 0.5×12 = 6.0V"
+      ],
+      "resultado_katex": "V_L = V_{th} \\cdot \\frac{R_L}{R_{th}+R_L}"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-th-1",
+      "titulo": "Encontrar equivalente Thevenin",
+      "descripcion": "Circuito: $V_s = 20\\,\\text{V}$ en serie con $R_1 = 5\\,\\Omega$. Desde el extremo de R₁ sale $R_2 = 10\\,\\Omega$ a tierra. Los terminales AB están en paralelo con R₂. Hallar $V_{th}$ y $R_{th}$.",
+      "solucion": "$V_{th} = 20 \\times \\frac{10}{5+10} = 13.33\\,\\text{V}$; $R_{th} = 5\\|10 = 3.33\\,\\Omega$",
+      "explicacion": "Divisor de voltaje da V_th. Cortocircuitar fuente y calcular resistencia vista desde AB.",
+      "tiempo_minutos": 8,
+      "dificultad": "intermedio"
+    },
+    {
+      "id": "ej-norton-1",
+      "titulo": "Equivalente Norton completo",
+      "descripcion": "Encontrar el equivalente de Norton para la misma red del ejercicio anterior. Luego calcular $I_L$ si $R_L = 20\\,\\Omega$.",
+      "solucion": "$I_n = V_{th}/R_{th} = 13.33/3.33 = 4\\,\\text{A}$; $R_n = 3.33\\,\\Omega$; $I_L = I_n \\times R_n/(R_n+R_L) = 4 \\times 3.33/23.33 = 0.571\\,\\text{A}$",
+      "explicacion": "Dividir corriente Norton entre R_n y R_L usando divisor de corriente.",
+      "tiempo_minutos": 6,
+      "dificultad": "intermedio"
+    }
+  ],
+  "enlaces": [
+    {"ruta": "/clase/4/tema/nodos-mallas", "texto": "← Análisis de Nodos y Mallas"},
+    {"ruta": "/clase/4/tema/maximum-power-transfer", "texto": "Siguiente: Máxima Transferencia →"},
+    {"ruta": "/clase/4", "texto": "Volver a Clase 4"}
+  ]
+}

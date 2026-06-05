@@ -429,6 +429,32 @@
                             "Limitación de corriente: proteger componentes sensibles",
                             "Polarización: establecer puntos de operación para componentes activos"
                         ],
+                        "simulacion_dinamica": {
+                            "tipo": "resistencia_v_i",
+                            "titulo": "Laboratorio: Ley de Ohm",
+                            "descripcion": "Varía el voltaje y la resistencia para observar el cambio proporcional en la corriente y la potencia disipada.",
+                            "ancho": 220,
+                            "alto": 200,
+                            "diagrama": [
+                                { "tipo": "fuente_dc", "x": 30, "y": 100, "valor": "Vin" },
+                                { "tipo": "linea", "x1": 30, "y1": 30, "x2": 90, "y2": 30 },
+                                { "tipo": "resistencia", "x": 90, "y": 20, "id": "R1", "valor": "R" },
+                                { "tipo": "linea", "x1": 140, "y1": 30, "x2": 180, "y2": 30 },
+                                { "tipo": "linea", "x1": 180, "y1": 30, "x2": 180, "y2": 150 },
+                                { "tipo": "tierra", "x": 180, "y": 150 }
+                            ],
+                            "controles": [
+                                { "id": "vin", "label": "Voltaje (V)", "min": 0, "max": 24, "step": 0.5, "default": 10, "unidad": "V" },
+                                { "id": "r", "label": "Resistencia (R)", "min": 10, "max": 2000, "step": 10, "default": 100, "unidad": "Ω" }
+                            ],
+                            "metricas": [
+                                { "label": "Corriente (I)", "formula_katex": "I = V/R", "calculo": "vin / r", "unidad": "A" },
+                                { "label": "Potencia (P)", "formula_katex": "P = V^2/R", "calculo": "(vin * vin) / r", "unidad": "W" }
+                            ],
+                            "graficas": [
+                                { "id": "vi_curve", "label": "V vs I (Lineal)", "color": "#7c6af7", "calculo_y": "x / r" }
+                            ]
+                        },
                         "codigo_colores": {
                             "descripcion": "Sistema de bandas para identificar el valor de la resistencia.",
                             "numero_bandas": 4,
@@ -584,6 +610,32 @@
                             "Acoplamiento y desacoplamiento de etapas",
                             "Temporización"
                         ],
+                        "simulacion_dinamica": {
+                            "tipo": "capacitor_i_v",
+                            "titulo": "Laboratorio: Comportamiento del Capacitor",
+                            "descripcion": "Explora la relación entre voltaje y corriente en un capacitor. Observa el desfase de 90° y cómo la reactancia XC disminuye al aumentar la frecuencia.",
+                            "ancho": 220,
+                            "alto": 200,
+                            "diagrama": [
+                                { "tipo": "fuente_ac", "x": 30, "y": 100, "valor": "Vin" },
+                                { "tipo": "linea", "x1": 30, "y1": 30, "x2": 100, "y2": 30 },
+                                { "tipo": "capacitor", "x": 100, "y": 30, "id": "C1", "valor": "C" },
+                                { "tipo": "linea", "x1": 100, "y1": 80, "x2": 100, "y2": 150 },
+                                { "tipo": "tierra", "x": 100, "y": 150 }
+                            ],
+                            "controles": [
+                                { "id": "freq", "label": "Frecuencia (Hz)", "min": 10, "max": 2000, "step": 10, "default": 100, "unidad": "Hz" },
+                                { "id": "c", "label": "Capacitancia (µF)", "min": 1, "max": 100, "step": 1, "default": 10, "unidad": "µF" }
+                            ],
+                            "metricas": [
+                                { "label": "Reactancia (Xc)", "formula_katex": "X_C = \\frac{1}{2\\pi f C}", "calculo": "1 / (2 * Math.PI * freq * c * 1e-6)", "unidad": "Ω" },
+                                { "label": "Fase (I vs V)", "formula_katex": "\\theta", "calculo": "90", "unidad": "° (adelanto)" }
+                            ],
+                            "graficas": [
+                                { "id": "v_wave", "label": "Voltaje V(t)", "color": "#3b82f6", "calculo_y": "5 * Math.sin(x)" },
+                                { "id": "i_wave", "label": "Corriente I(t)", "color": "#f05a7e", "calculo_y": "5 * Math.cos(x)" }
+                            ]
+                        },
                         "tipos": [
                             {
                                 "id": "electrolitico",
@@ -695,6 +747,33 @@
                             "Almacenamiento de energía en fuentes conmutadas",
                             "Supresión de picos de corriente"
                         ],
+                        "simulacion_dinamica": {
+                            "tipo": "inductor_v_i",
+                            "titulo": "Laboratorio: Comportamiento del Inductor",
+                            "descripcion": "Estudia cómo un inductor se opone a los cambios de corriente. Observa el desfase de 90° (voltaje adelanta a corriente) y cómo la reactancia XL aumenta con la frecuencia.",
+                            "ancho": 220,
+                            "alto": 200,
+                            "diagrama": [
+                                { "tipo": "fuente_ac", "x": 30, "y": 100, "valor": "Vin" },
+                                { "tipo": "linea", "x1": 30, "y1": 30, "x2": 100, "y2": 30 },
+                                { "tipo": "inductor", "x": 100, "y": 20, "id": "L1", "valor": "L" },
+                                { "tipo": "linea", "x1": 150, "y1": 30, "x2": 180, "y2": 30 },
+                                { "tipo": "linea", "x1": 180, "y1": 30, "x2": 180, "y2": 150 },
+                                { "tipo": "tierra", "x": 180, "y": 150 }
+                            ],
+                            "controles": [
+                                { "id": "freq", "label": "Frecuencia (Hz)", "min": 10, "max": 2000, "step": 10, "default": 100, "unidad": "Hz" },
+                                { "id": "l", "label": "Inductancia (mH)", "min": 1, "max": 500, "step": 1, "default": 100, "unidad": "mH" }
+                            ],
+                            "metricas": [
+                                { "label": "Reactancia (XL)", "formula_katex": "X_L = 2\\pi f L", "calculo": "2 * Math.PI * freq * l * 1e-3", "unidad": "Ω" },
+                                { "label": "Fase (V vs I)", "formula_katex": "\\theta", "calculo": "90", "unidad": "° (adelanto)" }
+                            ],
+                            "graficas": [
+                                { "id": "i_wave", "label": "Corriente I(t)", "color": "#f0c040", "calculo_y": "2 * Math.sin(x)" },
+                                { "id": "v_wave", "label": "Voltaje V(t)", "color": "#20c997", "calculo_y": "2 * Math.cos(x)" }
+                            ]
+                        },
                         "partes": [
                             {
                                 "nombre": "Devanado (Inducido)",

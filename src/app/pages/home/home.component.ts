@@ -38,36 +38,41 @@ export class HomeComponent implements OnInit {
   getRouteForTema(tema: string): string | null {
     const t = tema.toLowerCase();
     
-    // Componentes electrónicos
-    if (t.includes('componentes') || t.includes('características') || t.includes('propiedades')) return '/componentes';
+    // Unidad 1 (Semanas 1-2)
+    if (t.includes('conceptos básicos de electrónica') || t === 'conceptos básicos de electrónica analógica') return '/clase/1/tema/conceptos-basicos';
+    if (t.includes('características y propiedades de los componentes')) return '/clase/2';
+    if (t.includes('circuitos básicos: amplificadores')) return '/clase/1/tema/circuitos-basicos';
     
-    // Circuitos básicos: amplificadores, filtros, osciladores
-    if (t.includes('amplificadores') || t.includes('filtros') || t.includes('osciladores')) return '/sistemas';
-    if (t.includes('circuitos básicos')) return '/sistemas';
+    // Unidad 2 (Semanas 3-4)
+    if (t.includes('leyes y teoremas fundamentales')) return '/clase/3';
+    if (t.includes('resistencia equivalente en serie')) return '/clase/4/tema/resistencia-equivalente';
+    if (t.includes('métodos de análisis: nodos')) return '/clase/4/tema/nodos-mallas';
+    if (t.includes('cálculo de corrientes, voltajes')) return '/clase/3/tema/tipos-circuitos';
+    if (t.includes('thevenin') || t.includes('norton')) return '/clase/4/tema/thevenin-norton';
+    if (t.includes('máxima transferencia') || t.includes('maximum power')) return '/clase/4/tema/maximum-power-transfer';
     
-    // Clase 3 — Análisis DC
-    if (t.includes('ohm')) return '/clase/3/tema/ley-de-ohm';
-    if (t.includes('kirchhoff') || t.includes('teoremas fundamentales')) return '/clase/3';
-    if (t.includes('resistencia equivalente') || t.includes('equivalente') || t.includes('serie') || t.includes('paralelo')) return '/clase/4/tema/resistencia-equivalente';
-    if (t.includes('nodos') || t.includes('mallas')) return '/clase/4';
-    if (t.includes('máxima transferencia') || t.includes('maximum power') || t.includes('potencia máxima')) return '/clase/4/tema/maximum-power-transfer';
-    if (t.includes('thevenin') || t.includes('norton')) return '/clase/4/tema/maximum-power-transfer';
-    if (t.includes('resistencias equivalentes') || t.includes('corrientes, voltajes')) return '/clase/3/tema/tipos-circuitos';
-    if (t.includes('leyes y teoremas')) return '/clase/3';
+    // Unidad 3 (Semanas 5-6)
+    if (t.includes('conceptos de señales y sistemas') || t.includes('señales senoidales y fasores')) return '/clase/5/tema/senales-ac';
+    if (t.includes('filtros pasivos')) return '/clase/5/tema/filtros-pasivos';
+    if (t.includes('respuesta en frecuencia') || t.includes('diagramas de bode')) return '/clase/6/tema/respuesta-frecuencia';
+    if (t.includes('respuesta transitoria y estable') || t.includes('transitoria y estado estable')) return '/clase/6/tema/respuesta-transitoria';
 
-    // Componentes específicos
+    // Componentes específicos (Catalog shortcuts)
     if (t.includes('diodos')) return '/componentes/activos/diodo';
     if (t.includes('transistor') || t.includes('bjt') || t.includes('mosfet')) return '/componentes/activos/transistor';
     if (t.includes('op-amp') || t.includes('operacional')) return '/componentes/activos/opamp';
-    
-    // Componentes pasivos
     if (t.includes('resistencia')) return '/componentes/pasivos/resistencia';
     if (t.includes('capacitor')) return '/componentes/pasivos/capacitor';
     if (t.includes('inductor') || t.includes('bobina')) return '/componentes/pasivos/inductor';
-    
-    // Otros componentes
     if (t.includes('transformador')) return '/componentes/otros/transformador';
     if (t.includes('potenciómetro') || t.includes('potenciometro')) return '/componentes/otros/potenciometro';
+    
+    // Fallback general parsing
+    if (t.includes('componentes') || t.includes('características') || t.includes('propiedades')) return '/componentes';
+    if (t.includes('amplificadores') || t.includes('filtros') || t.includes('osciladores')) return '/sistemas';
+    if (t.includes('circuitos básicos')) return '/sistemas';
+    if (t.includes('ohm')) return '/clase/3/tema/ley-de-ohm';
+    if (t.includes('kirchhoff')) return '/clase/3';
     
     return null;
   }

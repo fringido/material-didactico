@@ -5,11 +5,27 @@ import { HttpClient } from '@angular/common/http';
 import { KatexDirective } from '../../../directives/katex.directive';
 import { FormulaTooltipDirective } from '../../../directives/formula-tooltip.directive';
 import { PageBackBarComponent } from '../../../components/page-back-bar/page-back-bar.component';
+import { AmplifierSimulatorComponent } from '../../../components/circuit-simulator/amplifier-simulator.component';
+import { FilterSimulatorComponent } from '../../../components/circuit-simulator/filter-simulator.component';
+import { OscillatorSimulatorComponent } from '../../../components/circuit-simulator/oscillator-simulator.component';
+import { PotentiometerSimulatorComponent } from '../../../components/circuit-simulator/potentiometer-simulator.component';
+import { TransformerSimulatorComponent } from '../../../components/circuit-simulator/transformer-simulator.component';
 
 @Component({
   selector: 'app-sistema-detalle',
   standalone: true,
-  imports: [CommonModule, RouterLink, KatexDirective, FormulaTooltipDirective, PageBackBarComponent],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    KatexDirective, 
+    FormulaTooltipDirective, 
+    PageBackBarComponent,
+    AmplifierSimulatorComponent,
+    FilterSimulatorComponent,
+    OscillatorSimulatorComponent,
+    PotentiometerSimulatorComponent,
+    TransformerSimulatorComponent
+  ],
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']
 })

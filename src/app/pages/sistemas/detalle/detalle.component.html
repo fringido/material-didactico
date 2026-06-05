@@ -21,6 +21,35 @@
     </div>
   </header>
 
+  <!-- SIMULADORES ESPECIALIZADOS -->
+  <section class="section" *ngIf="detalle().simulador !== false">
+    <h2 class="section__title">Laboratorio Interactivo</h2>
+    <div class="content-panel">
+      <!-- Amplificadores -->
+      @if (sistema() === 'amplificadores') {
+        <app-amplifier-simulator />
+      }
+
+      <!-- Filtros -->
+      @if (sistema() === 'filtros') {
+        <app-filter-simulator />
+      }
+
+      <!-- Osciladores -->
+      @if (sistema() === 'osciladores') {
+        <app-oscillator-simulator />
+      }
+
+      <!-- Casos Especiales -->
+      @if (detalle().id === 'potenciometro') {
+        <app-potentiometer-simulator />
+      }
+      @if (detalle().id === 'transformador') {
+        <app-transformer-simulator />
+      }
+    </div>
+  </section>
+
   <!-- AMPLIFICADORES -->
   <section class="section" *ngIf="sistema() === 'amplificadores' && detalle().ganancia_voltaje">
     <h2 class="section__title">Características</h2>

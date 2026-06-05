@@ -5,11 +5,21 @@ import { HttpClient } from '@angular/common/http';
 import { KatexDirective } from '../../directives/katex.directive';
 import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
 import { EquationChartComponent } from '../../components/equation-chart/equation-chart.component';
+import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
+import { BodeChartComponent } from '../../components/bode-chart/bode-chart.component';
 
 @Component({
   selector: 'app-unidad',
   standalone: true,
-  imports: [CommonModule, RouterLink, KatexDirective, PageBackBarComponent, EquationChartComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    KatexDirective,
+    PageBackBarComponent,
+    EquationChartComponent,
+    DynamicCircuitSimulatorComponent,
+    BodeChartComponent
+  ],
   templateUrl: './unidad.component.html',
   styleUrls: ['./unidad.component.scss']
 })

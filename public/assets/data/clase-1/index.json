@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "clase": 1,
+    "modulo": 1,
+    "unidad": 1,
+    "titulo": "Introducción a la Electrónica Analógica",
+    "semanas": "1",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-04",
+    "descripcion": "Fundamentos de señales analógicas, diferencia con digital, parámetros de señales y clasificación de componentes electrónicos activos y pasivos.",
+    "ruta": "/clase/1"
+  },
+  "objetivos": [
+    "Comprender la diferencia entre señales analógicas y digitales",
+    "Identificar los parámetros fundamentales de una señal eléctrica",
+    "Clasificar correctamente los componentes electrónicos como activos o pasivos",
+    "Reconocer las aplicaciones de la electrónica analógica en sistemas mecatrónicos"
+  ],
+  "temas": [
+    {
+      "id": "conceptos-basicos",
+      "nombre": "Conceptos Básicos de Electrónica Analógica",
+      "descripcion": "¿Qué es la electrónica analógica? Señales continuas vs digitales, magnitudes eléctricas fundamentales.",
+      "icono": "📡",
+      "ruta": "/clase/1/tema/conceptos-basicos",
+      "archivo": "conceptos-basicos.json"
+    },
+    {
+      "id": "componentes-activos-pasivos",
+      "nombre": "Componentes Activos y Pasivos",
+      "descripcion": "Clasificación, características y propiedades de los componentes electrónicos fundamentales.",
+      "icono": "🔧",
+      "ruta": "/clase/1/tema/componentes",
+      "archivo": "componentes-activos-pasivos.json"
+    },
+    {
+      "id": "circuitos-basicos",
+      "nombre": "Circuitos Básicos: Amplificadores, Filtros, Osciladores",
+      "descripcion": "Introducción a los tres pilares de los sistemas electrónicos analógicos y sus aplicaciones.",
+      "icono": "⚡",
+      "ruta": "/clase/1/tema/circuitos-basicos",
+      "archivo": "circuitos-basicos.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "unidad_completa": "/modulo/1/unidad/1",
+    "siguiente_clase": "/clase/2",
+    "catalogo_componentes": "/componentes",
+    "sistemas": "/sistemas"
+  }
+}

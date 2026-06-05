@@ -1,0 +1,101 @@
+{
+  "id": "componentes-activos",
+  "nombre": "Componentes Activos: Diodos, BJT, Op-Amp",
+  "descripcion": "Componentes que requieren energía externa y pueden amplificar señales o controlar flujos de corriente de forma no lineal.",
+  "introduccion": "A diferencia de los componentes pasivos, los activos controlan corrientes utilizando otras señales eléctricas, permitiendo la amplificación, conmutación y modulación de energía. La electrónica moderna nació con la invención del tubo de vacío y se revolucionó con la llegada de los semiconductores de estado sólido como los diodos de silicio, los transistores BJT y MOSFET, y los amplificadores operacionales en circuitos integrados.",
+  "metadata": {
+    "clase": 2,
+    "orden": 2,
+    "titulo": "Componentes Activos: Diodos, BJT, Op-Amp"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Diodo Semiconductor",
+      "descripcion": "Dispositivo semiconductor de dos terminales (Ánodo y Cátodo) que permite el flujo de corriente en una sola dirección. En polarización directa actúa como un interruptor cerrado (con caída de 0.7V en Silicio). En polarización inversa actúa como un circuito abierto.",
+      "tipos": ["Rectificador (conversión AC-DC)", "Zener (regulación de voltaje)", "LED (emisión de luz)"]
+    },
+    {
+      "nombre": "Transistor Bipolar (BJT)",
+      "descripcion": "Dispositivo semiconductor de tres terminales (Base, Colector, Emisor) que amplifica corriente. Una pequeña corriente en la Base (Ib) controla una corriente mucho mayor entre Colector y Emisor (Ic).",
+      "modos": ["Corte: interruptor abierto (Ib = 0)", "Saturación: interruptor cerrado (totalmente conductor)", "Activa: región de amplificación (Ic = \u03b2 \u00b7 Ib)"]
+    },
+    {
+      "nombre": "Amplificador Operacional (Op-Amp)",
+      "descripcion": "Circuito integrado de alta ganancia con dos entradas (Inversora '-' y No Inversora '+') y una salida. Es el bloque analógico más versátil para sumas, restas, integraciones y filtrado de señales.",
+      "ideal": ["Ganancia infinita", "Resistencia de entrada infinita", "Resistencia de salida cero"]
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Relación de Corrientes en BJT (Región Activa)",
+      "katex": "I_C = \\beta \\cdot I_B \\quad \\text{y} \\quad I_E = I_C + I_B = (\\beta + 1)I_B",
+      "derivacion": "beta (\u03b2) o hFE es la ganancia de corriente continua del transistor, variando típicamente entre 50 y 300."
+    },
+    {
+      "titulo": "Voltaje del Diodo en Conducción Directa",
+      "katex": "V_D \\approx 0.7\\,\\text{V} \\quad [\\text{Silicio}] \\quad \\text{o} \\quad V_D \\approx 0.3\\,\\text{V} \\quad [\\text{Germanio}]",
+      "derivacion": "Barrera de potencial que se debe vencer en la unión P-N para establecer la conducción de portadores de carga."
+    },
+    {
+      "titulo": "Ganancia de Amplificador No Inversor",
+      "katex": "A_v = 1 + \\frac{R_f}{R_{in}}",
+      "derivacion": "Ecuación obtenida aplicando retroalimentación negativa y la condición de cortocircuito virtual (V+ = V-)."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Curva Característica I-V de un Diodo de Silicio",
+    "descripcion": "Relación entre el voltaje aplicado al diodo (Vd) y la corriente resultante (Id), mostrando el codo de conducción a los 0.7V.",
+    "data": {
+      "labels": [0, 0.2, 0.4, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8],
+      "datasets": [
+        {
+          "label": "Corriente de Conducción Id (mA)",
+          "data": [0, 0.001, 0.01, 0.1, 1.2, 5.5, 20.0, 75.0, 200.0],
+          "borderColor": "#10b981",
+          "tension": 0.4
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Voltaje del Diodo Vd (V)",
+      "yLabel": "Corriente Id (mA)"
+    }
+  },
+  "secciones": [
+    {
+      "id": "bjt-operation",
+      "titulo": "Zonas de Trabajo de un Transistor BJT",
+      "contenido": "Un transistor puede operar de tres maneras básicas. (1) CORTE: Si el voltaje Base-Emisor es menor a 0.6V, no hay corriente de base y el colector queda desconectado (interruptor abierto). (2) SATURACIÓN: Si se inyecta suficiente corriente a la base, el transistor conduce al máximo posible limitado por la carga externa (interruptor cerrado, Vce \u2248 0.2V). (3) ACTIVA: Usada para amplificadores de audio y sensores; la corriente de colector es proporcional a la de base."
+    },
+    {
+      "id": "opamp-feedback",
+      "titulo": "Retroalimentación en Amplificadores Operacionales",
+      "contenido": "El Op-Amp en lazo abierto tiene ganancia casi infinita (100,000+), lo que hace que su salida se sature rápidamente ante cualquier diferencia en sus entradas (actúa como comparador). Al conectar la salida de vuelta a la entrada inversora (retroalimentación negativa), logramos estabilizar la ganancia a un valor preciso definido por resistencias externas."
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-bjt-1",
+      "titulo": "Cálculo de corrientes en transistor BJT",
+      "descripcion": "Un transistor NPN en región activa tiene un parámetro $\\beta = 150$. Si se mide una corriente de base de $I_B = 20\\,\\mu\\text{A}$, calcule la corriente de colector ($I_C$) y la corriente de emisor ($I_E$).",
+      "solucion": "$I_C = \\beta \\cdot I_B = 150 \\times 20 \\times 10^{-6}\\,\\text{A} = 3\\,\\text{mA}$. Corriente de emisor: $I_E = I_C + I_B = 3\\,\\text{mA} + 0.02\\,\\text{mA} = 3.02\\,\\text{mA}$.",
+      "explicacion": "Utilizamos las relaciones fundamentales del transistor BJT en su zona lineal activa.",
+      "tiempo_minutos": 4,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-opamp-1",
+      "titulo": "Diseño de Amplificador No Inversor",
+      "descripcion": "Se desea amplificar la señal de un sensor de temperatura de $0.5\\,\\text{V}$ a $2.5\\,\\text{V}$ usando un Op-Amp no inversor. Si se usa una resistencia de entrada $R_{in} = 10\\,\\text{k}\\Omega$, calcule la resistencia de retroalimentación $R_f$ requerida.",
+      "solucion": "Ganancia requerida: $A_v = 2.5 / 0.5 = 5$. Fórmula de ganancia: $5 = 1 + R_f / 10\\,\\text{k}\\Omega \\rightarrow 4 = R_f / 10\\,\\text{k}\\Omega \\rightarrow R_f = 40\\,\\text{k}\\Omega$.",
+      "explicacion": "Utilizamos la ecuación de ganancia del amplificador no inversor y despejamos el valor de Rf.",
+      "tiempo_minutos": 5,
+      "dificultad": "medio"
+    }
+  ],
+  "enlaces": [
+    {"ruta": "/clase/2", "texto": "Volver a Clase 2"},
+    {"ruta": "/clase/2/tema/instrumentos", "texto": "Siguiente: Instrumentos de Medición →"}
+  ]
+}

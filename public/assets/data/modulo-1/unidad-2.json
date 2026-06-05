@@ -2,107 +2,157 @@
   "metadata": {
     "modulo": 1,
     "unidad": 2,
-    "numero_unidad": 2,
     "titulo": "Análisis de Circuitos en DC",
     "semanas": "3-4",
-    "clase": 3,
-    "version": "1.0.0",
-    "fecha_actualizacion": "2026-05-21",
-    "descripcion": "Leyes fundamentales, topologías y análisis básico de redes en corriente continua.",
-    "duracion_estimada": "4 semanas (parcial)"
+    "version": "1.2.0",
+    "fecha_actualizacion": "2026-06-04",
+    "descripcion": "Estudio de las leyes fundamentales y métodos sistemáticos para resolver redes de corriente continua."
   },
   "objetivos": [
-    "Aplicar la Ley de Ohm y despejar sus variables con el triángulo mnemotécnico",
-    "Calcular resistencias equivalentes en serie, paralelo y circuitos mixtos",
-    "Plantear ecuaciones con las leyes de Kirchhoff (LCK y LVK)",
-    "Respetar convenciones de signo al analizar nodos y mallas"
+    "Aplicar la Ley de Ohm para calcular V, I y R en componentes individuales.",
+    "Utilizar las Leyes de Kirchhoff (LVK y LCK) para analizar redes interconectadas.",
+    "Dominar los métodos de Nodos y Mallas para la resolución de circuitos complejos.",
+    "Comprender y aplicar los Teoremas de Thevenin y Norton para simplificación de redes.",
+    "Calcular la máxima transferencia de potencia en una carga."
   ],
   "temas": [
     {
       "id": "ley-de-ohm",
-      "titulo": "La Ley de Ohm",
-      "descripcion": "Relación V = I·R, triángulo de Ohm y analogía pedagógica.",
-      "ruta": "/clase/3/tema/ley-de-ohm",
-      "ecuaciones": [
-        {
-          "nombre": "Ley de Ohm",
-          "formula": "V = I \\cdot R",
-          "grafica": { "tipo": "ohm", "titulo": "Relación V–I — Ley de Ohm" }
+      "nombre": "La Ley de Ohm",
+      "descripcion": "Relación fundamental entre voltaje, corriente y resistencia.",
+      "contenido": {
+        "introduccion": "Establece que la corriente es directamente proporcional al voltaje e inversamente proporcional a la resistencia.",
+        "ecuaciones": [
+          { "nombre": "Ley de Ohm", "formula": "V = I \\cdot R", "descripcion": "Voltaje es el producto de corriente por resistencia." },
+          { "nombre": "Corriente", "formula": "I = \\frac{V}{R}", "descripcion": "La corriente es la razón entre voltaje y resistencia." },
+          { "nombre": "Resistencia", "formula": "R = \\frac{V}{I}", "descripcion": "La resistencia es la razón entre voltaje y corriente." }
+        ],
+        "variables": [
+          { "simbolo": "V", "nombre": "Voltaje", "unidad": "V", "descripcion": "Presión eléctrica o diferencia de potencial." },
+          { "simbolo": "I", "nombre": "Corriente", "unidad": "A", "descripcion": "Flujo de carga eléctrica." },
+          { "simbolo": "R", "nombre": "Resistencia", "unidad": "\\Omega", "descripcion": "Oposición al paso de la corriente." }
+        ],
+        "interactivos": [
+          { "id": "ohm-lab", "titulo": "Laboratorio de Ley de Ohm", "tipo": "ohm-law-lab" },
+          { "id": "pipe", "titulo": "Analogía de la Tubería", "tipo": "pipe-analogy" }
+        ],
+        "simulacion_dinamica": {
+          "tipo": "resistencia_v_i",
+          "titulo": "Calculadora Interactiva de Ohm",
+          "controles": [
+            { "id": "vin", "label": "Voltaje", "min": 0, "max": 24, "default": 10, "unidad": "V" },
+            { "id": "r", "label": "Resistencia", "min": 10, "max": 2000, "default": 100, "unidad": "\\Omega" }
+          ],
+          "metricas": [
+            { "label": "Corriente", "calculo": "vin / r", "unidad": "A", "formula_katex": "I = V/R" }
+          ]
         }
-      ],
-      "enlaces": [
-        { "texto": "Ver tema interactivo", "ruta": "/clase/3/tema/ley-de-ohm" }
-      ]
+      }
     },
     {
       "id": "tipos-circuitos",
-      "titulo": "Tipos de Circuitos (Topologías Básicas)",
-      "descripcion": "Serie, paralelo y reducción de circuitos mixtos.",
-      "subtemas": [
-        "Circuito en serie",
-        "Circuito en paralelo",
-        "Circuito mixto (serie-paralelo)"
-      ],
-      "ecuaciones": [
-        { "nombre": "Serie", "formula": "R_T = R_1 + R_2 + \\cdots" },
-        { "nombre": "Paralelo", "formula": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\cdots" }
-      ],
-      "enlaces": [
-        { "texto": "Ver tema interactivo", "ruta": "/clase/3/tema/tipos-circuitos" }
-      ]
+      "nombre": "Tipos de Circuitos — Topologías",
+      "descripcion": "Circuitos en serie, paralelo y mixtos. Reducción de redes.",
+      "contenido": {
+        "introduccion": "Las topologías fundamentales determinan cómo se distribuyen el voltaje y la corriente.",
+        "topologias": [
+          {
+            "id": "serie",
+            "nombre": "Circuito en Serie",
+            "descripcion": "Componentes conectados en una sola trayectoria. La corriente es idéntica en todos.",
+            "reglas": [
+              { "magnitud": "Resistencia Total", "formula": "R_T = R_1 + R_2 + \\dots", "descripcion": "Se suman aritméticamente." },
+              { "magnitud": "Corriente", "formula": "I_T = I_1 = I_2", "descripcion": "La misma en todo el lazo." }
+            ],
+            "comportamiento_clave": "Si un componente falla, se abre todo el circuito."
+          },
+          {
+            "id": "paralelo",
+            "nombre": "Circuito en Paralelo",
+            "descripcion": "Componentes conectados entre los mismos dos nodos. El voltaje es idéntico.",
+            "reglas": [
+              { "magnitud": "Resistencia Total", "formula": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2}", "descripcion": "El recíproco de la suma de recíprocos." },
+              { "magnitud": "Voltaje", "formula": "V_T = V_1 = V_2", "descripcion": "Igual en todas las ramas." }
+            ],
+            "comportamiento_clave": "R_T siempre es menor que la resistencia más pequeña."
+          }
+        ],
+        "interactivos": [
+          { "id": "topo-lab", "titulo": "Laboratorio de Topologías", "tipo": "topology-lab" }
+        ]
+      }
     },
     {
       "id": "leyes-kirchhoff",
-      "titulo": "Leyes de Kirchhoff",
-      "descripcion": "LCK (nodos) y LVK (mallas) basadas en conservación de carga y energía.",
-      "subtemas": [
-        "Ley de Corrientes (LCK)",
-        "Ley de Voltajes (LVK)",
-        "Convención de signos"
-      ],
-      "ecuaciones": [
-        { "nombre": "LCK", "formula": "\\sum I_k = 0" },
-        { "nombre": "LVK", "formula": "\\sum V_k = 0" }
-      ],
-      "enlaces": [
-        { "texto": "Ver tema interactivo", "ruta": "/clase/3/tema/leyes-kirchhoff" }
-      ]
+      "nombre": "Leyes de Kirchhoff",
+      "descripcion": "Conservación de carga y energía en circuitos.",
+      "contenido": {
+        "leyes": [
+          {
+            "id": "lck",
+            "nombre": "Ley de Corrientes (LCK)",
+            "principio": "Conservación de la carga",
+            "definicion": "La suma de corrientes que entran a un nodo es igual a la suma de las que salen.",
+            "ecuacion": "\\sum I_{in} = \\sum I_{out}"
+          },
+          {
+            "id": "lvk",
+            "nombre": "Ley de Voltajes (LVK)",
+            "principio": "Conservación de la energía",
+            "definicion": "La suma algebraica de las caídas de voltaje en una malla es cero.",
+            "ecuacion": "\\sum V_{subidas} = \\sum V_{caídas}"
+          }
+        ],
+        "interactivos": [
+          { "id": "k-lab", "titulo": "Laboratorio de Kirchhoff", "tipo": "kirchhoff-lab" }
+        ],
+        "simulacion_dinamica": {
+          "tipo": "kirchhoff-lab",
+          "titulo": "Práctica de Kirchhoff",
+          "descripcion": "Mide voltajes y corrientes para verificar las leyes."
+        }
+      }
+    },
+    {
+      "id": "nodos-mallas",
+      "nombre": "Métodos de Nodos y Mallas",
+      "descripcion": "Resolución sistemática de circuitos complejos.",
+      "contenido": {
+        "introduccion": "Métodos algebraicos para encontrar todas las variables de un circuito.",
+        "formulas": [
+          { "titulo": "Análisis de Mallas", "katex": "[R][I] = [V]" },
+          { "titulo": "Análisis de Nodos", "katex": "[G][V] = [I]" }
+        ],
+        "simulacion_dinamica": {
+          "tipo": "matrix_visualizer",
+          "titulo": "Visualizador de Matrices",
+          "descripcion": "Observa cómo se construye la matriz del sistema.",
+          "matriz_dinamica": {
+            "tipo": "mallas",
+            "variables": ["I1", "I2"],
+            "filas": [
+              ["R1 + R2", "-R2", "V1"],
+              ["-R2", "R2 + R3", "0"]
+            ]
+          },
+          "controles": [
+             { "id": "R1", "label": "R1", "min": 10, "max": 1000, "default": 100, "step": 10 },
+             { "id": "R2", "label": "R2", "min": 10, "max": 1000, "default": 200, "step": 10 },
+             { "id": "R3", "label": "R3", "min": 10, "max": 1000, "default": 300, "step": 10 },
+             { "id": "V1", "label": "V1", "min": 1, "max": 50, "default": 12, "step": 1 }
+          ],
+          "metricas": []
+        }
+      }
     }
   ],
   "ejercicios": [
     {
-      "numero": 4,
-      "titulo": "Análisis de nodos",
-      "descripcion": "Resolver 5 circuitos usando análisis de nodos.",
-      "dificultad": "intermedio"
-    },
-    {
-      "numero": 5,
-      "titulo": "Análisis de mallas",
-      "descripcion": "Resolver 5 circuitos usando análisis de mallas.",
-      "dificultad": "intermedio"
+      "id": "ej-dc-1",
+      "titulo": "Divisor de Voltaje",
+      "descripcion": "Calcula el voltaje en R2 si Vin=12V, R1=1k\\Omega y R2=2k\\Omega.",
+      "solucion": "V_{out} = V_{in} \\cdot \\frac{R_2}{R_1 + R_2} = 12 \\cdot \\frac{2k}{3k} = 8V",
+      "tiempo_minutos": 10
     }
-  ],
-  "recursos_adicionales": [
-    {
-      "titulo": "Clase 3 — Material interactivo",
-      "descripcion": "Temas con simuladores y diagramas",
-      "url": "/clase/3"
-    },
-    {
-      "titulo": "Resistencia (componente)",
-      "descripcion": "Catálogo y gráfica de Ohm",
-      "url": "/componentes/pasivos/resistencia"
-    }
-  ],
-  "referencias": [
-    "Boylestad & Nashelsky — Capítulos de corriente continua y leyes de Kirchhoff",
-    "Floyd — Análisis de circuitos en DC"
-  ],
-  "notas_profesor": {
-    "enfasis": [
-      "Corregir la fórmula de paralelo (inversos, no suma directa de R)",
-      "Practicar convención de signos antes de sistemas de ecuaciones grandes"
-    ]
-  }
+  ]
 }

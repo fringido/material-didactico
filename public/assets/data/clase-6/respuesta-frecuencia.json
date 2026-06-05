@@ -1,0 +1,220 @@
+{
+  "id": "respuesta-frecuencia",
+  "nombre": "Respuesta en Frecuencia y Diagramas de Bode",
+  "descripcion": "Análisis del comportamiento de circuitos en función de la frecuencia. Construcción e interpretación de Diagramas de Bode de magnitud y fase.",
+  "introduccion": "El Diagrama de Bode es la herramienta estándar de la industria para visualizar cómo un sistema electrónico responde a diferentes frecuencias. Fue desarrollado por Hendrik Wade Bode en los Laboratorios Bell en los años 1930s. Usa escala logarítmica tanto en frecuencia como en ganancia (dB), lo que permite representar respuestas que abarcan décadas de frecuencia y amplios rangos de ganancia en una sola gráfica. Es fundamental para el análisis y diseño de filtros, amplificadores y sistemas de control.",
+  "metadata": {
+    "clase": 6,
+    "orden": 1,
+    "titulo": "Respuesta en Frecuencia y Diagramas de Bode"
+  },
+  "simulacion_dinamica": {
+    "tipo": "filter_frequency",
+    "titulo": "Laboratorio: Efecto de la Frecuencia en Filtros",
+    "descripcion": "Cambia la frecuencia de la señal de entrada y observa cómo el filtro RC afecta la amplitud y la fase de la salida en tiempo real.",
+    "ancho": 300,
+    "alto": 220,
+    "diagrama": [
+      { "tipo": "fuente_ac", "x": 30, "y": 100, "valor": "Vin" },
+      { "tipo": "linea", "x1": 30, "y1": 30, "x2": 80, "y2": 30 },
+      { "tipo": "resistencia", "x": 80, "y": 20, "id": "R", "valor": "R" },
+      { "tipo": "linea", "x1": 130, "y1": 30, "x2": 180, "y2": 30 },
+      { "tipo": "capacitor", "x": 180, "y": 30, "id": "C", "valor": "C" },
+      { "tipo": "linea", "x1": 180, "y1": 80, "x2": 180, "y2": 150 },
+      { "tipo": "tierra", "x": 180, "y": 150 },
+      { "tipo": "nodo", "x": 180, "y": 30, "valor": "Vout" }
+    ],
+    "controles": [
+      { "id": "freq", "label": "Frecuencia (f)", "min": 10, "max": 5000, "step": 10, "default": 100, "unidad": "Hz" },
+      { "id": "r", "label": "Resistencia (R)", "min": 100, "max": 10000, "step": 100, "default": 1000, "unidad": "Ω" },
+      { "id": "c", "label": "Capacitancia (C)", "min": 0.1, "max": 10, "step": 0.1, "default": 1, "unidad": "µF" }
+    ],
+    "metricas": [
+      { "label": "Frecuencia Corte (fc)", "formula_katex": "f_c = \\frac{1}{2\\pi RC}", "calculo": "1 / (2 * Math.PI * r * c * 1e-6)", "unidad": "Hz" },
+      { "label": "Ganancia (Vout/Vin)", "formula_katex": "|H|", "calculo": "1 / Math.sqrt(1 + Math.pow(freq / (1 / (2 * Math.PI * r * c * 1e-6)), 2))", "unidad": "" },
+      { "label": "Fase", "formula_katex": "\\phi", "calculo": "-Math.atan(freq / (1 / (2 * Math.PI * r * c * 1e-6))) * 180 / Math.PI", "unidad": "°" }
+    ],
+    "graficas": [
+      { "id": "vin_wave", "label": "Entrada (Vin)", "color": "#3b82f6", "calculo_y": "5 * Math.sin(freq * 2 * Math.PI * x / 1000)" },
+      { "id": "vout_wave", "label": "Salida (Vout)", "color": "#10b981", "calculo_y": "(5 / Math.sqrt(1 + Math.pow(freq / (1 / (2 * Math.PI * r * c * 1e-6)), 2))) * Math.sin(freq * 2 * Math.PI * x / 1000 - Math.atan(freq / (1 / (2 * Math.PI * r * c * 1e-6))))" }
+    ]
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Escala Logarítmica de Frecuencia",
+      "descripcion": "En el Diagrama de Bode, el eje X (frecuencia) está en escala logarítmica. Esto permite mostrar un rango muy amplio de frecuencias (ej: 1 Hz a 1 MHz) en una gráfica compacta y revela la naturaleza asintótica del comportamiento.",
+      "unidad": "Décadas: intervalo donde la frecuencia se multiplica por 10 (ej: 100 Hz a 1 kHz = 1 década)"
+    },
+    {
+      "nombre": "Ganancia en Decibeles (dB)",
+      "descripcion": "La ganancia en dB permite comparar señales en escala logarítmica: G_dB = 20·log(|H|). Una ganancia de 1 = 0 dB (sin cambio). Factor 2 ≈ 6 dB. Factor 10 = 20 dB. Factor 0.707 = -3 dB (frecuencia de corte).",
+      "tabla_referencia": [
+        {"factor": 0.1, "dB": -20},
+        {"factor": 0.5, "dB": -6},
+        {"factor": 0.707, "dB": -3},
+        {"factor": 1.0, "dB": 0},
+        {"factor": 2.0, "dB": 6},
+        {"factor": 10, "dB": 20}
+      ]
+    },
+    {
+      "nombre": "Polo",
+      "descripcion": "Frecuencia a la cual la función de transferencia aumenta su denominador (o disminuye su ganancia). Cada polo contribuye con -20 dB/década de pendiente y -90° de fase en el diagrama de Bode. La frecuencia de corte de un filtro RC es un polo.",
+      "forma_matematica": "Factor (1 + jω/ωp) en el denominador de H(jω)"
+    },
+    {
+      "nombre": "Cero",
+      "descripcion": "Frecuencia a la cual la función de transferencia aumenta en el numerador (o aumenta la ganancia). Cada cero contribuye con +20 dB/década y +90° de fase. El filtro pasa-altas tiene un cero en ω=0.",
+      "forma_matematica": "Factor (1 + jω/ωz) en el numerador de H(jω)"
+    },
+    {
+      "nombre": "Pendiente asintótica",
+      "descripcion": "La aproximación de Bode usa líneas rectas (asíntotas) para trazar el diagrama. Un polo: -20 dB/década tras la fc. Dos polos: -40 dB/década. Esta aproximación introduce un error máximo de 3 dB en la fc.",
+      "cuando_usarlo": "Trazado rápido a mano de diagramas de Bode para sistemas con múltiples polos y ceros."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Ganancia en dB",
+      "katex": "G_{dB} = 20\\log_{10}|H(j\\omega)|",
+      "derivacion": "Escala logarítmica de la magnitud de la función de transferencia."
+    },
+    {
+      "titulo": "Fase de H(jω)",
+      "katex": "\\phi = \\angle H(j\\omega) = \\arctan\\left(\\frac{\\text{Im}\\{H\\}}{\\text{Re}\\{H\\}}\\right)",
+      "derivacion": "El ángulo de fase muestra cuánto la salida adelanta o atrasa a la entrada a cada frecuencia."
+    },
+    {
+      "titulo": "Función de transferencia LPF (1er orden)",
+      "katex": "H(s) = \\frac{\\omega_c}{s + \\omega_c} = \\frac{1}{1 + s/\\omega_c}",
+      "derivacion": "Un polo en s = -ωc. En Bode: 0 dB para f << fc, -20 dB/dec para f >> fc."
+    },
+    {
+      "titulo": "Función de transferencia HPF (1er orden)",
+      "katex": "H(s) = \\frac{s}{s + \\omega_c} = \\frac{s/\\omega_c}{1 + s/\\omega_c}",
+      "derivacion": "Un zero en s=0 y un polo en s = -ωc. En Bode: sube +20 dB/dec hasta fc, luego se aplana."
+    },
+    {
+      "titulo": "Función de transferencia 2do orden (RLC)",
+      "katex": "H(s) = \\frac{\\omega_0^2}{s^2 + (\\omega_0/Q)s + \\omega_0^2}",
+      "derivacion": "Dos polos complejos conjugados. Pendiente -40 dB/década. Pico de resonancia si Q > 0.5."
+    },
+    {
+      "titulo": "Ancho de Banda (-3 dB)",
+      "katex": "BW = f_2 - f_1",
+      "derivacion": "Diferencia entre la frecuencia alta y baja donde la ganancia cae -3 dB del máximo. Para RLC: BW = f₀/Q."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Diagrama de Bode — LPF RC (fc = 1 kHz)",
+    "descripcion": "Ganancia en dB y Fase vs. Frecuencia para filtro pasa-bajas RC de primer orden",
+    "data": {
+      "labels": [10, 100, 500, 1000, 2000, 5000, 10000, 50000, 100000],
+      "datasets": [
+        {
+          "label": "Magnitud |H| (dB)",
+          "data": [-0.001, -0.043, -0.97, -3.01, -6.99, -14.1, -20.04, -33.98, -40.0],
+          "borderColor": "#6366f1",
+          "tension": 0.4,
+          "yAxisID": "y"
+        },
+        {
+          "label": "Fase (°)",
+          "data": [-0.57, -5.71, -26.6, -45.0, -63.4, -78.7, -84.3, -88.9, -89.4],
+          "borderColor": "#f59e0b",
+          "tension": 0.4,
+          "yAxisID": "y1"
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Frecuencia (Hz) — escala log",
+      "yLabel": "Ganancia (dB)",
+      "y1Label": "Fase (°)",
+      "xScale": "logarithmic"
+    }
+  },
+  "secciones": [
+    {
+      "id": "construccion-bode-manual",
+      "titulo": "Cómo Trazar el Diagrama de Bode Manualmente",
+      "contenido": "MÉTODO ASINTÓTICO para H(jω) = 1/(1 + jω/ωc): (1) Trazar la asíntota de baja frecuencia: línea horizontal a 0 dB hasta ω = ωc. (2) En ω = ωc: el valor real es -3 dB (no 0 dB). (3) Trazar la asíntota de alta frecuencia: línea con pendiente -20 dB/decade desde ωc. (4) Para la FASE: a ω = 0.1·ωc la fase es ≈ -5.7°; a ω = ωc la fase es -45°; a ω = 10·ωc la fase es ≈ -84.3°. Trazar una línea recta desde (0.1ωc, -5.7°) hasta (10ωc, -84.3°)."
+    },
+    {
+      "id": "multiples-polos",
+      "titulo": "Bode con Múltiples Polos y Ceros",
+      "contenido": "Para funciones de transferencia más complejas: H(jω) = K · (1+jω/ωz1)/(1+jω/ωp1)(1+jω/ωp2): (1) Calcular la ganancia DC: 20·log(K). (2) En cada CERO a ωzn: la pendiente AUMENTA +20 dB/década. (3) En cada POLO a ωpn: la pendiente DISMINUYE -20 dB/década. (4) Las fases se SUMAN: cada cero contribuye +90° y cada polo -90° a lo largo de la transición."
+    },
+    {
+      "id": "ancho-de-banda",
+      "titulo": "Ancho de Banda y Factor de Calidad",
+      "contenido": "El ancho de banda (BW) es el rango de frecuencias donde la ganancia es mayor a -3 dB. Para un amplificador: BW = fH - fL. Para un filtro pasabanda RLC: BW = f₀/Q. Circuitos de alta Q tienen BW estrecho (muy selectivos) y pueden presentar picos de resonancia peligrosos. En diseño de sistemas de control, el BW determina la velocidad de respuesta del sistema."
+    }
+  ],
+  "ejemplos_resueltos": [
+    {
+      "id": "ex-bode-1",
+      "titulo": "Trazar Bode de un LPF RC",
+      "enunciado": "R=1.59kΩ, C=100nF. Calcular la fc y describir el comportamiento de Bode.",
+      "pasos": [
+        "fc = 1/(2π × 1.59k × 100n) = 1000 Hz",
+        "A 100 Hz (f/fc = 0.1): |H| = 1/√(1+0.01) ≈ 0.995 → -0.04 dB, fase ≈ -5.7°",
+        "A 1000 Hz (f/fc = 1, fc): |H| = 1/√2 ≈ 0.707 → -3 dB, fase = -45°",
+        "A 10 kHz (f/fc = 10): |H| = 1/√101 ≈ 0.0995 → -20 dB, fase ≈ -84°",
+        "A 100 kHz (f/fc = 100): |H| ≈ 0.01 → -40 dB (dos décadas = -40 dB)"
+      ],
+      "resultado_katex": "f_c = 1\\,\\text{kHz},\\quad \\text{pendiente} = -20\\,\\text{dB/década para } f > f_c"
+    },
+    {
+      "id": "ex-bode-2",
+      "titulo": "Bode de sistema con polo y cero",
+      "enunciado": "H(jω) = jω/(jω + 100) · 1000/(jω + 1000). Encontrar: ganancias asintóticas y frecuencias clave.",
+      "pasos": [
+        "Primer factor: HPF con cero en ω=0, polo en ωp1=100 rad/s (fp1 ≈ 15.9 Hz)",
+        "Segundo factor: LPF con polo en ωp2=1000 rad/s (fp2 ≈ 159 Hz)",
+        "Región de paso (banda media): entre fp1 y fp2",
+        "Ganancia media: |H| → 1000/1000 = 1 = 0 dB",
+        "A f < fp1: sube +20 dB/dec. Entre fp1 y fp2: 0 dB. A f > fp2: baja -20 dB/dec"
+      ],
+      "resultado_katex": "\\text{Este es un filtro pasa-banda de 1er orden}"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-bode-1",
+      "titulo": "Diagrama de Bode — LPF simple",
+      "descripcion": "Para el filtro LPF con $H(j\\omega) = \\frac{500}{j\\omega + 500}$, encuentra: (a) la fc en Hz, (b) la ganancia a DC (f→0), (c) la ganancia en dB y la fase a f=500 Hz, (d) la pendiente para f>>fc.",
+      "solucion": "(a) $f_c = 500/(2\\pi) \\approx 79.6\\,\\text{Hz}$; (b) $|H(0)| = 1 = 0\\,\\text{dB}$; (c) $f = 500\\,\\text{Hz} = 6.28 f_c$: $|H| \\approx 0.157 = -16.1\\,\\text{dB}$, $\\phi \\approx -81°$; (d) $-20\\,\\text{dB/dec}$",
+      "explicacion": "ωc = 500 rad/s → fc = ωc/(2π). A f >> fc la aproximación asintótica da -20 dB/década.",
+      "tiempo_minutos": 8,
+      "dificultad": "intermedio"
+    },
+    {
+      "id": "ej-bode-2",
+      "titulo": "Identificar filtro por su Bode",
+      "descripcion": "Una red tiene ganancia: 0 dB para $f < 1\\,\\text{kHz}$, luego baja a $-20\\,\\text{dB}$/década, y la fase es $-45°$ a $f = 1\\,\\text{kHz}$. ¿Qué tipo de filtro es? ¿Cuál es su $H(j\\omega)$?",
+      "solucion": "Es un filtro pasa-bajas de primer orden. $H(j\\omega) = \\frac{\\omega_c}{j\\omega + \\omega_c}$ con $\\omega_c = 2\\pi \\times 1000 \\approx 6283\\,\\text{rad/s}$",
+      "explicacion": "La ganancia plana a baja frecuencia y pendiente -20 dB/dec identifican un polo a 1 kHz = LPF de 1er orden.",
+      "tiempo_minutos": 5,
+      "dificultad": "intermedio"
+    }
+  ],
+  "notas_profesor": {
+    "enfasis": [
+      "Hacer que los alumnos tracen diagramas de Bode a mano antes de usar software",
+      "Mostrar cómo el Bode del osciloscopio o LTSpice confirma el análisis teórico",
+      "Relacionar el BW con la velocidad de respuesta: mayor BW = respuesta más rápida"
+    ],
+    "errores_comunes": [
+      "Confundir rad/s con Hz al identificar la frecuencia de corte",
+      "Olvidar el factor de escala (K) al calcular la ganancia a bajas frecuencias",
+      "Confundir la asíntota (-3 dB en fc) con el valor real"
+    ]
+  },
+  "enlaces": [
+    {"ruta": "/clase/5/tema/filtros-pasivos", "texto": "← Filtros Pasivos"},
+    {"ruta": "/clase/6/tema/respuesta-transitoria", "texto": "Siguiente: Respuesta Transitoria →"},
+    {"ruta": "/clase/6", "texto": "Volver a Clase 6"}
+  ]
+}

@@ -1,0 +1,676 @@
+{
+    "metadata": {
+        "modulo": 2,
+        "unidad": 5,
+        "titulo": "Osciladores y Generadores de Señales",
+        "semanas": "10-11",
+        "version": "1.0.0",
+        "fecha_actualizacion": "2026-05-30",
+        "descripcion": "Osciladores LC, RC, de cristal, PLL, VCO y generadores de formas de onda"
+    },
+    "objetivos": [
+        "Comprender el principio de oscilación y criterio de Barkhausen",
+        "Analizar osciladores LC (Colpitts, Hartley)",
+        "Analizar osciladores RC (corrimiento de fase, Wien bridge)",
+        "Comprender osciladores de cristal y su alta estabilidad",
+        "Analizar PLL (Phase-Locked Loop) y VCO",
+        "Diseñar generadores de onda cuadrada, triangular y diente de sierra",
+        "Calcular componentes para frecuencias específicas"
+    ],
+    "temas": [
+        {
+            "id": "principio-oscilacion",
+            "nombre": "Principio de Oscilación",
+            "descripcion": "Fundamentos teóricos de la generación de señales periódicas.",
+            "ecuaciones": [
+                {
+                    "nombre": "Criterio de Barkhausen (magnitud)",
+                    "formula": "|A\\beta| \\geq 1"
+                },
+                {
+                    "nombre": "Criterio de Barkhausen (fase)",
+                    "formula": "\\angle A\\beta = 0^\\circ \\text{ o } 360^\\circ"
+                },
+                {
+                    "nombre": "Frecuencia de oscilación",
+                    "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}"
+                },
+                {
+                    "nombre": "Condición de inicio",
+                    "formula": "|A\\beta| > 1 \\text{ (para iniciar)}"
+                },
+                {
+                    "nombre": "Condición de mantenimiento",
+                    "formula": "|A\\beta| = 1 \\text{ (estado estable)}"
+                }
+            ],
+            "contenido": {
+                "conceptos": [
+                    {
+                        "nombre": "Retroalimentación positiva",
+                        "descripcion": "Parte de la salida se realimenta a la entrada en fase",
+                        "importancia": "Esencial para mantener la oscilación"
+                    },
+                    {
+                        "nombre": "Ganancia de lazo (Aβ)",
+                        "descripcion": "Producto de ganancia del amplificador y red de retroalimentación",
+                        "criterio": "Debe ser ≥ 1 para oscilación"
+                    },
+                    {
+                        "nombre": "Desplazamiento de fase",
+                        "descripcion": "El desplazamiento total del lazo debe ser 0° o múltiplo de 360°",
+                        "importancia": "Determina la frecuencia de oscilación"
+                    },
+                    {
+                        "nombre": "Estabilidad de amplitud",
+                        "descripcion": "Mecanismos para limitar la amplitud y evitar saturación",
+                        "metodos": "No-linealidad, control automático de ganancia"
+                    }
+                ],
+                "tipos_osciladores": [
+                    "Osciladores LC (alta frecuencia, RF)",
+                    "Osciladores RC (baja frecuencia, audio)",
+                    "Osciladores de cristal (muy alta estabilidad)",
+                    "Osciladores de relajación (formas de onda no senoidales)"
+                ]
+            }
+        },
+        {
+            "id": "osciladores-lc",
+            "nombre": "Osciladores LC",
+            "descripcion": "Osciladores basados en circuitos resonantes LC para RF.",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia resonante",
+                    "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}"
+                },
+                {
+                    "nombre": "Oscilador Colpitts",
+                    "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{L C_T}}, \\quad C_T = \\frac{C_1 C_2}{C_1 + C_2}"
+                },
+                {
+                    "nombre": "Oscilador Hartley",
+                    "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{L_T C}}, \\quad L_T = L_1 + L_2"
+                },
+                {
+                    "nombre": "Relación de capacitores Colpitts",
+                    "formula": "\\frac{C_2}{C_1} \\geq \\beta"
+                }
+            ],
+            "contenido": {
+                "colpitts": {
+                    "descripcion": "Usa divisor capacitivo en la red de retroalimentación",
+                    "configuracion": "Dos capacitores en serie con inductor",
+                    "ventajas": "Buena estabilidad, fácil implementación",
+                    "aplicaciones": "RF, VHF, UHF",
+                    "rango_frecuencia": "kHz a GHz",
+                    "ejemplo_diseño": {
+                        "enunciado": "Diseñar Colpitts para f=10MHz con L=10μH.",
+                        "solucion": [
+                            "C_T = 1/(4π²f²L) = 1/(4π²×10¹⁴×10⁻⁵) ≈ 25.3pF",
+                            "Seleccionar C1 = 50pF, C2 = 50pF",
+                            "C_T = (50×50)/(50+50) = 25pF ✓"
+                        ]
+                    }
+                },
+                "hartley": {
+                    "descripcion": "Usa divisor inductivo en la red de retroalimentación",
+                    "configuracion": "Dos inductores en serie con capacitor",
+                    "ventajas": "Sintonización fácil con capacitor variable",
+                    "desventajas": "Más difícil de integrar que Colpitts",
+                    "aplicaciones": "RF, sintonización AM/FM"
+                },
+                "otros_lc": [
+                    {
+                        "nombre": "Oscilador Pierce",
+                        "descripcion": "Variante de Colpitts para cristales",
+                        "aplicacion": "Relojes, microcontroladores"
+                    },
+                    {
+                        "nombre": "Oscilador Clapp",
+                        "descripcion": "Colpitts con capacitor adicional en serie",
+                        "ventaja": "Mejor estabilidad de frecuencia"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "osciladores-rc",
+            "nombre": "Osciladores RC",
+            "descripcion": "Osciladores basados en redes RC para audio y baja frecuencia.",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia corrimiento de fase",
+                    "formula": "f_0 = \\frac{1}{2\\pi RC\\sqrt{6}}"
+                },
+                {
+                    "nombre": "Frecuencia Wien bridge",
+                    "formula": "f_0 = \\frac{1}{2\\pi RC}"
+                },
+                {
+                    "nombre": "Ganancia Wien bridge",
+                    "formula": "A = 3 \\text{ (mínimo para oscilación)}"
+                },
+                {
+                    "nombre": "Frecuencia puente T",
+                    "formula": "f_0 = \\frac{1}{2\\pi RC}"
+                }
+            ],
+            "contenido": {
+                "corrimiento_fase": {
+                    "descripcion": "Tres secciones RC proporcionan 180° de desplazamiento",
+                    "configuracion": "Tres redes RC en cascada",
+                    "ganancia_requerida": "A ≥ 29",
+                    "ventajas": "Simple, buena forma de onda",
+                    "desventajas": "Frecuencia fija, difícil sintonizar",
+                    "aplicaciones": "Generadores de audio, instrumentos"
+                },
+                "wien_bridge": {
+                    "descripcion": "Puente de Wien como red de retroalimentación",
+                    "configuracion": "Amplificador con ganancia 3 y puente Wien",
+                    "ganancia_requerida": "A = 3 exactamente",
+                    "estabilidad": "Excelente con control automático de ganancia",
+                    "ventajas": "Baja distorsión, fácil sintonización",
+                    "aplicaciones": "Generadores de audio de laboratorio, sintetizadores",
+                    "ejemplo_diseño": {
+                        "enunciado": "Diseñar Wien bridge para f=1kHz.",
+                        "solucion": [
+                            "f = 1/(2πRC)",
+                            "Seleccionar R = 10kΩ",
+                            "C = 1/(2π×1000×10000) ≈ 15.9nF"
+                        ]
+                    }
+                },
+                "doble_t": {
+                    "descripcion": "Red de rechazo (notch) para estabilizar frecuencia",
+                    "aplicacion": "Filtros, osciladores de baja distorsión"
+                }
+            }
+        },
+        {
+            "id": "osciladores-cristal",
+            "nombre": "Osciladores de Cristal",
+            "descripcion": "Osciladores con alta estabilidad usando efecto piezoeléctrico.",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia serie",
+                    "formula": "f_s = \\frac{1}{2\\pi\\sqrt{L_s C_s}}"
+                },
+                {
+                    "nombre": "Frecuencia paralelo",
+                    "formula": "f_p = f_s \\sqrt{1 + \\frac{C_s}{C_p}}"
+                },
+                {
+                    "nombre": "Factor de calidad Q",
+                    "formula": "Q = \\frac{1}{R_s}\\sqrt{\\frac{L_s}{C_s}}"
+                },
+                {
+                    "nombre": "Estabilidad de frecuencia",
+                    "formula": "\\frac{\\Delta f}{f} \\approx 10^{-6} \\text{ a } 10^{-9}"
+                }
+            ],
+            "contenido": {
+                "efecto_piezoelectrico": {
+                    "descripcion": "Materiales como cuarzo vibran mecánicamente con campo eléctrico",
+                    "caracteristicas": [
+                        "Muy alta estabilidad de frecuencia",
+                        "Factor Q muy alto (10⁴ - 10⁶)",
+                        "Baja deriva térmica"
+                    ]
+                },
+                "modelo_electrico": {
+                    "componentes": [
+                        "L_s: Inductancia motriz (H)",
+                        "C_s: Capacitancia motriz (fF)",
+                        "R_s: Resistencia serie (Ω)",
+                        "C_p: Capacitancia de encapsulado (pF)"
+                    ]
+                },
+                "modos_oscilacion": [
+                    {
+                        "modo": "Modo fundamental",
+                        "descripcion": "Oscilación en la frecuencia fundamental del cristal",
+                        "aplicacion": "Relojes, microcontroladores (kHz - MHz)"
+                    },
+                    {
+                        "modo": "Overtone",
+                        "descripcion": "Oscilación en armónicos (3°, 5°, 7°)",
+                        "aplicacion": "RF de alta frecuencia (MHz - GHz)"
+                    }
+                ],
+                "configuraciones": [
+                    {
+                        "nombre": "Pierce",
+                        "descripcion": "Más común, usa inversor digital",
+                        "aplicacion": "Microcontroladores, relojes"
+                    },
+                    {
+                        "nombre": "Colpitts con cristal",
+                        "descripcion": "Para aplicaciones analógicas",
+                        "aplicacion": "RF, transmisores"
+                    }
+                ],
+                "especificaciones": [
+                    "Frecuencia: 32kHz a 100MHz+",
+                    "Tolerancia: ±10ppm a ±100ppm",
+                    "Estabilidad: ±10ppm a ±100ppm sobre temperatura",
+                    "Rango de temperatura: -40°C a +85°C (industrial)"
+                ]
+            }
+        },
+        {
+            "id": "pll-vco",
+            "nombre": "PLL y VCO",
+            "descripcion": "Phase-Locked Loop y Voltage-Controlled Oscillator para síntesis de frecuencia.",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia VCO",
+                    "formula": "f_{out} = f_{center} + K_{VCO} V_{control}"
+                },
+                {
+                    "nombre": "Sensibilidad VCO",
+                    "formula": "K_{VCO} = \\frac{\\Delta f}{\\Delta V} \\text{ [Hz/V]}"
+                },
+                {
+                    "nombre": "Frecuencia salida PLL",
+                    "formula": "f_{out} = N \\cdot f_{ref}"
+                },
+                {
+                    "nombre": "Ancho de banda PLL",
+                    "formula": "\\omega_n = \\sqrt{\\frac{K_{PD} K_{VCO}}{N \\tau}}"
+                }
+            ],
+            "contenido": {
+                "pll": {
+                    "descripcion": "Sistema de control en lazo cerrado para sincronizar fase y frecuencia",
+                    "componentes": [
+                        {
+                            "nombre": "Phase Detector (PD)",
+                            "funcion": "Compara fase de referencia y salida",
+                            "salida": "Voltaje proporcional a diferencia de fase"
+                        },
+                        {
+                            "nombre": "Loop Filter (LF)",
+                            "funcion": "Filtra la salida del PD",
+                            "tipo": "Pasa-bajas (pasivo o activo)"
+                        },
+                        {
+                            "nombre": "VCO",
+                            "funcion": "Genera frecuencia proporcional a voltaje de control",
+                            "salida": "Señal de frecuencia variable"
+                        },
+                        {
+                            "nombre": "Feedback Divider (N)",
+                            "funcion": "Divide frecuencia de salida",
+                            "resultado": "f_out = N × f_ref"
+                        }
+                    ],
+                    "estados": [
+                        "Locked (bloqueado): fases sincronizadas",
+                        "Unlocked (desbloqueado): buscando sincronización",
+                        "Capture range: rango donde puede adquirir bloqueo",
+                        "Lock range: rango donde mantiene bloqueo"
+                    ],
+                    "aplicaciones": [
+                        "Síntesis de frecuencia (radio, TV)",
+                        "Recuperación de reloj (comunicaciones)",
+                        "Demodulación FM",
+                        "Multiplicación de frecuencia"
+                    ]
+                },
+                "vco": {
+                    "descripcion": "Oscilador cuya frecuencia se controla con voltaje",
+                    "tipos": [
+                        "VCO LC (alta frecuencia, RF)",
+                        "VCO RC (baja frecuencia, audio)",
+                        "VCO de relajación (formas de onda)"
+                    ],
+                    "parametros": [
+                        "Frecuencia central (f_center)",
+                        "Rango de sintonía (tuning range)",
+                        "Sensibilidad (K_VCO)",
+                        "Linealidad"
+                    ],
+                    "aplicaciones": [
+                        "Sintetizadores",
+                        "Modulación FM",
+                        "Generación de barrido (sweep)",
+                        "Control de frecuencia"
+                    ]
+                }
+            }
+        },
+        {
+            "id": "generadores-formas-onda",
+            "nombre": "Generadores de Formas de Onda",
+            "descripcion": "Circuitos para generar onda cuadrada, triangular y diente de sierra.",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia 555 astable",
+                    "formula": "f = \\frac{1.44}{(R_1 + 2R_2)C}"
+                },
+                {
+                    "nombre": "Ciclo de trabajo 555",
+                    "formula": "D = \\frac{R_1 + R_2}{R_1 + 2R_2} \\times 100\\%"
+                },
+                {
+                    "nombre": "Frecuencia integrador-relajación",
+                    "formula": "f = \\frac{V_{sat}}{4R_1 C V_{ref}}"
+                },
+                {
+                    "nombre": "Pendiente diente de sierra",
+                    "formula": "\\frac{dV}{dt} = \\frac{I}{C}"
+                }
+            ],
+            "contenido": {
+                "temporizador_555": {
+                    "descripcion": "Circuito integrado versátil para generación de pulsos y oscilación",
+                    "modos": [
+                        {
+                            "modo": "Astable",
+                            "descripcion": "Oscilador libre (multivibrador)",
+                            "aplicacion": "Generador de pulsos, clock",
+                            "configuracion": "R1, R2, C determinan frecuencia"
+                        },
+                        {
+                            "modo": "Monostable",
+                            "descripcion": "Un solo pulso por trigger",
+                            "aplicacion": "Temporizadores, debounce",
+                            "duracion": "t = 1.1RC"
+                        },
+                        {
+                            "modo": "Bistable",
+                            "descripcion": "Flip-flop",
+                            "aplicacion": "Memoria, latch"
+                        }
+                    ],
+                    "ejemplo_diseño": {
+                        "enunciado": "Diseñar 555 astable para f=1kHz, D=50%.",
+                        "solucion": [
+                            "Para D=50%, R1 debe ser muy pequeño",
+                            "Usar diodo en paralelo con R2",
+                            "f ≈ 1/(0.693(R1+R2)C) ≈ 1/(0.693×2R2C)",
+                            "Seleccionar C=10nF, R2≈72kΩ"
+                        ]
+                    }
+                },
+                "onda_cuadrada": {
+                    "metodos": [
+                        "555 astable",
+                        "Comparador con histéresis (Schmitt trigger)",
+                        "Oscilador de relajación con op-amp"
+                    ],
+                    "caracteristicas": [
+                        "Transiciones rápidas",
+                        "Niveles definidos (V_high, V_low)",
+                        "Ciclo de duty controlable"
+                    ]
+                },
+                "onda_triangular": {
+                    "metodos": [
+                        "Integrador de onda cuadrada",
+                        "Oscilador de relajación con integrador",
+                        "Generador de función integrado (ICL8038)"
+                    ],
+                    "caracteristicas": [
+                        "Linealidad de rampa",
+                        "Simetría controlable",
+                        "Frecuencia ajustable"
+                    ]
+                },
+                "diente_sierra": {
+                    "metodos": [
+                        "Integrador asimétrico",
+                        "Carga/descarga de capacitor",
+                        "Generador de barrido"
+                    ],
+                    "caracteristicas": [
+                        "Rampa lenta, retorno rápido",
+                        "Usado en osciloscopios (time base)",
+                        "Control de frecuencia por corriente"
+                    ]
+                },
+                "generadores_integrados": [
+                    {
+                        "nombre": "ICL8038",
+                        "descripcion": "Generador de función (seno, tri, cuadrada)",
+                        "rango": "0.001Hz a 300kHz"
+                    },
+                    {
+                        "nombre": "MAX038",
+                        "descripcion": "Generador de función de alta frecuencia",
+                        "rango": "0.1Hz a 20MHz"
+                    },
+                    {
+                        "nombre": "XR2206",
+                        "descripcion": "Generador de función para audio",
+                        "rango": "0.01Hz a 1MHz"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "estabilidad-frecuencia",
+            "nombre": "Estabilidad de Frecuencia",
+            "descripcion": "Factores que afectan la estabilidad y métodos para mejorarla.",
+            "ecuaciones": [
+                {
+                    "nombre": "Deriva térmica",
+                    "formula": "\\frac{\\Delta f}{f} = \\alpha \\Delta T"
+                },
+                {
+                    "nombre": "Deriva por envejecimiento",
+                    "formula": "\\frac{\\Delta f}{f} \\text{ por año}"
+                },
+                {
+                    "nombre": "Pulling (sensibilidad a carga)",
+                    "formula": "\\frac{\\Delta f}{f} = \\frac{\\Delta C}{2C}"
+                }
+            ],
+            "contenido": {
+                "factores_afectan": [
+                    {
+                        "factor": "Temperatura",
+                        "efecto": "Cambios en L, C, parámetros activos",
+                        "solucion": "Componentes de baja TC, compensación"
+                    },
+                    {
+                        "factor": "Variación de voltaje",
+                        "efecto": "Cambios en parámetros de transistor",
+                        "solucion": "Regulación de alimentación"
+                    },
+                    {
+                        "factor": "Carga",
+                        "efecto": "Cambio de impedancia afecta frecuencia",
+                        "solucion": "Buffer de salida, aislamiento"
+                    },
+                    {
+                        "factor": "Envejecimiento",
+                        "efecto": "Cambios graduales en componentes",
+                        "solucion": "Componentes estables, recalibración"
+                    },
+                    {
+                        "factor": "Vibración mecánica",
+                        "efecto": "Efecto microfónico",
+                        "solucion": "Montaje robusto, amortiguación"
+                    }
+                ],
+                "mejoras_estabilidad": [
+                    "Usar cristal para máxima estabilidad",
+                    "Compensación térmica (TCXO, OCXO)",
+                    "Regulación de voltaje precisa",
+                    "Blindaje y aislamiento",
+                    "Control de temperatura (horno de cristal)"
+                ],
+                "comparacion_estabilidad": {
+                    "oscilador_rc": "10⁻³ a 10⁻⁴",
+                    "oscilador_lc": "10⁻⁴ a 10⁻⁵",
+                    "cristal": "10⁻⁶ a 10⁻⁹",
+                    "atomo": "10⁻¹² a 10⁻¹³"
+                }
+            }
+        },
+        {
+            "id": "calculo-componentes",
+            "nombre": "Cálculo de Componentes",
+            "descripcion": "Procedimientos de diseño para calcular componentes de osciladores.",
+            "ecuaciones": [
+                {
+                    "nombre": "Diseño LC (f dada)",
+                    "formula": "LC = \\frac{1}{4\\pi^2 f^2}"
+                },
+                {
+                    "nombre": "Diseño RC (f dada)",
+                    "formula": "RC = \\frac{1}{2\\pi f}"
+                },
+                {
+                    "nombre": "Selección L/C",
+                    "formula": "Q = \\frac{R}{\\omega L} = \\omega CR"
+                }
+            ],
+            "contenido": {
+                "procedimiento_general": [
+                    "Especificar frecuencia deseada",
+                    "Seleccionar tipo de oscilador apropiado",
+                    "Elegir valor de un componente (L o C)",
+                    "Calcular el componente complementario",
+                    "Verificar criterio de Barkhausen",
+                    "Ajustar para estabilidad y forma de onda"
+                ],
+                "consideraciones_practicas": [
+                    "Usar valores estándar de componentes",
+                    "Considerar tolerancias y variaciones",
+                    "Incluir ajuste fino (trimmer)",
+                    "Verificar con simulación",
+                    "Prototipar y medir"
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Diseño Colpitts para 27MHz",
+                        "pasos": [
+                            "Seleccionar L = 100nH",
+                            "C_T = 1/(4π²×27²×10⁶×100×10⁻⁹) ≈ 347pF",
+                            "Elegir C1 = C2 = 700pF (C_T ≈ 350pF)",
+                            "Verificar ganancia: β requerido < C2/C1 = 1",
+                            "Ajustar con trimmer para frecuencia exacta"
+                        ]
+                    },
+                    {
+                        "titulo": "Diseño Wien bridge para 440Hz (La musical)",
+                        "pasos": [
+                            "Seleccionar R = 10kΩ",
+                            "C = 1/(2π×440×10000) ≈ 36.2nF",
+                            "Configurar ganancia A = 3 con retroalimentación negativa",
+                            "Agregar lámpara incandescente o JFET para estabilización",
+                            "Ajustar con trimmer para frecuencia exacta"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "ejercicios": [
+        {
+            "numero": 16,
+            "titulo": "Análisis de osciladores LC",
+            "descripcion": "Analizar osciladores Colpitts y Hartley, calcular frecuencia y verificar criterio de Barkhausen.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "90 minutos",
+            "objetivos": [
+                "Calcular frecuencia de oscilación",
+                "Verificar ganancia mínima requerida",
+                "Analizar estabilidad del oscilador"
+            ]
+        },
+        {
+            "numero": 17,
+            "titulo": "Diseño de osciladores RC",
+            "descripcion": "Diseñar osciladores de corrimiento de fase y Wien bridge para frecuencias específicas.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "90 minutos",
+            "objetivos": [
+                "Calcular componentes R y C",
+                "Determinar ganancia requerida",
+                "Implementar control de amplitud"
+            ]
+        },
+        {
+            "numero": 18,
+            "titulo": "PLL y síntesis de frecuencia",
+            "descripcion": "Analizar y diseñar sistemas PLL para multiplicación de frecuencia.",
+            "tipo": "practico",
+            "dificultad": "avanzado",
+            "tiempo_estimado": "120 minutos",
+            "objetivos": [
+                "Calcular divisores para frecuencia deseada",
+                "Diseñar filtro de lazo",
+                "Analizar rango de captura y lock"
+            ]
+        }
+    ],
+    "evaluacion": {
+        "criterios": [
+            "Cálculo correcto de frecuencia de oscilación",
+            "Verificación adecuada de criterio de Barkhausen",
+            "Diseño correcto de componentes",
+            "Comprensión de estabilidad y factores de deriva"
+        ],
+        "rubrica": {
+            "excelente": "Diseña osciladores con precisión, comprende profundamente estabilidad y criterios de oscilación.",
+            "bueno": "Calcula frecuencias correctamente, buena comprensión de principios básicos.",
+            "suficiente": "Comprende conceptos básicos pero tiene dificultades con diseño detallado.",
+            "insuficiente": "No logra aplicar conceptos de osciladores correctamente."
+        }
+    },
+    "recursos_adicionales": {
+        "simuladores": [
+            {
+                "nombre": "Calculadora de osciladores",
+                "descripcion": "Herramienta interactiva para calcular componentes",
+                "ruta": "/simuladores/osciladores"
+            },
+            {
+                "nombre": "Simulador PLL",
+                "descripcion": "Visualización de adquisición de fase",
+                "ruta": "/simuladores/pll"
+            }
+        ],
+        "lecturas": [
+            "Sedra & Smith - Microelectronic Circuits (capítulo de oscillators)",
+            "Razavi - RF Microelectronics"
+        ]
+    },
+    "referencias": [
+        {
+            "tipo": "libro",
+            "titulo": "Microelectronic Circuits",
+            "autores": ["Sedra", "Smith"],
+            "capitulo": "Signal Generators and Waveform-Shaping Circuits"
+        },
+        {
+            "tipo": "libro",
+            "titulo": "RF Microelectronics",
+            "autores": ["Razavi"],
+            "capitulo": "Oscillators"
+        }
+    ],
+    "notas_profesor": {
+        "enfasis": [
+            "Importancia del criterio de Barkhausen",
+            "Diferencias entre tipos de osciladores y aplicaciones",
+            "Estabilidad de frecuencia en aplicaciones reales"
+        ],
+        "dificultades_comunes": [
+            "Confusión entre condiciones de inicio y mantenimiento",
+            "Olvidar considerar carga en diseño",
+            "Errores en cálculo de redes de retroalimentación"
+        ],
+        "sugerencias": [
+            "Usar simulación SPICE para verificar diseños",
+            "Demostrar con generador de funciones en laboratorio",
+            "Medir estabilidad con frecuencia de referencia"
+        ]
+    }
+}

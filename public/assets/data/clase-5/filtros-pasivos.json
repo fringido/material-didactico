@@ -1,0 +1,198 @@
+{
+  "id": "filtros-pasivos",
+  "nombre": "Filtros Pasivos (RC, RL, RLC)",
+  "descripcion": "Diseño y análisis de filtros pasa-bajas, pasa-altas y pasa-banda con componentes pasivos R, L y C. Función de transferencia, frecuencia de corte y respuesta en frecuencia.",
+  "introduccion": "Un filtro eléctrico es una red que deja pasar ciertas frecuencias mientras atenúa otras. Los filtros pasivos, construidos solo con resistencias, inductores y capacitores, son la base del procesamiento de señales analógicas. No requieren alimentación externa y son fundamentales en comunicaciones, audio, instrumentación y electrónica de potencia. Comprender su diseño y comportamiento prepara al estudiante para los filtros activos con Op-Amps.",
+  "metadata": {
+    "clase": 5,
+    "orden": 2,
+    "titulo": "Filtros Pasivos (RC, RL, RLC)"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Función de Transferencia H(jω)",
+      "descripcion": "Cociente entre la señal de salida y la señal de entrada en el dominio de la frecuencia. Para un filtro: H(jω) = V_out(jω) / V_in(jω). Es un número complejo que indica la ganancia (|H|) y el desfase (∠H) del filtro a cada frecuencia.",
+      "principio_fisico": "Derivada de la respuesta fasorial del circuito usando divisor de voltaje complejo.",
+      "cuando_usarlo": "Siempre que se quiera caracterizar completamente el comportamiento en frecuencia de un circuito."
+    },
+    {
+      "nombre": "Frecuencia de Corte (fc)",
+      "descripcion": "Frecuencia a la cual la ganancia cae al 70.7% de su valor máximo (equivalente a -3 dB en escala logarítmica). Define la 'frontera' entre la banda de paso y la banda de rechazo.",
+      "formula": "f_c = \\frac{1}{2\\pi RC}",
+      "equivalente_dB": "A f = fc: |H| = 1/√2 ≈ 0.707 → 20·log(0.707) ≈ -3 dB",
+      "cuando_usarlo": "Es el parámetro de diseño principal: se fijan los componentes R y C para obtener la fc deseada."
+    },
+    {
+      "nombre": "Filtro Pasa-Bajas (LPF)",
+      "descripcion": "Permite el paso de frecuencias menores a fc y atenúa las mayores. A bajas frecuencias la señal pasa sin cambios; a altas frecuencias la salida tiende a cero.",
+      "circuito_tipico": "RC: resistor en serie, capacitor en paralelo con la carga. A baja f: Z_C→∞, toda la señal aparece en C. A alta f: Z_C→0, cortocircuita la salida.",
+      "aplicaciones": ["Eliminar ruido de alta frecuencia en señales de sensores", "Filtro anti-aliasing en conversores ADC", "Suavizado de señales PWM"]
+    },
+    {
+      "nombre": "Filtro Pasa-Altas (HPF)",
+      "descripcion": "Permite el paso de frecuencias mayores a fc y atenúa las menores (incluida la DC). A altas frecuencias la señal pasa sin cambios.",
+      "circuito_tipico": "RC: capacitor en serie, resistor en paralelo con la carga. A baja f: Z_C→∞, bloquea la señal. A alta f: Z_C→0, toda la señal aparece en R.",
+      "aplicaciones": ["Eliminar componente DC de una señal (acoplamiento AC)", "Detectar cambios rápidos en señales", "Écualización en audio"]
+    },
+    {
+      "nombre": "Filtro Pasa-Banda (BPF)",
+      "descripcion": "Permite el paso de frecuencias dentro de una banda (f₁ a f₂) y atenúa las demás. Requiere combinación de LPF y HPF, o circuito RLC.",
+      "aplicaciones": ["Sintonización de radios", "Comunicaciones de banda estrecha", "Análisis de señales en instrumentación"]
+    },
+    {
+      "nombre": "Atenuación y Pendiente",
+      "descripcion": "La atenuación es cuán fuertemente el filtro rechaza las frecuencias no deseadas. Un filtro de primer orden (un elemento reactivo) tiene pendiente de -20 dB/década (o -6 dB/octava). Uno de segundo orden: -40 dB/década. La pendiente se dobla por cada orden adicional.",
+      "cuando_usarlo": "A mayor pendiente, separación más nítida entre banda de paso y de rechazo."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Frecuencia de corte — Filtro RC",
+      "katex": "f_c = \\frac{1}{2\\pi RC}, \\quad \\omega_c = \\frac{1}{RC}",
+      "derivacion": "Se obtiene igualando la reactancia del capacitor con la resistencia: |Z_C| = R → 1/(ωC) = R → ω = 1/(RC)."
+    },
+    {
+      "titulo": "Frecuencia de corte — Filtro RL",
+      "katex": "f_c = \\frac{R}{2\\pi L}, \\quad \\omega_c = \\frac{R}{L}",
+      "derivacion": "Se obtiene igualando la reactancia del inductor con la resistencia: Z_L = R → ωL = R → ω = R/L."
+    },
+    {
+      "titulo": "Frecuencia de resonancia — Filtro RLC",
+      "katex": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}, \\quad \\omega_0 = \\frac{1}{\\sqrt{LC}}",
+      "derivacion": "La resonancia ocurre cuando Z_L = Z_C: ωL = 1/(ωC) → ω² = 1/(LC) → ω₀ = 1/√(LC)."
+    },
+    {
+      "titulo": "Función de transferencia — LPF RC",
+      "katex": "H(j\\omega) = \\frac{1}{1 + j\\omega RC} = \\frac{1}{1 + j(f/f_c)}",
+      "derivacion": "Divisor de voltaje: V_out/V_in = Z_C/(R+Z_C) = (1/jωC)/(R + 1/jωC) = 1/(1 + jωRC)."
+    },
+    {
+      "titulo": "Función de transferencia — HPF RC",
+      "katex": "H(j\\omega) = \\frac{j\\omega RC}{1 + j\\omega RC} = \\frac{j(f/f_c)}{1 + j(f/f_c)}",
+      "derivacion": "Divisor de voltaje: V_out/V_in = R/(R+Z_C) = jωRC/(1 + jωRC)."
+    },
+    {
+      "titulo": "Ganancia en dB",
+      "katex": "G_{dB} = 20\\log_{10}|H(j\\omega)|",
+      "derivacion": "Escala logarítmica que permite representar rangos amplios de ganancia en un diagrama de Bode."
+    },
+    {
+      "titulo": "Magnitud de H(jω) — LPF",
+      "katex": "|H(j\\omega)| = \\frac{1}{\\sqrt{1 + (\\omega/\\omega_c)^2}}",
+      "derivacion": "Módulo del número complejo H = 1/(1+jx) donde x = ω/ωc."
+    },
+    {
+      "titulo": "Factor de Calidad (Q) — RLC",
+      "katex": "Q = \\frac{f_0}{BW} = \\frac{1}{R}\\sqrt{\\frac{L}{C}}",
+      "derivacion": "Q mide cuán selectivo es el filtro. Alto Q → banda estrecha (muy selectivo). Bajo Q → banda ancha."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Respuesta en Frecuencia: LPF vs HPF (RC, fc=1kHz)",
+    "descripcion": "Ganancia normalizada vs frecuencia para un filtro RC de primer orden",
+    "data": {
+      "labels": [0.1, 0.5, 1, 2, 5, 10, 20, 50, 100],
+      "datasets": [
+        {
+          "label": "Pasa-Bajas |H| (dB)",
+          "data": [-0.04, -1.0, -3.0, -7.0, -14.1, -20.0, -26.0, -34.0, -40.1],
+          "borderColor": "#6366f1",
+          "tension": 0.4
+        },
+        {
+          "label": "Pasa-Altas |H| (dB)",
+          "data": [-40.1, -7.0, -3.0, -1.0, -0.17, -0.04, -0.01, 0, 0],
+          "borderColor": "#10b981",
+          "tension": 0.4
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Frecuencia normalizada f/fc",
+      "yLabel": "Ganancia (dB)"
+    }
+  },
+  "secciones": [
+    {
+      "id": "diseno-lpf-rc",
+      "titulo": "Diseño de Filtro Pasa-Bajas RC",
+      "contenido": "PROCEDIMIENTO: (1) Especificar la frecuencia de corte fc deseada. (2) Elegir un valor de C estándar disponible (ej: 100nF). (3) Calcular R = 1/(2π·fc·C). (4) Seleccionar el valor de R comercial más cercano (serie E24 o E96). (5) Verificar la fc real con los valores elegidos. NOTA: si la carga RL es pequeña comparada con R, el filtro se carga y la fc efectiva cambia. Considerar un buffer (seguidor de voltaje con Op-Amp) para independizar."
+    },
+    {
+      "id": "lpf-vs-hpf-comportamiento",
+      "titulo": "Comportamiento Asintótico de los Filtros",
+      "contenido": "Para el LPF RC: (1) A f << fc: |H| ≈ 1 (0 dB), sin atenuación. (2) A f = fc: |H| = 1/√2 ≈ 0.707 (-3 dB), fase = -45°. (3) A f >> fc: |H| ≈ ωc/ω → decrece a -20 dB/década. Para el HPF RC es el comportamiento espejo. Estas aproximaciones asintóticas son la base del Diagrama de Bode."
+    },
+    {
+      "id": "filtro-rlc-resonancia",
+      "titulo": "Resonancia en el Filtro RLC",
+      "contenido": "En el circuito RLC serie, a la frecuencia de resonancia ω₀ = 1/√(LC): Z_L y Z_C se cancelan exactamente (son iguales y opuestas en magnitud). La impedancia total es solo R (mínima). La corriente es máxima. Este fenómeno se usa para sintonizar radios (seleccionar frecuencias específicas). El factor Q determina la selectividad: Q = ω₀L/R. A mayor Q, más estrecha y nítida es la respuesta alrededor de f₀."
+    }
+  ],
+  "ejemplos_resueltos": [
+    {
+      "id": "ex-lpf-design",
+      "titulo": "Ejemplo 1: Diseño de filtro pasa-bajas RC",
+      "enunciado": "Diseñar un LPF RC con fc = 1 kHz. Usar C = 100 nF.",
+      "pasos": [
+        "fc = 1 kHz = 1000 Hz, C = 100 nF = 100×10⁻⁹ F",
+        "R = 1/(2π·fc·C) = 1/(2π × 1000 × 100×10⁻⁹)",
+        "R = 1/(2π × 10⁻⁴) = 1/0.000628 = 1591.5 Ω",
+        "Valor comercial más cercano: R = 1.5 kΩ (o 1.6 kΩ de la serie E24)",
+        "fc_real = 1/(2π × 1500 × 100×10⁻⁹) = 1061 Hz"
+      ],
+      "resultado_katex": "R = \\frac{1}{2\\pi f_c C} = \\frac{1}{2\\pi \\times 1000 \\times 100\\,\\text{nF}} \\approx 1.59\\,\\text{k}\\Omega"
+    },
+    {
+      "id": "ex-hpf-analysis",
+      "titulo": "Ejemplo 2: Análisis de filtro pasa-altas",
+      "enunciado": "HPF RC: R=10kΩ, C=10nF, V_in=5V. Calcular V_out a 100 Hz, 1.59 kHz (fc) y 100 kHz.",
+      "pasos": [
+        "fc = 1/(2π × 10k × 10n) = 1591.5 Hz ≈ 1.59 kHz",
+        "H(jω) = jf/fc / (1 + jf/fc)",
+        "A 100 Hz: f/fc = 0.0629, |H| = 0.0628, V_out = 5×0.0628 = 0.314 V",
+        "A fc=1.59 kHz: f/fc = 1, |H| = 1/√2 = 0.707, V_out = 5×0.707 = 3.54 V",
+        "A 100 kHz: f/fc = 62.9, |H| ≈ 1, V_out ≈ 5 V"
+      ],
+      "resultado_katex": "|H(jf)| = \\frac{f/f_c}{\\sqrt{1 + (f/f_c)^2}}"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-fc-1",
+      "titulo": "Frecuencia de Corte RC",
+      "descripcion": "Diseñe un filtro pasa-bajas RC con una frecuencia de corte de $1\\,\\text{kHz}$ usando un capacitor de $100\\,\\text{nF}$. Luego calcule $V_{out}$ si $V_{in} = 5\\,\\text{V}$ a $f = 500\\,\\text{Hz}$ y a $f = 5\\,\\text{kHz}$.",
+      "solucion": "$R = 1/(2\\pi \\times 10^3 \\times 10^{-7}) \\approx 1.59\\,\\text{k}\\Omega$. A 500 Hz: $|H| = 1/\\sqrt{1+(0.5)^2} = 0.894$, $V_{out} = 4.47\\,\\text{V}$. A 5 kHz: $|H| = 1/\\sqrt{1+25} = 0.196$, $V_{out} = 0.98\\,\\text{V}$",
+      "explicacion": "A 500 Hz (f < fc) pasa casi todo. A 5 kHz (f >> fc) atenúa significativamente.",
+      "tiempo_minutos": 8,
+      "dificultad": "intermedio"
+    },
+    {
+      "id": "ej-rlc-1",
+      "titulo": "Resonancia RLC",
+      "descripcion": "Para un circuito RLC serie: $L = 10\\,\\text{mH}$, $C = 1\\,\\mu\\text{F}$, $R = 10\\,\\Omega$. Calcular $f_0$, $Q$ y el ancho de banda $BW$.",
+      "solucion": "$f_0 = 1/(2\\pi\\sqrt{10^{-2} \\times 10^{-6}}) = 1590\\,\\text{Hz}$; $Q = (1/R)\\sqrt{L/C} = (1/10)\\sqrt{10^{-2}/10^{-6}} = 10$; $BW = f_0/Q = 159\\,\\text{Hz}$",
+      "explicacion": "Q=10 indica un filtro moderadamente selectivo. El BW de 159 Hz significa que selecciona señales entre aprox. 1511 Hz y 1670 Hz.",
+      "tiempo_minutos": 10,
+      "dificultad": "avanzado"
+    }
+  ],
+  "notas_profesor": {
+    "enfasis": [
+      "Hacer que los alumnos construyan un filtro RC real y midan la fc con osciloscopio",
+      "Mostrar que fc no es donde la salida es cero, sino donde cae -3dB",
+      "Contrastar el comportamiento de L vs C en frecuencia (contrarios)"
+    ],
+    "errores_comunes": [
+      "Confundir frecuencia de corte (fc) con frecuencia de resonancia (f0)",
+      "Olvidar que la fase también cambia en fc",
+      "No considerar el efecto de carga en el diseño del filtro"
+    ]
+  },
+  "enlaces": [
+    {"ruta": "/clase/5/tema/senales-ac", "texto": "← Señales AC y Fasores"},
+    {"ruta": "/clase/6/tema/respuesta-frecuencia", "texto": "Siguiente: Diagrama de Bode →"},
+    {"ruta": "/clase/5", "texto": "Volver a Clase 5"}
+  ]
+}

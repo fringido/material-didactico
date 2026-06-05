@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "clase": 5,
+    "modulo": 1,
+    "unidad": 3,
+    "titulo": "Circuitos en AC y Filtros Pasivos",
+    "semanas": "5",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-30",
+    "descripcion": "Fundamentos de corriente alterna, fasores e introducción a los filtros RC y RL.",
+    "ruta": "/clase/5"
+  },
+  "objetivos": [
+    "Identificar los parámetros fundamentales de una señal senoidal",
+    "Realizar conversiones entre el dominio del tiempo y el dominio de la frecuencia (fasores)",
+    "Calcular la impedancia de elementos pasivos (R, L, C)",
+    "Diseñar filtros pasa-bajas y pasa-altas básicos"
+  ],
+  "temas": [
+    {
+      "id": "senales-ac",
+      "nombre": "Señales Senoidales y Fasores",
+      "descripcion": "Representación matemática y vectorial de señales que varían en el tiempo.",
+      "icono": "🌊",
+      "ruta": "/clase/5/tema/senales-ac",
+      "archivo": "senales-ac.json"
+    },
+    {
+      "id": "filtros-pasivos",
+      "nombre": "Filtros Pasivos",
+      "descripcion": "Redes RC, RL y RLC que seleccionan rangos de frecuencia.",
+      "icono": "🧹",
+      "ruta": "/clase/5/tema/filtros-pasivos",
+      "archivo": "filtros-pasivos.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "unidad_completa": "/modulo/1/unidad/3",
+    "siguiente_clase": "/clase/6"
+  }
+}

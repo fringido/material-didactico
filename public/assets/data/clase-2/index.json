@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "clase": 2,
+    "modulo": 1,
+    "unidad": 1,
+    "titulo": "Componentes Electrónicos — Identificación y Propiedades",
+    "semanas": "2",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-04",
+    "descripcion": "Estudio detallado de componentes activos (diodos, transistores, op-amps) y pasivos (resistencias, capacitores, inductores). Identificación, propiedades, simbología y aplicaciones.",
+    "ruta": "/clase/2"
+  },
+  "objetivos": [
+    "Identificar visualmente y por su simbología los componentes electrónicos fundamentales",
+    "Distinguir entre componentes activos y pasivos y sus características principales",
+    "Leer el código de colores de resistencias y capacitores",
+    "Comprender las propiedades fundamentales de diodos, transistores y op-amps",
+    "Seleccionar el componente adecuado según la aplicación"
+  ],
+  "temas": [
+    {
+      "id": "componentes-pasivos",
+      "nombre": "Componentes Pasivos: R, L, C",
+      "descripcion": "Resistencias, capacitores e inductores: identificación, simbología, propiedades y aplicaciones en circuitos.",
+      "icono": "🔌",
+      "ruta": "/clase/2/tema/componentes-pasivos",
+      "archivo": "componentes-pasivos.json"
+    },
+    {
+      "id": "componentes-activos",
+      "nombre": "Componentes Activos: Diodos, BJT, Op-Amp",
+      "descripcion": "Componentes que requieren energía externa y pueden amplificar señales. Diodos, transistores y amplificadores operacionales.",
+      "icono": "💡",
+      "ruta": "/clase/2/tema/componentes-activos",
+      "archivo": "componentes-activos.json"
+    },
+    {
+      "id": "instrumentos-medicion",
+      "nombre": "Instrumentos de Medición",
+      "descripcion": "Uso correcto del multímetro y el osciloscopio para medir voltaje, corriente, resistencia y formas de onda.",
+      "icono": "📏",
+      "ruta": "/clase/2/tema/instrumentos",
+      "archivo": "instrumentos-medicion.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "clase_anterior": "/clase/1",
+    "siguiente_clase": "/clase/3",
+    "unidad_completa": "/modulo/1/unidad/1",
+    "catalogo_componentes": "/componentes"
+  }
+}

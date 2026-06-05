@@ -4,11 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { KatexDirective } from '../../directives/katex.directive';
 import { SimulacionDinamica } from '../../models/componentes.model';
 import { MatrixVisualizerComponent } from '../matrix-visualizer/matrix-visualizer.component';
+import { KirchhoffLabComponent } from '../clase3-labs/kirchhoff-lab.component';
+import { OhmLawLabComponent } from '../clase3-labs/ohm-law-lab.component';
+import { TopologyLabComponent } from '../clase3-labs/topology-lab.component';
 
 @Component({
   selector: 'app-dynamic-circuit-simulator',
   standalone: true,
-  imports: [CommonModule, FormsModule, KatexDirective, MatrixVisualizerComponent],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    KatexDirective, 
+    MatrixVisualizerComponent,
+    KirchhoffLabComponent,
+    OhmLawLabComponent,
+    TopologyLabComponent
+  ],
   templateUrl: './dynamic-circuit-simulator.component.html',
   styleUrls: ['./dynamic-circuit-simulator.component.scss']
 })

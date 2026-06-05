@@ -1,0 +1,247 @@
+{
+  "id": "senales-ac",
+  "nombre": "Señales Senoidales y Fasores",
+  "descripcion": "Fundamentos matemáticos de la corriente alterna: parámetros de ondas senoidales, representación fasorial, impedancias complejas y análisis de circuitos AC.",
+  "introduccion": "La corriente alterna (AC) es la forma predominante de transmisión y uso de energía eléctrica en el mundo. A diferencia de la DC donde voltaje y corriente son constantes, en AC varían sinusoidalmente con el tiempo. El dominio fasorial, basado en números complejos, transforma el análisis de ecuaciones diferenciales en álgebra de vectores, haciendo el estudio de circuitos AC tan accesible como el de circuitos DC. Este concepto es fundamental para entender filtros, amplificadores y comunicaciones.",
+  "metadata": {
+    "clase": 5,
+    "orden": 1,
+    "titulo": "Señales Senoidales y Fasores"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Amplitud (Vm o Vm_pico)",
+      "descripcion": "El valor máximo o pico que alcanza la señal senoidal. Es la distancia desde cero hasta el valor máximo de la onda.",
+      "unidad": "Voltios (V) o Amperios (A)",
+      "nota": "No confundir con el valor RMS (eficaz): V_rms = Vm/√2 ≈ 0.707·Vm"
+    },
+    {
+      "nombre": "Frecuencia (f) y Período (T)",
+      "descripcion": "La frecuencia f es el número de ciclos completos por segundo (Hz). El período T es el tiempo de un ciclo completo. Se relacionan inversamente.",
+      "formulas_relacionadas": ["f = 1/T", "T = 1/f"],
+      "ejemplos": [
+        {"f": "60 Hz", "T": "16.67 ms", "uso": "Red eléctrica México/USA"},
+        {"f": "50 Hz", "T": "20 ms", "uso": "Red eléctrica Europa"},
+        {"f": "1 kHz", "T": "1 ms", "uso": "Audio (tono estándar)"}
+      ]
+    },
+    {
+      "nombre": "Frecuencia Angular (ω)",
+      "descripcion": "Velocidad angular en radianes por segundo. Relaciona frecuencia lineal f con radianes: ω = 2πf. Es la variable natural de las impedancias y la transformada de Laplace.",
+      "unidad": "rad/s",
+      "cuando_usarlo": "Siempre en fórmulas de impedancia: Z_C = 1/jωC, Z_L = jωL"
+    },
+    {
+      "nombre": "Fase (φ)",
+      "descripcion": "Desplazamiento angular de la señal respecto a una referencia en t=0. Define si una señal 'adelanta' o 'atrasa' a otra. Fundamental en el análisis de circuitos reactivos.",
+      "unidad": "Grados (°) o Radianes (rad)",
+      "importante": "Si φ > 0: la señal adelanta a la referencia. Si φ < 0: la señal atrasa."
+    },
+    {
+      "nombre": "Valor RMS (Valor Eficaz)",
+      "descripcion": "El valor de DC que produce la misma potencia que la señal AC. Para una senoidal pura: V_rms = Vm/√2. Los multímetros miden este valor.",
+      "formula": "V_{rms} = \\frac{V_m}{\\sqrt{2}} \\approx 0.707\\,V_m",
+      "cuando_usarlo": "Para calcular potencia en AC: P = V_rms · I_rms · cos(φ)"
+    },
+    {
+      "nombre": "Fasor",
+      "descripcion": "Número complejo que representa una señal senoidal de estado estable. Su magnitud es el valor pico (o RMS) y su ángulo es la fase. Permite aplicar álgebra compleja en lugar de cálculo diferencial.",
+      "forma_polar": "V = Vm∠φ",
+      "forma_rectangular": "V = Vm·cos(φ) + j·Vm·sin(φ)",
+      "principio_fisico": "Representación de Euler: e^(jωt) = cos(ωt) + j·sin(ωt)"
+    },
+    {
+      "nombre": "Impedancia (Z)",
+      "descripcion": "Generalización de la resistencia para circuitos AC. Es un número complejo: Z = R + jX, donde R es la resistencia y X es la reactancia. Permite aplicar la Ley de Ohm en AC: V = I·Z.",
+      "unidad": "Ohmios (Ω)",
+      "partes": {
+        "resistencia": "R = Re{Z}: disipa energía",
+        "reactancia": "X = Im{Z}: almacena/libera energía"
+      }
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Señal Senoidal en el tiempo",
+      "katex": "v(t) = V_m \\sin(\\omega t + \\phi)",
+      "derivacion": "V_m: amplitud pico, ω = 2πf: frecuencia angular, φ: ángulo de fase inicial.",
+      "variables": [
+        {"simbolo": "V_m", "nombre": "Voltaje pico", "unidad": "V"},
+        {"simbolo": "\\omega", "nombre": "Frecuencia angular", "unidad": "rad/s"},
+        {"simbolo": "\\phi", "nombre": "Fase inicial", "unidad": "rad o °"}
+      ]
+    },
+    {
+      "titulo": "Valor RMS de una senoidal",
+      "katex": "V_{rms} = \\frac{V_m}{\\sqrt{2}} \\approx 0.707\\,V_m",
+      "derivacion": "Se obtiene de la raíz cuadrada del promedio del cuadrado de la señal en un período."
+    },
+    {
+      "titulo": "Frecuencia angular",
+      "katex": "\\omega = 2\\pi f = \\frac{2\\pi}{T}",
+      "derivacion": "Convierte frecuencia en Hz a radianes por segundo."
+    },
+    {
+      "titulo": "Representación Fasorial (polar)",
+      "katex": "\\mathbf{V} = V_m \\angle \\phi",
+      "derivacion": "Un fasor captura la amplitud y fase de la senoidal. La frecuencia ω se omite (se conoce) y se recupera al retornar al dominio temporal."
+    },
+    {
+      "titulo": "Fórmula de Euler",
+      "katex": "e^{j\\phi} = \\cos\\phi + j\\sin\\phi",
+      "derivacion": "Base matemática de los fasores. La parte real corresponde al coseno (señal física), la parte imaginaria al seno."
+    },
+    {
+      "titulo": "Impedancia del Resistor",
+      "katex": "Z_R = R",
+      "derivacion": "La resistencia no depende de la frecuencia. Voltaje e corriente están en FASE (φ=0)."
+    },
+    {
+      "titulo": "Impedancia del Inductor",
+      "katex": "Z_L = j\\omega L",
+      "derivacion": "Puramente imaginaria (positiva). El voltaje ADELANTA a la corriente 90°. A mayor frecuencia, mayor impedancia.",
+      "comportamiento": "A f=0 (DC): Z_L → 0 (cortocircuito). A f→∞: Z_L → ∞ (circuito abierto)."
+    },
+    {
+      "titulo": "Impedancia del Capacitor",
+      "katex": "Z_C = \\frac{1}{j\\omega C} = -\\frac{j}{\\omega C}",
+      "derivacion": "Puramente imaginaria (negativa). La corriente ADELANTA al voltaje 90°. A mayor frecuencia, menor impedancia.",
+      "comportamiento": "A f=0 (DC): Z_C → ∞ (circuito abierto). A f→∞: Z_C → 0 (cortocircuito)."
+    },
+    {
+      "titulo": "Ley de Ohm en AC",
+      "katex": "\\mathbf{V} = \\mathbf{I} \\cdot \\mathbf{Z}",
+      "derivacion": "La misma forma que en DC, pero usando fasores V, I y la impedancia compleja Z."
+    },
+    {
+      "titulo": "Impedancia en serie",
+      "katex": "Z_T = Z_1 + Z_2 + \\cdots + Z_n",
+      "derivacion": "Las impedancias se suman como números complejos cuando están en serie."
+    },
+    {
+      "titulo": "Potencia compleja",
+      "katex": "S = P + jQ = V_{rms}\\,I_{rms}\\,\\angle\\phi",
+      "derivacion": "P [W] = potencia activa (real). Q [VAR] = potencia reactiva. |S| [VA] = potencia aparente."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Señales AC: Voltaje y Corriente con desfase de 45°",
+    "descripcion": "Ejemplo: v(t) = 10sin(ωt), i(t) = 5sin(ωt - 45°). Desfase en circuito RC.",
+    "data": {
+      "labels": [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360],
+      "datasets": [
+        {
+          "label": "v(t) [V]",
+          "data": [0, 5.0, 8.66, 10.0, 8.66, 5.0, 0, -5.0, -8.66, -10.0, -8.66, -5.0, 0],
+          "borderColor": "#6366f1",
+          "tension": 0.4
+        },
+        {
+          "label": "i(t) [A] (desfasada -45°)",
+          "data": [3.54, 5.0, 5.0, 3.54, 0, -3.54, -5.0, -5.0, -3.54, 0, 3.54, 5.0, 5.0],
+          "borderColor": "#f59e0b",
+          "tension": 0.4
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Ángulo (°)",
+      "yLabel": "Amplitud"
+    }
+  },
+  "secciones": [
+    {
+      "id": "conversion-temporal-fasorial",
+      "titulo": "Conversión entre Dominio Temporal y Fasorial",
+      "contenido": "Para ir del dominio TEMPORAL al FASORIAL: identificar V_m y φ en v(t) = V_m·sin(ωt + φ), escribir el fasor V = V_m∠φ. Para ir del FASORIAL al TEMPORAL: V = V_m∠φ → v(t) = V_m·sin(ωt + φ). NOTA: se usa seno o coseno según la convención del problema, pero hay que ser consistente."
+    },
+    {
+      "id": "diagrama-fasorial",
+      "titulo": "Diagrama Fasorial",
+      "contenido": "El diagrama fasorial es un plano complejo donde se dibujan los fasores como flechas (vectores). La longitud es la magnitud (V_m) y el ángulo con el eje horizontal real es la fase (φ). Cuando los fasores rotan a frecuencia ω, sus proyecciones sobre el eje real forman las senoidales. El diagrama facilita ver visualmente si una señal adelanta o atrasa a otra."
+    },
+    {
+      "id": "circuito-rc-ac",
+      "titulo": "Análisis de Circuito RC en AC",
+      "contenido": "Para un circuito serie RC con v_s(t) = V_s·sin(ωt): Impedancia total Z_T = R - j/(ωC). Módulo: |Z_T| = √(R² + 1/(ωC)²). Fase: φ = -arctan(1/(ωRC)). Corriente: I = V_s/|Z_T| ∠-φ. Voltaje en C: V_C = I·Z_C. A bajas frecuencias, Z_C >> R y el capacitor domina. A altas frecuencias, Z_C → 0 y la resistencia domina."
+    }
+  ],
+  "ejemplos_resueltos": [
+    {
+      "id": "ex-fasor-1",
+      "titulo": "Conversión a fasor y suma",
+      "enunciado": "Sumar v₁(t) = 10sin(ωt + 30°) y v₂(t) = 8sin(ωt - 60°) usando fasores.",
+      "pasos": [
+        "V₁ = 10∠30° → rect: 10cos30° + j10sin30° = 8.66 + j5",
+        "V₂ = 8∠-60° → rect: 8cos(-60°) + j8sin(-60°) = 4 - j6.928",
+        "V_T = V₁ + V₂ = (8.66+4) + j(5-6.928) = 12.66 - j1.928",
+        "|V_T| = √(12.66² + 1.928²) = √(160.3 + 3.72) = 12.8",
+        "φ_T = arctan(-1.928/12.66) = -8.66°",
+        "V_T = 12.8∠-8.66°"
+      ],
+      "resultado_katex": "v_T(t) = 12.8\\sin(\\omega t - 8.66^\\circ)\\,\\text{V}"
+    },
+    {
+      "id": "ex-impedancia-1",
+      "titulo": "Impedancia y corriente en serie RLC",
+      "enunciado": "R=10Ω, L=50mH, C=100μF, f=100Hz, V_s=20V∠0°. Calcular Z_T e I.",
+      "pasos": [
+        "ω = 2π × 100 = 628.3 rad/s",
+        "Z_R = 10 Ω",
+        "Z_L = jωL = j × 628.3 × 0.05 = j31.4 Ω",
+        "Z_C = 1/(jωC) = 1/(j × 628.3 × 100×10⁻⁶) = -j15.92 Ω",
+        "Z_T = 10 + j31.4 - j15.92 = 10 + j15.48",
+        "|Z_T| = √(10² + 15.48²) = 18.47 Ω, φ = arctan(15.48/10) = 57.1°",
+        "I = V_s/Z_T = 20∠0° / 18.47∠57.1° = 1.083∠-57.1° A"
+      ],
+      "resultado_katex": "Z_T = 18.47\\,\\Omega \\angle 57.1^\\circ, \\quad I = 1.083\\,\\text{A}\\angle -57.1^\\circ"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-fasores-1",
+      "titulo": "Conversión a Fasores",
+      "descripcion": "Exprese el voltaje $v(t) = 170\\sin(377t + 30^\\circ)$ en su forma fasorial. ¿Cuál es la frecuencia en Hz?",
+      "solucion": "$\\mathbf{V} = 170\\angle 30^\\circ\\,\\text{V}$. Frecuencia: $f = \\omega/(2\\pi) = 377/(2\\pi) \\approx 60\\,\\text{Hz}$",
+      "explicacion": "La magnitud del fasor es el valor pico (170V). El ángulo es el desfase (+30°). ω = 2πf → f = ω/2π.",
+      "tiempo_minutos": 3,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-impedancia-1",
+      "titulo": "Cálculo de Impedancia",
+      "descripcion": "Calcule la impedancia de un inductor de $10\\,\\text{mH}$ a una frecuencia de $60\\,\\text{Hz}$.",
+      "solucion": "$Z_L = j\\omega L = j \\cdot 2\\pi \\cdot 60 \\cdot 0.010 = j3.77\\,\\Omega$",
+      "explicacion": "Usar $Z_L = j2\\pi f L$. A 60 Hz el inductor de 10 mH tiene 3.77 Ω de reactancia inductiva.",
+      "tiempo_minutos": 5,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-rc-ac-1",
+      "titulo": "Circuito RC en serie — análisis completo",
+      "descripcion": "Circuito RC: $R=1\\,\\text{k}\\Omega$, $C=1\\,\\mu\\text{F}$, $V_s = 10\\angle 0°\\,\\text{V}$, $f=159\\,\\text{Hz}$. Calcular $Z_T$, $I$, $V_R$ y $V_C$.",
+      "solucion": "$\\omega=1000\\,\\text{rad/s}$; $Z_C = -j1000\\,\\Omega$; $Z_T = 1000 - j1000 = 1414\\angle -45°\\,\\Omega$; $I = 7.07\\angle 45°\\,\\text{mA}$; $V_R = 7.07\\angle 45°\\,\\text{V}$; $V_C = 7.07\\angle -45°\\,\\text{V}$",
+      "explicacion": "A 159 Hz, R = Xc = 1kΩ → ángulo exactamente -45°. El capacitor atrasa 90° respecto al resistor.",
+      "tiempo_minutos": 10,
+      "dificultad": "avanzado"
+    }
+  ],
+  "notas_profesor": {
+    "enfasis": [
+      "Demostrar que todo el análisis DC (LCK, LVK, Thevenin) aplica igual en AC pero con fasores",
+      "Visualizar el diagrama fasorial para que los estudiantes entiendan el desfase",
+      "La impedancia del capacitor DISMINUYE con la frecuencia (contrario al inductor)"
+    ],
+    "errores_comunes": [
+      "Confundir V_m (pico) con V_rms (eficaz)",
+      "Olvidar el j al escribir impedancias de L y C",
+      "No convertir mH o μF a las unidades base antes de calcular"
+    ]
+  },
+  "enlaces": [
+    {"ruta": "/clase/5", "texto": "Volver a Clase 5"},
+    {"ruta": "/clase/5/tema/filtros-pasivos", "texto": "Siguiente: Filtros Pasivos →"},
+    {"ruta": "/clase/4", "texto": "← Clase 4: DC Avanzado"}
+  ]
+}

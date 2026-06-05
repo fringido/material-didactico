@@ -1,0 +1,150 @@
+{
+  "id": "conceptos-basicos",
+  "nombre": "Conceptos Básicos de Electrónica Analógica",
+  "descripcion": "Introducción a las magnitudes eléctricas, señales analógicas vs digitales, y principios fundamentales de la electrónica.",
+  "introduccion": "La electrónica analógica estudia el comportamiento de señales eléctricas continuas — señales que pueden tomar cualquier valor dentro de un rango, no solo 0 o 1. Desde los micrófonos que capturan tu voz hasta los sensores de temperatura en un motor, pasando por los amplificadores de audio y los sistemas de radio, la electrónica analógica está en el núcleo de la interacción entre el mundo físico y los sistemas electrónicos. En mecatrónica, es la interfaz entre el mundo real y el mundo digital.",
+  "metadata": {
+    "clase": 1,
+    "orden": 1,
+    "titulo": "Conceptos Básicos de Electrónica Analógica"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Señal Analógica",
+      "descripcion": "Señal continua en tiempo y en amplitud. Puede tomar infinitos valores en su rango. Representa fielmente los fenómenos físicos del mundo real como temperatura, presión, luz, sonido.",
+      "ejemplos": ["Voltaje de salida de un micrófono", "Temperatura medida por un termopar", "Señal de audio en un amplificador", "Salida de un giroscopio analógico"],
+      "caracteristicas": ["Continua en tiempo y amplitud", "Alta resolución teórica", "Susceptible al ruido", "Procesamiento directo de fenómenos físicos"]
+    },
+    {
+      "nombre": "Señal Digital",
+      "descripcion": "Señal discreta que solo puede tomar valores definidos (usualmente 0 y 1 en sistemas binarios). Más robusta al ruido pero con resolución limitada por el número de bits.",
+      "ejemplos": ["Datos en un microcontrolador", "Señal UART o SPI", "Salida de un encoder digital"],
+      "diferencias_clave": "Analógica: infinitos niveles, susceptible al ruido. Digital: niveles discretos, inmune al ruido."
+    },
+    {
+      "nombre": "Carga Eléctrica (Q)",
+      "descripcion": "La carga eléctrica es la propiedad fundamental de la materia que genera el campo eléctrico. Los electrones llevan carga negativa, los protones positiva. La unidad es el Coulomb (C). La carga del electrón es 1.6×10⁻¹⁹ C.",
+      "unidad": "Coulomb (C)"
+    },
+    {
+      "nombre": "Corriente Eléctrica (I)",
+      "descripcion": "Flujo de carga eléctrica por unidad de tiempo: I = dQ/dt. Convencionalmente fluye del positivo al negativo (corriente convencional), aunque los electrones fluyen en sentido opuesto.",
+      "unidad": "Amperio (A) = 1 C/s",
+      "formula": "I = \\frac{dQ}{dt}"
+    },
+    {
+      "nombre": "Voltaje (V)",
+      "descripcion": "Diferencia de potencial eléctrico entre dos puntos. Es la 'presión' que mueve a los electrones. Se necesita un punto de referencia (tierra o GND = 0V).",
+      "unidad": "Voltio (V)",
+      "analogia": "Como la altura: necesitas dos puntos para medir la diferencia."
+    },
+    {
+      "nombre": "Potencia Eléctrica (P)",
+      "descripcion": "Energía entregada o consumida por unidad de tiempo: P = V × I. Se mide en Watts. Un foco de 60W consume 60 joules de energía por segundo.",
+      "unidad": "Watt (W) = V × A",
+      "formula": "P = V \\cdot I = I^2 R = \\frac{V^2}{R}"
+    },
+    {
+      "nombre": "Tierra (GND)",
+      "descripcion": "Punto de referencia de voltaje en el circuito, definido como 0V. Todos los voltajes se miden respecto a la tierra. Puede ser la chasis de un equipo, el terminal negativo de una batería, o un punto virtual en el circuito.",
+      "cuando_usarlo": "Definir GND es el primer paso en cualquier análisis de circuitos."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Corriente eléctrica",
+      "katex": "I = \\frac{dQ}{dt} \\quad [\\text{Amperio} = \\text{C/s}]",
+      "derivacion": "Tasa de cambio de carga por unidad de tiempo."
+    },
+    {
+      "titulo": "Potencia eléctrica",
+      "katex": "P = V \\cdot I = I^2 R = \\frac{V^2}{R} \\quad [\\text{Watts}]",
+      "derivacion": "Energía por unidad de tiempo. Las tres formas son equivalentes usando la Ley de Ohm."
+    },
+    {
+      "titulo": "Energía eléctrica",
+      "katex": "W = P \\cdot t = V \\cdot I \\cdot t \\quad [\\text{Joules}]",
+      "derivacion": "Potencia multiplicada por el tiempo. 1 kWh = 1000W × 3600s = 3.6 MJ."
+    },
+    {
+      "titulo": "Señal senoidal básica",
+      "katex": "v(t) = V_m\\sin(2\\pi f t + \\phi)",
+      "derivacion": "Representación matemática de una señal analógica senoidal con amplitud V_m, frecuencia f y fase φ."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Señal Analógica vs Digital",
+    "descripcion": "Comparación visual entre una señal senoidal analógica y su versión digitalizada (muestreada y cuantizada)",
+    "data": {
+      "labels": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "datasets": [
+        {
+          "label": "Señal Analógica",
+          "data": [0, 3.09, 5.88, 8.09, 9.51, 10, 9.51, 8.09, 5.88, 3.09, 0, -3.09, -5.88],
+          "borderColor": "#6366f1",
+          "tension": 0.4,
+          "pointRadius": 0
+        },
+        {
+          "label": "Señal Digital (muestreada)",
+          "data": [0, 3, 6, 8, 10, 10, 10, 8, 6, 3, 0, -3, -6],
+          "borderColor": "#f59e0b",
+          "stepped": true,
+          "pointRadius": 4
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Tiempo (muestras)",
+      "yLabel": "Amplitud"
+    }
+  },
+  "secciones": [
+    {
+      "id": "analogico-vs-digital",
+      "titulo": "Analógico vs Digital: ¿Cuándo usar cada uno?",
+      "contenido": "ANALÓGICO: ideal para señales del mundo real (sensores, audio, control de motores). Alta resolución. Sensible a ruido e interferencias. DIGITAL: ideal para procesamiento, almacenamiento y transmisión de datos. Inmune a ruido (hasta cierto punto). Limitado por el número de bits (resolución). En mecatrónica: los sensores y actuadores son analógicos; el procesamiento es digital. El ADC (convertidor analógico-digital) es el puente entre ambos mundos."
+    },
+    {
+      "id": "magnitudes-electricas",
+      "titulo": "Magnitudes Eléctricas Fundamentales",
+      "contenido": "Las cuatro magnitudes fundamentales: (1) VOLTAJE (V): diferencia de potencial, medido con voltímetro en paralelo. (2) CORRIENTE (I): flujo de carga, medido con amperímetro en serie. (3) RESISTENCIA (R): oposición al flujo, medido con óhmetro (sin energizar el circuito). (4) POTENCIA (P): energía por tiempo, calculada de V × I. Los instrumentos de medición (multímetro, osciloscopio) miden estas magnitudes."
+    },
+    {
+      "id": "prefijos-metricos",
+      "titulo": "Prefijos Métricos en Electrónica",
+      "contenido": "En electrónica se manejan rangos muy amplios de valores. Los prefijos más comunes: pico (p, ×10⁻¹²), nano (n, ×10⁻⁹), micro (μ, ×10⁻⁶), mili (m, ×10⁻³), kilo (k, ×10³), Mega (M, ×10⁶), Giga (G, ×10⁹). Ejemplos: 100 nF = 100×10⁻⁹ F; 4.7 kΩ = 4700 Ω; 2.4 GHz = 2.4×10⁹ Hz."
+    },
+    {
+      "id": "notacion-cientifica",
+      "titulo": "Notación Científica y de Ingeniería",
+      "contenido": "La notación de ingeniería usa potencias de 10 en múltiplos de 3 (k, M, G, m, μ, n, p). A diferencia de la notación científica que puede usar cualquier potencia de 10. Ejemplos: 0.0047 F = 4.7×10⁻³ F = 4.7 mF. 22000 Ω = 22×10³ Ω = 22 kΩ. 0.000000001 F = 1×10⁻⁹ F = 1 nF."
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-magnitudes-1",
+      "titulo": "Identificar magnitudes",
+      "descripcion": "Una batería de $9\\,\\text{V}$ conectada a una resistencia de $180\\,\\Omega$. Calcular la corriente y la potencia disipada.",
+      "solucion": "$I = 9/180 = 50\\,\\text{mA}$; $P = 9\\,\\text{V} \\times 50\\,\\text{mA} = 0.45\\,\\text{W} = 450\\,\\text{mW}$",
+      "explicacion": "Aplicar Ley de Ohm para corriente, luego P = VI para potencia.",
+      "tiempo_minutos": 3,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-prefijos-1",
+      "titulo": "Conversión de unidades",
+      "descripcion": "Expresar en unidades base: (a) $4.7\\,\\text{k}\\Omega$, (b) $100\\,\\text{nF}$, (c) $33\\,\\mu\\text{H}$, (d) $2.4\\,\\text{GHz}$",
+      "solucion": "(a) $4700\\,\\Omega$ (b) $10^{-7}\\,\\text{F}$ (c) $33 \\times 10^{-6}\\,\\text{H}$ (d) $2.4 \\times 10^9\\,\\text{Hz}$",
+      "explicacion": "k = ×10³, n = ×10⁻⁹, μ = ×10⁻⁶, G = ×10⁹",
+      "tiempo_minutos": 4,
+      "dificultad": "basico"
+    }
+  ],
+  "enlaces": [
+    {"ruta": "/clase/1", "texto": "Volver a Clase 1"},
+    {"ruta": "/clase/1/tema/componentes", "texto": "Siguiente: Componentes Activos y Pasivos →"},
+    {"ruta": "/componentes", "texto": "Catálogo de Componentes"}
+  ]
+}

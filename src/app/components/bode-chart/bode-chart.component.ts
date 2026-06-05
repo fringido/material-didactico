@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges, signal, computed, PLATFORM_ID, inject } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges, signal, computed, PLATFORM_ID, inject, Input } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { KatexDirective } from '../../directives/katex.directive';
@@ -14,6 +14,11 @@ export type FilterType = 'lowpass' | 'highpass' | 'bandpass';
 })
 export class BodeChartComponent implements AfterViewInit, OnChanges {
   private platformId = inject(PLATFORM_ID);
+
+  @Input() set type(value: FilterType) { this.filterType.set(value); }
+  @Input() set R(value: number) { this.rValue.set(value); }
+  @Input() set C(value: number) { this.cValue.set(value); }
+  @Input() set L(value: number) { this.lValue.set(value); }
 
   filterType = signal<FilterType>('lowpass');
   

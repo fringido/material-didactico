@@ -13,12 +13,12 @@
       [backLabel]="backLabel"
       [breadcrumb]="[
         { label: 'Inicio', link: '/' },
-        { label: 'Clase ' + claseNum(), link: backLink },
+        { label: 'Clase ' + clase(), link: backLink },
         { label: tema().metadata?.titulo || tema().nombre }
       ]" />
 
     <header class="page-hero">
-      <span class="badge badge--primary badge--lg">Clase {{ tema().metadata?.clase || claseNum() }}</span>
+      <span class="badge badge--primary badge--lg">Clase {{ tema().metadata?.clase || clase() }}</span>
       <h1 class="page-hero__title">{{ tema().metadata?.titulo || tema().nombre }}</h1>
       <p class="page-hero__lead">{{ tema().introduccion || tema().descripcion }}</p>
     </header>

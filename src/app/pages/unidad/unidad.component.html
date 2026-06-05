@@ -2,13 +2,15 @@
   @if (loading()) {
     <div class="loading-state">
       <div class="spinner"></div>
-      <p>Cargando...</p>
+      <p>Cargando Unidad...</p>
     </div>
   } @else if (error()) {
     <app-page-back-bar backLink="/" backLabel="Volver al inicio" />
-    <div class="error">{{ error() }}</div>
+    <div class="error-panel">
+      <p class="text-error">⚠️ {{ error() }}</p>
+    </div>
   } @else if (unidadData()) {
-    <div class="unidad-content">
+    <div class="unidad-wrapper">
       <app-page-back-bar
         backLink="/"
         backLabel="Volver al inicio"
@@ -18,144 +20,103 @@
           { label: unidadData().metadata.titulo }
         ]" />
 
-      <header class="page-hero unidad-header">
+      <header class="page-hero">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="badge badge--primary">Módulo {{ unidadData().metadata.modulo }}</span>
+          <span class="badge badge--info">Unidad {{ unidadData().metadata.unidad }}</span>
+        </div>
         <h1 class="page-hero__title">{{ unidadData().metadata.titulo }}</h1>
         <p class="page-hero__lead">{{ unidadData().metadata.descripcion }}</p>
-        <div class="metadata">
-          <span class="badge badge--neutral">Módulo {{ unidadData().metadata.modulo }}</span>
-          <span class="badge badge--neutral">Unidad {{ unidadData().metadata.numero_unidad }}</span>
-          <span class="badge badge--info">{{ unidadData().metadata.duracion_estimada }}</span>
+        <div class="meta-footer mt-4">
+          <span class="text-secondary">⏱️ Duración estimada: {{ unidadData().metadata.semanas }} semanas</span>
         </div>
       </header>
 
-      @if (unidadData().objetivos) {
-        <section class="objetivos">
-          <h2>Objetivos de Aprendizaje</h2>
-          <ul>
-            @for (objetivo of unidadData().objetivos; track objetivo) {
-              <li>{{ objetivo }}</li>
-            }
-          </ul>
+      @if (unidadData().objetivos?.length) {
+        <section class="section">
+          <h2 class="section__title">Objetivos de Aprendizaje</h2>
+          <div class="content-panel">
+            <ul class="bullet-list">
+              @for (obj of unidadData().objetivos; track obj) {
+                <li>{{ obj }}</li>
+              }
+            </ul>
+          </div>
         </section>
       }
 
-      @if (unidadData().temas) {
-        <section class="temas">
-          <h2>Temas</h2>
-          @for (tema of unidadData().temas; track tema.id || tema.titulo) {
-            <div class="tema">
-              <h3>{{ tema.titulo || tema.nombre }}</h3>
-              <p>{{ tema.descripcion }}</p>
-              
-              @if (tema.subtemas) {
-                <ul class="subtemas">
-                  @for (subtema of tema.subtemas; track subtema) {
-                    <li>{{ subtema }}</li>
-                  }
-                </ul>
-              }
+      @if (unidadData().temas?.length) {
+        <section class="section">
+          <h2 class="section__title">Contenido de la Unidad</h2>
+          <div class="temas-list">
+            @for (tema of unidadData().temas; track tema.id) {
+              <article class="tema-card card card--bordered">
+                <div class="tema-card__header">
+                  <h3 class="tema-card__title">{{ tema.nombre }}</h3>
+                  <p class="tema-card__desc">{{ tema.descripcion }}</p>
+                </div>
 
-              @if (tema.ecuaciones) {
-                <div class="ecuaciones-grid">
-                  @for (ecuacion of tema.ecuaciones; track ecuacion.nombre) {
-                    <div class="ecuacion-card">
-                      <div class="ecuacion-info">
-                        <strong>{{ ecuacion.nombre }}:</strong>
-                        <span [appKatex]="ecuacion.formula"></span>
-                      </div>
-                      @if (ecuacion.grafica) {
-                        <div class="ecuacion-grafica-wrapper">
-                          <app-equation-chart
-                            [chartType]="ecuacion.grafica.tipo"
-                            [title]="ecuacion.grafica.titulo || ecuacion.nombre"
-                            [equation]="ecuacion.formula" />
+                <div class="tema-card__preview">
+                  @if (tema.contenido?.introduccion) {
+                    <p class="text-body text-sm">{{ tema.contenido.introduccion }}</p>
+                  }
+
+                  <!-- Preview de Ecuaciones -->
+                  @if (tema.contenido?.ecuaciones?.length) {
+                    <div class="equations-preview mt-3">
+                      @for (eq of tema.contenido.ecuaciones.slice(0,2); track eq.nombre) {
+                        <div class="eq-tag">
+                          <span class="eq-name">{{ eq.nombre }}:</span>
+                          <span [appKatex]="eq.formula" [inline]="true"></span>
                         </div>
                       }
                     </div>
                   }
-                </div>
-              }
 
-              @if (tema.ruta || tema.enlaces) {
-                <div class="enlaces">
-                  @if (tema.ruta) {
-                    <a [routerLink]="tema.ruta" class="btn btn--primary btn--sm">Ver tema interactivo →</a>
-                  }
-                  @if (tema.enlaces) {
-                    @for (enlace of tema.enlaces; track enlace.texto) {
-                      <a [routerLink]="enlace.ruta">{{ enlace.texto }}</a>
-                    }
+                  <!-- Simulador Inlined si existe -->
+                  @if (tema.contenido?.simulacion_dinamica) {
+                    <div class="mt-4">
+                      @if (tema.contenido.simulacion_dinamica.tipo === 'bode_interactive') {
+                        <app-bode-chart />
+                      } @else {
+                        <app-dynamic-circuit-simulator [simulacion]="tema.contenido.simulacion_dinamica" />
+                      }
+                    </div>
                   }
                 </div>
-              }
-            </div>
-          }
-        </section>
-      }
 
-      @if (unidadData().ejercicios) {
-        <section class="ejercicios">
-          <h2>Ejercicios</h2>
-          @for (ejercicio of unidadData().ejercicios; track ejercicio.titulo) {
-            <div class="ejercicio">
-              <h4>{{ ejercicio.titulo }}</h4>
-              <p>{{ ejercicio.descripcion }}</p>
-              @if (ejercicio.dificultad) {
-                <span class="dificultad">Dificultad: {{ ejercicio.dificultad }}</span>
-              }
-            </div>
-          }
-        </section>
-      }
-
-      @if (unidadData().evaluacion) {
-        <section class="evaluacion">
-          <h2>Evaluación</h2>
-          @for (item of unidadData().evaluacion; track item.tipo) {
-            <div class="evaluacion-item">
-              <strong>{{ item.tipo }}:</strong> {{ item.descripcion }}
-              @if (item.peso) {
-                <span>({{ item.peso }})</span>
-              }
-            </div>
-          }
-        </section>
-      }
-
-      @if (unidadData().recursos_adicionales) {
-        <section class="recursos">
-          <h2>Recursos Adicionales</h2>
-          <ul>
-            @for (recurso of unidadData().recursos_adicionales; track recurso.titulo) {
-              <li>
-                <strong>{{ recurso.titulo }}:</strong>
-                @if (recurso.url) {
-                  <a [href]="recurso.url" target="_blank">{{ recurso.descripcion }}</a>
-                } @else {
-                  {{ recurso.descripcion }}
-                }
-              </li>
+                <div class="tema-card__footer mt-4">
+                  <a [routerLink]="['/modulo', unidadData().metadata.modulo, 'unidad', unidadData().metadata.unidad, 'tema', tema.id]" 
+                     class="btn btn--primary btn--sm">
+                    Estudiar Tema Completo →
+                  </a>
+                </div>
+              </article>
             }
-          </ul>
+          </div>
         </section>
       }
 
-      @if (unidadData().referencias) {
-        <section class="referencias">
-          <h2>Referencias</h2>
-          <ul>
-            @for (ref of unidadData().referencias; track ref) {
-              <li>{{ ref }}</li>
+      @if (unidadData().ejercicios?.length) {
+        <section class="section">
+          <h2 class="section__title">Ejercicios de Práctica</h2>
+          <div class="exercises-grid">
+            @for (ej of unidadData().ejercicios; track ej.id) {
+              <div class="exercise-item card">
+                <h4 class="exercise-item__title">{{ ej.titulo }}</h4>
+                <p class="text-body text-sm" [appKatex]="ej.descripcion"></p>
+                <div class="flex justify-between items-center mt-3">
+                   <span class="badge badge--neutral">{{ ej.tiempo_minutos }} min</span>
+                   <button class="btn btn--ghost btn--xs" (click)="error.set('Inicia el tema para ver la solución')">Ver solución</button>
+                </div>
+              </div>
             }
-          </ul>
+          </div>
         </section>
       }
 
-      <footer class="page-footer-nav">
+      <footer class="page-footer-nav mt-5">
         <app-page-back-bar backLink="/" backLabel="Volver al inicio" />
-        @if (unidadData().metadata.unidad === 2) {
-          <a routerLink="/clase/3" class="btn btn--primary btn--sm">Clase 3 interactiva →</a>
-        }
       </footer>
     </div>
   }

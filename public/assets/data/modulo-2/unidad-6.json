@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "modulo": 2,
+    "unidad": 6,
+    "titulo": "Amplificadores Operacionales",
+    "semanas": "11-12",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-04",
+    "descripcion": "Aplicaciones lineales y no lineales del Op-Amp ideal y real."
+  },
+  "objetivos": [
+    "Identificar las características del Op-Amp ideal.",
+    "Analizar configuraciones básicas: inversor, no inversor, sumador y restador.",
+    "Diseñar circuitos integradores, derivadores y comparadores.",
+    "Implementar filtros activos de primer y segundo orden."
+  ],
+  "temas": [
+    {
+      "id": "configuraciones-lineales",
+      "nombre": "Configuraciones Lineales",
+      "descripcion": "Operaciones matemáticas básicas con Op-Amps.",
+      "contenido": {
+        "configuraciones": ["Inversor", "No Inversor", "Sumador", "Seguidor"]
+      }
+    }
+  ]
+}

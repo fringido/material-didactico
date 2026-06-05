@@ -1,0 +1,740 @@
+{
+    "metadata": {
+        "modulo": 2,
+        "unidad": 6,
+        "titulo": "Amplificadores Operacionales",
+        "semanas": "12-14",
+        "version": "1.0.0",
+        "fecha_actualizacion": "2026-05-30",
+        "descripcion": "Configuraciones, parámetros, filtros activos y aplicaciones de amplificadores operacionales"
+    },
+    "objetivos": [
+        "Comprender características ideales vs reales de amplificadores operacionales",
+        "Analizar configuraciones básicas: inversor, no inversor, sumador, restador",
+        "Calcular ganancia, impedancias y respuesta en frecuencia",
+        "Diseñar integradores y derivadores",
+        "Comprender parámetros importantes: AOL, offset, slew rate, CMRR",
+        "Diseñar filtros activos: Butterworth, Chebyshev, Sallen-Key",
+        "Aplicar op-amps en instrumentación y aplicaciones prácticas"
+    ],
+    "temas": [
+        {
+            "id": "caracteristicas-opamp",
+            "nombre": "Características Ideales vs Reales",
+            "descripcion": "Parámetros que definen el comportamiento de amplificadores operacionales.",
+            "ecuaciones": [
+                {
+                    "nombre": "Ganancia lazo abierto ideal",
+                    "formula": "A_{OL} \\to \\infty"
+                },
+                {
+                    "nombre": "Impedancia entrada ideal",
+                    "formula": "Z_{in} \\to \\infty"
+                },
+                {
+                    "nombre": "Impedancia salida ideal",
+                    "formula": "Z_{out} \\to 0"
+                },
+                {
+                    "nombre": "Corriente de entrada ideal",
+                    "formula": "I_{in+} = I_{in-} = 0"
+                },
+                {
+                    "nombre": "Voltaje de entrada ideal",
+                    "formula": "V_+ = V_- \\text{ (virtual short)}"
+                }
+            ],
+            "contenido": {
+                "caracteristicas_ideales": [
+                    {
+                        "parametro": "Ganancia lazo abierto (AOL)",
+                        "valor_ideal": "∞",
+                        "valor_real": "10⁵ - 10⁷",
+                        "impacto": "Determina precisión de ganancia en lazo cerrado"
+                    },
+                    {
+                        "parametro": "Impedancia de entrada",
+                        "valor_ideal": "∞",
+                        "valor_real": "1MΩ - 10¹²Ω",
+                        "impacto": "Carga de la fuente"
+                    },
+                    {
+                        "parametro": "Impedancia de salida",
+                        "valor_ideal": "0",
+                        "valor_real": "10Ω - 100Ω",
+                        "impacto": "Capacidad de corriente"
+                    },
+                    {
+                        "parametro": "Ancho de banda",
+                        "valor_ideal": "∞",
+                        "valor_real": "1Hz - 100MHz",
+                        "impacto": "Respuesta en frecuencia"
+                    },
+                    {
+                        "parametro": "CMRR",
+                        "valor_ideal": "∞",
+                        "valor_real": "60dB - 120dB",
+                        "impacto": "Rechazo de modo común"
+                    },
+                    {
+                        "parametro": "Slew Rate",
+                        "valor_ideal": "∞",
+                        "valor_real": "0.5V/μs - 1000V/μs",
+                        "impacto": "Velocidad de respuesta"
+                    }
+                ],
+                "conceptos_clave": [
+                    {
+                        "nombre": "Virtual short",
+                        "descripcion": "V_+ = V_- debido a alta ganancia y retroalimentación negativa",
+                        "aplicacion": "Simplifica análisis de circuitos"
+                    },
+                    {
+                        "nombre": "Virtual ground",
+                        "descripcion": "Cuando una entrada está a tierra, la otra también está virtualmente a tierra",
+                        "aplicacion": "Configuración inversora"
+                    },
+                    {
+                        "nombre": "Retroalimentación negativa",
+                        "descripcion": "Parte de la salida se resta de la entrada",
+                        "efecto": "Estabiliza ganancia, aumenta ancho de banda"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "parametros-importantes",
+            "nombre": "Parámetros Importantes",
+            "descripcion": "Parámetros críticos que afectan el rendimiento en aplicaciones reales.",
+            "ecuaciones": [
+                {
+                    "nombre": "Ganancia lazo cerrado",
+                    "formula": "A_{CL} = \\frac{A_{OL}}{1 + A_{OL}\\beta}"
+                },
+                {
+                    "nombre": "Ancho de banda ganancia unidad",
+                    "formula": "f_T = A_{OL(0)} \\times f_{3dB}"
+                },
+                {
+                    "nombre": "Ancho de banda lazo cerrado",
+                    "formula": "f_{CL} = \\frac{f_T}{A_{CL}}"
+                },
+                {
+                    "nombre": "CMRR",
+                    "formula": "CMRR = 20\\log_{10}\\left(\\frac{A_{DM}}{A_{CM}}\\right)"
+                },
+                {
+                    "nombre": "Voltaje offset",
+                    "formula": "V_{out} = A_{CL}(V_{in} + V_{os})"
+                },
+                {
+                    "nombre": "Corriente bias",
+                    "formula": "I_{bias} = \\frac{I_{B+} + I_{B-}}{2}"
+                },
+                {
+                    "nombre": "Corriente offset",
+                    "formula": "I_{os} = |I_{B+} - I_{B-}|"
+                }
+            ],
+            "contenido": {
+                "parametros_detalle": [
+                    {
+                        "nombre": "Ganancia lazo abierto (AOL)",
+                        "descripcion": "Ganancia sin retroalimentación",
+                        "tipico": "100,000 - 10,000,000",
+                        "variacion": "Disminuye con frecuencia",
+                        "importancia": "Determina error en ganancia lazo cerrado"
+                    },
+                    {
+                        "nombre": "Ancho de banda (BW)",
+                        "descripcion": "Rango de frecuencias donde opera correctamente",
+                        "producto_ganancia_ancho": "Gain-Bandwidth Product (GBP)",
+                        "relacion": "BW × Ganancia = constante",
+                        "tipico": "1MHz - 100MHz"
+                    },
+                    {
+                        "nombre": "Slew Rate",
+                        "descripcion": "Máxima tasa de cambio de voltaje de salida",
+                        "unidad": "V/μs",
+                        "efecto": "Distorsión a alta frecuencia y amplitud",
+                        "tipico": "0.5 - 1000 V/μs",
+                        "calculo": "SR > 2πf_peak V_peak"
+                    },
+                    {
+                        "nombre": "CMRR (Common Mode Rejection Ratio)",
+                        "descripcion": "Capacidad de rechazar señales comunes a ambas entradas",
+                        "unidad": "dB",
+                        "importancia": "Crítico en amplificadores diferenciales",
+                        "tipico": "80 - 120 dB"
+                    },
+                    {
+                        "nombre": "Offset de voltaje (V_os)",
+                        "descripcion": "Voltaje de salida cuando entradas están a cero",
+                        "causa": "Mismatch interno de transistores",
+                        "tipico": "0.1 - 10 mV",
+                        "correccion": "Null offset pins"
+                    },
+                    {
+                        "nombre": "Corrientes de entrada",
+                        "descripcion": "Corrientes que fluyen en las entradas",
+                        "tipos": ["Bias current", "Offset current"],
+                        "tipico": "1nA - 1μA",
+                        "efecto": "Crea offset si resistencias no balanceadas"
+                    },
+                    {
+                        "nombre": "Ruido",
+                        "descripcion": "Ruido generado internamente",
+                        "tipos": ["Voltaje noise", "Current noise"],
+                        "unidad": "nV/√Hz",
+                        "aplicacion": "Circuitos de precisión, audio"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Cálculo de ancho de banda",
+                        "enunciado": "Op-amp con GBP=10MHz, ganancia lazo cerrado=100. Calcular BW.",
+                        "solucion": [
+                            "BW = GBP / A_CL = 10MHz / 100 = 100kHz"
+                        ]
+                    },
+                    {
+                        "titulo": "Verificación de slew rate",
+                        "enunciado": "Señal de 10V pico a 100kHz. SR mínimo requerido.",
+                        "solucion": [
+                            "SR > 2π × 100kHz × 10V = 6.28 V/μs"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "configuraciones-basicas",
+            "nombre": "Configuraciones Básicas",
+            "descripcion": "Amplificador inversor, no inversor, sumador y restador.",
+            "ecuaciones": [
+                {
+                    "nombre": "Inversor",
+                    "formula": "A_v = -\\frac{R_f}{R_{in}}"
+                },
+                {
+                    "nombre": "Impedancia entrada inversor",
+                    "formula": "Z_{in} = R_{in}"
+                },
+                {
+                    "nombre": "No inversor",
+                    "formula": "A_v = 1 + \\frac{R_f}{R_1}"
+                },
+                {
+                    "nombre": "Impedancia entrada no inversor",
+                    "formula": "Z_{in} \\to \\infty"
+                },
+                {
+                    "nombre": "Seguidor de voltaje",
+                    "formula": "A_v = 1"
+                },
+                {
+                    "nombre": "Sumador inversor",
+                    "formula": "V_{out} = -R_f\\left(\\frac{V_1}{R_1} + \\frac{V_2}{R_2} + \\cdots\\right)"
+                },
+                {
+                    "nombre": "Restador (diferencial)",
+                    "formula": "V_{out} = \\frac{R_f}{R_1}(V_2 - V_1)"
+                }
+            ],
+            "contenido": {
+                "configuraciones": [
+                    {
+                        "nombre": "Amplificador Inversor",
+                        "descripcion": "Entrada en terminal inversor, no inversor a tierra",
+                        "ganancia": "A_v = -R_f/R_in",
+                        "impedancia_entrada": "Z_in = R_in",
+                        "impedancia_salida": "Baja",
+                        "aplicaciones": "Amplificación general, mezcla de señales",
+                        "ventajas": "Ganancia precisa, fácil diseño",
+                        "desventajas": "Impedancia de entrada limitada"
+                    },
+                    {
+                        "nombre": "Amplificador No Inversor",
+                        "descripcion": "Entrada en terminal no inversor",
+                        "ganancia": "A_v = 1 + R_f/R_1",
+                        "impedancia_entrada": "Muy alta",
+                        "aplicaciones": "Buffer, alta impedancia de entrada",
+                        "ventajas": "Alta Z_in, sin inversión",
+                        "desventajas": "Ganancia mínima = 1"
+                    },
+                    {
+                        "nombre": "Seguidor de Voltaje (Buffer)",
+                        "descripcion": "R_f = 0, R_1 = ∞ (configuración no inversor)",
+                        "ganancia": "A_v = 1",
+                        "impedancia_entrada": "Muy alta",
+                        "impedancia_salida": "Muy baja",
+                        "aplicaciones": "Buffer, adaptación de impedancia",
+                        "ventajas": "Aislamiento perfecto"
+                    },
+                    {
+                        "nombre": "Sumador Inversor",
+                        "descripcion": "Múltiples entradas en terminal inversor",
+                        "salida": "Suma ponderada invertida",
+                        "aplicaciones": "Mezcla de audio, procesamiento de señales",
+                        "flexibilidad": "Pesos ajustables con resistencias"
+                    },
+                    {
+                        "nombre": "Amplificador Diferencial",
+                        "descripcion": "Dos entradas, amplifica diferencia",
+                        "ganancia": "A_v = (R_f/R_1)(V_2 - V_1)",
+                        "aplicaciones": "Instrumentación, rechazo de modo común",
+                        "importancia": "Base de amplificadores de instrumentación"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Diseño inversor",
+                        "enunciado": "Diseñar amplificador inversor con A_v = -10, Z_in = 10kΩ.",
+                        "solucion": [
+                            "R_in = 10kΩ",
+                            "R_f = 10 × R_in = 100kΩ",
+                            "A_v = -100k/10k = -10 ✓"
+                        ]
+                    },
+                    {
+                        "titulo": "Sumador de tres señales",
+                        "enunciado": "Sumar V1, V2, V3 con pesos 1, 2, 3 respectivamente.",
+                        "solucion": [
+                            "Seleccionar R_f = 30kΩ",
+                            "R1 = 30kΩ (peso 1)",
+                            "R2 = 15kΩ (peso 2)",
+                            "R3 = 10kΩ (peso 3)",
+                            "V_out = -(V1 + 2V2 + 3V3)"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "integrador-derivador",
+            "nombre": "Integrador y Derivador",
+            "descripcion": "Circuitos para operaciones matemáticas de integración y derivación.",
+            "ecuaciones": [
+                {
+                    "nombre": "Integrador ideal",
+                    "formula": "V_{out}(t) = -\\frac{1}{RC}\\int V_{in}(t) dt"
+                },
+                {
+                    "nombre": "Frecuencia de corte integrador",
+                    "formula": "f_c = \\frac{1}{2\\pi RC}"
+                },
+                {
+                    "nombre": "Derivador ideal",
+                    "formula": "V_{out}(t) = -RC \\frac{dV_{in}(t)}{dt}"
+                },
+                {
+                    "nombre": "Integrador práctico (con resistor)",
+                    "formula": "V_{out} = -\\frac{R_f}{R_{in}}V_{in} - \\frac{1}{R_{in}C}\\int V_{in} dt"
+                }
+            ],
+            "contenido": {
+                "integrador": {
+                    "descripcion": "Realiza integración de la señal de entrada",
+                    "configuracion": "Capacitor en retroalimentación, resistor en entrada",
+                    "aplicaciones": [
+                        "Integración de señales",
+                        "Filtros pasa-bajas",
+                        "Generación de rampas",
+                        "Convertidores V-F"
+                    ],
+                    "problema": "Saturación por offset de DC",
+                    "solucion": "Resistor en paralelo con capacitor (R_f >> R_in)",
+                    "frecuencia_minima": "f_min = 1/(2πR_fC)",
+                    "ejemplo": {
+                        "enunciado": "Diseñar integrador para f_min = 10Hz, R_in = 10kΩ.",
+                        "solucion": [
+                            "Seleccionar C = 100nF",
+                            "R_f = 1/(2π × 10 × 100×10⁻⁹) ≈ 159kΩ"
+                        ]
+                    }
+                },
+                "derivador": {
+                    "descripcion": "Realiza derivación de la señal de entrada",
+                    "configuracion": "Capacitor en entrada, resistor en retroalimentación",
+                    "aplicaciones": [
+                        "Detección de flancos",
+                        "Filtros pasa-altas",
+                        "Diferenciación de señales"
+                    ],
+                    "problemas": [
+                        "Inestabilidad a alta frecuencia",
+                        "Amplificación de ruido"
+                    ],
+                    "solucion": "Resistor pequeño en serie con capacitor",
+                    "ejemplo": {
+                        "enunciado": "Diseñar derivador con ganancia de -1 a 1kHz.",
+                        "solucion": [
+                            "RC = 1/(2π × 1000) ≈ 159μs",
+                            "Seleccionar C = 10nF",
+                            "R = 159μs / 10nF = 15.9kΩ"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "id": "comparadores",
+            "nombre": "Comparadores",
+            "descripcion": "Op-amps sin retroalimentación para comparación de voltajes.",
+            "ecuaciones": [
+                {
+                    "nombre": "Salida comparador",
+                    "formula": "V_{out} = \\begin{cases} V_{sat+} & \\text{si } V_+ > V_- \\\\ V_{sat-} & \\text{si } V_+ < V_- \\end{cases}"
+                },
+                {
+                    "nombre": "Histéresis (Schmitt trigger)",
+                    "formula": "V_{UTP} = V_{ref}\\frac{R_1}{R_1 + R_2}, \\quad V_{LTP} = V_{ref}\\frac{R_1}{R_1 + R_2} - V_{sat}\\frac{R_1}{R_2}"
+                }
+            ],
+            "contenido": {
+                "comparador_basico": {
+                    "descripcion": "Op-amp en lazo abierto (sin retroalimentación)",
+                    "comportamiento": "Salida satura a +V_sat o -V_sat",
+                    "aplicaciones": [
+                        "Detección de umbrales",
+                        "Conversión A/D simple",
+                        "Generación de onda cuadrada",
+                        "Control de encendido/apagado"
+                    ],
+                    "problema": "Ruido puede causar múltiples transiciones",
+                    "solucion": "Histéresis (Schmitt trigger)"
+                },
+                "schmitt_trigger": {
+                    "descripcion": "Comparador con retroalimentación positiva",
+                    "ventajas": [
+                        "Inmunidad al ruido",
+                        "Transiciones limpias",
+                        "Dos umbrales (UTP, LTP)"
+                    ],
+                    "tipos": [
+                        "Inversor (retroalimentación a entrada +)",
+                        "No inversor (retroalimentación a entrada -)"
+                    ],
+                    "aplicaciones": [
+                        "Limpieza de señales ruidosas",
+                        "Generación de onda cuadrada",
+                        "Debounce de interruptores"
+                    ],
+                    "ejemplo": {
+                        "enunciado": "Diseñar Schmitt trigger no inversor con V_ref=0, V_sat=±15V, hysteresis=1V.",
+                        "solucion": [
+                            "V_hyst = 2V_sat × R1/(R1+R2) = 1V",
+                            "30 × R1/(R1+R2) = 1",
+                            "R1/(R1+R2) = 1/30",
+                            "Seleccionar R1 = 1kΩ, R2 = 29kΩ"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "id": "filtros-activos",
+            "nombre": "Filtros Activos",
+            "descripcion": "Filtros usando op-amps: Butterworth, Chebyshev, Bessel, Sallen-Key.",
+            "ecuaciones": [
+                {
+                    "nombre": "Ganancia filtro Sallen-Key",
+                    "formula": "K = 1 + \\frac{R_a}{R_b}"
+                },
+                {
+                    "nombre": "Frecuencia de corte",
+                    "formula": "f_c = \\frac{1}{2\\pi RC}"
+                },
+                {
+                    "nombre": "Factor Q",
+                    "formula": "Q = \\frac{1}{3 - K}"
+                },
+                {
+                    "nombre": "Atenuación Butterworth",
+                    "formula": "A_{dB} = -20n\\log_{10}\\left(\\sqrt{1 + (\\frac{f}{f_c})^{2n}}\\right)"
+                }
+            ],
+            "contenido": {
+                "tipos_respuesta": [
+                    {
+                        "nombre": "Butterworth",
+                        "descripcion": "Respuesta plana en banda de paso",
+                        "caracteristica": "Máxima planitud",
+                        "ripple_banda_paso": "0 dB",
+                        "rolloff": "-20n dB/década",
+                        "aplicaciones": "Audio, instrumentación"
+                    },
+                    {
+                        "nombre": "Chebyshev",
+                        "descripcion": "Rolloff más rápido con ripple en banda",
+                        "caracteristica": "Atenuación más rápida",
+                        "ripple_banda_paso": "0.5 - 3 dB",
+                        "rolloff": "Más rápido que Butterworth",
+                        "aplicaciones": "Filtros selectivos"
+                    },
+                    {
+                        "nombre": "Bessel",
+                        "descripcion": "Respuesta lineal en fase",
+                        "caracteristica": "Mínima distorsión de pulso",
+                        "ripple_banda_paso": "0 dB",
+                        "rolloff": "Más lento que Butterworth",
+                        "aplicaciones": "Pulsos, comunicaciones"
+                    }
+                ],
+                "topologias": [
+                    {
+                        "nombre": "Sallen-Key",
+                        "descripcion": "Topología más común para filtros activos",
+                        "ventajas": "Simple, estable, fácil ajuste",
+                        "configuraciones": ["LP", "HP", "BP"],
+                        "orden": "2do orden por etapa"
+                    },
+                    {
+                        "nombre": "Multiple Feedback (MFB)",
+                        "descripcion": "Topología alternativa",
+                        "ventajas": "Buena para alta Q",
+                        "desventajas": "Más sensible a tolerancias"
+                    },
+                    {
+                        "nombre": "State Variable",
+                        "descripcion": "Simultáneamente LP, HP, BP",
+                        "ventajas": "Versátil, ajuste independiente",
+                        "desventajas": "Más op-amps requeridos"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Filtro pasa-bajas Butterworth 2do orden",
+                        "enunciado": "f_c = 1kHz, ganancia = 1.",
+                        "solucion": [
+                            "Seleccionar C = 10nF",
+                            "R = 1/(2π × 1000 × 10×10⁻⁹) ≈ 15.9kΩ",
+                            "Para K=1: Ra = ∞, Rb = 0 (seguidor)",
+                            "Usar dos resistores y capacitores iguales"
+                        ]
+                    },
+                    {
+                        "titulo": "Filtro pasa-bandas Sallen-Key",
+                        "enunciado": "f_0 = 1kHz, Q = 5, ganancia = 10.",
+                        "solucion": [
+                            "K = 10",
+                            "Q = 1/(3-K) = 1/(3-10) = -0.14 (no válido)",
+                            "Usar topología MFB para Q > 0.5"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "aplicaciones-instrumentacion",
+            "nombre": "Aplicaciones en Instrumentación",
+            "descripcion": "Amplificadores de instrumentación y aplicaciones de precisión.",
+            "ecuaciones": [
+                {
+                    "nombre": "Amplificador de instrumentación",
+                    "formula": "A_v = \\left(1 + \\frac{2R_1}{R_g}\\right)\\frac{R_3}{R_2}"
+                },
+                {
+                    "nombre": "Ganancia primer etapa",
+                    "formula": "A_{v1} = 1 + \\frac{2R_1}{R_g}"
+                },
+                {
+                    "nombre": "CMRR amplificador instrumentación",
+                    "formula": "CMRR_{total} = CMRR_{opamp} + 20\\log_{10}\\left(\\frac{A_{v1}}{\\Delta R/R}\\right)"
+                }
+            ],
+            "contenido": {
+                "amplificador_instrumentacion": {
+                    "descripcion": "Amplificador diferencial de alta precisión",
+                    "caracteristicas": [
+                        "Alta impedancia de entrada",
+                        "Alto CMRR",
+                        "Ganancia ajustable con un resistor",
+                        "Bajo offset y drift"
+                    ],
+                    "configuracion": "Tres op-amps en cascada",
+                    "primer_etapa": "Dos op-amps no inversores",
+                    "segunda_etapa": "Amplificador diferencial",
+                    "ganancia": "A_v = (1 + 2R1/Rg) × (R3/R2)",
+                    "aplicaciones": [
+                        "Sensores de puente (strain gauge)",
+                        "Termopares",
+                        "ECG, EEG (biomédica)",
+                        "Medición de baja señal"
+                    ],
+                    "ejemplo": {
+                        "enunciado": "Diseñar IA con ganancia 1000, R1=R2=10kΩ.",
+                        "solucion": [
+                            "A_v1 = 1 + 2R1/Rg",
+                            "A_v2 = R3/R2 = 1 (R3 = R2)",
+                            "1000 = 1 + 2×10000/Rg",
+                            "Rg = 20000/999 ≈ 20Ω"
+                        ]
+                    }
+                },
+                "otras_aplicaciones": [
+                    {
+                        "nombre": "Convertidor I-V",
+                        "descripcion": "Convierte corriente a voltaje",
+                        "aplicacion": "Fotodiodos, sensores de corriente",
+                        "configuracion": "Resistor en retroalimentación"
+                    },
+                    {
+                        "nombre": "Amplificador de transimpedancia",
+                        "descripcion": "Similar a I-V pero para muy baja corriente",
+                        "aplicacion": "Fotodiodos, detectores",
+                        "consideraciones": "Baja corriente bias, bajo ruido"
+                    },
+                    {
+                        "nombre": "Rectificador de precisión",
+                        "descripcion": "Rectificación sin caída de diodo",
+                        "aplicacion": "Medición AC, demodulación",
+                        "configuracion": "Diodo en lazo de retroalimentación"
+                    },
+                    {
+                        "nombre": "Hold de pico",
+                        "descripcion": "Mantiene el valor pico de una señal",
+                        "aplicacion": "Medición de pico",
+                        "configuracion": "Capacitor en retroalimentación"
+                    },
+                    {
+                        "nombre": "Generador de función",
+                        "descripcion": "Genera seno, tri, cuadrada",
+                        "aplicacion": "Instrumentos de prueba",
+                        "configuracion": "Integrador + comparador"
+                    }
+                ]
+            }
+        }
+    ],
+    "ejercicios": [
+        {
+            "numero": 19,
+            "titulo": "Análisis de configuraciones básicas",
+            "descripcion": "Analizar amplificadores inversor, no inversor, sumador y diferencial.",
+            "tipo": "practico",
+            "dificultad": "basico",
+            "tiempo_estimado": "90 minutos",
+            "objetivos": [
+                "Calcular ganancia de cada configuración",
+                "Determinar impedancias de entrada y salida",
+                "Verificar con simulación"
+            ]
+        },
+        {
+            "numero": 20,
+            "titulo": "Diseño de filtros activos",
+            "descripcion": "Diseñar filtros pasa-bajas, pasa-altas y pasa-banda usando Sallen-Key.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "120 minutos",
+            "objetivos": [
+                "Calcular componentes para frecuencia de corte",
+                "Seleccionar tipo de respuesta (Butterworth, etc.)",
+                "Verificar respuesta en frecuencia"
+            ]
+        },
+        {
+            "numero": 21,
+            "titulo": "Integradores y derivadores",
+            "descripcion": "Diseñar y analizar circuitos integradores y derivadores.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "90 minutos",
+            "objetivos": [
+                "Diseñar integrador con frecuencia mínima especificada",
+                "Diseñar derivador con ganancia especificada",
+                "Analizar respuesta en frecuencia"
+            ]
+        },
+        {
+            "numero": 22,
+            "titulo": "Amplificador de instrumentación",
+            "descripcion": "Diseñar amplificador de instrumentación para sensores.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "90 minutos",
+            "objetivos": [
+                "Calcular resistencias para ganancia deseada",
+                "Analizar CMRR y rechazo de modo común",
+                "Aplicar a sensor de puente"
+            ]
+        },
+        {
+            "numero": 23,
+            "titulo": "Parámetros reales de op-amp",
+            "descripcion": "Analizar efectos de parámetros no ideales en circuitos.",
+            "tipo": "practico",
+            "dificultad": "avanzado",
+            "tiempo_estimado": "120 minutos",
+            "objetivos": [
+                "Calcular error por offset de voltaje",
+                "Determinar efecto de slew rate",
+                "Analizar limitaciones de ancho de banda"
+            ]
+        }
+    ],
+    "evaluacion": {
+        "criterios": [
+            "Cálculo correcto de ganancias y parámetros",
+            "Diseño adecuado de configuraciones",
+            "Comprensión de limitaciones reales",
+            "Diseño correcto de filtros activos"
+        ],
+        "rubrica": {
+            "excelente": "Diseña circuitos con precisión, comprende profundamente parámetros reales y limitaciones.",
+            "bueno": "Calcula ganancias correctamente, buena comprensión de configuraciones básicas.",
+            "suficiente": "Comprende conceptos básicos pero tiene dificultades con diseño avanzado.",
+            "insuficiente": "No logra aplicar conceptos de op-amps correctamente."
+        }
+    },
+    "recursos_adicionales": {
+        "simuladores": [
+            {
+                "nombre": "Diseñador de filtros activos",
+                "descripcion": "Herramienta interactiva para diseño de filtros",
+                "ruta": "/simuladores/filtros-activos"
+            },
+            {
+                "nombre": "Calculadora de op-amp",
+                "descripcion": "Calculadora de configuraciones básicas",
+                "ruta": "/simuladores/opamp"
+            }
+        ],
+        "lecturas": [
+            "Schaumann & Van Valkenburg - Design of Analog Filters",
+            "Jung - Op Amp Applications Handbook"
+        ]
+    },
+    "referencias": [
+        {
+            "tipo": "libro",
+            "titulo": "Op Amps for Everyone",
+            "autores": ["Ron Mancini", "Bruce Carter"],
+            "capitulo": "Basic Op Amp Configurations"
+        },
+        {
+            "tipo": "libro",
+            "titulo": "Design of Analog Filters",
+            "autores": ["Schaumann", "Van Valkenburg"],
+            "capitulo": "Active Filters"
+        }
+    ],
+    "notas_profesor": {
+        "enfasis": [
+            "Importancia de parámetros reales vs ideales",
+            "Aplicaciones prácticas en instrumentación",
+            "Diseño de filtros para especificaciones dadas"
+        ],
+        "dificultades_comunes": [
+            "Olvidar limitaciones de slew rate",
+            "Confusión entre configuraciones",
+            "Errores en cálculo de filtros activos"
+        ],
+        "sugerencias": [
+            "Usar simulación SPICE para verificar diseños",
+            "Medir con osciloscopio en laboratorio",
+            "Comparar op-amps reales (741, TL071, etc.)"
+        ]
+    }
+}

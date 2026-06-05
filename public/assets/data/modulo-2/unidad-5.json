@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "modulo": 2,
+    "unidad": 5,
+    "titulo": "Osciladores y Generadores de Señales",
+    "semanas": "9-10",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-04",
+    "descripcion": "Principios de oscilación y circuitos para la generación de señales senoidales y no senoidales."
+  },
+  "objetivos": [
+    "Comprender el Criterio de Barkhausen para la oscilación sostenida.",
+    "Diseñar osciladores RC y LC (Wien, Colpitts, Hartley).",
+    "Analizar osciladores de cristal y sistemas PLL.",
+    "Utilizar el temporizador 555 para generadores de pulsos."
+  ],
+  "temas": [
+    {
+      "id": "osciladores-senoidales",
+      "nombre": "Osciladores Senoidales",
+      "descripcion": "Circuitos de retroalimentación positiva.",
+      "contenido": {
+        "tipos": ["Puente de Wien", "Colpitts", "Hartley"]
+      }
+    }
+  ]
+}

@@ -12,6 +12,15 @@ import { KirchhoffLabComponent } from '../../components/clase3-labs/kirchhoff-la
 import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
 import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
 
+const CLASS_TO_MODULE_UNIT: Record<number, { modulo: number; unidad: number }> = {
+  1: { modulo: 1, unidad: 1 },
+  2: { modulo: 1, unidad: 1 },
+  3: { modulo: 1, unidad: 2 },
+  4: { modulo: 1, unidad: 2 },
+  5: { modulo: 1, unidad: 3 },
+  6: { modulo: 1, unidad: 3 },
+};
+
 const TEMA_IDS_BY_CLASS: Record<number, string[]> = {
   3: ['ley-de-ohm', 'tipos-circuitos', 'leyes-kirchhoff'],
   4: ['resistencia-equivalente', 'nodos-mallas', 'maximum-power-transfer'],
@@ -37,51 +46,56 @@ const TEMA_IDS_BY_CLASS: Record<number, string[]> = {
   styleUrls: ['./tema-detalle.component.scss']
 })
 export class TemaDetalleComponent implements OnInit {
-  private http = inject(HttpClient);
-  private route = inject(ActivatedRoute);
+  private readonly http = inject(HttpClient);
+  private readonly route = inject(ActivatedRoute);
 
+  modulo = signal<number>(1);
+  unidad = signal<number>(1);
+  clase = signal<number | null>(null);
+  temaId = signal<string | null>(null);
   tema = signal<any>(null);
   loading = signal(true);
   error = signal<string | null>(null);
-  claseNum = signal<number>(3);
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
+      const claseParam = params.get('clase');
+      const moduloParam = params.get('modulo');
+      const unidadParam = params.get('unidad');
       const id = params.get('id');
 
-      // Derive clase number from the URL (e.g. /clase/4/tema/...)
-      const urlSegments = this.route.snapshot.pathFromRoot
-        .flatMap(r => r.url)
-        .map(u => u.path);
-      const claseIdx = urlSegments.indexOf('clase');
-      const claseNumber = claseIdx >= 0 ? Number(urlSegments[claseIdx + 1]) : 3;
-      const validClase = TEMA_IDS_BY_CLASS[claseNumber] ? claseNumber : 3;
-      this.claseNum.set(validClase);
-
-      const validIds = TEMA_IDS_BY_CLASS[validClase];
-      if (!id || !validIds.includes(id)) {
-        this.error.set('Tema no encontrado.');
-        this.loading.set(false);
-        return;
+      const claseNum = claseParam ? Number(claseParam) : null;
+      if (claseNum) {
+        const mapping = CLASS_TO_MODULE_UNIT[claseNum] || { modulo: 1, unidad: 1 };
+        this.clase.set(claseNum);
+        this.modulo.set(mapping.modulo);
+        this.unidad.set(mapping.unidad);
+      } else {
+        this.clase.set(null);
+        this.modulo.set(Number(moduloParam) || 1);
+        this.unidad.set(Number(unidadParam) || 1);
       }
 
+      this.temaId.set(id);
       this.loading.set(true);
-      this.http.get<any>(`/assets/data/clase-${validClase}/${id}.json`).subscribe({
+
+      const m = this.modulo();
+      const u = this.unidad();
+
+      this.http.get<any>(`/assets/data/modulo-${m}/unidad-${u}.json`).subscribe({
         next: (data) => {
-          // Normalizar convencion_signos a siempre ser array (Clase 3)
-          if (data.leyes) {
-            data.leyes = data.leyes.map((ley: any) => {
-              if (ley.convencion_signos && typeof ley.convencion_signos === 'string') {
-                ley.convencion_signos = [{ caso: 'General', regla: ley.convencion_signos }];
-              }
-              return ley;
-            });
+          const found = data.temas.find((t: any) => t.id === id);
+          if (found) {
+            // Normalizar contenido para el template
+            const normalizedTema = found.contenido ? { ...found, ...found.contenido } : { ...found };
+            this.tema.set(normalizedTema);
+          } else {
+            this.error.set(`Tema "${id}" no encontrado.`);
           }
-          this.tema.set(data);
           this.loading.set(false);
         },
         error: () => {
-          this.error.set(`No se pudo cargar el tema "${id}".`);
+          this.error.set(`No se pudo cargar la información de la Unidad ${u}.`);
           this.loading.set(false);
         }
       });
@@ -96,7 +110,6 @@ export class TemaDetalleComponent implements OnInit {
     console.error('Error loading image:', src, event);
   }
 
-  /** Returns the tooltip variables array for a Clase 4 formula */
   getVariablesForFormula(formula: any): any[] {
     const tooltipId = formula?.variables_tooltip;
     if (!tooltipId || !this.tema()?.variables_tooltips) return [];
@@ -104,10 +117,10 @@ export class TemaDetalleComponent implements OnInit {
   }
 
   get backLink(): string {
-    return `/clase/${this.claseNum()}`;
+    return this.clase() ? `/clase/${this.clase()}` : `/modulo/${this.modulo()}/unidad/${this.unidad()}`;
   }
 
   get backLabel(): string {
-    return `Volver a Clase ${this.claseNum()}`;
+    return this.clase() ? `Volver a Clase ${this.clase()}` : `Volver a Unidad ${this.unidad()}`;
   }
 }

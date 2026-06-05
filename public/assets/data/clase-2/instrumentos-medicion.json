@@ -1,0 +1,101 @@
+{
+  "id": "instrumentos-medicion",
+  "nombre": "Instrumentos de Medición: Multímetro y Osciloscopio",
+  "descripcion": "Uso correcto del multímetro y el osciloscopio para medir voltaje, corriente, resistencia y formas de onda en el dominio del tiempo.",
+  "introduccion": "En electrónica analógica, no podemos ver la electricidad directamente. Para entender, diagnosticar y verificar el comportamiento de los circuitos, dependemos de instrumentos de medición. El Multímetro es la herramienta diaria para lecturas de estado estable (DC) y valores promedio, mientras que el Osciloscopio nos permite 'ver' la forma en que los voltajes varían en el tiempo, siendo fundamental para el análisis de transitorios, señales de corriente alterna (AC) y ruido.",
+  "metadata": {
+    "clase": 2,
+    "orden": 3,
+    "titulo": "Instrumentos de Medición"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Multímetro Digital (DMM)",
+      "descripcion": "Instrumento portátil que combina múltiples funciones de medición eléctrica en una sola unidad.",
+      "funciones": ["Voltímetro (mide voltaje en PARALELO con alta impedancia)", "Amperímetro (mide corriente en SERIE con baja impedancia y fusible)", "Óhmetro (mide resistencia con el circuito APAGADO/DESENERGIZADO)", "Prueba de continuidad (pitido audible para caminos de baja resistencia)"]
+    },
+    {
+      "nombre": "Osciloscopio",
+      "descripcion": "Instrumento de visualización gráfica que muestra señales eléctricas variables en el tiempo. El eje vertical (Y) representa el voltaje y el eje horizontal (X) representa el tiempo.",
+      "ajustes": ["Volts/Div: escala de voltaje por rejilla vertical", "Time/Div: escala de tiempo por rejilla horizontal", "Trigger (Disparo): estabiliza formas de onda repetitivas en la pantalla"]
+    },
+    {
+      "nombre": "Acoplamiento del Canal",
+      "descripcion": "Configuración que define cómo entra la señal al osciloscopio.",
+      "modos": ["DC: muestra la señal completa (componente DC + AC)", "AC: bloquea la componente DC mediante un capacitor en serie (solo muestra variaciones de AC)", "GND: desconecta la entrada y muestra el nivel de referencia de cero voltios"]
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Relación entre Periodo y Frecuencia",
+      "katex": "f = \\frac{1}{T} \\quad [\\text{Hz}] \\quad \\text{o} \\quad T = \\frac{1}{f} \\quad [\\text{s}]",
+      "derivacion": "La frecuencia f (número de ciclos por segundo) es el recíproco exacto del periodo T (tiempo que tarda un ciclo completo)."
+    },
+    {
+      "titulo": "Voltaje Eficaz (RMS) para una Onda Senoidal pura",
+      "katex": "V_{rms} = \\frac{V_p}{\\sqrt{2}} \\approx 0.707 \\cdot V_p",
+      "derivacion": "Valor equivalente de voltaje DC que produciría la misma disipación de calor en una carga puramente resistiva."
+    },
+    {
+      "titulo": "Voltaje Pico a Pico",
+      "katex": "V_{pp} = 2 \\cdot V_p = V_{max} - V_{min}",
+      "derivacion": "Diferencia de voltaje entre el punto más alto (cresta) y el punto más bajo (valle) de la forma de onda."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Visualización de una Onda Senoidal en el Osciloscopio",
+    "descripcion": "Forma de onda senoidal de 5Vp a 1kHz en una rejilla con división vertical de 2V/Div y división horizontal de 0.2ms/Div.",
+    "data": {
+      "labels": [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2],
+      "datasets": [
+        {
+          "label": "Canal 1 (Voltios)",
+          "data": [0, 2.94, 4.76, 4.76, 2.94, 0, -2.94, -4.76, -4.76, -2.94, 0, 2.94, 4.76],
+          "borderColor": "#eab308",
+          "tension": 0.4
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Tiempo (ms)",
+      "yLabel": "Voltaje (V)"
+    }
+  },
+  "secciones": [
+    {
+      "id": "dmm-safety",
+      "titulo": "Reglas de Seguridad y Cuidado del Multímetro",
+      "contenido": "1. NUNCA mida resistencia o continuidad en un circuito energizado; dañará el óhmetro. 2. Al medir corriente, asegúrese de que el multímetro esté en serie con la carga. Conectarlo en paralelo a una fuente de voltaje creará un cortocircuito que fundirá el fusible interno o dañará el instrumento. 3. Comience siempre midiendo en el rango más alto si utiliza un multímetro de rango manual para evitar sobrecargas."
+    },
+    {
+      "id": "osc-trigger",
+      "titulo": "Entendiendo el Sistema de Disparo (Trigger)",
+      "contenido": "El Trigger actúa como un fotógrafo que toma fotos repetidamente en el mismo instante de una escena en movimiento. Le dice al osciloscopio cuándo empezar a dibujar la señal en la pantalla. Sin un disparo correcto, la onda se desplazará de izquierda a derecha continuamente o se verá borrosa. Ajustando el 'Level' de trigger definimos el voltaje de umbral en el que se inicia el barrido horizontal."
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-osc-1",
+      "titulo": "Lectura de escalas en osciloscopio",
+      "descripcion": "En la pantalla de un osciloscopio, una señal senoidal ocupa un total de $6$ divisiones verticales de pico a pico y un ciclo completo ocupa exactamente $4$ divisiones horizontales. Si la perilla de Volts/Div está en $2\\,\\text{V/div}$ y la de Time/Div está en $0.5\\,\\text{ms/div}$, calcule: (a) $V_{pp}$, (b) $V_p$, (c) Periodo $T$, (d) Frecuencia $f$.",
+      "solucion": "(a) $V_{pp} = 6\\,\\text{div} \\times 2\\,\\text{V/div} = 12\\,\\text{V}$. (b) $V_p = 12\\,\\text{V} / 2 = 6\\,\\text{V}$. (c) $T = 4\\,\\text{div} \\times 0.5\\,\\text{ms/div} = 2\\,\\text{ms}$. (d) $f = 1 / 2\\,\\text{ms} = 500\\,\\text{Hz}$.",
+      "explicacion": "Multiplicamos el número de divisiones por el factor de escala correspondiente de cada eje para obtener los valores físicos reales.",
+      "tiempo_minutos": 5,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-rms-1",
+      "titulo": "Voltaje RMS residencial",
+      "descripcion": "El multímetro digital mide un voltaje de tomacorriente AC de $120\\,\\text{V}_{rms}$ (voltaje eficaz). ¿Cuál es el voltaje pico ($V_p$) y el voltaje pico a pico ($V_{pp}$) de esta red?",
+      "solucion": "$V_p = 120 \\times \\sqrt{2} \\approx 120 \\times 1.4142 = 169.7\\,\\text{V}$. Voltaje pico a pico: $V_{pp} = 2 \\times 169.7 = 339.4\\,\\text{V}$.",
+      "explicacion": "Para ondas senoidales puras, el voltaje RMS se multiplica por la raíz de 2 para hallar el voltaje pico de la cresta.",
+      "tiempo_minutos": 3,
+      "dificultad": "basico"
+    }
+  ],
+  "enlaces": [
+    {"ruta": "/clase/2", "texto": "Volver a Clase 2"},
+    {"ruta": "/clase/3", "texto": "Siguiente Clase: Ley de Ohm y Kirchhoff (Comienzo del Análisis DC) →"}
+  ]
+}

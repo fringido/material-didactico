@@ -1,0 +1,107 @@
+{
+  "id": "componentes-activos-pasivos",
+  "nombre": "Componentes Activos y Pasivos",
+  "descripcion": "Clasificación, características y propiedades de los componentes electrónicos fundamentales.",
+  "introduccion": "En la electrónica analógica, clasificamos los componentes según su capacidad para inyectar o controlar energía en el sistema. Esta distinción entre componentes pasivos (que solo disipan o almacenan energía) y activos (que controlan el flujo de electricidad o introducen ganancia de potencia) es fundamental para entender el funcionamiento de cualquier circuito eléctrico y diseñar sistemas analógicos eficaces.",
+  "metadata": {
+    "clase": 1,
+    "orden": 2,
+    "titulo": "Componentes Activos y Pasivos"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Componentes Pasivos",
+      "descripcion": "Dispositivos que no pueden introducir ganancia de energía neta en el circuito. Solo consumen, disipan o almacenan energía en campos eléctricos o magnéticos. Los tres clásicos son resistores (R), capacitores (C) e inductores (L).",
+      "propiedades": ["No requieren fuente de alimentación externa", "Comportamiento lineal (generalmente)", "No amplifican señales"]
+    },
+    {
+      "nombre": "Componentes Activos",
+      "descripcion": "Dispositivos capaces de controlar o modificar el flujo de corriente mediante otra señal eléctrica, o que pueden amplificar una señal de potencia. Físicamente, requieren de una fuente de alimentación externa para funcionar. Ejemplos clásicos: transistores (BJT, MOSFET), diodos (que controlan la dirección, aunque a veces se debaten si son pasivos por no amplificar, típicamente se agrupan aquí en su análisis) y amplificadores operacionales.",
+      "propiedades": ["Requieren alimentación externa", "Controlan corrientes grandes con señales pequeñas", "Comportamiento altamente no lineal"]
+    },
+    {
+      "nombre": "Ganancia de Potencia",
+      "descripcion": "La capacidad de un circuito o componente activo de entregar más potencia de señal en su salida de la que recibe en su entrada de control. Esta energía extra proviene de la fuente de alimentación DC.",
+      "formula": "G_P = \\frac{P_{out}}{P_{in}}"
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Disipación de Potencia en Resistores",
+      "katex": "P_R = V \\cdot I = I^2 R = \\frac{V^2}{R} \\quad [\\text{Watts}]",
+      "derivacion": "Toda la potencia eléctrica absorbida por un resistor ideal se convierte en calor. Es una pérdida irreversible de energía."
+    },
+    {
+      "titulo": "Energía Almacenada en un Capacitor",
+      "katex": "E_C = \\frac{1}{2} C V^2 \\quad [\\text{Joules}]",
+      "derivacion": "Energía almacenada en el campo eléctrico formado entre las placas del capacitor."
+    },
+    {
+      "titulo": "Energía Almacenada en un Inductor",
+      "katex": "E_L = \\frac{1}{2} L I^2 \\quad [\\text{Joules}]",
+      "derivacion": "Energía almacenada en el campo magnético creado por el flujo de corriente a través de las espiras."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Respuesta Temporal de Almacenamiento (Capacitor vs Inductor)",
+    "descripcion": "Representación visual de la carga de un capacitor (Voltaje) y un inductor (Corriente) en el tiempo con una constante de tiempo tau = 1s.",
+    "data": {
+      "labels": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5],
+      "datasets": [
+        {
+          "label": "Voltaje del Capacitor (V_c / V_s)",
+          "data": [0, 0.393, 0.632, 0.777, 0.865, 0.918, 0.95, 0.97, 0.982, 0.993],
+          "borderColor": "#10b981",
+          "tension": 0.3
+        },
+        {
+          "label": "Corriente del Inductor (I_l / I_max)",
+          "data": [0, 0.393, 0.632, 0.777, 0.865, 0.918, 0.95, 0.97, 0.982, 0.993],
+          "borderColor": "#3b82f6",
+          "tension": 0.3
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Tiempo (t / \u03c4)",
+      "yLabel": "Carga Relativa (0 a 1)"
+    }
+  },
+  "secciones": [
+    {
+      "id": "pasivos-detalle",
+      "titulo": "Los tres elementos pasivos fundamentales",
+      "contenido": "RESISTOR (R): Se opone a la corriente eléctrica, disipa calor y sigue la Ley de Ohm. CAPACITOR (C): Almacena carga eléctrica en forma de campo eléctrico entre dos placas conductoras. Se opone a cambios bruscos de voltaje. INDUCTOR (L): Almacena energía en forma de campo magnético inducido por la corriente. Se opone a cambios bruscos de corriente."
+    },
+    {
+      "id": "activos-detalle",
+      "titulo": "Semiconductores y Elementos Activos",
+      "contenido": "DIODO: Permite el paso de corriente en una dirección (polarización directa) y lo bloquea en la otra (polarización inversa). TRANSISTOR (BJT/MOSFET): Interruptor controlado o amplificador de corriente/voltaje. Regula el flujo de corriente principal según la corriente/voltaje de control. AMPLIFICADOR OPERACIONAL (Op-Amp): Dispositivo integrado que amplifica diferencias de voltaje con ganancias muy elevadas, base de filtros activos, comparadores e integradores."
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-activos-1",
+      "titulo": "Identificación de tipos de elementos",
+      "descripcion": "Dado el siguiente circuito que contiene: un panel solar, un resistor de carga, un diodo de protección, y un transistor de conmutación. Clasifique cada uno como activo, pasivo o fuente.",
+      "solucion": "Panel Solar: Fuente de energía. Resistor: Pasivo (disipa potencia). Diodo: Activo (semiconductor de control unidireccional). Transistor: Activo (controlador/conmutador que requiere control externo).",
+      "explicacion": "Los semiconductores (diodo, transistor) se clasifican como activos por su naturaleza no lineal y funciones de control, mientras que el resistor es pasivo.",
+      "tiempo_minutos": 5,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-energia-1",
+      "titulo": "Cálculo de energía en componentes pasivos",
+      "descripcion": "Un capacitor de $220\\,\\mu\\text{F}$ se carga a un voltaje de $12\\,\\text{V}$. Un inductor de $10\\,\\text{mH}$ conduce una corriente de $2\\,\\text{A}$. ¿Cuál almacena más energía en joules?",
+      "solucion": "Energía en el capacitor: $E_C = 0.5 \\times 220 \\times 10^{-6} \\times 12^2 = 15.84\\,\\text{mJ}$. Energía en el inductor: $E_L = 0.5 \\times 10 \\times 10^{-3} \\times 2^2 = 20\\,\\text{mJ}$. Por lo tanto, el inductor almacena más energía.",
+      "explicacion": "Aplicamos las ecuaciones de almacenamiento de energía $E_C = \\frac{1}{2}CV^2$ y $E_L = \\frac{1}{2}LI^2$.",
+      "tiempo_minutos": 5,
+      "dificultad": "medio"
+    }
+  ],
+  "enlaces": [
+    {"ruta": "/clase/1", "texto": "Volver a Clase 1"},
+    {"ruta": "/clase/1/tema/circuitos-basicos", "texto": "Siguiente: Circuitos Básicos →"}
+  ]
+}

@@ -1,0 +1,585 @@
+{
+    "metadata": {
+        "modulo": 1,
+        "unidad": 3,
+        "titulo": "Análisis de Circuitos en AC",
+        "semanas": "5-6",
+        "version": "1.0.0",
+        "fecha_actualizacion": "2026-05-30",
+        "descripcion": "Señales senoidales, fasores, impedancia compleja, filtros y respuesta en frecuencia"
+    },
+    "objetivos": [
+        "Comprender los parámetros de señales senoidales (amplitud, frecuencia, fase)",
+        "Aplicar notación fasorial para análisis de circuitos en AC",
+        "Calcular impedancia compleja de resistencias, inductores y capacitores",
+        "Analizar circuitos RLC en régimen senoidal permanente",
+        "Diseñar y analizar filtros pasa-bajas, pasa-altas, pasa-banda y rechaza-banda",
+        "Interpretar diagramas de Bode de magnitud y fase",
+        "Comprender respuesta transitoria vs respuesta en estado estable"
+    ],
+    "temas": [
+        {
+            "id": "senales-senoidales",
+            "nombre": "Señales Senoidales",
+            "descripcion": "Parámetros fundamentales de señales AC: amplitud, frecuencia, período, fase y valor RMS.",
+            "ecuaciones": [
+                {
+                    "nombre": "Señal senoidal",
+                    "formula": "v(t) = V_m \\sin(\\omega t + \\phi)"
+                },
+                {
+                    "nombre": "Frecuencia angular",
+                    "formula": "\\omega = 2\\pi f = \\frac{2\\pi}{T}"
+                },
+                {
+                    "nombre": "Valor RMS",
+                    "formula": "V_{rms} = \\frac{V_m}{\\sqrt{2}}"
+                },
+                {
+                    "nombre": "Valor promedio",
+                    "formula": "V_{avg} = \\frac{2}{\\pi} V_m \\approx 0.637 V_m"
+                }
+            ],
+            "contenido": {
+                "parametros": [
+                    {
+                        "nombre": "Amplitud pico (V_m)",
+                        "descripcion": "Valor máximo de la señal",
+                        "unidad": "V"
+                    },
+                    {
+                        "nombre": "Amplitud pico a pico (V_pp)",
+                        "descripcion": "Diferencia entre máximo y mínimo",
+                        "formula": "V_{pp} = 2V_m",
+                        "unidad": "V"
+                    },
+                    {
+                        "nombre": "Frecuencia (f)",
+                        "descripcion": "Ciclos por segundo",
+                        "unidad": "Hz"
+                    },
+                    {
+                        "nombre": "Período (T)",
+                        "descripcion": "Tiempo de un ciclo completo",
+                        "formula": "T = \\frac{1}{f}",
+                        "unidad": "s"
+                    },
+                    {
+                        "nombre": "Fase (φ)",
+                        "descripcion": "Desplazamiento temporal",
+                        "unidad": "grados o radianes"
+                    },
+                    {
+                        "nombre": "Valor RMS",
+                        "descripcion": "Valor efectivo (equivalente DC)",
+                        "formula": "V_{rms} = \\frac{V_m}{\\sqrt{2}}",
+                        "unidad": "V"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Cálculo de parámetros",
+                        "enunciado": "v(t) = 10\\sin(377t + 30°) V. Calcular f, T, V_rms.",
+                        "solucion": [
+                            "ω = 377 rad/s",
+                            "f = ω/(2π) = 377/(2π) ≈ 60 Hz",
+                            "T = 1/f = 1/60 ≈ 16.67 ms",
+                            "V_rms = 10/√2 ≈ 7.07 V"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fasores-numeros-complejos",
+            "nombre": "Fasores y Números Complejos",
+            "descripcion": "Representación fasorial de señales senoidales y operaciones con números complejos.",
+            "ecuaciones": [
+                {
+                    "nombre": "Representación fasorial",
+                    "formula": "\\mathbf{V} = V_m \\angle \\phi = V_m e^{j\\phi}"
+                },
+                {
+                    "nombre": "Forma rectangular",
+                    "formula": "\\mathbf{V} = a + jb"
+                },
+                {
+                    "nombre": "Conversión polar a rectangular",
+                    "formula": "a = V_m \\cos\\phi, \\quad b = V_m \\sin\\phi"
+                },
+                {
+                    "nombre": "Conversión rectangular a polar",
+                    "formula": "V_m = \\sqrt{a^2 + b^2}, \\quad \\phi = \\arctan\\left(\\frac{b}{a}\\right)"
+                }
+            ],
+            "contenido": {
+                "operaciones_complejas": [
+                    {
+                        "operacion": "Suma",
+                        "metodo": "Sumar partes reales e imaginarias por separado",
+                        "ejemplo": "(3+j4) + (1-j2) = 4+j2"
+                    },
+                    {
+                        "operacion": "Multiplicación",
+                        "metodo": "Multiplicar magnitudes, sumar ángulos",
+                        "formula": "A\\angle\\alpha \\cdot B\\angle\\beta = AB\\angle(\\alpha+\\beta)"
+                    },
+                    {
+                        "operacion": "División",
+                        "metodo": "Dividir magnitudes, restar ángulos",
+                        "formula": "\\frac{A\\angle\\alpha}{B\\angle\\beta} = \\frac{A}{B}\\angle(\\alpha-\\beta)"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Conversión de formas",
+                        "enunciado": "Convertir 10∠30° a forma rectangular.",
+                        "solucion": [
+                            "a = 10cos(30°) = 10(0.866) = 8.66",
+                            "b = 10sin(30°) = 10(0.5) = 5",
+                            "Resultado: 8.66 + j5"
+                        ]
+                    },
+                    {
+                        "titulo": "Multiplicación de fasores",
+                        "enunciado": "(5∠45°) · (2∠30°)",
+                        "solucion": [
+                            "Magnitud: 5 × 2 = 10",
+                            "Ángulo: 45° + 30° = 75°",
+                            "Resultado: 10∠75°"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "impedancia-compleja",
+            "nombre": "Impedancia Compleja",
+            "descripcion": "Impedancia de resistencias, inductores y capacitores en el dominio de frecuencia.",
+            "ecuaciones": [
+                {
+                    "nombre": "Impedancia de resistencia",
+                    "formula": "\\mathbf{Z}_R = R"
+                },
+                {
+                    "nombre": "Impedancia de inductor",
+                    "formula": "\\mathbf{Z}_L = j\\omega L = jX_L"
+                },
+                {
+                    "nombre": "Reactancia inductiva",
+                    "formula": "X_L = \\omega L = 2\\pi f L"
+                },
+                {
+                    "nombre": "Impedancia de capacitor",
+                    "formula": "\\mathbf{Z}_C = \\frac{1}{j\\omega C} = -jX_C = \\frac{1}{j\\omega C}"
+                },
+                {
+                    "nombre": "Reactancia capacitiva",
+                    "formula": "X_C = \\frac{1}{\\omega C} = \\frac{1}{2\\pi f C}"
+                },
+                {
+                    "nombre": "Ley de Ohm en AC",
+                    "formula": "\\mathbf{V} = \\mathbf{I} \\mathbf{Z}"
+                }
+            ],
+            "contenido": {
+                "comportamiento_componentes": [
+                    {
+                        "componente": "Resistor",
+                        "impedancia": "Z_R = R",
+                        "fase": "0° (voltaje y corriente en fase)",
+                        "comportamiento": "Independiente de la frecuencia"
+                    },
+                    {
+                        "componente": "Inductor",
+                        "impedancia": "Z_L = jωL",
+                        "fase": "+90° (voltaje adelanta a corriente)",
+                        "comportamiento": "X_L aumenta con frecuencia"
+                    },
+                    {
+                        "componente": "Capacitor",
+                        "impedancia": "Z_C = 1/(jωC)",
+                        "fase": "-90° (voltaje retrasa a corriente)",
+                        "comportamiento": "X_C disminuye con frecuencia"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Cálculo de impedancia",
+                        "enunciado": "Inductor L=10mH a f=60Hz. Calcular Z_L.",
+                        "solucion": [
+                            "X_L = 2π(60)(0.01) = 3.77 Ω",
+                            "Z_L = j3.77 Ω = 3.77∠90° Ω"
+                        ]
+                    },
+                    {
+                        "titulo": "Circuito RLC serie",
+                        "enunciado": "R=100Ω, L=50mH, C=100μF a f=100Hz. Calcular Z_total.",
+                        "solucion": [
+                            "X_L = 2π(100)(0.05) = 31.4 Ω",
+                            "X_C = 1/(2π(100)(100×10⁻⁶)) = 15.9 Ω",
+                            "Z_total = R + j(X_L - X_C) = 100 + j(31.4-15.9)",
+                            "Z_total = 100 + j15.5 Ω = 101.2∠8.8° Ω"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "analisis-fasorial",
+            "nombre": "Análisis Fasorial de Circuitos",
+            "descripcion": "Aplicación de leyes de Kirchhoff y métodos de análisis en el dominio fasorial.",
+            "ecuaciones": [
+                {
+                    "nombre": "LCK en fasores",
+                    "formula": "\\sum \\mathbf{I}_k = 0"
+                },
+                {
+                    "nombre": "LVK en fasores",
+                    "formula": "\\sum \\mathbf{V}_k = 0"
+                },
+                {
+                    "nombre": "Divisor de voltaje en AC",
+                    "formula": "\\mathbf{V}_x = \\mathbf{V}_{total} \\cdot \\frac{\\mathbf{Z}_x}{\\mathbf{Z}_{total}}"
+                },
+                {
+                    "nombre": "Divisor de corriente en AC",
+                    "formula": "\\mathbf{I}_1 = \\mathbf{I}_{total} \\cdot \\frac{\\mathbf{Z}_2}{\\mathbf{Z}_1 + \\mathbf{Z}_2}"
+                }
+            ],
+            "contenido": {
+                "metodos": [
+                    {
+                        "nombre": "Análisis de nodos en AC",
+                        "descripcion": "Similar a DC pero usando impedancias complejas y fasores",
+                        "ecuacion": "\\sum \\frac{\\mathbf{V}_i - \\mathbf{V}_j}{\\mathbf{Z}_{ij}} = \\mathbf{I}_{fuentes}"
+                    },
+                    {
+                        "nombre": "Análisis de mallas en AC",
+                        "descripcion": "Similar a DC pero usando impedancias complejas y fasores",
+                        "ecuacion": "\\sum (\\mathbf{I}_i - \\mathbf{I}_j)\\mathbf{Z}_{ij} = \\mathbf{V}_{fuentes}"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Circuito RC serie",
+                        "enunciado": "Fuente v(t)=100√2 sin(377t) V, R=100Ω, C=100μF. Calcular i(t).",
+                        "solucion": [
+                            "V = 100∠0° V",
+                            "X_C = 1/(377×100×10⁻⁶) = 26.5 Ω",
+                            "Z = 100 - j26.5 = 103.5∠-14.9° Ω",
+                            "I = V/Z = 100∠0° / 103.5∠-14.9° = 0.966∠14.9° A",
+                            "i(t) = 0.966√2 sin(377t + 14.9°) A"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "filtros-rc-rl-rlc",
+            "nombre": "Filtros RC, RL y RLC",
+            "descripcion": "Diseño y análisis de filtros pasa-bajas, pasa-altas, pasa-banda y rechaza-banda.",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia de corte RC",
+                    "formula": "f_c = \\frac{1}{2\\pi RC}"
+                },
+                {
+                    "nombre": "Frecuencia de corte RL",
+                    "formula": "f_c = \\frac{R}{2\\pi L}"
+                },
+                {
+                    "nombre": "Frecuencia de resonancia RLC serie",
+                    "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}"
+                },
+                {
+                    "nombre": "Factor de calidad Q",
+                    "formula": "Q = \\frac{f_0}{BW} = \\frac{1}{R}\\sqrt{\\frac{L}{C}}"
+                },
+                {
+                    "nombre": "Ancho de banda",
+                    "formula": "BW = f_2 - f_1 = \\frac{f_0}{Q}"
+                }
+            ],
+            "contenido": {
+                "tipos_filtros": [
+                    {
+                        "tipo": "Pasa-Bajas (Low-Pass)",
+                        "descripcion": "Pasa frecuencias menores que f_c",
+                        "configuracion": "RC: salida en capacitor, RL: salida en resistor",
+                        "aplicaciones": "Eliminación de ruido de alta frecuencia"
+                    },
+                    {
+                        "tipo": "Pasa-Altas (High-Pass)",
+                        "descripcion": "Pasa frecuencias mayores que f_c",
+                        "configuracion": "RC: salida en resistor, RL: salida en inductor",
+                        "aplicaciones": "Eliminación de componente DC"
+                    },
+                    {
+                        "tipo": "Pasa-Banda (Band-Pass)",
+                        "descripcion": "Pasa frecuencias en un rango específico",
+                        "configuracion": "RLC serie o paralelo",
+                        "aplicaciones": "Sintonización de radio"
+                    },
+                    {
+                        "tipo": "Rechaza-Banda (Notch)",
+                        "descripcion": "Elimina una frecuencia específica",
+                        "configuracion": "RLC paralelo (tanque)",
+                        "aplicaciones": "Eliminación de interferencia 60Hz"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Diseño de filtro pasa-bajas RC",
+                        "enunciado": "Diseñar filtro pasa-bajas con f_c=1kHz usando R=1kΩ.",
+                        "solucion": [
+                            "f_c = 1/(2πRC)",
+                            "C = 1/(2πRf_c) = 1/(2π×1000×1000)",
+                            "C ≈ 159 nF"
+                        ]
+                    },
+                    {
+                        "titulo": "Cálculo de resonancia",
+                        "enunciado": "Circuito RLC serie con L=10mH, C=1μF. Calcular f_0.",
+                        "solucion": [
+                            "f_0 = 1/(2π√(LC))",
+                            "f_0 = 1/(2π√(0.01×0.000001))",
+                            "f_0 = 1/(2π×0.0001) ≈ 1592 Hz"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "diagramas-bode",
+            "nombre": "Diagramas de Bode",
+            "descripcion": "Representación gráfica de la respuesta en frecuencia (magnitud y fase).",
+            "ecuaciones": [
+                {
+                    "nombre": "Ganancia en decibeles",
+                    "formula": "A_{dB} = 20\\log_{10}|H(j\\omega)|"
+                },
+                {
+                    "nombre": "Función de transferencia RC pasa-bajas",
+                    "formula": "H(j\\omega) = \\frac{1}{1 + j\\omega RC}"
+                },
+                {
+                    "nombre": "Magnitud en dB (pasa-bajas)",
+                    "formula": "|H(j\\omega)|_{dB} = -10\\log_{10}(1 + (\\omega RC)^2)"
+                },
+                {
+                    "nombre": "Fase (pasa-bajas)",
+                    "formula": "\\angle H(j\\omega) = -\\arctan(\\omega RC)"
+                }
+            ],
+            "contenido": {
+                "caracteristicas": [
+                    {
+                        "concepto": "Escala logarítmica",
+                        "descripcion": "Eje de frecuencia en escala log, magnitud en dB"
+                    },
+                    {
+                        "concepto": "Pendiente de atenuación",
+                        "descripcion": "-20 dB/década por polo, +20 dB/década por cero"
+                    },
+                    {
+                        "concepto": "Frecuencia de corte",
+                        "descripcion": "Punto donde la ganancia cae -3dB (0.707 de valor máximo)"
+                    },
+                    {
+                        "concepto": "Fase",
+                        "descripcion": "Desplazamiento de fase vs frecuencia"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Análisis de Bode",
+                        "enunciado": "Filtro RC pasa-bajas con R=1kΩ, C=1μF. Calcular ganancia a f=100Hz y f=10kHz.",
+                        "solucion": [
+                            "f_c = 1/(2π×1000×1×10⁻⁶) ≈ 159 Hz",
+                            "A f=100Hz (< f_c): |H| ≈ 1 (0 dB)",
+                            "A f=10kHz (>> f_c): |H| ≈ f_c/f = 159/10000 = 0.0159",
+                            "Ganancia = 20log(0.0159) ≈ -36 dB"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "respuesta-transitoria",
+            "nombre": "Respuesta Transitoria vs Estado Estable",
+            "descripcion": "Diferencia entre respuesta transitoria y respuesta en régimen permanente.",
+            "ecuaciones": [
+                {
+                    "nombre": "Respuesta RC (carga)",
+                    "formula": "v_C(t) = V_S(1 - e^{-t/RC})"
+                },
+                {
+                    "nombre": "Constante de tiempo RC",
+                    "formula": "\\tau = RC"
+                },
+                {
+                    "nombre": "Respuesta RL (corriente)",
+                    "formula": "i_L(t) = \\frac{V_S}{R}(1 - e^{-tR/L})"
+                },
+                {
+                    "nombre": "Constante de tiempo RL",
+                    "formula": "\\tau = \\frac{L}{R}"
+                },
+                {
+                    "nombre": "Respuesta RLC (subamortiguado)",
+                    "formula": "i(t) = e^{-\\alpha t}(A\\cos(\\omega_d t) + B\\sin(\\omega_d t))"
+                }
+            ],
+            "contenido": {
+                "conceptos": [
+                    {
+                        "nombre": "Respuesta transitoria",
+                        "descripcion": "Comportamiento temporal inmediato después de un cambio (conmutación)",
+                        "duracion": "Dura aproximadamente 5τ (constantes de tiempo)",
+                        "componentes": "Respuesta natural + respuesta forzada"
+                    },
+                    {
+                        "nombre": "Estado estable",
+                        "descripcion": "Comportamiento después de que desaparece la transición",
+                        "duracion": "Permanente mientras las condiciones sean constantes",
+                        "analisis": "Se analiza en el dominio de frecuencia (fasores)"
+                    },
+                    {
+                        "nombre": "Tipos de respuesta RLC",
+                        "descripcion": "Subamortiguado, críticamente amortiguado, sobreamortiguado",
+                        "factor": "Determinado por el factor de amortiguamiento ζ"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Respuesta RC",
+                        "enunciado": "Circuito RC con R=10kΩ, C=100μF, V_S=10V. Calcular v_C después de 1s.",
+                        "solucion": [
+                            "τ = RC = 10000 × 100×10⁻⁶ = 1s",
+                            "v_C(1s) = 10(1 - e^{-1/1}) = 10(1 - 0.368)",
+                            "v_C(1s) ≈ 6.32 V"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "ejercicios": [
+        {
+            "numero": 8,
+            "titulo": "Parámetros de señales senoidales",
+            "descripcion": "Calcular parámetros (f, T, V_rms, φ) de señales AC dadas.",
+            "tipo": "practico",
+            "dificultad": "basico",
+            "tiempo_estimado": "45 minutos",
+            "objetivos": [
+                "Identificar amplitud, frecuencia y fase de señales",
+                "Convertir entre diferentes representaciones",
+                "Calcular valores RMS y promedio"
+            ]
+        },
+        {
+            "numero": 9,
+            "titulo": "Operaciones con fasores",
+            "descripcion": "Realizar operaciones aritméticas con números complejos y fasores.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "60 minutos",
+            "objetivos": [
+                "Convertir entre forma polar y rectangular",
+                "Sumar, restar, multiplicar y dividir fasores",
+                "Aplicar operaciones a circuitos AC"
+            ]
+        },
+        {
+            "numero": 10,
+            "titulo": "Análisis de circuitos en AC",
+            "descripcion": "Resolver circuitos RLC usando análisis fasorial (nodos o mallas).",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "120 minutos",
+            "objetivos": [
+                "Calcular impedancias de componentes",
+                "Aplicar leyes de Kirchhoff en el dominio fasorial",
+                "Resolver sistemas de ecuaciones complejas"
+            ]
+        },
+        {
+            "numero": 11,
+            "titulo": "Diseño de filtros",
+            "descripcion": "Diseñar filtros RC, RL y RLC para especificaciones dadas.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "90 minutos",
+            "objetivos": [
+                "Calcular componentes para frecuencia de corte deseada",
+                "Analizar respuesta en frecuencia",
+                "Dibujar diagramas de Bode aproximados"
+            ]
+        }
+    ],
+    "evaluacion": {
+        "criterios": [
+            "Cálculo correcto de parámetros de señales",
+            "Manejo adecuado de números complejos",
+            "Aplicación correcta de impedancias",
+            "Diseño de filtros según especificaciones"
+        ],
+        "rubrica": {
+            "excelente": "Resuelve todos los problemas con procedimiento claro, resultados exactos y comprensión profunda de conceptos.",
+            "bueno": "Resuelve la mayoría con errores menores de cálculo pero comprensión sólida de conceptos.",
+            "suficiente": "Comprende los conceptos básicos pero tiene dificultades con operaciones complejas.",
+            "insuficiente": "No logra aplicar los conceptos de análisis en AC correctamente."
+        }
+    },
+    "recursos_adicionales": {
+        "simuladores": [
+            {
+                "nombre": "Generador de diagramas de Bode",
+                "descripcion": "Herramienta interactiva para visualizar respuesta en frecuencia",
+                "ruta": "/simuladores/bode"
+            },
+            {
+                "nombre": "Calculadora de impedancia",
+                "descripcion": "Calculadora interactiva de impedancia compleja",
+                "ruta": "/simuladores/impedancia"
+            }
+        ],
+        "lecturas": [
+            "Boylestad & Nashelsky - Capítulo de análisis en AC",
+            "Alexander & Sadiku - Circuitos eléctricos (capítulo de fasores)"
+        ]
+    },
+    "referencias": [
+        {
+            "tipo": "libro",
+            "titulo": "Electrónica: Teoría de Circuitos",
+            "autores": ["Boylestad", "Nashelsky"],
+            "capitulo": "Análisis en corriente alterna"
+        },
+        {
+            "tipo": "libro",
+            "titulo": "Fundamentals of Electric Circuits",
+            "autores": ["Alexander", "Sadiku"],
+            "capitulo": "Sinusoidal Steady-State Analysis"
+        }
+    ],
+    "notas_profesor": {
+        "enfasis": [
+            "Importancia de la notación fasorial para simplificar análisis AC",
+            "Relación entre respuesta transitoria y estado estable",
+            "Aplicaciones prácticas de filtros en sistemas reales"
+        ],
+        "dificultades_comunes": [
+            "Confusión entre tiempo y frecuencia",
+            "Errores en conversión de formas complejas",
+            "Olvidar unidades angulares (grados vs radianes)"
+        ],
+        "sugerencias": [
+            "Usar simuladores para visualizar respuesta en frecuencia",
+            "Practicar extensivamente con números complejos",
+            "Relacionar con aplicaciones prácticas (audio, RF)"
+        ]
+    }
+}

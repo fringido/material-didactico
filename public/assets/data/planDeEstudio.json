@@ -50,6 +50,7 @@
             "numero": 1,
             "titulo": "Introducción a la Electrónica Analógica",
             "semanas": "1-2",
+            "data_file": "modulo-1/unidad-1.json",
             "temas": [
               "Conceptos básicos de electrónica analógica",
               "Características y propiedades de los componentes electrónicos",
@@ -65,6 +66,7 @@
             "numero": 2,
             "titulo": "Análisis de Circuitos en DC",
             "semanas": "3-4",
+            "data_file": "modulo-1/unidad-2.json",
             "temas": [
               "Leyes y teoremas fundamentales (Ohm, Kirchhoff)",
               "Resistencia equivalente en serie y paralelo",
@@ -86,6 +88,7 @@
             "numero": 3,
             "titulo": "Análisis de Circuitos en AC",
             "semanas": "5-6",
+            "data_file": "modulo-1/unidad-3.json",
             "temas": [
               "Conceptos de señales y sistemas en AC",
               "Filtros pasivos (RC, RL, RLC)",
@@ -111,6 +114,7 @@
             "numero": 4,
             "titulo": "Amplificadores y Etapas de Potencia",
             "semanas": "7-8",
+            "data_file": "modulo-2/unidad-4.json",
             "temas": [
               "Clasificación de amplificadores: clase A, B, AB y C",
               "Configuraciones: emisor común, base común, colector común",
@@ -128,8 +132,9 @@
             "numero": 5,
             "titulo": "Osciladores y Generadores de Señales",
             "semanas": "9-10",
+            "data_file": "modulo-2/unidad-5.json",
             "temas": [
-              "Osciladores LC y RC",
+              "Osciladores LC e RC",
               "Osciladores de cristal y PLL",
               "Generadores de señales senoidales y no senoidales",
               "Estabilidad y ajuste de frecuencia"
@@ -144,6 +149,7 @@
             "numero": 6,
             "titulo": "Amplificadores Operacionales",
             "semanas": "11-12",
+            "data_file": "modulo-2/unidad-6.json",
             "temas": [
               "Características del amplificador operacional ideal",
               "Configuraciones básicas: inversor, no inversor, sumador",

@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "modulo": 2,
+    "unidad": 4,
+    "titulo": "Amplificadores y Etapas de Potencia",
+    "semanas": "7-8",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-04",
+    "descripcion": "Estudio de las configuraciones de transistores BJT y MOSFET para amplificación de pequeña y gran señal."
+  },
+  "objetivos": [
+    "Clasificar amplificadores según su punto de operación (A, B, AB, C).",
+    "Analizar configuraciones BJT: Emisor Común, Base Común y Colector Común.",
+    "Diseñar etapas de potencia considerando eficiencia y distorsión.",
+    "Comprender el acoplamiento entre etapas amplificadoras."
+  ],
+  "temas": [
+    {
+      "id": "clases-amplificadores",
+      "nombre": "Clases de Amplificación",
+      "descripcion": "Clasificación por eficiencia y conducción.",
+      "contenido": {
+        "tipos": ["Clase A", "Clase B", "Clase AB", "Clase C"]
+      }
+    },
+    {
+      "id": "configuraciones-bjt",
+      "nombre": "Configuraciones BJT",
+      "descripcion": "Análisis de ganancia e impedancia.",
+      "contenido": {
+        "configuraciones": ["Emisor Común", "Colector Común", "Base Común"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "id": "componentes-pasivos",
+  "nombre": "Componentes Pasivos: R, L, C",
+  "descripcion": "Resistencias, capacitores e inductores: identificación, simbología, propiedades y aplicaciones en circuitos.",
+  "introduccion": "Los componentes pasivos son los bloques básicos de cualquier circuito analógico. No introducen energía activa ni amplifican señales, sino que se limitan a oponerse al flujo de corriente (resistores) o a almacenar energía de forma temporal en campos eléctricos (capacitores) o magnéticos (inductores). Aprender a identificarlos, leer sus códigos de valores e interpretar sus hojas de datos es clave para todo ingeniero o técnico en electrónica.",
+  "metadata": {
+    "clase": 2,
+    "orden": 1,
+    "titulo": "Componentes Pasivos: R, L, C"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Resistores y Código de Colores",
+      "descripcion": "Dispositivos diseñados para introducir una resistencia eléctrica específica en un circuito. El código de colores permite leer su valor mediante 4 o 5 bandas impresas en su cuerpo, indicando dígitos, multiplicador y tolerancia.",
+      "bandas": "Banda 1 y 2: Dígitos. Banda 3: Multiplicador. Banda 4: Tolerancia (ej. Dorado = 5%, Plateado = 10%)."
+    },
+    {
+      "nombre": "Capacitores y Codificación",
+      "descripcion": "Dispositivos que almacenan carga eléctrica. Su codificación suele ser de tres dígitos (ej. 104 = 10 seguido de 4 ceros en picofaradios = 100,000 pF = 100 nF = 0.1 \u03bcF). Existen capacitores polarizados (electrolíticos) y no polarizados (cerámicos, poliéster).",
+      "polaridad": "Los capacitores electrolíticos tienen polaridad obligatoria. Conectarlos al revés puede destruirlos físicamente."
+    },
+    {
+      "nombre": "Inductores y Autoinducción",
+      "descripcion": "Bobinas de alambre conductor que se oponen a cambios rápidos de corriente mediante la inducción de una fuerza electromotriz contraria. Su valor se mide en Henrios (H), usualmente milihenrios (mH) o microhenrios (\u03bcH).",
+      "aplicacion": "Filtrado en fuentes de alimentación, sintonización de radio, acoplamiento magnético (transformadores)."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Fórmula del código de colores (4 bandas)",
+      "katex": "R = (\\text{Banda}_1 \\cdot 10 + \\text{Banda}_2) \\cdot 10^{\\text{Multiplicador}} \\, \\Omega \\quad [\\pm \\text{Tolerancia}\\%]",
+      "derivacion": "Lectura estándar para resistencias axiales comunes."
+    },
+    {
+      "titulo": "Reactancia Capacitiva",
+      "katex": "X_C = \\frac{1}{2\\pi f C} \\quad [\\Omega]",
+      "derivacion": "La oposición que presenta un capacitor ideal al paso de corriente alterna de frecuencia f. A mayor frecuencia, menor reactancia."
+    },
+    {
+      "titulo": "Reactancia Inductiva",
+      "katex": "X_L = 2\\pi f L \\quad [\\Omega]",
+      "derivacion": "La oposición que presenta un inductor ideal al paso de corriente alterna de frecuencia f. A mayor frecuencia, mayor reactancia."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Reactancia de Capacitor e Inductor vs Frecuencia",
+    "descripcion": "Impedancia efectiva de un capacitor de 10\u03bcF y un inductor de 10mH en función de la frecuencia.",
+    "data": {
+      "labels": [10, 50, 100, 200, 500, 1000, 2000, 5000],
+      "datasets": [
+        {
+          "label": "Reactancia Capacitiva X_C (Ohms)",
+          "data": [1591.5, 318.3, 159.2, 79.6, 31.8, 15.9, 8.0, 3.2],
+          "borderColor": "#ef4444",
+          "tension": 0.2
+        },
+        {
+          "label": "Reactancia Inductiva X_L (Ohms)",
+          "data": [0.63, 3.14, 6.28, 12.57, 31.42, 62.83, 125.66, 314.16],
+          "borderColor": "#3b82f6",
+          "tension": 0.2
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Frecuencia (Hz)",
+      "yLabel": "Reactancia (Ohms)"
+    }
+  },
+  "secciones": [
+    {
+      "id": "color-codes",
+      "titulo": "Cómo Leer Resistencias",
+      "contenido": "Los colores representan números: Negro=0, Marrón=1, Rojo=2, Naranja=3, Amarillo=4, Verde=5, Azul=6, Violeta=7, Gris=8, Blanco=9. Por ejemplo, una resistencia con bandas Marrón-Negro-Rojo-Dorado es: 1 (Marrón), 0 (Negro), multiplicador 10^2 (Rojo), tolerancia 5% (Dorado) = 10 x 100 = 1000 Ohms = 1 k\u03a9 con +/- 5%."
+    },
+    {
+      "id": "capacitores-codes",
+      "titulo": "Identificación de Capacitores",
+      "contenido": "En capacitores cerámicos pequeños, los dos primeros dígitos indican el valor y el tercer dígito indica el multiplicador (número de ceros a agregar), todo en picofaradios (pF). Por ejemplo: 103 = 10,000 pF = 10 nF = 0.01 \u03bcF. 472 = 4,700 pF = 4.7 nF. La última letra suele ser la tolerancia (J = 5%, K = 10%, M = 20%)."
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-colores-1",
+      "titulo": "Lectura de Resistencia",
+      "descripcion": "Determine el valor de una resistencia con las siguientes bandas de color ordenadas de izquierda a derecha: Amarillo, Violeta, Naranja, Dorado.",
+      "solucion": "Amarillo = 4, Violeta = 7, Naranja = multiplicador $\\times 10^3$ ($1000$), Dorado = tolerancia $\\pm 5\\%$. Por lo tanto, el valor es $47 \\times 10^3\\,\\Omega = 47\\,\\text{k}\\Omega \\pm 5\\%$.",
+      "explicacion": "Mapeamos cada color a su valor correspondiente en el código estándar de 4 bandas.",
+      "tiempo_minutos": 3,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-capacitor-1",
+      "titulo": "Conversión de código de capacitor",
+      "descripcion": "Un capacitor tiene impreso el código **224K**. ¿Cuál es su capacitancia en picofaradios, nanofaradios y microfaradios? ¿Qué significa la K?",
+      "solucion": "$224 \\rightarrow 22 \\times 10^4\\,\\text{pF} = 220,000\\,\\text{pF} = 220\\,\\text{nF} = 0.22\\,\\mu\\text{F}$. La letra **K** representa una tolerancia del $\\pm 10\\%$.",
+      "explicacion": "22 es la base, 4 indica 4 ceros adicionales en pF. La tolerancia K está normada internacionalmente como 10%.",
+      "tiempo_minutos": 3,
+      "dificultad": "basico"
+    }
+  ],
+  "enlaces": [
+    {"ruta": "/clase/2", "texto": "Volver a Clase 2"},
+    {"ruta": "/clase/2/tema/componentes-activos", "texto": "Siguiente: Componentes Activos →"}
+  ]
+}

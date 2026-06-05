@@ -1,116 +1,150 @@
-<div class="simulator-container">
-  <div class="simulator-header">
-    <h3 class="simulator-title">🔌 {{ simulacion.titulo || 'Simulador Interactivo' }}</h3>
-    <p class="simulator-desc" *ngIf="simulacion.descripcion">{{ simulacion.descripcion }}</p>
+<div class="simulator-card card">
+  <div class="simulator-card__header">
+    <h3 class="simulator-card__title">{{ simulacion.titulo }}</h3>
+    <p class="simulator-card__desc">{{ simulacion.descripcion }}</p>
   </div>
 
-  <div class="simulator-body">
-    <div class="workspace-grid">
+  <div class="simulator-card__content">
+    
+    <!-- LABORATORIOS ESPECIALIZADOS (CASOS ESPECÍFICOS) -->
+    @if (simulacion.tipo === 'kirchhoff-lab') {
+      <app-kirchhoff-lab />
+    } @else if (simulacion.tipo === 'ohm-law-lab') {
+      <app-ohm-law-lab />
+    } @else if (simulacion.tipo === 'topology-lab') {
+      <app-topology-lab />
+    } @else if (simulacion.tipo === 'matrix_visualizer' && simulacion.matriz_dinamica) {
+      <app-matrix-visualizer [matriz]="simulacion.matriz_dinamica" [controlValues]="controlValues()" />
+    } @else {
+      <!-- SIMULADOR GENÉRICO BASADO EN DATOS -->
+      <div class="simulator-layout">
+        <!-- Diagrama / Visualización -->
+        <div class="simulator-viz">
+          <div class="diagram-wrapper" [style.width.px]="simulacion.ancho" [style.height.px]="simulacion.alto">
+            <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet" class="diagram-svg">
+              <!-- Grid Background -->
+              <defs>
+                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--border-color)" stroke-width="0.5" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#grid)" opacity="0.2" />
 
-      <!-- Diagrama SVG Dinámico -->
-      <div class="diagram-panel">
-        <h4 class="panel-subtitle">Diagrama del Circuito</h4>
+              <g class="diagram-elements">
+                @for (el of simulacion.diagrama; track $index) {
+                  <ng-container [ngSwitch]="el.tipo">
+                    <!-- Resistencia -->
+                    <g *ngSwitchCase="'resistencia'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <path d="M0,10 L10,10 L12,0 L16,20 L20,0 L24,20 L28,0 L32,20 L36,0 L40,10 L50,10" fill="none" stroke="var(--color-primary)" stroke-width="2" />
+                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
+                    </g>
+                    <!-- Capacitor -->
+                    <g *ngSwitchCase="'capacitor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <path d="M0,10 L22,10 M28,10 L50,10 M22,0 L22,20 M28,0 L28,20" fill="none" stroke="var(--color-primary)" stroke-width="2" />
+                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
+                    </g>
+                    <!-- Inductor -->
+                    <g *ngSwitchCase="'inductor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <path d="M0,10 L10,10 C10,10 10,0 15,0 C20,0 20,10 20,10 C20,10 20,0 25,0 C30,0 30,10 30,10 C30,10 30,0 35,0 C40,0 40,10 40,10 L50,10" fill="none" stroke="var(--color-primary)" stroke-width="2" />
+                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
+                    </g>
+                    <!-- Fuente DC -->
+                    <g *ngSwitchCase="'fuente_dc'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <circle cx="0" cy="0" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2" />
+                      <path d="M-5,0 L5,0 M0,-5 L0,5" stroke="var(--color-primary)" stroke-width="2" />
+                      <text x="20" y="5" class="diagram-label">{{ el.valor }}</text>
+                    </g>
+                    <!-- Fuente AC -->
+                    <g *ngSwitchCase="'fuente_ac'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <circle cx="0" cy="0" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2" />
+                      <path d="M-8,0 Q-4,-8 0,0 T8,0" stroke="var(--color-primary)" stroke-width="2" fill="none" />
+                      <text x="20" y="5" class="diagram-label">{{ el.valor }}</text>
+                    </g>
+                    <!-- Tierra -->
+                    <g *ngSwitchCase="'tierra'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <path d="M0,0 L0,15 M-10,15 L10,15 M-7,20 L7,20 M-4,25 L4,25" fill="none" stroke="var(--text-secondary)" stroke-width="2" />
+                    </g>
+                    <!-- Línea -->
+                    <line *ngSwitchCase="'linea'" [attr.x1]="el.x1" [attr.y1]="el.y1" [attr.x2]="el.x2" [attr.y2]="el.y2" stroke="var(--text-secondary)" stroke-width="1.5" />
+                    <!-- Nodo -->
+                    <g *ngSwitchCase="'nodo'">
+                      <circle [attr.cx]="el.x || 0" [attr.cy]="el.y || 0" r="4" fill="var(--color-primary)" />
+                      <text [attr.x]="(el.x || 0) + 8" [attr.y]="(el.y || 0) - 8" class="diagram-label diagram-label--important">{{ el.valor }}</text>
+                    </g>
+                  </ng-container>
+                }
+              </g>
+            </svg>
+          </div>
 
-        <div class="svg-diagram-wrapper">
-          <svg [attr.viewBox]="'0 0 ' + (simulacion.ancho || 240) + ' ' + (simulacion.alto || 200)" class="circuit-svg">
-            <ng-container *ngFor="let el of simulacion.diagrama">
+          <!-- Muestras de Ondas si existen -->
+          @if (simulacion.graficas?.length) {
+            <div class="wave-viewer">
+              <svg width="300" height="100" class="wave-svg">
+                <line x1="0" y1="50" x2="300" y2="50" stroke="var(--border-color)" stroke-dasharray="4" />
+                @for (g of simulacion.graficas; track g.id) {
+                  <path [attr.d]="generateWavePath(g)" fill="none" [attr.stroke]="g.color" stroke-width="2" />
+                }
+              </svg>
+              <div class="wave-legend">
+                @for (g of simulacion.graficas; track g.id) {
+                  <div class="legend-item">
+                    <span class="legend-color" [style.background]="g.color"></span>
+                    <span class="legend-label">{{ g.label }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
 
-              <!-- Líneas genéricas -->
-              <line *ngIf="el.tipo === 'linea'" [attr.x1]="el.x1" [attr.y1]="el.y1" [attr.x2]="el.x2" [attr.y2]="el.y2" stroke="currentColor" stroke-width="2"/>
+        <!-- Controles y Métricas -->
+        <div class="simulator-sidebar">
+          <div class="controls-section">
+            <h4 class="sidebar-title">Parámetros</h4>
+            @for (ctrl of simulacion.controles; track ctrl.id) {
+              <div class="control-group">
+                <div class="control-label">
+                  <span>{{ ctrl.label }}</span>
+                  <span class="control-value">{{ controlValues()[ctrl.id] }}{{ ctrl.unidad }}</span>
+                </div>
+                <input type="range" 
+                       [min]="ctrl.min" 
+                       [max]="ctrl.max" 
+                       [step]="ctrl.step || 1" 
+                       [value]="controlValues()[ctrl.id]"
+                       (input)="updateControl(ctrl.id, $any($event.target).value)"
+                       class="slider">
+              </div>
+            }
+          </div>
 
-              <!-- Fuente AC -->
-              <ng-container *ngIf="el.tipo === 'fuente_ac'">
-                <circle [attr.cx]="el.x" [attr.cy]="el.y" r="16" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
-                <path [attr.d]="'M ' + (el.x! - 8) + ' ' + el.y + ' Q ' + (el.x! - 4) + ' ' + (el.y! - 8) + ' ' + el.x + ' ' + el.y + ' T ' + (el.x! + 8) + ' ' + el.y" fill="none" stroke="currentColor" stroke-width="2"/>
-                <line [attr.x1]="el.x" [attr.y1]="el.y! - 16" [attr.x2]="el.x" [attr.y2]="el.y! - 70" stroke="currentColor" stroke-width="2"/>
-                <line [attr.x1]="el.x" [attr.y1]="el.y! + 16" [attr.x2]="el.x" [attr.y2]="el.y! + 70" stroke="currentColor" stroke-width="2"/>
-              </ng-container>
-
-              <!-- Resistencia -->
-              <ng-container *ngIf="el.tipo === 'resistencia'">
-                <rect [attr.x]="el.x" [attr.y]="el.y" width="20" height="40" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
-                <line [attr.x1]="el.x! + 10" [attr.y1]="el.y! - 30" [attr.x2]="el.x! + 10" [attr.y2]="el.y" stroke="currentColor" stroke-width="2"/>
-                <line [attr.x1]="el.x! + 10" [attr.y1]="el.y! + 40" [attr.x2]="el.x! + 10" [attr.y2]="el.y! + 70" stroke="currentColor" stroke-width="2"/>
-                <text *ngIf="el.id" [attr.x]="el.x! - 10" [attr.y]="el.y! + 25" fill="currentColor" font-size="10" font-weight="bold">{{ el.id }}</text>
-              </ng-container>
-
-              <!-- Diodo -->
-              <ng-container *ngIf="el.tipo === 'diodo'">
-                <polygon [attr.points]="el.x + ',' + el.y + ' ' + el.x + ',' + (el.y! + 20) + ' ' + (el.x! + 15) + ',' + (el.y! + 10)" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0.3"/>
-                <line [attr.x1]="el.x! + 15" [attr.y1]="el.y" [attr.x2]="el.x! + 15" [attr.y2]="el.y! + 20" stroke="currentColor" stroke-width="3"/>
-                <text *ngIf="el.id" [attr.x]="el.x! + 8" [attr.y]="el.y! + 32" fill="#EF4444" font-size="10" font-weight="bold" text-anchor="middle">{{ el.id }}</text>
-              </ng-container>
-
-              <!-- Nodo -->
-              <ng-container *ngIf="el.tipo === 'nodo'">
-                <circle [attr.cx]="el.x" [attr.cy]="el.y" r="4" fill="#34D399"/>
-                <text *ngIf="el.valor" [attr.x]="el.x! + 8" [attr.y]="el.y! - 8" fill="#34D399" font-size="10" font-weight="bold">{{ el.valor }}</text>
-              </ng-container>
-
-              <!-- Tierra -->
-              <ng-container *ngIf="el.tipo === 'tierra'">
-                <line [attr.x1]="el.x" [attr.y1]="el.y" [attr.x2]="el.x" [attr.y2]="el.y! + 10" stroke="currentColor" stroke-width="2"/>
-                <line [attr.x1]="el.x! - 12" [attr.y1]="el.y! + 10" [attr.x2]="el.x! + 12" [attr.y2]="el.y! + 10" stroke="currentColor" stroke-width="3"/>
-                <line [attr.x1]="el.x! - 6" [attr.y1]="el.y! + 15" [attr.x2]="el.x! + 6" [attr.y2]="el.y! + 15" stroke="currentColor" stroke-width="2"/>
-              </ng-container>
-
-            </ng-container>
-          </svg>
+          <div class="metrics-section">
+            <h4 class="sidebar-title">Resultados</h4>
+            <div class="metrics-grid">
+              @for (m of metricasEvaluadas(); track m.label) {
+                <div class="metric-card">
+                  <p class="metric-label">{{ m.label }}</p>
+                  <p class="metric-value">{{ m.valorCalculado | number:'1.1-2' }}<small>{{ m.unidad }}</small></p>
+                  @if (m.formula_katex) {
+                    <div class="metric-formula" [appKatex]="m.formula_katex"></div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
         </div>
       </div>
+    }
 
-      <!-- Controles -->
-      <div class="controls-panel">
-        <h4 class="panel-subtitle">Ajustar Parámetros</h4>
+  </div>
 
-        <div class="control-group" *ngFor="let ctrl of simulacion.controles">
-          <label class="control-label" [attr.for]="'ctrl-' + ctrl.id">{{ ctrl.label }}: <span class="control-value">{{ controlValues()[ctrl.id] }} {{ ctrl.unidad || '' }}</span></label>
-            <input [id]="'ctrl-' + ctrl.id" type="range"
-             title="{{ ctrl.label }}"
-                 [min]="ctrl.min"
-                 [max]="ctrl.max"
-                 [step]="ctrl.step"
-                 [value]="controlValues()[ctrl.id]"
-                 (input)="updateControl(ctrl.id, $any($event.target).value)"
-                 class="control-slider">
-        </div>
-
-        <button (click)="togglePlay()" class="btn-play mt-4" *ngIf="simulacion.graficas && simulacion.graficas.length > 0">
-          {{ isPlaying() ? '⏸ Pausar Animación' : '▶ Reproducir Animación' }}
-        </button>
-      </div>
+  <div class="simulator-card__footer">
+    <div class="flex items-center gap-2">
+      <button class="btn btn--ghost btn--sm" (click)="togglePlay()">
+        {{ isPlaying() ? '⏸ Pausar' : '▶️ Reanudar' }}
+      </button>
+      <span class="text-xs text-secondary">Animación de tiempo real</span>
     </div>
-
-    <!-- Gráficas Animadas -->
-    <div class="waves-panel" *ngIf="simulacion.graficas && simulacion.graficas.length > 0">
-      <h4 class="panel-subtitle text-center">Formas de Onda</h4>
-      <div class="waves-grid">
-        <div class="wave-box" *ngFor="let g of simulacion.graficas">
-          <span class="wave-box__tag" [style.backgroundColor]="g.color + '22'" [style.color]="g.color">{{ g.label }}</span>
-          <svg class="wave-svg" viewBox="0 0 300 100">
-            <line x1="0" y1="50" x2="300" y2="50" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
-            <path [attr.d]="generateWavePath(g)" fill="none" [attr.stroke]="g.color" stroke-width="2"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- Métricas -->
-    <div class="metrics-panel" *ngIf="simulacion.metricas && simulacion.metricas.length > 0">
-      <h4 class="panel-subtitle">Métricas Calculadas</h4>
-      <div class="metrics-grid">
-        <div class="metric-card" *ngFor="let m of metricasEvaluadas()">
-          <p class="metric-label">{{ m.label }}</p>
-          <p class="metric-value">{{ m.valorCalculado.toFixed(2) }} {{ m.unidad || '' }}</p>
-          <div class="metric-formula" [appKatex]="m.formula_katex"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Matriz Dinámica -->
-    <div class="matrix-panel-wrapper" *ngIf="simulacion.matriz_dinamica">
-      <app-matrix-visualizer [matriz]="simulacion.matriz_dinamica" [controlValues]="controlValues()"></app-matrix-visualizer>
-    </div>
-
   </div>
 </div>

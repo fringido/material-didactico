@@ -1,0 +1,232 @@
+{
+  "id": "respuesta-transitoria",
+  "nombre": "Respuesta Transitoria y Estado Estable",
+  "descripcion": "Análisis del comportamiento temporal de circuitos RC y RL ante escalones de voltaje. Constante de tiempo, carga/descarga de capacitores e inductores, y convergencia al estado estable.",
+  "introduccion": "Cuando se aplica un cambio abrupto (escalón) a un circuito que contiene elementos reactivos (C o L), el voltaje y la corriente no cambian instantáneamente sino que evolucionan siguiendo una función exponencial. Este comportamiento transitorio es crítico en electrónica digital (velocidad de los circuitos), en fuentes de poder (tiempo de arranque), en convertidores DC-DC y en sistemas de control. La constante de tiempo τ (tau) determina la rapidez de esta transición.",
+  "metadata": {
+    "clase": 6,
+    "orden": 2,
+    "titulo": "Respuesta Transitoria y Estado Estable"
+  },
+  "simulacion_dinamica": {
+    "tipo": "rc_transient",
+    "titulo": "Laboratorio: Respuesta Transitoria RC",
+    "descripcion": "Observa cómo varían el voltaje y la corriente al cargar un capacitor. Cambia R y C para ver el efecto en la constante de tiempo τ.",
+    "ancho": 300,
+    "alto": 220,
+    "diagrama": [
+      { "tipo": "fuente_dc", "x": 30, "y": 100, "valor": "Vs" },
+      { "tipo": "linea", "x1": 30, "y1": 30, "x2": 80, "y2": 30 },
+      { "tipo": "resistencia", "x": 80, "y": 20, "id": "R", "valor": "R" },
+      { "tipo": "linea", "x1": 130, "y1": 30, "x2": 180, "y2": 30 },
+      { "tipo": "capacitor", "x": 180, "y": 30, "id": "C", "valor": "C" },
+      { "tipo": "linea", "x1": 180, "y1": 80, "x2": 180, "y2": 150 },
+      { "tipo": "tierra", "x": 180, "y": 150 },
+      { "tipo": "nodo", "x": 180, "y": 30, "valor": "Vc" }
+    ],
+    "controles": [
+      { "id": "vs", "label": "Voltaje Fuente (Vs)", "min": 1, "max": 20, "step": 1, "default": 10, "unidad": "V" },
+      { "id": "r", "label": "Resistencia (R)", "min": 100, "max": 10000, "step": 100, "default": 1000, "unidad": "Ω" },
+      { "id": "c", "label": "Capacitancia (C)", "min": 1, "max": 1000, "step": 10, "default": 100, "unidad": "µF" }
+    ],
+    "metricas": [
+      { "label": "Constante de Tiempo (τ)", "formula_katex": "\\tau = R \\cdot C", "calculo": "(r * c) / 1000", "unidad": "ms" },
+      { "label": "Tiempo Estable (5τ)", "formula_katex": "5\\tau", "calculo": "5 * (r * c) / 1000", "unidad": "ms" },
+      { "label": "Voltaje Final", "formula_katex": "V_f = V_s", "calculo": "vs", "unidad": "V" }
+    ],
+    "graficas": [
+      { "id": "vc_wave", "label": "Voltaje Capacitor Vc(t)", "color": "#6366f1", "calculo_y": "vs * (1 - Math.exp(-x / (r * c / 1000000)))" },
+      { "id": "ic_wave", "label": "Corriente Ic(t)", "color": "#ef4444", "calculo_y": "(vs / r) * Math.exp(-x / (r * c / 1000000)) * 100" }
+    ]
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Respuesta Transitoria",
+      "descripcion": "La evolución temporal de voltajes y corrientes desde un estado inicial hasta el estado final, después de un cambio en el circuito. Es la solución homogénea de la ecuación diferencial del circuito.",
+      "principio_fisico": "El capacitor no puede cambiar su voltaje instantáneamente (requiere energía finita). El inductor no puede cambiar su corriente instantáneamente.",
+      "cuando_usarlo": "Al analizar el encendido/apagado de fuentes, el inicio de comunicaciones, el tiempo de carga de baterías."
+    },
+    {
+      "nombre": "Constante de Tiempo τ (tau)",
+      "descripcion": "El parámetro que determina la velocidad de la respuesta transitoria. Tiene unidades de segundos. Después de 1τ el sistema ha completado el 63.2% de su transición. Después de 5τ ha completado el 99.3% (se considera que alcanzó el estado estable).",
+      "para_RC": "τ = RC [segundos]",
+      "para_RL": "τ = L/R [segundos]",
+      "valores_clave": [
+        {"tiempo": "1τ", "porcentaje": "63.2% del valor final"},
+        {"tiempo": "2τ", "porcentaje": "86.5%"},
+        {"tiempo": "3τ", "porcentaje": "95.0%"},
+        {"tiempo": "5τ", "porcentaje": "99.3% (estado estable práctico)"}
+      ]
+    },
+    {
+      "nombre": "Estado Inicial",
+      "descripcion": "Las condiciones del circuito ANTES del cambio. Para un capacitor: V_C(0⁻) = voltaje inicial. Para un inductor: I_L(0⁻) = corriente inicial. Estas condiciones definen el punto de partida de la respuesta transitoria.",
+      "cuando_usarlo": "Siempre hay que determinar las condiciones iniciales antes de resolver la respuesta transitoria."
+    },
+    {
+      "nombre": "Estado Estable (Régimen Permanente)",
+      "descripcion": "El estado que alcanza el circuito después de un tiempo largo (t → ∞). En DC, el capacitor actúa como circuito abierto (I_C = 0) y el inductor como cortocircuito (V_L = 0).",
+      "cuando_usarlo": "Calcular el estado estable primero (usando análisis DC) para conocer el valor final de la transición."
+    },
+    {
+      "nombre": "Respuesta Completa",
+      "descripcion": "La suma de la respuesta transitoria (que decae) y la respuesta de estado estable (que permanece): y(t) = y_transitoria(t) + y_estable. Para un circuito de primer orden lineal: y(t) = (y₀ - y_∞)·e^(-t/τ) + y_∞.",
+      "cuando_usarlo": "Para obtener la expresión completa de voltaje o corriente en función del tiempo."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Voltaje de carga del capacitor (escalón)",
+      "katex": "v_C(t) = V_f + (V_0 - V_f)e^{-t/\\tau}",
+      "derivacion": "Donde V_f es el valor final (estado estable), V_0 es el valor inicial y τ = RC. Esta fórmula es universal para circuitos RC de primer orden.",
+      "variables": [
+        {"simbolo": "V_f", "nombre": "Voltaje final (∞)", "unidad": "V"},
+        {"simbolo": "V_0", "nombre": "Voltaje inicial", "unidad": "V"},
+        {"simbolo": "\\tau", "nombre": "Constante de tiempo RC", "unidad": "s"}
+      ]
+    },
+    {
+      "titulo": "Carga desde cero (caso especial)",
+      "katex": "v_C(t) = V_S\\left(1 - e^{-t/RC}\\right)",
+      "derivacion": "Caso especial de V_0 = 0 y V_f = V_S. El capacitor carga desde 0 hasta V_S."
+    },
+    {
+      "titulo": "Descarga del capacitor",
+      "katex": "v_C(t) = V_0\\,e^{-t/RC}",
+      "derivacion": "Caso especial de V_f = 0. El capacitor descarga desde V_0 hasta 0."
+    },
+    {
+      "titulo": "Constante de tiempo RC",
+      "katex": "\\tau = RC",
+      "derivacion": "Producto de la resistencia por la capacitancia. A mayor R o mayor C, más lenta la respuesta."
+    },
+    {
+      "titulo": "Corriente en circuito RC (carga)",
+      "katex": "i(t) = \\frac{V_S}{R}\\,e^{-t/RC}",
+      "derivacion": "La corriente empieza en el máximo (V_S/R) y decae exponencialmente hasta cero."
+    },
+    {
+      "titulo": "Voltaje en inductor RL (escalón)",
+      "katex": "v_L(t) = V_S\\,e^{-t/\\tau}",
+      "derivacion": "Al aplicar un escalón de voltaje, V_L empieza igual al escalón y decae. La energía se transfiere a la resistencia."
+    },
+    {
+      "titulo": "Corriente en inductor RL (escalón)",
+      "katex": "i_L(t) = \\frac{V_S}{R}\\left(1 - e^{-t/\\tau}\\right)",
+      "derivacion": "La corriente en el inductor crece desde 0 hasta el valor de estado estable V_S/R. τ = L/R."
+    },
+    {
+      "titulo": "Constante de tiempo RL",
+      "katex": "\\tau = \\frac{L}{R}",
+      "derivacion": "A mayor inductancia L, más lenta la respuesta. A mayor resistencia R, más rápida."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Carga y Descarga de Capacitor RC (τ = 1 ms)",
+    "descripcion": "V_C vs tiempo para carga (0→V_s) y descarga (V_s→0) con τ = RC = 1 ms",
+    "data": {
+      "labels": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 7, 8, 9, 10],
+      "datasets": [
+        {
+          "label": "Carga V_C (V)",
+          "data": [0, 3.94, 6.32, 7.77, 8.65, 9.18, 9.50, 9.70, 9.82, 9.89, 9.93, 9.96, 9.975, 9.991, 9.997, 9.999, 10.0],
+          "borderColor": "#6366f1",
+          "tension": 0.4
+        },
+        {
+          "label": "Descarga V_C (V)",
+          "data": [10.0, 6.07, 3.68, 2.23, 1.35, 0.82, 0.50, 0.30, 0.18, 0.11, 0.067, 0.04, 0.025, 0.009, 0.003, 0.001, 0],
+          "borderColor": "#ef4444",
+          "tension": 0.4
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Tiempo (ms, siendo τ = 1 ms)",
+      "yLabel": "Voltaje V_C (V)"
+    }
+  },
+  "secciones": [
+    {
+      "id": "procedimiento-transitorio",
+      "titulo": "Procedimiento General para Respuesta Transitoria",
+      "contenido": "MÉTODO: (1) ANTES del cambio (t = 0⁻): calcular el estado estable inicial. Para C: V_C(0⁻). Para L: I_L(0⁻). (2) DESPUÉS del cambio (t = 0⁺): los valores de C y L no cambian instantáneamente: V_C(0⁺) = V_C(0⁻), I_L(0⁺) = I_L(0⁻). (3) Calcular el estado estable FINAL (t→∞): análisis DC con C abierto e L cortocircuito. (4) Calcular τ: τ = R_th · C (o L/R_th), donde R_th es la resistencia de Thevenin vista desde los terminales del elemento reactivo. (5) Aplicar la fórmula universal: x(t) = x_final + (x_inicial - x_final)·e^(-t/τ)."
+    },
+    {
+      "id": "circuito-rc-fisico",
+      "titulo": "Comportamiento Físico del Capacitor",
+      "contenido": "El capacitor almacena energía en el campo eléctrico entre sus placas: W = ½CV². Cuando el voltaje aumenta (carga), el capacitor extrae corriente del circuito para aumentar su campo eléctrico. Cuando el voltaje disminuye (descarga), entrega corriente al circuito. Esta 'inercia' eléctrica es lo que genera la respuesta transitoria exponencial. Es análogo a la masa en mecánica: no puede cambiar su velocidad instantáneamente."
+    },
+    {
+      "id": "aplicaciones-transitorio",
+      "titulo": "Aplicaciones del Análisis Transitorio",
+      "contenido": "1. FUENTES DE PODER: tiempo de arranque y respuesta a cambios de carga. 2. CIRCUITOS DIGITALES: el tiempo de carga y descarga de capacitores limita la velocidad máxima de operación (frecuencia de reloj). 3. FILTROS RC como INTEGRADORES: a altas frecuencias el capacitor no tiene tiempo de cargarse completamente y el circuito integra la señal. 4. PROTECCIÓN: circuitos RC retrasan picos de tensión para proteger componentes sensibles. 5. TEMPORIZADORES: el 555 Timer usa la carga de un capacitor RC para generar tiempos precisos."
+    }
+  ],
+  "ejemplos_resueltos": [
+    {
+      "id": "ex-rc-carga",
+      "titulo": "Ejemplo 1: Carga de capacitor desde estado inicial",
+      "enunciado": "Circuito RC: V_S = 10V, R = 10kΩ, C = 100μF. El capacitor está inicialmente descargado (V_C(0) = 0). Encontrar v_C(t) y el tiempo para alcanzar 7V.",
+      "pasos": [
+        "τ = RC = 10k × 100μ = 10k × 10⁻⁴ = 1 s",
+        "v_C(t) = V_S(1 - e^(-t/τ)) = 10(1 - e^(-t))",
+        "Para v_C = 7V: 7 = 10(1 - e^(-t)) → e^(-t) = 0.3",
+        "-t = ln(0.3) = -1.204 → t = 1.204 s",
+        "Verificar: 1.204τ → 10(1 - e^(-1.204)) = 10(1 - 0.3) = 7V ✓"
+      ],
+      "resultado_katex": "v_C(t) = 10(1 - e^{-t})\\,\\text{V},\\quad t_{7V} = RC\\cdot\\ln(10/3) \\approx 1.2\\,\\text{s}"
+    },
+    {
+      "id": "ex-rc-descarga",
+      "titulo": "Ejemplo 2: Descarga con condición inicial",
+      "enunciado": "Un capacitor de 47μF está cargado a 15V. Se conecta a una resistencia de 4.7kΩ. Encontrar v_C(t) y la corriente inicial.",
+      "pasos": [
+        "τ = RC = 4700 × 47×10⁻⁶ = 0.221 s",
+        "v_C(t) = 15·e^(-t/0.221) V",
+        "i(t) = (V_0/R)·e^(-t/τ) = (15/4700)·e^(-t/0.221) = 3.19 mA · e^(-t/0.221)",
+        "i_inicial = 15V/4.7kΩ = 3.19 mA",
+        "Tiempo para 37%: t = τ = 0.221 s → v_C = 15 × 0.368 = 5.52V"
+      ],
+      "resultado_katex": "v_C(t) = 15e^{-t/0.221}\\,\\text{V},\\quad i(0) = 3.19\\,\\text{mA}"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-rc-1",
+      "titulo": "Carga de capacitor RC",
+      "descripcion": "Circuito RC: $V_S = 12\\,\\text{V}$, $R = 22\\,\\text{k}\\Omega$, $C = 10\\,\\mu\\text{F}$. El capacitor está inicialmente descargado. (a) Calcular $\\tau$. (b) Expresar $v_C(t)$. (c) ¿Cuánto tiempo tarda en alcanzar $9\\,\\text{V}$?",
+      "solucion": "(a) $\\tau = 22k \\times 10\\mu = 0.22\\,\\text{s}$; (b) $v_C(t) = 12(1-e^{-t/0.22})\\,\\text{V}$; (c) $9 = 12(1-e^{-t/0.22}) \\Rightarrow e^{-t/0.22} = 0.25 \\Rightarrow t = 0.22\\ln(4) \\approx 0.305\\,\\text{s}$",
+      "explicacion": "9V es el 75% de 12V. Usando la fórmula inversa: t = τ·ln(V_S/(V_S - V_C)).",
+      "tiempo_minutos": 8,
+      "dificultad": "intermedio"
+    },
+    {
+      "id": "ej-rl-1",
+      "titulo": "Respuesta transitoria RL",
+      "descripcion": "Circuito RL serie con $V_S = 5\\,\\text{V}$, $R = 100\\,\\Omega$, $L = 10\\,\\text{mH}$. ¿Cuál es $\\tau$? Exprese $i_L(t)$ y la corriente máxima.",
+      "solucion": "$\\tau = L/R = 10\\,\\text{mH}/100\\,\\Omega = 0.1\\,\\text{ms}$; $i_L(t) = (V_S/R)(1 - e^{-t/\\tau}) = 50\\,\\text{mA}(1 - e^{-t/0.1\\text{ms}})$; $I_{max} = V_S/R = 5/100 = 50\\,\\text{mA}$",
+      "explicacion": "A t→∞: el inductor es cortocircuito y toda la tensión cae en R. La corriente estable es V_S/R.",
+      "tiempo_minutos": 6,
+      "dificultad": "intermedio"
+    }
+  ],
+  "notas_profesor": {
+    "enfasis": [
+      "Demostrar físicamente con capacitor, resistencia y multímetro la carga exponencial",
+      "Relacionar el concepto de 5τ con el tiempo de espera en circuitos digitales",
+      "La constante de tiempo τ es el tiempo en que la exponencial cae al 36.8% (e⁻¹)"
+    ],
+    "errores_comunes": [
+      "Asumir que el capacitor alcanza el estado estable inmediatamente",
+      "Confundir τ = RC con τ = L/R (cada uno para su circuito)",
+      "No calcular el estado estable final antes de aplicar la fórmula"
+    ]
+  },
+  "enlaces": [
+    {"ruta": "/clase/6/tema/respuesta-frecuencia", "texto": "← Diagramas de Bode"},
+    {"ruta": "/modulo/1/unidad/3", "texto": "Ver Unidad 3 Completa"},
+    {"ruta": "/clase/6", "texto": "Volver a Clase 6"}
+  ]
+}

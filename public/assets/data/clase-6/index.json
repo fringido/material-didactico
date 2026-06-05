@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "clase": 6,
+    "modulo": 1,
+    "unidad": 3,
+    "titulo": "Respuesta Dinámica en AC",
+    "semanas": "6",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-30",
+    "descripcion": "Diagramas de Bode, comportamiento en frecuencia y análisis de respuesta transitoria.",
+    "ruta": "/clase/6"
+  },
+  "objetivos": [
+    "Interpretar Diagramas de Bode de magnitud y fase",
+    "Calcular el ancho de banda y factor de calidad en circuitos resonantes",
+    "Analizar la respuesta temporal de circuitos ante escalones de voltaje",
+    "Comprender la transición entre el régimen transitorio y el estado estable"
+  ],
+  "temas": [
+    {
+      "id": "respuesta-frecuencia",
+      "nombre": "Respuesta en Frecuencia y Bode",
+      "descripcion": "Gráficas logarítmicas para el análisis de sistemas dinámicos.",
+      "icono": "📊",
+      "ruta": "/clase/6/tema/respuesta-frecuencia",
+      "archivo": "respuesta-frecuencia.json"
+    },
+    {
+      "id": "respuesta-transitoria",
+      "nombre": "Respuesta Transitoria y Estable",
+      "descripcion": "Análisis de carga y descarga de elementos reactivos.",
+      "icono": "⏱️",
+      "ruta": "/clase/6/tema/respuesta-transitoria",
+      "archivo": "respuesta-transitoria.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "unidad_completa": "/modulo/1/unidad/3",
+    "clase_anterior": "/clase/5"
+  }
+}

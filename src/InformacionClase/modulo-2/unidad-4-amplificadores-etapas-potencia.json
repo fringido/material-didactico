@@ -1,0 +1,670 @@
+{
+    "metadata": {
+        "modulo": 2,
+        "unidad": 4,
+        "titulo": "Amplificadores y Etapas de Potencia",
+        "semanas": "7-9",
+        "version": "1.0.0",
+        "fecha_actualizacion": "2026-05-30",
+        "descripcion": "Clases de amplificadores, configuraciones BJT, punto de operación, polarización y etapas de potencia"
+    },
+    "objetivos": [
+        "Comprender las diferentes clases de amplificadores (A, B, AB, C) y sus características",
+        "Analizar configuraciones BJT: emisor común, base común, colector común",
+        "Determinar el punto de operación Q y diseñar polarización de transistores",
+        "Analizar rectas de carga DC y AC",
+        "Calcular ganancia de voltaje, corriente y potencia",
+        "Comprender distorsión armónica y linealidad",
+        "Diseñar amplificadores de bajo nivel y de potencia"
+    ],
+    "temas": [
+        {
+            "id": "clases-amplificadores",
+            "nombre": "Clases de Amplificadores",
+            "descripcion": "Clasificación de amplificadores según el ángulo de conducción y eficiencia.",
+            "ecuaciones": [
+                {
+                    "nombre": "Eficiencia teórica Clase A",
+                    "formula": "\\eta_{max} = 50\\%"
+                },
+                {
+                    "nombre": "Eficiencia teórica Clase B",
+                    "formula": "\\eta_{max} = \\frac{\\pi}{4} \\approx 78.5\\%"
+                },
+                {
+                    "nombre": "Eficiencia teórica Clase AB",
+                    "formula": "\\eta_{max} \\approx 70-78\\%"
+                },
+                {
+                    "nombre": "Eficiencia teórica Clase C",
+                    "formula": "\\eta_{max} \\approx 90\\%"
+                },
+                {
+                    "nombre": "Potencia de salida Clase A",
+                    "formula": "P_{out} = \\frac{V_{CC}^2}{2R_L}"
+                }
+            ],
+            "contenido": {
+                "clases": [
+                    {
+                        "clase": "Clase A",
+                        "angulo_conduccion": "360°",
+                        "descripcion": "El transistor conduce durante todo el ciclo de la señal",
+                        "eficiencia": "25-50%",
+                        "ventajas": "Linealidad excelente, baja distorsión",
+                        "desventajas": "Baja eficiencia, alta disipación de potencia",
+                        "aplicaciones": "Audio de alta fidelidad, etapas preamplificadoras"
+                    },
+                    {
+                        "clase": "Clase B",
+                        "angulo_conduccion": "180°",
+                        "descripcion": "Cada transistor conduce medio ciclo (push-pull)",
+                        "eficiencia": "78.5% máximo",
+                        "ventajas": "Alta eficiencia, baja disipación",
+                        "desventajas": "Distorsión de cruce (crossover)",
+                        "aplicaciones": "Etapa de potencia de audio, RF"
+                    },
+                    {
+                        "clase": "Clase AB",
+                        "angulo_conduccion": "180-360°",
+                        "descripcion": "Pequeña polarización para eliminar distorsión de cruce",
+                        "eficiencia": "50-78%",
+                        "ventajas": "Buena eficiencia, baja distorsión",
+                        "desventajas": "Más complejo que Clase B",
+                        "aplicaciones": "Audio de potencia, amplificadores integrados"
+                    },
+                    {
+                        "clase": "Clase C",
+                        "angulo_conduccion": "<180°",
+                        "descripcion": "Conduce solo una fracción del ciclo",
+                        "eficiencia": "Hasta 90%",
+                        "ventajas": "Máxima eficiencia",
+                        "desventajas": "Alta distorsión, requiere circuito resonante",
+                        "aplicaciones": "RF, transmisores, osciladores"
+                    }
+                ],
+                "comparacion": {
+                    "headers": ["Característica", "Clase A", "Clase B", "Clase AB", "Clase C"],
+                    "rows": [
+                        ["Ángulo de conducción", "360°", "180°", "180-360°", "<180°"],
+                        ["Eficiencia máxima", "50%", "78.5%", "78%", "90%"],
+                        ["Distorsión", "Mínima", "Crossover", "Baja", "Alta"],
+                        ["Linealidad", "Excelente", "Media", "Buena", "Pobre"],
+                        ["Aplicación típica", "Preamp", "Potencia", "Audio", "RF"]
+                    ]
+                }
+            }
+        },
+        {
+            "id": "configuraciones-bjt",
+            "nombre": "Configuraciones BJT",
+            "descripcion": "Análisis detallado de emisor común, base común y colector común.",
+            "ecuaciones": [
+                {
+                    "nombre": "Ganancia emisor común",
+                    "formula": "A_v = -\\frac{R_C}{r_e + R_E'}"
+                },
+                {
+                    "nombre": "Impedancia entrada EC",
+                    "formula": "Z_{in} = \\beta(r_e + R_E')"
+                },
+                {
+                    "nombre": "Ganancia base común",
+                    "formula": "A_v = \\frac{R_C}{r_e}"
+                },
+                {
+                    "nombre": "Impedancia entrada BC",
+                    "formula": "Z_{in} = r_e"
+                },
+                {
+                    "nombre": "Ganancia colector común",
+                    "formula": "A_v \\approx 1"
+                },
+                {
+                    "nombre": "Impedancia entrada CC",
+                    "formula": "Z_{in} = \\beta(R_E || R_L)"
+                }
+            ],
+            "contenido": {
+                "configuraciones": [
+                    {
+                        "nombre": "Emisor Común (Common Emitter)",
+                        "descripcion": "Entrada en base, salida en colector, emisor a tierra (o con resistencia)",
+                        "caracteristicas": [
+                            "Alta ganancia de voltaje (typical 20-200)",
+                            "Ganancia de corriente moderada (β)",
+                            "Desfase de 180° entre entrada y salida",
+                            "Impedancia de entrada media (1-10 kΩ)",
+                            "Impedancia de salida media-alta"
+                        ],
+                        "aplicaciones": "Amplificación general, etapas intermedias",
+                        "ventajas": "Versátil, buena ganancia",
+                        "desventajas": "Inversión de fase, respuesta en frecuencia limitada"
+                    },
+                    {
+                        "nombre": "Base Común (Common Base)",
+                        "descripcion": "Entrada en emisor, salida en colector, base a tierra (AC)",
+                        "caracteristicas": [
+                            "Ganancia de voltaje alta (similar a EC)",
+                            "Ganancia de corriente < 1 (α ≈ 0.99)",
+                            "Sin desfase (0°)",
+                            "Impedancia de entrada muy baja (10-100 Ω)",
+                            "Impedancia de salida alta"
+                        ],
+                        "aplicaciones": "RF, adaptación de impedancia baja",
+                        "ventajas": "Buena respuesta en alta frecuencia",
+                        "desventajas": "Baja impedancia de entrada"
+                    },
+                    {
+                        "nombre": "Colector Común (Common Collector / Emitter Follower)",
+                        "descripcion": "Entrada en base, salida en emisor, colector a tierra (AC)",
+                        "caracteristicas": [
+                            "Ganancia de voltaje ≈ 1",
+                            "Ganancia de corriente alta (β+1)",
+                            "Sin desfase (0°)",
+                            "Impedancia de entrada muy alta (10-100 kΩ)",
+                            "Impedancia de salida muy baja"
+                        ],
+                        "aplicaciones": "Buffer, adaptación de impedancia, etapa de salida",
+                        "ventajas": "Alta impedancia entrada, baja salida",
+                        "desventajas": "Sin ganancia de voltaje"
+                    }
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Cálculo de ganancia EC",
+                        "enunciado": "Amplificador EC con R_C=2kΩ, R_E=200Ω, β=100, V_BE=0.7V, I_C=2mA. Calcular A_v y Z_in.",
+                        "solucion": [
+                            "r_e = 26mV / I_C = 26/2 = 13 Ω",
+                            "A_v = -R_C / r_e = -2000/13 ≈ -154",
+                            "Z_in = β(r_e + R_E) = 100(13 + 200) = 21.3 kΩ"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "punto-operacion-q",
+            "nombre": "Punto de Operación Q",
+            "descripcion": "Punto de reposo del transistor (sin señal) que determina el rango de operación.",
+            "ecuaciones": [
+                {
+                    "nombre": "Corriente de colector Q",
+                    "formula": "I_{CQ} = \\beta I_{BQ}"
+                },
+                {
+                    "nombre": "Voltaje colector-emisor Q",
+                    "formula": "V_{CEQ} = V_{CC} - I_{CQ}R_C - I_{E Q}R_E"
+                },
+                {
+                    "nombre": "Resistencia emisor para estabilidad",
+                    "formula": "R_E = \\frac{V_E}{I_{CQ}} = \\frac{0.1V_{CC}}{I_{CQ}}"
+                }
+            ],
+            "contenido": {
+                "conceptos": [
+                    {
+                        "nombre": "Punto Q (Quiescent Point)",
+                        "descripcion": "Punto de operación en DC sin señal aplicada",
+                        "coordenadas": "(I_CQ, V_CEQ)",
+                        "importancia": "Determina rango lineal, máxima excursión de señal"
+                    },
+                    {
+                        "nombre": "Región de saturación",
+                        "descripcion": "V_CE < V_CE(sat) ≈ 0.2V",
+                        "comportamiento": "Transistor completamente encendido"
+                    },
+                    {
+                        "nombre": "Región de corte",
+                        "descripcion": "I_C ≈ 0",
+                        "comportamiento": "Transistor completamente apagado"
+                    },
+                    {
+                        "nombre": "Región activa",
+                        "descripcion": "V_CE > V_CE(sat), I_C > 0",
+                        "comportamiento": "Amplificación lineal"
+                    }
+                ],
+                "criterios_diseño": [
+                    "Punto Q debe estar en centro de recta de carga para máxima excursión",
+                    "Margen de seguridad para variaciones de temperatura y β",
+                    "Estabilidad térmica con resistencia de emisor"
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Cálculo de punto Q",
+                        "enunciado": "Circuito con V_CC=12V, R_C=2kΩ, R_E=500Ω, β=100, polarización por división de voltaje. I_CQ=2mA.",
+                        "solucion": [
+                            "I_EQ ≈ I_CQ = 2mA",
+                            "V_E = I_EQ × R_E = 0.002 × 500 = 1V",
+                            "V_C = V_CC - I_CQ × R_C = 12 - 0.002 × 2000 = 8V",
+                            "V_CEQ = V_C - V_E = 8 - 1 = 7V",
+                            "Punto Q: (2mA, 7V)"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "recta-carga",
+            "nombre": "Recta de Carga DC y AC",
+            "descripcion": "Análisis gráfico del comportamiento del transistor mediante rectas de carga.",
+            "ecuaciones": [
+                {
+                    "nombre": "Ecuación recta de carga DC",
+                    "formula": "I_C = \\frac{V_{CC} - V_{CE}}{R_C + R_E}"
+                },
+                {
+                    "nombre": "Intersección eje I_C (saturación)",
+                    "formula": "I_{C(sat)} = \\frac{V_{CC}}{R_C + R_E}"
+                },
+                {
+                    "nombre": "Intersección eje V_CE (corte)",
+                    "formula": "V_{CE(cutoff)} = V_{CC}"
+                },
+                {
+                    "nombre": "Resistencia de carga AC",
+                    "formula": "R_{L(AC)} = R_C || R_L"
+                }
+            ],
+            "contenido": {
+                "recta_dc": {
+                    "descripcion": "Representa comportamiento en DC (sin señal)",
+                    "procedimiento": [
+                        "Trazar línea entre I_C(sat) y V_CE(cutoff)",
+                        "Ubicar punto Q sobre esta recta",
+                        "Determinar márgenes de saturación y corte"
+                    ]
+                },
+                "recta_ac": {
+                    "descripcion": "Representa comportamiento con señal AC",
+                    "procedimiento": [
+                        "Calcular R_L(AC) = R_C || R_L",
+                        "Recta AC pasa por punto Q con pendiente -1/R_L(AC)",
+                        "Determinar máxima excursión de señal"
+                    ]
+                },
+                "ejemplos": [
+                    {
+                        "titulo": "Análisis de recta de carga",
+                        "enunciado": "V_CC=20V, R_C=4kΩ, R_E=1kΩ, R_L=4kΩ. Calcular rectas DC y AC.",
+                        "solucion": [
+                            "I_C(sat) = 20V/(4k+1k) = 4mA",
+                            "V_CE(cutoff) = 20V",
+                            "R_L(AC) = 4k || 4k = 2kΩ",
+                            "Pendiente AC = -1/2k = -0.5 mA/V"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "polarizacion-transistores",
+            "nombre": "Polarización de Transistores",
+            "descripcion": "Métodos para establecer el punto de operación Q estable.",
+            "ecuaciones": [
+                {
+                    "nombre": "Polarización por división de voltaje",
+                    "formula": "V_B = V_{CC} \\cdot \\frac{R_2}{R_1 + R_2}"
+                },
+                {
+                    "nombre": "Corriente base",
+                    "formula": "I_B = \\frac{V_B - V_{BE}}{R_E(\\beta + 1)}"
+                },
+                {
+                    "nombre": "Corriente colector",
+                    "formula": "I_C = \\beta I_B"
+                },
+                {
+                    "nombre": "Polarización por retroalimentación de colector",
+                    "formula": "I_B = \\frac{V_{CC} - V_{BE}}{R_B + (\\beta + 1)R_C}"
+                }
+            ],
+            "contenido": {
+                "metodos": [
+                    {
+                        "nombre": "Polarización fija",
+                        "descripcion": "Resistencia simple de base",
+                        "ecuacion": "I_B = (V_CC - V_BE)/R_B",
+                        "ventajas": "Simple",
+                        "desventajas": "Muy inestable, dependiente de β y temperatura"
+                    },
+                    {
+                        "nombre": "Polarización por retroalimentación de colector",
+                        "descripcion": "Resistencia de base conectada a colector",
+                        "ventajas": "Más estable que polarización fija",
+                        "desventajas": "Aún dependiente de β"
+                    },
+                    {
+                        "nombre": "Polarización por división de voltaje",
+                        "descripcion": "Dos resistencias forman divisor en base",
+                        "ventajas": "Muy estable, independiente de β",
+                        "desventajas": "Requiere más componentes",
+                        "criterio": "I_R1, I_R2 >> I_B (tipical 10×)"
+                    },
+                    {
+                        "nombre": "Polarización con emisor",
+                        "descripcion": "Resistencia de emisor para estabilidad térmica",
+                        "ventajas": "Excelente estabilidad térmica",
+                        "desventajas": "Reduce ganancia si no bypass"
+                    }
+                ],
+                "estabilidad_termica": {
+                    "efectos": [
+                        "β aumenta con temperatura",
+                        "V_BE disminuye con temperatura (~-2mV/°C)",
+                        "I_C aumenta con temperatura"
+                    ],
+                    "soluciones": [
+                        "Usar resistencia de emisor (R_E)",
+                        "Polarización por división de voltaje",
+                        "Compensación con diodos o transistores"
+                    ]
+                },
+                "ejemplos": [
+                    {
+                        "titulo": "Diseño de polarización",
+                        "enunciado": "Diseñar polarización por división para I_CQ=2mA, V_CEQ=6V, V_CC=12V, β=100.",
+                        "solucion": [
+                            "Seleccionar R_E = 0.1V_CC/I_C = 1.2/0.002 = 600Ω",
+                            "V_E = I_C × R_E = 0.002 × 600 = 1.2V",
+                            "V_B = V_E + V_BE = 1.2 + 0.7 = 1.9V",
+                            "R_C = (V_CC - V_CE - V_E)/I_C = (12-6-1.2)/0.002 = 2.4kΩ",
+                            "I_R = 10×I_B = 10×(I_C/β) = 10×0.02 = 0.2mA",
+                            "R_2 = V_B/I_R = 1.9/0.0002 = 9.5kΩ",
+                            "R_1 = (V_CC - V_B)/I_R = (12-1.9)/0.0002 = 50.5kΩ"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "amplificadores-potencia",
+            "nombre": "Amplificadores de Potencia",
+            "descripcion": "Etapas de salida para entregar potencia a la carga con alta eficiencia.",
+            "ecuaciones": [
+                {
+                    "nombre": "Potencia de salida",
+                    "formula": "P_{out} = \\frac{V_{out(rms)}^2}{R_L}"
+                },
+                {
+                    "nombre": "Potencia de entrada DC",
+                    "formula": "P_{DC} = V_{CC} I_{DC}"
+                },
+                {
+                    "nombre": "Eficiencia",
+                    "formula": "\\eta = \\frac{P_{out}}{P_{DC}} \\times 100\\%"
+                },
+                {
+                    "nombre": "Disipación de potencia",
+                    "formula": "P_D = P_{DC} - P_{out}"
+                }
+            ],
+            "contenido": {
+                "tipos": [
+                    {
+                        "nombre": "Amplificador Clase A",
+                        "descripcion": "Un transistor conduce todo el ciclo",
+                        "potencia_maxima": "V_CC²/(2R_L)",
+                        "disipacion_maxima": "V_CC²/(2R_L) (sin señal)",
+                        "aplicacion": "Audio de baja potencia, preamplificadores"
+                    },
+                    {
+                        "nombre": "Push-Pull Clase B",
+                        "descripcion": "Dos transistores NPN/PNP en configuración complementaria",
+                        "potencia_maxima": "V_CC²/(2R_L)",
+                        "disipacion_maxima": "V_CC²/(4π²R_L)",
+                        "aplicacion": "Audio de potencia, etapas de salida"
+                    },
+                    {
+                        "nombre": "Push-Pull Clase AB",
+                        "descripcion": "Similar a Clase B con pequeña polarización",
+                        "ventajas": "Elimina distorsión de cruce",
+                        "aplicacion": "Audio integrado, amplificadores de potencia"
+                    }
+                ],
+                "consideraciones_diseño": [
+                    "Disipación de potencia en transistores (heat sinks)",
+                    "Protección contra cortocircuito",
+                    "Matching de transistores en push-pull",
+                    "Capacitores de acoplamiento y bypass"
+                ],
+                "ejemplos": [
+                    {
+                        "titulo": "Cálculo de potencia Clase B",
+                        "enunciado": "Amplificador push-pull con V_CC=±20V, R_L=8Ω. Calcular P_out máxima.",
+                        "solucion": [
+                            "V_peak ≈ V_CC = 20V",
+                            "V_rms = 20/√2 ≈ 14.14V",
+                            "P_out = V_rms²/R_L = 14.14²/8 ≈ 25W",
+                            "P_DC = (2V_CC × V_peak)/(πR_L) = (40×20)/(π×8) ≈ 31.8W",
+                            "η = 25/31.8 × 100% ≈ 78.5%"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "distorsion-armonica",
+            "nombre": "Distorsión Armónica",
+            "descripcion": "Análisis de no-linealidad y distorsión en amplificadores.",
+            "ecuaciones": [
+                {
+                    "nombre": "THD (Total Harmonic Distortion)",
+                    "formula": "THD = \\frac{\\sqrt{V_2^2 + V_3^2 + \\cdots}}{V_1} \\times 100\\%"
+                },
+                {
+                    "nombre": "Factor de distorsión",
+                    "formula": "DF = \\frac{P_{distorsion}}{P_{fundamental}}"
+                }
+            ],
+            "contenido": {
+                "tipos_distorsion": [
+                    {
+                        "nombre": "Distorsión armónica",
+                        "descripcion": "Aparición de múltiplos de la frecuencia fundamental",
+                        "causas": "No-linealidad del transistor, punto Q inadecuado",
+                        "medicion": "Analizador de espectro, THD meter"
+                    },
+                    {
+                        "nombre": "Distorsión de intermodulación",
+                        "descripcion": "Sumas y diferencias de frecuencias cuando hay múltiples señales",
+                        "causas": "No-linealidad con múltiples tonos",
+                        "importancia": "Crítica en comunicaciones"
+                    },
+                    {
+                        "nombre": "Distorsión de cruce (crossover)",
+                        "descripcion": "Distorsión cerca del cruce por cero en Clase B",
+                        "solucion": "Polarización Clase AB"
+                    },
+                    {
+                        "nombre": "Clipping",
+                        "descripcion": "Recorte de la señal por saturación o corte",
+                        "causas": "Señal excesiva, punto Q mal ubicado"
+                    }
+                ],
+                "reduccion_distorsion": [
+                    "Polarización adecuada (punto Q central)",
+                    "Retroalimentación negativa",
+                    "Linealización con pre-distorsión",
+                    "Uso de topologías push-pull simétricas"
+                ],
+                "especificaciones_tipicas": {
+                    "audio_hifi": "THD < 0.1%",
+                    "audio_comercial": "THD < 1%",
+                    "comunicaciones": "IMD < -40dB"
+                }
+            }
+        },
+        {
+            "id": "acoplamiento-etas",
+            "nombre": "Acoplamiento entre Etapas",
+            "descripcion": "Métodos para conectar múltiples etapas amplificadoras.",
+            "ecuaciones": [
+                {
+                    "nombre": "Ganancia total (cascada)",
+                    "formula": "A_{v(total)} = A_{v1} \\times A_{v2} \\times \\cdots \\times A_{vn}"
+                },
+                {
+                    "nombre": "Ancho de banda total",
+                    "formula": "BW_{total} \\approx \\sqrt{BW_1^2 + BW_2^2 + \\cdots}"
+                }
+            ],
+            "contenido": {
+                "metodos_acoplamiento": [
+                    {
+                        "nombre": "Acoplamiento RC",
+                        "descripcion": "Capacitor en serie entre etapas",
+                        "ventajas": "Simple, bloquea DC",
+                        "desventajas": "Respuesta en baja frecuencia limitada",
+                        "aplicacion": "Audio, baja frecuencia"
+                    },
+                    {
+                        "nombre": "Acoplamiento por transformador",
+                        "descripcion": "Transformador entre etapas",
+                        "ventajas": "Matching de impedancia, aislamiento DC",
+                        "desventajas": "Costoso, tamaño, respuesta en frecuencia limitada",
+                        "aplicacion": "RF, audio de potencia"
+                    },
+                    {
+                        "nombre": "Acoplamiento directo (DC)",
+                        "descripcion": "Conexión directa sin componentes",
+                        "ventajas": "Buena respuesta en baja frecuencia, simple",
+                        "desventajas": "Niveles DC deben compatibilizarse",
+                        "aplicacion": "Circuitos integrados, DC amplifiers"
+                    },
+                    {
+                        "nombre": "Acoplamiento óptico",
+                        "descripcion": "Optoacoplador entre etapas",
+                        "ventajas": "Aislamiento galvánico completo",
+                        "desventajas": "Banda limitada, no-linealidad",
+                        "aplicacion": "Aislamiento, protección"
+                    }
+                ],
+                "consideraciones": [
+                    "Matching de impedancias entre etapas",
+                    "Niveles de DC compatibles",
+                    "Respuesta en frecuencia",
+                    "Estabilidad y retroalimentación"
+                ]
+            }
+        }
+    ],
+    "ejercicios": [
+        {
+            "numero": 12,
+            "titulo": "Análisis de configuraciones BJT",
+            "descripcion": "Analizar amplificadores emisor común, base común y colector común.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "120 minutos",
+            "objetivos": [
+                "Calcular ganancia de voltaje y corriente",
+                "Determinar impedancias de entrada y salida",
+                "Comparar características de cada configuración"
+            ]
+        },
+        {
+            "numero": 13,
+            "titulo": "Diseño de polarización",
+            "descripcion": "Diseñar redes de polarización para especificaciones dadas.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "90 minutos",
+            "objetivos": [
+                "Calcular resistencias de polarización",
+                "Determinar punto de operación Q",
+                "Verificar estabilidad térmica"
+            ]
+        },
+        {
+            "numero": 14,
+            "titulo": "Análisis de recta de carga",
+            "descripcion": "Trazar rectas de carga DC y AC y determinar máxima excursión.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "60 minutos",
+            "objetivos": [
+                "Calcular intersecciones de recta DC",
+                "Determinar recta de carga AC",
+                "Calcular máxima señal sin distorsión"
+            ]
+        },
+        {
+            "numero": 15,
+            "titulo": "Amplificadores de potencia",
+            "descripcion": "Analizar y diseñar etapas de potencia Clase A, B y AB.",
+            "tipo": "practico",
+            "dificultad": "avanzado",
+            "tiempo_estimado": "120 minutos",
+            "objetivos": [
+                "Calcular potencia de salida y eficiencia",
+                "Determinar disipación de potencia",
+                "Comparar clases de amplificadores"
+            ]
+        }
+    ],
+    "evaluacion": {
+        "criterios": [
+            "Cálculo correcto de ganancias e impedancias",
+            "Diseño adecuado de polarización",
+            "Análisis correcto de rectas de carga",
+            "Comprensión de eficiencia y distorsión"
+        ],
+        "rubrica": {
+            "excelente": "Diseña y analiza amplificadores con precisión, comprende profundamente todos los conceptos.",
+            "bueno": "Resuelve la mayoría de problemas con errores menores, buena comprensión conceptual.",
+            "suficiente": "Comprende conceptos básicos pero tiene dificultades con análisis complejo.",
+            "insuficiente": "No logra aplicar conceptos de amplificadores correctamente."
+        }
+    },
+    "recursos_adicionales": {
+        "simuladores": [
+            {
+                "nombre": "Simulador de punto Q",
+                "descripcion": "Herramienta interactiva para análisis de polarización",
+                "ruta": "/simuladores/punto-q"
+            },
+            {
+                "nombre": "Analizador de distorsión",
+                "descripcion": "Visualización de THD y espectro armónico",
+                "ruta": "/simuladores/distorsion"
+            }
+        ],
+        "lecturas": [
+            "Sedra & Smith - Microelectronic Circuits (capítulo de BJT amplifiers)",
+            "Boylestad - Electronic Devices and Circuit Theory"
+        ]
+    },
+    "referencias": [
+        {
+            "tipo": "libro",
+            "titulo": "Microelectronic Circuits",
+            "autores": ["Sedra", "Smith"],
+            "capitulo": "Single-Stage BJT Amplifiers"
+        },
+        {
+            "tipo": "libro",
+            "titulo": "Electronic Devices and Circuit Theory",
+            "autores": ["Boylestad", "Nashelsky"],
+            "capitulo": "BJT Amplifiers"
+        }
+    ],
+    "notas_profesor": {
+        "enfasis": [
+            "Importancia de la polarización estable",
+            "Relación entre eficiencia y distorsión",
+            "Aplicaciones prácticas en audio y RF"
+        ],
+        "dificultades_comunes": [
+            "Confusión entre ganancia DC y AC",
+            "Olvidar efectos de carga en cascada",
+            "Errores en cálculo de impedancias"
+        ],
+        "sugerencias": [
+            "Usar simulación SPICE para verificar diseños",
+            "Demostrar con osciloscopio en laboratorio",
+            "Relacionar con especificaciones de datasheets"
+        ]
+    }
+}

@@ -1,97 +1,187 @@
 {
+  "id": "leyes-kirchhoff",
+  "nombre": "Leyes de Kirchhoff",
+  "descripcion": "LCK (Ley de Corrientes) y LVK (Ley de Voltajes): herramientas fundamentales para el análisis de redes eléctricas complejas.",
+  "introduccion": "Las Leyes de Kirchhoff, formuladas por Gustav Robert Kirchhoff en 1845, son las herramientas más poderosas del análisis de circuitos. Se derivan directamente de la conservación de la carga (LCK) y la conservación de la energía (LVK). Permiten escribir sistemas de ecuaciones que resuelven cualquier red eléctrica lineal sin importar su complejidad. Son la base de los métodos de Análisis de Nodos y Análisis de Mallas.",
   "metadata": {
     "clase": 3,
-    "modulo": 1,
-    "unidad": 2,
-    "id": "leyes-kirchhoff",
+    "orden": 3,
     "titulo": "Leyes de Kirchhoff",
-    "version": "1.0.0",
-    "fecha_actualizacion": "2026-05-21",
-    "ruta": "/clase/3/tema/leyes-kirchhoff",
-    "orden": 3
+    "semana": "3",
+    "unidad": 2,
+    "modulo": 1
   },
-  "introduccion": "Las leyes de Gustav Kirchhoff (1845) son el corazón del análisis de redes. Mientras la Ley de Ohm describe un componente aislado (V = I \\cdot R), las leyes de Kirchhoff gobiernan cómo se distribuyen corrientes y voltajes en toda una red interconectada. Descansan en la conservación de la carga y de la energía.",
-  "leyes": [
+  "conceptos_clave": [
     {
-      "id": "lck",
-      "nombre": "Primera Ley — Ley de Corrientes de Kirchhoff (LCK)",
-      "principio": "Conservación de la carga eléctrica",
-      "definicion": "La suma algebraica de todas las corrientes que entran y salen de un nodo es igual a cero. Toda la corriente que entra a un nodo debe salir por las demás ramas: la carga no se acumula en el nodo.",
-      "ecuacion": "\\sum_{k=1}^{n} I_k = 0",
-      "forma_practica": "\\sum I_{entrada} = \\sum I_{salida}",
-      "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/kcl-nodo.svg"
-      },
-      "analogia": "Imagina un nodo como una cruceta de tuberías: el caudal que llega debe igualar el caudal que sale. Si entran 5 A, deben salir 5 A en total.",
-      "convencion_signos": "Corriente que entra al nodo: signo positivo. Corriente que sale: signo negativo (o viceversa, siempre que sea consistente en todo el circuito)."
+      "nombre": "Ley de Corrientes de Kirchhoff (LCK / KCL)",
+      "descripcion": "La suma algebraica de todas las corrientes que llegan a un nodo es igual a cero. Equivalentemente: la suma de corrientes que entran = suma de corrientes que salen.",
+      "principio_fisico": "Conservación de la carga eléctrica. Los electrones no pueden acumularse en un nodo (no hay carga neta en estado estable).",
+      "analogia": "Como el agua en una unión de tuberías: todo el caudal que llega debe salir.",
+      "cuando_usarlo": "Siempre que haya más de una rama en un nodo. Base del Análisis de Nodos."
     },
     {
-      "id": "lvk",
-      "nombre": "Segunda Ley — Ley de Voltajes de Kirchhoff (LVK)",
-      "principio": "Conservación de la energía",
-      "definicion": "En cualquier malla (camino cerrado), la suma algebraica de todas las caídas y subidas de tensión es igual a cero. La energía que entrega la fuente se balancea con las caídas en los elementos de esa malla.",
-      "ecuacion": "\\sum_{k=1}^{n} V_k = 0",
-      "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/kvl-malla.svg"
-      },
-      "convencion_signos": [
+      "nombre": "Ley de Voltajes de Kirchhoff (LVK / KVL)",
+      "descripcion": "La suma algebraica de todas las caídas de voltaje en cualquier lazo cerrado es igual a cero. La energía ganada por la fuente = energía disipada en los resistores.",
+      "principio_fisico": "Conservación de la energía. Al recorrer un lazo cerrado y volver al punto de inicio, la energía neta es cero.",
+      "analogia": "Como subir y bajar una montaña y regresar al punto de partida: la ganancia y pérdida neta de altura es cero.",
+      "cuando_usarlo": "Para cada lazo o malla del circuito. Base del Análisis de Mallas."
+    },
+    {
+      "nombre": "Convención de Signos para LCK",
+      "descripcion": "Definir un sentido positivo para las corrientes que ENTRAN al nodo (o las que SALEN). Ser consistente en todo el análisis. Si la solución da un valor negativo, la corriente va en sentido opuesto al asumido.",
+      "cuando_usarlo": "Al plantear ecuaciones de nodo: elegir convención y mantenerla."
+    },
+    {
+      "nombre": "Convención de Signos para LVK",
+      "descripcion": "Al recorrer una malla en sentido horario: (1) Si se pasa por un resistor en el sentido de la corriente asumida → caída de voltaje (-IR). (2) Si se pasa del - al + de una fuente → ganancia de voltaje (+V). (3) Al revés → signo opuesto.",
+      "cuando_usarlo": "Al plantear ecuaciones de malla: definir el sentido de recorrido y la dirección de la corriente."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "LCK — Forma General",
+      "katex": "\\sum_{k=1}^{n} I_k = 0",
+      "derivacion": "La suma algebraica de todas las corrientes en el nodo es cero. Por convención, corrientes que entran son positivas, las que salen son negativas (o viceversa, pero consistente)."
+    },
+    {
+      "titulo": "LCK — Forma Alternativa",
+      "katex": "\\sum I_{\\text{entrada}} = \\sum I_{\\text{salida}}",
+      "derivacion": "Equivalente a la forma general, pero más intuitiva: todo lo que llega, sale."
+    },
+    {
+      "titulo": "LVK — Forma General",
+      "katex": "\\sum_{k=1}^{n} V_k = 0",
+      "derivacion": "La suma algebraica de todos los voltajes en el lazo cerrado es cero. Al recorrer el lazo se van sumando o restando las caídas de voltaje según la convención de signos."
+    },
+    {
+      "titulo": "Sistema de Ecuaciones (Nodos)",
+      "katex": "\\begin{cases} \\frac{V_1 - V_s}{R_1} + \\frac{V_1}{R_2} + \\frac{V_1 - V_2}{R_3} = 0 \\\\ \\frac{V_2 - V_1}{R_3} + \\frac{V_2}{R_4} = 0 \\end{cases}",
+      "derivacion": "Ejemplo de sistema de ecuaciones generado por LCK en un circuito con 2 nodos independientes."
+    }
+  ],
+  "chart_config": {
+    "type": "bar",
+    "titulo": "Corrientes en un nodo (LCK)",
+    "descripcion": "Demostración: corrientes que entran = corrientes que salen",
+    "data": {
+      "labels": ["I₁ (entra)", "I₂ (entra)", "I₃ (sale)", "I₄ (sale)"],
+      "datasets": [
         {
-          "caso": "Batería",
-          "regla": "Al recorrer la malla de − a + en una fuente: subida de tensión (+V). De + a −: caída (−V)."
-        },
-        {
-          "caso": "Resistencia",
-          "regla": "Si se recorre la resistencia en el mismo sentido que la corriente: caída de tensión (−I \\cdot R). En sentido contrario: +I \\cdot R."
+          "label": "Corriente (mA)",
+          "data": [30, 20, 35, 15],
+          "backgroundColor": ["#10b981", "#10b981", "#ef4444", "#ef4444"]
         }
-      ],
-      "nota_dificultad": "La convención de signos es la fuente más común de error. Elige una dirección de recorrido de malla y mantén la misma regla en todo el circuito."
+      ]
+    },
+    "options": {
+      "nota": "Σ entran = 30+20 = 50 mA = Σ salen = 35+15 = 50 mA ✓"
     }
-  ],
-  "tips_ensenanza": [
-    "LCK en nodos, LVK en mallas: no intercambiar el nivel de análisis.",
-    "Antes de escribir ecuaciones, marca en el diagrama las corrientes asumidas y el sentido de recorrido.",
-    "Comprueba con Ohm que V = I·R en cada resistencia después de resolver."
-  ],
-  "interactivos": [
+  },
+  "secciones": [
     {
-      "id": "kcl-demo",
-      "tipo": "kirchhoff-lab",
-      "modo": "kcl",
-      "titulo": "Simulador LCK en un nodo",
-      "descripcion": "Ajusta las corrientes de entrada y salida y verifica que la suma algebraica sea cero."
+      "id": "independencia-ecuaciones",
+      "titulo": "Número de Ecuaciones Independientes",
+      "contenido": "Para un circuito con N nodos y B ramas: el Análisis de Nodos requiere (N-1) ecuaciones LCK independientes (se toma un nodo como referencia = tierra). El Análisis de Mallas requiere (B - N + 1) ecuaciones LVK independientes (número de mallas independientes). La elección del método depende de cuál genera menos incógnitas."
     },
     {
-      "id": "kvl-demo",
-      "tipo": "kirchhoff-lab",
-      "modo": "kvl",
-      "titulo": "Simulador LVK en una malla",
-      "descripcion": "Recorre una malla con fuente y resistencias; observa la suma de tensiones con convención de signos."
-    }
-  ],
-  "ejemplos": [
-    {
-      "titulo": "LCK en nodo simple",
-      "enunciado": "Entran I_1 = 3 A e I_2 = 2 A; sale I_3 por una tercera rama. ¿Cuánto es I_3?",
-      "solucion_pasos": [
-        "I_1 + I_2 = I_3",
-        "3 + 2 = 5 A"
-      ],
-      "resultado": "I_3 = 5 A"
+      "id": "fuentes-corriente",
+      "titulo": "LCK con Fuentes de Corriente",
+      "contenido": "Cuando un nodo tiene una fuente de corriente conectada, esa corriente se incluye directamente en la ecuación LCK de ese nodo. Si la fuente de corriente Is sale del nodo con voltaje V₁: la ecuación incluye el término -Is (o +Is según convención). Las fuentes de corriente SIMPLIFICAN el Análisis de Nodos porque fijan directamente una variable del sistema."
     },
     {
-      "titulo": "LVK — malla con dos resistencias",
-      "enunciado": "Fuente de 10 V, R_1 = 4 Ω y R_2 = 6 Ω en serie. Verificar LVK.",
-      "solucion_pasos": [
-        "I = \\frac{10}{4+6} = 1 A",
-        "V_{R1} = 4 V, V_{R2} = 6 V",
-        "+10 - 4 - 6 = 0"
-      ],
-      "resultado": "La suma de tensiones en la malla es cero."
+      "id": "fuentes-voltaje",
+      "titulo": "LVK con Fuentes de Voltaje (Supernodo)",
+      "contenido": "Si una fuente de voltaje conecta dos nodos no-referencia, se forma un 'supernodo'. Se combina la LCK de ambos nodos en una ecuación, y se agrega la ecuación de restricción V₁ - V₂ = V_fuente. Esto mantiene el número total de ecuaciones sin crear incógnitas adicionales."
+    },
+    {
+      "id": "procedimiento-mallas",
+      "titulo": "Procedimiento: Análisis de Mallas",
+      "contenido": "1. Identificar todas las mallas independientes del circuito plano. 2. Asignar una corriente de malla (I₁, I₂, ...) a cada malla, preferiblemente en sentido horario. 3. Para cada malla, aplicar LVK: ΣV = 0. Los resistores compartidos entre mallas tienen la diferencia de corrientes. 4. Resolver el sistema de ecuaciones simultáneas. 5. Si el resultado es negativo, la corriente real es opuesta a la dirección asumida."
     }
   ],
+  "ejemplos_resueltos": [
+    {
+      "id": "ex-lck-1",
+      "titulo": "Ejemplo 1: LCK en nodo con 3 ramas",
+      "enunciado": "Un nodo A tiene tres ramas: I₁ = 5 A entra, I₂ = 2 A sale, I₃ = ? Aplicar LCK.",
+      "pasos": [
+        "Convención: corrientes que entran (+), que salen (-)",
+        "LCK en nodo A: I₁ - I₂ - I₃ = 0",
+        "Sustituir: 5 - 2 - I₃ = 0",
+        "I₃ = 3 A (sale del nodo, como se asumió)"
+      ],
+      "resultado_katex": "I_3 = 5\\,\\text{A} - 2\\,\\text{A} = 3\\,\\text{A}\\,(\\text{sale del nodo})"
+    },
+    {
+      "id": "ex-lvk-1",
+      "titulo": "Ejemplo 2: LVK en malla simple",
+      "enunciado": "Una malla tiene: V_s = 12V, R₁ = 100Ω, R₂ = 200Ω, en serie. Aplicar LVK para encontrar I.",
+      "pasos": [
+        "Asumir corriente I en sentido horario",
+        "Recorrido horario. LVK: -V_s + IR₁ + IR₂ = 0",
+        "Despejar I: I = V_s / (R₁ + R₂)",
+        "I = 12V / (100 + 200) = 12/300 = 0.04 A = 40 mA"
+      ],
+      "resultado_katex": "-12 + 100I + 200I = 0 \\Rightarrow I = \\frac{12}{300} = 40\\,\\text{mA}"
+    },
+    {
+      "id": "ex-mallas-2",
+      "titulo": "Ejemplo 3: Análisis de Mallas con 2 mallas",
+      "enunciado": "Circuito con dos mallas: Malla 1 (V_s=24V, R₁=6Ω, R₃=4Ω), Malla 2 (R₂=8Ω, R₃=4Ω). R₃ es compartida. Encontrar I₁ e I₂.",
+      "pasos": [
+        "Malla 1 (I₁ horario): -24 + 6I₁ + 4(I₁-I₂) = 0 → 10I₁ - 4I₂ = 24",
+        "Malla 2 (I₂ horario): 8I₂ + 4(I₂-I₁) = 0 → -4I₁ + 12I₂ = 0 → I₁ = 3I₂",
+        "Sustituir: 10(3I₂) - 4I₂ = 24 → 26I₂ = 24 → I₂ = 0.923 A",
+        "I₁ = 3 × 0.923 = 2.77 A",
+        "Corriente en R₃: I₃ = I₁ - I₂ = 2.77 - 0.923 = 1.846 A"
+      ],
+      "resultado_katex": "I_1 = 2.77\\,\\text{A},\\quad I_2 = 0.923\\,\\text{A},\\quad I_{R_3} = 1.85\\,\\text{A}"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-kirchhoff-1",
+      "titulo": "Nodo con 4 ramas",
+      "descripcion": "Al nodo B llegan $I_1 = 8\\,\\text{A}$ y $I_3 = 3\\,\\text{A}$. Del nodo B salen $I_2 = 5\\,\\text{A}$ y $I_4 = ?$ Aplique LCK.",
+      "solucion": "$I_4 = I_1 + I_3 - I_2 = 8 + 3 - 5 = 6\\,\\text{A}$",
+      "explicacion": "LCK: ΣI_entran = ΣI_salen → 8 + 3 = 5 + I₄ → I₄ = 6 A",
+      "tiempo_minutos": 3,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-kirchhoff-2",
+      "titulo": "Malla con fuente y 3 resistores",
+      "descripcion": "Malla con $V_s = 20\\,\\text{V}$, $R_1 = 2\\,\\Omega$, $R_2 = 3\\,\\Omega$, $R_3 = 5\\,\\Omega$ en serie. Aplique LVK para encontrar $I$ y cada caída de voltaje.",
+      "solucion": "$I = 20/(2+3+5) = 2\\,\\text{A}$; $V_1=4\\,\\text{V}$, $V_2=6\\,\\text{V}$, $V_3=10\\,\\text{V}$",
+      "explicacion": "I = Vs/R_T. Cada caída de voltaje V_n = I·R_n. Verificar: 4+6+10 = 20V = Vs ✓",
+      "tiempo_minutos": 5,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-kirchhoff-3",
+      "titulo": "Sistema de 2 mallas",
+      "descripcion": "Dos mallas: Malla 1 tiene $V_{s1}=15\\,\\text{V}$, $R_1=5\\,\\Omega$ y $R_3=10\\,\\Omega$. Malla 2 tiene $R_2=8\\,\\Omega$ y $R_3=10\\,\\Omega$. $R_3$ es compartida. Encuentra $I_1$ e $I_2$.",
+      "solucion": "M1: $15I_1 - 10I_2 = 15$ | M2: $-10I_1 + 18I_2 = 0 \\Rightarrow I_1 = 1.8I_2$ | Sustituir: $27I_2 - 10I_2 = 15 \\Rightarrow I_2 = 0.882\\,\\text{A}$, $I_1 = 1.588\\,\\text{A}$",
+      "explicacion": "Plantear ecuaciones de malla correctamente, resolver sistema 2×2. Verificar sustituyendo en ambas ecuaciones.",
+      "tiempo_minutos": 12,
+      "dificultad": "avanzado"
+    }
+  ],
+  "notas_profesor": {
+    "enfasis": [
+      "Establecer claramente la convención de signos ANTES de escribir ecuaciones",
+      "Demostrar que LCK viene de conservación de carga y LVK de conservación de energía",
+      "Para circuitos con muchas mallas, la forma matricial [R][I]=[V] es más eficiente"
+    ],
+    "errores_comunes": [
+      "Cambiar la convención de signos a mitad del análisis",
+      "Olvidar el signo al recorrer el resistor compartido entre mallas",
+      "Confundir corriente de malla con corriente de rama (en R compartida es la diferencia)"
+    ]
+  },
   "enlaces": [
-    { "texto": "Ley de Ohm", "ruta": "/clase/3/tema/ley-de-ohm" },
-    { "texto": "Tipos de circuitos", "ruta": "/clase/3/tema/tipos-circuitos" },
-    { "texto": "Volver a Clase 3", "ruta": "/clase/3" }
+    {"ruta": "/clase/3/tema/tipos-circuitos", "texto": "← Anterior: Tipos de Circuitos"},
+    {"ruta": "/clase/4", "texto": "Siguiente: Análisis de Nodos y Mallas →"},
+    {"ruta": "/clase/3", "texto": "Volver a Clase 3"}
   ]
 }

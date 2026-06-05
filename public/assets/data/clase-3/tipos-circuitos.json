@@ -1,123 +1,187 @@
 {
+  "id": "tipos-circuitos",
+  "nombre": "Tipos de Circuitos — Topologías Básicas",
+  "descripcion": "Circuitos en serie, paralelo y mixtos. Reducción de redes y divisores de voltaje/corriente.",
+  "introduccion": "Comprender las topologías fundamentales de circuitos es esencial para analizar cualquier red eléctrica compleja. Un circuito en serie conecta componentes uno tras otro, mientras que en paralelo los conecta entre los mismos dos nodos. La mayoría de los circuitos reales son combinaciones de ambas (mixtos). Dominar la reducción de circuitos permite resolver problemas complejos paso a paso.",
   "metadata": {
     "clase": 3,
-    "modulo": 1,
+    "orden": 2,
+    "titulo": "Tipos de Circuitos y Topologías",
+    "semana": "3",
     "unidad": 2,
-    "id": "tipos-circuitos",
-    "titulo": "Tipos de Circuitos (Topologías Básicas)",
-    "version": "1.0.0",
-    "fecha_actualizacion": "2026-05-21",
-    "ruta": "/clase/3/tema/tipos-circuitos",
-    "orden": 2
+    "modulo": 1
   },
-  "introduccion": "Existen tres formas principales de conectar componentes (resistencias, fuentes, etc.) en una red analógica: en serie, en paralelo o en una combinación mixta (serie-paralelo).",
-  "topologias": [
+  "conceptos_clave": [
     {
-      "id": "serie",
-      "nombre": "Circuito en Serie",
-      "descripcion": "Los componentes están conectados uno detrás de otro, formando un único camino para la corriente.",
-      "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/circuito-serie.svg",
-        "credito": "Referencia visual — ttsz / Getty Images"
-      },
-      "reglas": [
+      "nombre": "Nodo",
+      "descripcion": "Punto de conexión donde se unen dos o más ramas de un circuito. En un nodo, la corriente que entra es igual a la que sale (LCK).",
+      "analogia": "Una intersección de calles: el tráfico que llega debe igual al que sale.",
+      "cuando_usarlo": "Identifica nodos antes de aplicar cualquier método de análisis."
+    },
+    {
+      "nombre": "Rama",
+      "descripcion": "Trayectoria entre dos nodos que contiene un único elemento (o varios en serie que se pueden combinar). Cada rama porta una corriente propia.",
+      "cuando_usarlo": "Contar ramas ayuda a determinar cuántas ecuaciones independientes se necesitan."
+    },
+    {
+      "nombre": "Malla",
+      "descripcion": "Lazo cerrado del circuito que no contiene otros lazos en su interior. Se usa en el Análisis de Mallas con LVK.",
+      "cuando_usarlo": "Circuitos planos (que pueden dibujarse sin cruces de conductores)."
+    },
+    {
+      "nombre": "Circuito Serie",
+      "descripcion": "Todos los componentes están en una sola trayectoria. La MISMA corriente fluye por todos los elementos. El voltaje total se reparte entre los elementos.",
+      "principio_fisico": "La corriente no tiene bifurcaciones: todo pasa por el mismo camino.",
+      "cuando_usarlo": "Cuando se quiere dividir voltaje o limitar corriente en una sola rama."
+    },
+    {
+      "nombre": "Circuito Paralelo",
+      "descripcion": "Los componentes comparten los mismos dos nodos (extremos). El MISMO voltaje aparece en todos los elementos. La corriente total se reparte entre las ramas.",
+      "principio_fisico": "Vías alternativas para el flujo de carga: voltaje igual, corrientes diferentes.",
+      "cuando_usarlo": "Cuando se necesita que varios dispositivos operen al mismo voltaje (instalaciones eléctricas del hogar)."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Resistencia Total en Serie",
+      "katex": "R_T = R_1 + R_2 + R_3 + \\cdots + R_n",
+      "derivacion": "En serie el mismo I circula por todos los R. Por LVK: V = IR₁ + IR₂ + ... = I(R₁+R₂+...) = I·Rₜ",
+      "propiedad": "Rₜ siempre es mayor que la resistencia más grande."
+    },
+    {
+      "titulo": "Resistencia Total en Paralelo",
+      "katex": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\cdots + \\frac{1}{R_n}",
+      "derivacion": "En paralelo el mismo V está en todos los R. Por LCK: I = V/R₁ + V/R₂ + ... = V(1/R₁+1/R₂+...) = V/Rₜ",
+      "propiedad": "Rₜ siempre es MENOR que la resistencia más pequeña."
+    },
+    {
+      "titulo": "Dos Resistencias en Paralelo (caso especial)",
+      "katex": "R_T = \\frac{R_1 \\cdot R_2}{R_1 + R_2}",
+      "derivacion": "Simplificación algebraica de la fórmula general para n=2. Muy útil en la práctica."
+    },
+    {
+      "titulo": "Divisor de Voltaje",
+      "katex": "V_n = V_s \\cdot \\frac{R_n}{R_1 + R_2 + \\cdots + R_n}",
+      "derivacion": "En serie, cada resistor toma una fracción del voltaje total proporcional a su valor.",
+      "aplicacion": "Diseño de referencias de voltaje, polarización de transistores."
+    },
+    {
+      "titulo": "Divisor de Corriente (dos ramas)",
+      "katex": "I_1 = I_T \\cdot \\frac{R_2}{R_1 + R_2}",
+      "derivacion": "La corriente que entra por la rama 1 es proporcional a la resistencia de la OTRA rama (inversamente proporcional a la propia).",
+      "nota": "Atención: la fórmula usa R₂ (la OTRA resistencia) en el numerador."
+    },
+    {
+      "titulo": "Conductancia",
+      "katex": "G = \\frac{1}{R} \\quad [\\text{Siemens, S}]",
+      "derivacion": "La conductancia G es el recíproco de la resistencia. En paralelo: G_T = G₁ + G₂ + ..."
+    }
+  ],
+  "chart_config": {
+    "type": "bar",
+    "titulo": "Comparativa: Resistencias en Serie vs Paralelo",
+    "descripcion": "Para R1=100Ω, R2=200Ω, R3=300Ω",
+    "data": {
+      "labels": ["R₁", "R₂", "R₃", "Rₜ Serie", "Rₜ Paralelo"],
+      "datasets": [
         {
-          "magnitud": "Corriente",
-          "formula": "I_T = I_1 = I_2 = \\cdots = I_n",
-          "descripcion": "La misma corriente circula por todos los elementos."
-        },
-        {
-          "magnitud": "Voltaje",
-          "formula": "V_T = V_1 + V_2 + \\cdots + V_n",
-          "descripcion": "El voltaje de la fuente se reparte entre los componentes."
-        },
-        {
-          "magnitud": "Resistencia equivalente",
-          "formula": "R_T = R_1 + R_2 + \\cdots + R_n",
-          "descripcion": "Las resistencias en serie se suman directamente."
+          "label": "Resistencia (Ω)",
+          "data": [100, 200, 300, 600, 54.5],
+          "backgroundColor": ["#6366f1", "#6366f1", "#6366f1", "#f59e0b", "#10b981"]
         }
-      ],
-      "comportamiento_clave": "Si un elemento se abre o falla, se interrumpe todo el camino y deja de circular corriente en el circuito."
+      ]
+    },
+    "options": {
+      "yLabel": "Resistencia (Ω)",
+      "xLabel": "Componente"
+    }
+  },
+  "secciones": [
+    {
+      "id": "serie-detalle",
+      "titulo": "Propiedades del Circuito en Serie",
+      "contenido": "1. CORRIENTE: La misma corriente I fluye por todos los elementos. Si el circuito se interrumpe en cualquier punto, deja de fluir corriente en todo el circuito. 2. VOLTAJE: El voltaje de la fuente V_s se reparte entre todos los resistores: V_s = V₁ + V₂ + V₃ (LVK). 3. RESISTENCIA: R_T = R₁ + R₂ + ... (suma directa). 4. POTENCIA: La potencia total es la suma de las potencias individuales: P_T = P₁ + P₂ + ..."
     },
     {
-      "id": "paralelo",
-      "nombre": "Circuito en Paralelo",
-      "descripcion": "Los componentes comparten los mismos dos nodos, creando ramas independientes para la corriente.",
-      "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/circuito-paralelo.svg",
-        "credito": "Referencia visual — ttsz / Getty Images"
-      },
-      "reglas": [
-        {
-          "magnitud": "Corriente",
-          "formula": "I_T = I_1 + I_2 + \\cdots + I_n",
-          "descripcion": "La corriente de la fuente se reparte entre las ramas."
-        },
-        {
-          "magnitud": "Voltaje",
-          "formula": "V_T = V_1 = V_2 = \\cdots = V_n",
-          "descripcion": "Mismo voltaje en todas las ramas en paralelo."
-        },
-        {
-          "magnitud": "Resistencia equivalente",
-          "formula": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\cdots + \\frac{1}{R_n}",
-          "descripcion": "La resistencia total es siempre menor que la menor resistencia individual."
-        },
-        {
-          "magnitud": "Caso dos resistencias",
-          "formula": "R_T = \\frac{R_1 R_2}{R_1 + R_2}",
-          "descripcion": "Forma compacta muy usada en ejercicios."
-        }
-      ],
-      "comportamiento_clave": "Si una rama se abre, las demás siguen conduciendo. Principio de las instalaciones eléctricas residenciales (cada carga en paralelo con la fuente)."
+      "id": "paralelo-detalle",
+      "titulo": "Propiedades del Circuito en Paralelo",
+      "contenido": "1. VOLTAJE: El mismo voltaje V aparece en todas las ramas paralelas. 2. CORRIENTE: La corriente total se divide entre las ramas: I_T = I₁ + I₂ + I₃ (LCK). La rama de menor resistencia lleva mayor corriente. 3. RESISTENCIA: R_T es siempre menor que el menor resistor individual. 4. Si n resistores idénticos de valor R están en paralelo: R_T = R/n."
     },
     {
-      "id": "mixto",
-      "nombre": "Circuito Mixto (Serie-Paralelo)",
-      "descripcion": "Combinación de bloques en serie y en paralelo dentro de la misma red.",
-      "ilustracion": {
-        "archivo": "/assets/illustrations/clase-3/circuito-mixto.svg"
-      },
-      "metodo_reduccion": [
-        "Identificar bloques puramente en paralelo o en serie.",
-        "Reemplazar cada bloque por su resistencia equivalente.",
-        "Repetir hasta obtener un solo R_{eq} entre los terminales de la fuente."
-      ],
-      "comportamiento_clave": "El análisis sistemático por reducción evita errores al mezclar reglas de serie y paralelo en un mismo paso."
-    }
-  ],
-  "tips_ensenanza": [
-    "Pregunta siempre: ¿comparten la misma corriente (serie) o el mismo voltaje (paralelo)?",
-    "En paralelo, R_T siempre es menor que la resistencia más pequeña.",
-    "En circuitos mixtos, dibuja cajas alrededor de cada bloque antes de calcular."
-  ],
-  "interactivos": [
-    {
-      "id": "topology-lab",
-      "tipo": "topology-lab",
-      "titulo": "Laboratorio de topologías",
-      "descripcion": "Calcula R_T, corrientes y voltajes en serie, paralelo y un circuito mixto guiado."
-    }
-  ],
-  "ejemplos": [
-    {
-      "titulo": "Serie — tres resistencias",
-      "enunciado": "R_1=100\\,\\Omega, R_2=220\\,\\Omega, R_3=330\\,\\Omega en serie.",
-      "solucion_pasos": ["R_T = 100+220+330 = 650\\,\\Omega"],
-      "resultado": "650\\,\\Omega"
+      "id": "mixto-procedimiento",
+      "titulo": "Procedimiento para Circuitos Mixtos",
+      "contenido": "Método paso a paso: (1) Identificar grupos en serie y grupos en paralelo. (2) Reducir primero las combinaciones en paralelo a una sola R_eq. (3) Luego sumar las R_eq resultantes si están en serie. (4) Repetir hasta obtener una sola R_total. (5) Con R_total, calcular la corriente total: I = V_s/R_total. (6) Regresar al circuito original para calcular voltajes y corrientes individuales."
     },
     {
-      "titulo": "Paralelo — dos resistencias",
-      "enunciado": "R_1=12\\,\\Omega y R_2=6\\,\\Omega en paralelo.",
-      "solucion_pasos": [
-        "R_T = \\frac{12\\cdot6}{12+6} = \\frac{72}{18} = 4\\,\\Omega"
-      ],
-      "resultado": "4\\,\\Omega"
+      "id": "divisor-voltaje-app",
+      "titulo": "Divisor de Voltaje — Aplicaciones",
+      "contenido": "El divisor de voltaje es fundamental en: (1) Polarización de la base de transistores BJT (circuito de polarización por divisor). (2) Crear una referencia de voltaje intermedia (ej: 3.3V a partir de 5V). (3) Interfaces de sensores analógicos: convertir un rango de resistencia variable en un rango de voltaje. Limitación: El circuito cargado (con corriente de salida) altera el voltaje calculado; usar cuando I_carga << I_divisor."
     }
   ],
+  "ejemplos_resueltos": [
+    {
+      "id": "ex-serie-1",
+      "titulo": "Ejemplo 1: Circuito en serie completo",
+      "enunciado": "Un circuito serie tiene V_s = 24 V, R₁ = 100 Ω, R₂ = 150 Ω, R₃ = 250 Ω. Calcular: R_T, I, V₁, V₂, V₃ y verificar con LVK.",
+      "pasos": [
+        "R_T = R₁ + R₂ + R₃ = 100 + 150 + 250 = 500 Ω",
+        "I = V_s / R_T = 24 V / 500 Ω = 0.048 A = 48 mA",
+        "V₁ = I·R₁ = 0.048 × 100 = 4.8 V",
+        "V₂ = I·R₂ = 0.048 × 150 = 7.2 V",
+        "V₃ = I·R₃ = 0.048 × 250 = 12.0 V",
+        "Verificación LVK: V₁ + V₂ + V₃ = 4.8 + 7.2 + 12.0 = 24.0 V = V_s ✓"
+      ],
+      "resultado_katex": "I = 48\\,\\text{mA},\\quad V_1=4.8\\,\\text{V},\\quad V_2=7.2\\,\\text{V},\\quad V_3=12\\,\\text{V}"
+    },
+    {
+      "id": "ex-paralelo-1",
+      "titulo": "Ejemplo 2: Divisor de voltaje con carga",
+      "enunciado": "Diseñar un divisor de voltaje con R₁ y R₂ para obtener 3.3 V de una fuente de 5 V. La corriente de la carga es despreciable. Elegir una corriente de divisor de 1 mA.",
+      "pasos": [
+        "Voltage deseado en R₂: V₂ = 3.3 V, luego V₁ = 5 - 3.3 = 1.7 V",
+        "Con I = 1 mA: R₁ = V₁/I = 1.7V / 0.001A = 1700 Ω ≈ 1.8 kΩ (valor comercial)",
+        "R₂ = V₂/I = 3.3V / 0.001A = 3300 Ω = 3.3 kΩ",
+        "Verificación: V₂ = 5V × 3.3k/(1.8k + 3.3k) = 5 × 3.3/5.1 = 3.24 V (ligero error por valores comerciales)",
+        "Potencia total: P = 5V × 1mA = 5 mW (muy eficiente)"
+      ],
+      "resultado_katex": "R_1 = 1.8\\,\\text{k}\\Omega,\\quad R_2 = 3.3\\,\\text{k}\\Omega"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-topo-1",
+      "titulo": "Resistencia equivalente mixta",
+      "descripcion": "Dado el circuito: R₁=10Ω en serie con la combinación paralela de R₂=20Ω y R₃=30Ω, todo conectado a $V_s = 15\\,\\text{V}$. Calcular $R_T$, $I_T$, e $I_2$.",
+      "solucion": "$R_{23} = \\frac{20\\times30}{20+30} = 12\\,\\Omega$; $R_T = 10+12 = 22\\,\\Omega$; $I_T = 15/22 \\approx 0.682\\,\\text{A}$; $V_{23} = 0.682 \\times 12 = 8.18\\,\\text{V}$; $I_2 = 8.18/20 = 0.409\\,\\text{A}$",
+      "explicacion": "Primero reducir paralelo → equivalente, luego sumar con serie. Calcular voltaje en la combinación paralela para encontrar corrientes individuales.",
+      "tiempo_minutos": 8,
+      "dificultad": "intermedio"
+    },
+    {
+      "id": "ej-topo-2",
+      "titulo": "Diseño de divisor de corriente",
+      "descripcion": "Se tiene una fuente de corriente de $I_T = 100\\,\\text{mA}$. Se quiere que $I_1 = 60\\,\\text{mA}$ y $I_2 = 40\\,\\text{mA}$. Diseñar el divisor de corriente (dos resistencias en paralelo).",
+      "solucion": "Razón: $I_1/I_2 = R_2/R_1 \\Rightarrow 60/40 = R_2/R_1 \\Rightarrow R_2 = 1.5\\,R_1$. Elegir $R_1 = 100\\,\\Omega, R_2 = 150\\,\\Omega$.",
+      "explicacion": "En el divisor de corriente, la corriente en cada rama es INVERSAMENTE proporcional a su resistencia: menor R → mayor I.",
+      "tiempo_minutos": 6,
+      "dificultad": "intermedio"
+    }
+  ],
+  "notas_profesor": {
+    "enfasis": [
+      "Demostrar con resistómetro que R_paralelo es siempre menor que R_min",
+      "Enfatizar que en serie I es la misma en todos; en paralelo V es el mismo",
+      "Usar el divisor de voltaje como base para entender polarización BJT más adelante"
+    ],
+    "errores_comunes": [
+      "Usar suma directa de R en paralelo (error muy común)",
+      "No verificar con LVK o LCK al finalizar",
+      "Confundir divisor de voltaje con divisor de corriente"
+    ]
+  },
   "enlaces": [
-    { "texto": "Ley de Ohm", "ruta": "/clase/3/tema/ley-de-ohm" },
-    { "texto": "Leyes de Kirchhoff", "ruta": "/clase/3/tema/leyes-kirchhoff" },
-    { "texto": "Volver a Clase 3", "ruta": "/clase/3" }
+    {"ruta": "/clase/3/tema/ley-de-ohm", "texto": "← Anterior: Ley de Ohm"},
+    {"ruta": "/clase/3/tema/leyes-kirchhoff", "texto": "Siguiente: Leyes de Kirchhoff →"},
+    {"ruta": "/clase/3", "texto": "Volver a Clase 3"}
   ]
 }

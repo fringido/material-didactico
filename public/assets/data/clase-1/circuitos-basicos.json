@@ -1,0 +1,107 @@
+{
+  "id": "circuitos-basicos",
+  "nombre": "Circuitos Básicos: Amplificadores, Filtros y Osciladores",
+  "descripcion": "Introducción a los tres pilares de los sistemas electrónicos analógicos y sus aplicaciones prácticas.",
+  "introduccion": "En electrónica analógica, la gran mayoría de los circuitos complejos se pueden descomponer en tres funciones o bloques de construcción fundamentales: los Amplificadores (que incrementan el nivel de señal), los Filtros (que seleccionan o rechazan componentes frecuenciales de una señal), y los Osciladores (que generan señales periódicas a partir de energía en corriente directa).",
+  "metadata": {
+    "clase": 1,
+    "orden": 3,
+    "titulo": "Circuitos Básicos"
+  },
+  "conceptos_clave": [
+    {
+      "nombre": "Amplificadores",
+      "descripcion": "Circuitos que incrementan la amplitud de una señal de entrada. La amplificación puede ser de voltaje, corriente o potencia. Tienen una entrada de señal, una alimentación DC y una salida. La relación de salida a entrada se llama Ganancia (A).",
+      "parametros": ["Ganancia de Voltaje (Av = Vout / Vin)", "Resistencia de entrada (Rin)", "Resistencia de salida (Rout)"]
+    },
+    {
+      "nombre": "Filtros Pasivos y Activos",
+      "descripcion": "Bloques diseñados para permitir el paso de señales de ciertas frecuencias mientras atenúan otras. Los filtros pasivos contienen solo resistencias, inductores y capacitores (RC, RL, RLC). Los filtros activos combinan estos elementos con amplificadores (usualmente Op-Amps) para evitar atenuaciones y proporcionar ganancia.",
+      "tipos": ["Pasa-bajas (LPF)", "Pasa-altas (HPF)", "Pasa-banda (BPF)", "Rechaza-banda (Notch)"]
+    },
+    {
+      "nombre": "Osciladores",
+      "descripcion": "Circuitos que generan una forma de onda periódica (senoidal, cuadrada, triangular) sin necesidad de una señal de entrada. Convierten la potencia DC de la fuente en potencia AC a una frecuencia determinada por sus componentes resonantes o de retroalimentación.",
+      "criterio": "Criterio de Barkhausen (Ganancia de lazo A\u03b2 = 1, desfase total de 0 o 360 grados) para que ocurra la oscilación estable."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Ganancia de Voltaje (en Decibelios)",
+      "katex": "A_v \\, [\\text{dB}] = 20 \\cdot \\log_{10} \\left( \\frac{V_{out}}{V_{in}} \\right)",
+      "derivacion": "Forma logarítmica de representar la ganancia. Facilita sumas de ganancias en cascada e interpretación de rangos amplios."
+    },
+    {
+      "titulo": "Frecuencia de Corte (Filtro RC)",
+      "katex": "f_c = \\frac{1}{2\\pi R C}",
+      "derivacion": "Frecuencia en la cual la potencia de salida disminuye a la mitad (atenuación de -3 dB) y la amplitud del voltaje cae a 0.707 de la entrada."
+    },
+    {
+      "titulo": "Frecuencia de Oscilación (Oscilador RC Puente de Wien)",
+      "katex": "f_0 = \\frac{1}{2\\pi R C}",
+      "derivacion": "Frecuencia de resonancia donde el desfase del lazo de retroalimentación es exactamente 0 grados."
+    }
+  ],
+  "chart_config": {
+    "type": "line",
+    "titulo": "Respuesta en Frecuencia de Filtros RC Pasa-Bajas y Pasa-Altas",
+    "descripcion": "Comparación del factor de transmisión (magnitud |H(f)|) en función de la frecuencia normalizada f / fc.",
+    "data": {
+      "labels": [0.1, 0.2, 0.5, 0.707, 1, 1.414, 2, 5, 10],
+      "datasets": [
+        {
+          "label": "Filtro Pasa-Bajas (LPF)",
+          "data": [0.995, 0.98, 0.894, 0.816, 0.707, 0.577, 0.447, 0.196, 0.099],
+          "borderColor": "#ef4444",
+          "tension": 0.2
+        },
+        {
+          "label": "Filtro Pasa-Altas (HPF)",
+          "data": [0.099, 0.196, 0.447, 0.577, 0.707, 0.816, 0.894, 0.98, 0.995],
+          "borderColor": "#3b82f6",
+          "tension": 0.2
+        }
+      ]
+    },
+    "options": {
+      "xLabel": "Frecuencia Normalizada (f / fc)",
+      "yLabel": "Magnitud de Ganancia |H(f)|"
+    }
+  },
+  "secciones": [
+    {
+      "id": "amplis-det",
+      "titulo": "El concepto de Amplificación",
+      "contenido": "Un amplificador toma una pequeña señal (como la señal de un micrófono que es de milivoltios) y la incrementa a niveles útiles (voltios para mover un altavoz). No se viola la conservación de la energía: la energía adicional es suministrada por la fuente de alimentación DC de la que está colgado el amplificador. La ganancia ideal es constante para todas las frecuencias, pero los amplificadores reales tienen un ancho de banda limitado."
+    },
+    {
+      "id": "filtros-det",
+      "titulo": "Importancia de los Filtros en Comunicaciones e Instrumentación",
+      "contenido": "Los filtros son esenciales para limpiar ruido. En una señal analógica digitalizada, el filtro pasa-bajas evita el solapamiento (aliasing) eliminando las frecuencias por encima de la mitad de la tasa de muestreo. En radiofrecuencia, un filtro pasa-banda permite sintonizar una estación específica bloqueando el resto del espectro electromagnético."
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-filtro-rc",
+      "titulo": "Diseño de un Filtro Pasa-Bajas para Audio",
+      "descripcion": "Diseñar un filtro RC pasa-bajas que elimine ruidos de alta frecuencia con una frecuencia de corte de $f_c = 1.6\\,\\text{kHz}$. Si selecciona un capacitor de $100\\,\\text{nF}$, calcule la resistencia necesaria.",
+      "solucion": "$R = 1 / (2 \\pi f_c C) = 1 / (2 \\times \\pi \\times 1600 \\times 100 \\times 10^{-9}) \\approx 995\\,\\Omega$ (se puede usar un resistor comercial de $1\\,\\text{k}\\Omega$).",
+      "explicacion": "Utilizamos la fórmula fundamental de frecuencia de corte para un filtro RC: $f_c = 1 / (2\\pi RC)$ despejando R.",
+      "tiempo_minutos": 4,
+      "dificultad": "basico"
+    },
+    {
+      "id": "ej-amplificador-db",
+      "titulo": "Cálculo de Ganancia en dB",
+      "descripcion": "Un amplificador recibe una señal de $50\\,\\text{mV}$ de pico y produce una salida de $2.5\\,\\text{V}$ de pico. Encuentre la ganancia de voltaje adimensional y la ganancia de voltaje en decibelios.",
+      "solucion": "Ganancia adimensional: $A_v = 2.5 / 0.05 = 50$. Ganancia en dB: $A_v\\,\\text{[dB]} = 20 \\log_{10}(50) \\approx 20 \\times 1.699 = 33.98\\,\\text{dB}$.",
+      "explicacion": "La ganancia es la relación directa de voltajes de salida y entrada. Luego se aplica la fórmula logarítmica para obtener la ganancia en dB.",
+      "tiempo_minutos": 4,
+      "dificultad": "basico"
+    }
+  ],
+  "enlaces": [
+    {"ruta": "/clase/1", "texto": "Volver a Clase 1"},
+    {"ruta": "/clase/2", "texto": "Siguiente Clase: Componentes e Identificación →"}
+  ]
+}
