@@ -35,6 +35,9 @@ export class ClaseAcComponent implements OnInit, OnDestroy {
   temaDetallado = signal<any>(null);
   loading = signal(true);
   error = signal<string | null>(null);
+  breadcrumb = signal<{ label: string; link?: string }[]>([]);
+  backLink = signal<string>('/');
+  backLabel = signal<string>('Volver');
 
   // Exercise state
   activeExercise = signal<string | null>(null);
@@ -52,6 +55,7 @@ export class ClaseAcComponent implements OnInit, OnDestroy {
           next: (detalle) => {
             this.temaDetallado.set({ id: temaId, nombre: detalle.nombre || detalle.titulo, descripcion: detalle.descripcion, detalle });
             this.data.set(null);
+            this.setupBreadcrumbForTema(detalle.nombre || detalle.titulo);
             this.loading.set(false);
           },
           error: (err) => {
@@ -65,6 +69,7 @@ export class ClaseAcComponent implements OnInit, OnDestroy {
           next: (d) => {
             this.data.set(d);
             this.temaDetallado.set(null);
+            this.setupBreadcrumbForIndex();
             this.loading.set(false);
           },
           error: () => {
@@ -74,6 +79,27 @@ export class ClaseAcComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  private setupBreadcrumbForTema(temaName: string) {
+    this.backLink.set('/modulo/1/unidad/3');
+    this.backLabel.set('Unidad 3');
+    this.breadcrumb.set([
+      { label: 'Inicio', link: '/' },
+      { label: 'Módulo 1', link: '/modulo/1' },
+      { label: 'Unidad 3: Análisis de Circuitos en AC', link: '/modulo/1/unidad/3' },
+      { label: temaName }
+    ]);
+  }
+
+  private setupBreadcrumbForIndex() {
+    this.backLink.set('/modulo/1/unidad/3');
+    this.backLabel.set('Unidad 3');
+    this.breadcrumb.set([
+      { label: 'Inicio', link: '/' },
+      { label: 'Módulo 1', link: '/modulo/1' },
+      { label: 'Unidad 3: Análisis de Circuitos en AC' }
+    ]);
   }
 
   ngOnDestroy() {

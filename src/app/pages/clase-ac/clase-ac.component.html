@@ -11,16 +11,17 @@
     </div>
   } @else if (data() || temaDetallado()) {
     @if (temaDetallado()) {
-      <app-page-back-bar backLink="/clase/ac" backLabel="Volver a Clase AC" [breadcrumb]="[
-          { label: 'Inicio', link: '/' },
-          { label: 'Clase AC', link: '/clase/ac' },
-          { label: temaDetallado()?.nombre }
-        ]" />
+      <app-page-back-bar
+        [backLink]="backLink()"
+        [backLabel]="backLabel()"
+        [breadcrumb]="breadcrumb()"
+      />
     } @else {
-      <app-page-back-bar backLink="/" backLabel="Volver al inicio" [breadcrumb]="[
-          { label: 'Inicio', link: '/' },
-          { label: 'Clase AC', link: '/clase/ac' }
-        ]" />
+      <app-page-back-bar
+        [backLink]="backLink()"
+        [backLabel]="backLabel()"
+        [breadcrumb]="breadcrumb()"
+      />
     }
 
     @if (data()) {
@@ -49,7 +50,9 @@
           <h2 class="section__title">Objetivos de aprendizaje</h2>
           <div class="content-panel">
             <ul class="text-body bullet-list">
-              <li *ngFor="let o of data().objetivos">{{ o }}</li>
+              @for (o of data().objetivos; track o) {
+                <li>{{ o }}</li>
+              }
             </ul>
           </div>
         </section>

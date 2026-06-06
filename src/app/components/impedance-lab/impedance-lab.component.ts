@@ -13,6 +13,7 @@ import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 export class ImpedanceLabComponent {
   @Input() simulacion: any;
 
+  Math = Math;
   private readonly fb = new FormBuilder();
 
   r   = signal(100);   // Ω
