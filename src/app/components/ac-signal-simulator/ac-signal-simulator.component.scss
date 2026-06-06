@@ -1,0 +1,49 @@
+.ac-shell {
+  background: var(--color-surface-2, #1e293b);
+  border: 1px solid var(--color-border, #334155);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.ac-header {
+  padding: 0.9rem 1.2rem 0.6rem;
+  border-bottom: 1px solid var(--color-border, #334155);
+}
+.ac-title { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin: 0 0 0.2rem; }
+.ac-subtitle { font-size: 0.78rem; color: #94a3b8; margin: 0; }
+.ac-body { padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
+
+.ac-controls { display: flex; flex-direction: column; gap: 0.6rem; }
+.ctrl-row { display: grid; grid-template-columns: 1fr; gap: 0.4rem;
+  @media (min-width: 480px) { grid-template-columns: repeat(3, 1fr); } }
+.ctrl-item { display: flex; flex-direction: column; gap: 2px; }
+.ctrl-label { font-size: 0.7rem; color: #94a3b8; sub { font-size: 0.63rem; } }
+.ctrl-input { width: 100%; accent-color: #a78bfa; cursor: pointer; }
+.ctrl-val { font-size: 0.72rem; color: #f1f5f9; font-family: monospace; }
+
+.viz-grid { display: grid; grid-template-columns: 1fr;
+  gap: 0.75rem;
+  @media (min-width: 560px) { grid-template-columns: 1fr auto auto; align-items: start; } }
+
+.wave-panel, .phasor-panel {
+  background: var(--color-surface-1, #0f172a);
+  border: 1px solid var(--color-border, #334155);
+  border-radius: 8px;
+  padding: 0.6rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.panel-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+.wave-svg { width: 100%; height: auto; font-family: monospace; }
+.phasor-svg { width: 120px; height: 120px; }
+
+.metrics-col { display: flex; flex-direction: column; gap: 0.4rem;
+  @media (max-width: 559px) { flex-direction: row; flex-wrap: wrap; } }
+.metric-chip {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 0.45rem 0.6rem; border-radius: 8px; border: 1px solid transparent; min-width: 80px;
+  &--purple { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3); }
+  &--blue   { background: rgba(56,189,248,0.1);  border-color: rgba(56,189,248,0.3);  }
+  &--green  { background: rgba(74,222,128,0.1);  border-color: rgba(74,222,128,0.3);  }
+  &--amber  { background: rgba(251,191,36,0.1);  border-color: rgba(251,191,36,0.3);  }
+}
+.m-label { font-size: 0.68rem; color: #94a3b8; sub { font-size: 0.62rem; } }
+.m-val { font-size: 0.9rem; font-weight: 700; font-family: monospace; color: #f1f5f9; }

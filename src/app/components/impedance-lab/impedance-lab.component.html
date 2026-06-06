@@ -1,0 +1,84 @@
+<div class="imp-shell">
+  <div class="imp-header">
+    <h4 class="imp-title">⚡ Calculadora de Impedancia RLC</h4>
+    <p class="imp-subtitle">Calcula X<sub>L</sub>, X<sub>C</sub>, |Z| y ángulo de fase en tiempo real</p>
+  </div>
+
+  <div class="imp-body">
+    <!-- Controls -->
+    <form [formGroup]="form" (ngSubmit)="apply()" class="">
+      <div class="ctrl-grid">
+        <label class="ctrl-item">
+          <span class="ctrl-label">R (Ω)</span>
+          <input class="ctrl-input" type="number" formControlName="r" min="0" step="10" (change)="apply()"/>
+        </label>
+        <label class="ctrl-item">
+          <span class="ctrl-label">L (mH)</span>
+          <input class="ctrl-input" type="number" formControlName="l" min="0" step="5" (change)="apply()"/>
+        </label>
+        <label class="ctrl-item">
+          <span class="ctrl-label">C (µF)</span>
+          <input class="ctrl-input" type="number" formControlName="c" min="1" step="10" (change)="apply()"/>
+        </label>
+        <label class="ctrl-item">
+          <span class="ctrl-label">f (Hz)</span>
+          <input class="ctrl-input" type="number" formControlName="f" min="10" step="10" (change)="apply()"/>
+        </label>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <div class="results-grid">
+      <div class="r-card r-card--blue">
+        <span class="r-label">X<sub>L</sub></span>
+        <span class="r-val">{{ xL() }} Ω</span>
+        <span class="r-formula">2πfL</span>
+      </div>
+      <div class="r-card r-card--green">
+        <span class="r-label">X<sub>C</sub></span>
+        <span class="r-val">{{ xC() }} Ω</span>
+        <span class="r-formula">1/(2πfC)</span>
+      </div>
+      <div class="r-card r-card--xl">
+        <span class="r-label">|Z|</span>
+        <span class="r-val">{{ zMag() }} Ω</span>
+        <span class="r-formula">√(R²+(XL−XC)²)</span>
+      </div>
+      <div class="r-card r-card--amber">
+        <span class="r-label">θ</span>
+        <span class="r-val">{{ theta() }}°</span>
+        <span class="r-formula">arctan(X/R)</span>
+      </div>
+    </div>
+
+    @if (isResonance()) {
+      <div style="padding: 0.5rem 0.75rem; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); border-radius: 8px; font-size: 0.82rem; color: #4ade80;">
+        ⚡ Resonancia aproximada — X<sub>L</sub> ≈ X<sub>C</sub>, Z es puramente resistiva
+      </div>
+    }
+
+    <!-- Phasor / impedance triangle -->
+    <div class="viz-panel">
+      <div class="viz-label">Triángulo de Impedancia (diagrama fasorial)</div>
+      <svg viewBox="0 0 250 140" class="imp-svg">
+        <!-- Axes -->
+        <line x1="15" y1="70" x2="230" y2="70"  stroke="#334155" stroke-width="1"/>
+        <line x1="70" y1="10" x2="70"  y2="130" stroke="#334155" stroke-width="1"/>
+        <text x="235" y="74" font-size="9" fill="#64748b">R</text>
+        <text x="72"  y="9"  font-size="9" fill="#64748b">jX</text>
+        <!-- R component -->
+        <path [attr.d]="phasorPaths.r" stroke="#38bdf8" stroke-width="2.5" fill="none"/>
+        <text [attr.x]="70 + r()*60/Math.max(zMag(),1)/2" y="82" font-size="8" fill="#38bdf8" text-anchor="middle">R={{r()}}Ω</text>
+        <!-- X component -->
+        <path [attr.d]="phasorPaths.x" stroke="#4ade80" stroke-width="2.5" fill="none"
+          [attr.stroke]="xNet() >= 0 ? '#4ade80' : '#f87171'"/>
+        <!-- Z hypotenuse -->
+        <path [attr.d]="phasorPaths.z" stroke="#a78bfa" stroke-width="2.5" fill="none" stroke-dasharray="4,2"/>
+        <circle [attr.cx]="phasorPaths.zTip.x" [attr.cy]="phasorPaths.zTip.y" r="4" fill="#a78bfa"/>
+        <text [attr.x]="phasorPaths.zTip.x+5" [attr.y]="phasorPaths.zTip.y-3" font-size="8" fill="#a78bfa">|Z|={{zMag()}}Ω</text>
+        <!-- f0 annotation -->
+        <text x="5" y="130" font-size="8" fill="#fbbf24">f₀ = {{ f0() }} Hz</text>
+      </svg>
+    </div>
+  </div>
+</div>

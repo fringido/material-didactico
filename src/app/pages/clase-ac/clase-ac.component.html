@@ -188,17 +188,104 @@
             <div class="content-panel">
                @if (temaDetallado().detalle.simulacion_dinamica.tipo === 'bode_interactive' || temaDetallado().detalle.graficas_bode) {
                   <app-bode-chart />
+               } @else if (temaDetallado().detalle.simulacion_dinamica.tipo === 'ac_signal_sim') {
+                  <app-ac-signal-simulator [simulacion]="temaDetallado().detalle.simulacion_dinamica" />
+               } @else if (temaDetallado().detalle.simulacion_dinamica.tipo === 'impedance_lab') {
+                  <app-impedance-lab [simulacion]="temaDetallado().detalle.simulacion_dinamica" />
                } @else {
                   <app-dynamic-circuit-simulator [simulacion]="temaDetallado().detalle.simulacion_dinamica" />
                }
             </div>
           </section>
-        } @else if (temaDetallado().detalle?.graficas_interactivas) {
+        } @else if (temaDetallado().detalle?.graficas_interactivas || temaDetallado().detalle?.graficas_bode) {
           <section class="section">
              <h3 class="section__title">🔌 Analizador de Bode</h3>
              <div class="content-panel">
                 <app-bode-chart />
              </div>
+          </section>
+        }
+
+        <!-- Conceptos Bode (diagramas-bode.json usa conceptos_bode en lugar de conceptos_clave) -->
+        @if (temaDetallado().detalle?.conceptos_bode?.length) {
+          <section class="section">
+            <h3 class="section__title">Conceptos del Diagrama de Bode</h3>
+            <div class="content-grid">
+              @for (c of temaDetallado().detalle.conceptos_bode; track c.concepto) {
+                <div class="formula-card card card--bordered">
+                  <p class="formula-card__label">{{ c.concepto }}</p>
+                  <p class="text-body mt-2">{{ c.descripcion }}</p>
+                  @if (c.imagen) {
+                    <div class="mt-4" style="text-align: center;">
+                      <img [src]="c.imagen" alt="{{ c.concepto }}" class="rounded max-w-full h-auto" style="max-height: 240px; border: 1px solid rgba(167,139,250,0.2);">
+                    </div>
+                  }
+                  @if (c.tabla?.length) {
+                    <table class="mt-3 w-full text-sm" style="border-collapse:collapse">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;padding:4px 8px;color:#64748b;font-size:0.7rem;border-bottom:1px solid #334155">dB</th>
+                          <th style="text-align:left;padding:4px 8px;color:#64748b;font-size:0.7rem;border-bottom:1px solid #334155">Ganancia</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (r of c.tabla; track r.dB) {
+                          <tr [style.background]="r.dB === '-3' ? 'rgba(167,139,250,0.1)' : 'transparent'">
+                            <td style="padding:3px 8px;font-family:monospace;color:#a78bfa">{{ r.dB }} dB</td>
+                            <td style="padding:3px 8px;color:#94a3b8">{{ r.ganancia }}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+                  }
+                </div>
+              }
+            </div>
+          </section>
+        }
+
+        <!-- Reglas de Bode asintótico -->
+        @if (getBodeRules().length) {
+          <section class="section">
+            <h3 class="section__title">Reglas del Bode Asintótico</h3>
+            <div class="content-panel">
+              <ul class="text-body bullet-list">
+                @for (r of getBodeRules(); track r) {
+                  <li>{{ r }}</li>
+                }
+              </ul>
+            </div>
+          </section>
+        }
+
+        <!-- Tabla de componentes RLC -->
+        @if (temaDetallado().detalle?.tabla_componentes?.length) {
+          <section class="section">
+            <h3 class="section__title">Tabla de Impedancias — R, L, C</h3>
+            <div style="overflow-x:auto">
+              <table class="w-full text-sm" style="border-collapse:collapse">
+                <thead>
+                  <tr style="border-bottom:1px solid #334155">
+                    <th style="text-align:left;padding:6px 12px;color:#64748b;font-size:0.75rem">Componente</th>
+                    <th style="text-align:left;padding:6px 12px;color:#64748b;font-size:0.75rem">Impedancia</th>
+                    <th style="text-align:left;padding:6px 12px;color:#64748b;font-size:0.75rem">Fase</th>
+                    <th style="text-align:left;padding:6px 12px;color:#64748b;font-size:0.75rem">Alta f</th>
+                    <th style="text-align:left;padding:6px 12px;color:#64748b;font-size:0.75rem">Baja f</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of temaDetallado().detalle.tabla_componentes; track row.componente) {
+                    <tr style="border-bottom:1px solid #1e293b">
+                      <td style="padding:5px 12px;color:#f1f5f9;font-weight:600">{{ row.componente }}</td>
+                      <td style="padding:5px 12px;color:#a78bfa;font-family:monospace">{{ row.impedancia }}</td>
+                      <td style="padding:5px 12px;color:#38bdf8">{{ row.fase }}</td>
+                      <td style="padding:5px 12px;color:#94a3b8;font-size:0.72rem">{{ row.a_alta_f }}</td>
+                      <td style="padding:5px 12px;color:#94a3b8;font-size:0.72rem">{{ row.a_baja_f }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
           </section>
         }
 

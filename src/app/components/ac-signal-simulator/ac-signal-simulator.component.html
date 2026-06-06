@@ -1,0 +1,81 @@
+<div class="ac-shell">
+  <div class="ac-header">
+    <h4 class="ac-title">🌊 Explorador de Señal Senoidal</h4>
+    <p class="ac-subtitle">Ajusta amplitud, frecuencia y fase — observa onda y fasor en tiempo real</p>
+  </div>
+
+  <div class="ac-body">
+    <!-- Controls -->
+    <form [formGroup]="form" (ngSubmit)="apply()" class="ac-controls">
+      <div class="ctrl-row">
+        <label class="ctrl-item">
+          <span class="ctrl-label">V<sub>m</sub> (V)</span>
+          <input class="ctrl-input" type="range" formControlName="vm" min="1" max="20" step="1" (input)="apply()"/>
+          <span class="ctrl-val">{{ form.value.vm }}V</span>
+        </label>
+        <label class="ctrl-item">
+          <span class="ctrl-label">f (Hz)</span>
+          <input class="ctrl-input" type="range" formControlName="f" min="10" max="1000" step="10" (input)="apply()"/>
+          <span class="ctrl-val">{{ form.value.f }}Hz</span>
+        </label>
+        <label class="ctrl-item">
+          <span class="ctrl-label">φ (°)</span>
+          <input class="ctrl-input" type="range" formControlName="phi" min="-180" max="180" step="15" (input)="apply()"/>
+          <span class="ctrl-val">{{ form.value.phi }}°</span>
+        </label>
+      </div>
+      <button type="button" class="btn btn--ghost btn--sm" (click)="togglePlay()">
+        {{ isPlaying() ? '⏸ Pausar' : '▶ Reanudar' }}
+      </button>
+    </form>
+
+    <div class="viz-grid">
+      <!-- Waveform -->
+      <div class="wave-panel">
+        <div class="panel-label">Forma de Onda v(t)</div>
+        <svg viewBox="0 0 340 100" class="wave-svg">
+          <line x1="0" y1="50" x2="340" y2="50" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="0" y1="20" x2="340" y2="20" stroke="#1e293b" stroke-width="1"/>
+          <line x1="0" y1="80" x2="340" y2="80" stroke="#1e293b" stroke-width="1"/>
+          <path [attr.d]="wavePath" fill="none" stroke="#a78bfa" stroke-width="2"/>
+          <text x="3" y="16" font-size="7" fill="#475569">+Vm</text>
+          <text x="3" y="84" font-size="7" fill="#475569">−Vm</text>
+          <text x="3" y="53" font-size="7" fill="#475569">0</text>
+        </svg>
+      </div>
+
+      <!-- Phasor diagram -->
+      <div class="phasor-panel">
+        <div class="panel-label">Fasor giratorio</div>
+        <svg viewBox="0 0 120 120" class="phasor-svg">
+          <circle cx="60" cy="60" r="45" stroke="#334155" stroke-width="1" fill="none"/>
+          <line x1="15" y1="60" x2="105" y2="60" stroke="#334155" stroke-width="1"/>
+          <line x1="60" y1="15" x2="60"  y2="105" stroke="#334155" stroke-width="1"/>
+          <path [attr.d]="phasorPath" stroke="#a78bfa" stroke-width="2.5" fill="none"/>
+          <circle [attr.cx]="phasorTip.x" [attr.cy]="phasorTip.y" r="4" fill="#a78bfa"/>
+          <text x="62" y="58" font-size="7" fill="#64748b">V</text>
+        </svg>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-col">
+        <div class="metric-chip metric-chip--purple">
+          <span class="m-label">V<sub>rms</sub></span>
+          <span class="m-val">{{ vrms() }} V</span>
+        </div>
+        <div class="metric-chip metric-chip--blue">
+          <span class="m-label">T</span>
+          <span class="m-val">{{ periodo() }} ms</span>
+        </div>
+        <div class="metric-chip metric-chip--green">
+          <span class="m-label">ω</span>
+          <span class="m-val">{{ omega() }} r/s</span>
+        </div>
+        <div class="metric-chip metric-chip--amber">
+          <span class="m-label">Fasor</span>
+          <span class="m-val">{{ fasor() }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

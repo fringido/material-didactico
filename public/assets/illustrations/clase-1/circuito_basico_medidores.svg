@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 260" width="480" height="260" font-family="monospace, sans-serif">
+  <rect width="480" height="260" fill="#0f172a" rx="12"/>
+  <text x="240" y="26" font-size="14" font-weight="bold" fill="#f1f5f9" text-anchor="middle">Circuito Básico con Voltímetro y Amperímetro</text>
+  <!-- Top wire -->
+  <line x1="55"  y1="70"  x2="420" y2="70"  stroke="#475569" stroke-width="2"/>
+  <!-- Bottom wire -->
+  <line x1="55"  y1="200" x2="420" y2="200" stroke="#475569" stroke-width="2"/>
+  <!-- Source left -->
+  <line x1="70" y1="70"  x2="70" y2="105" stroke="#38bdf8" stroke-width="2"/>
+  <circle cx="70" cy="135" r="25" stroke="#38bdf8" stroke-width="2" fill="none"/>
+  <text x="70" y="131" font-size="12" fill="#38bdf8" text-anchor="middle">+</text>
+  <text x="70" y="145" font-size="9"  fill="#38bdf8" text-anchor="middle">Vs</text>
+  <line x1="70" y1="160" x2="70" y2="200" stroke="#38bdf8" stroke-width="2"/>
+  <text x="42" y="138" font-size="10" fill="#38bdf8" text-anchor="end">12V</text>
+  <!-- Ammeter (series, horizontal) -->
+  <line x1="100" y1="70" x2="140" y2="70" stroke="#fbbf24" stroke-width="2"/>
+  <circle cx="175" cy="70" r="22" stroke="#fbbf24" stroke-width="2" fill="#1c1400"/>
+  <text x="175" y="66" font-size="10" fill="#fbbf24" text-anchor="middle" font-weight="bold">A</text>
+  <text x="175" y="79" font-size="8"  fill="#fbbf24" text-anchor="middle">0.5A</text>
+  <line x1="197" y1="70" x2="250" y2="70" stroke="#fbbf24" stroke-width="2"/>
+  <!-- Resistor R -->
+  <line x1="250" y1="70" x2="290" y2="70" stroke="#a78bfa" stroke-width="2"/>
+  <polyline points="290,70 297,58 305,82 313,58 321,82 329,58 337,82 345,70" stroke="#a78bfa" stroke-width="2" fill="none"/>
+  <line x1="345" y1="70" x2="400" y2="70" stroke="#a78bfa" stroke-width="2"/>
+  <text x="317" y="54" font-size="10" fill="#a78bfa" text-anchor="middle">R = 24Ω</text>
+  <!-- Voltmeter (parallel) -->
+  <line x1="250" y1="70"  x2="250" y2="110" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <circle cx="250" cy="135" r="22" stroke="#4ade80" stroke-width="2" fill="#001a0a"/>
+  <text x="250" y="131" font-size="10" fill="#4ade80" text-anchor="middle" font-weight="bold">V</text>
+  <text x="250" y="144" font-size="8"  fill="#4ade80" text-anchor="middle">12V</text>
+  <line x1="250" y1="157" x2="250" y2="200" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="345" y1="70"  x2="345" y2="110" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="345" y1="157" x2="345" y2="200" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- Ground -->
+  <line x1="235" y1="200" x2="235" y2="215" stroke="#64748b" stroke-width="2"/>
+  <line x1="223" y1="215" x2="247" y2="215" stroke="#64748b" stroke-width="3"/>
+  <line x1="228" y1="220" x2="242" y2="220" stroke="#64748b" stroke-width="2"/>
+  <!-- Formula -->
+  <text x="240" y="248" font-size="11" fill="#94a3b8" text-anchor="middle">V = I·R → 12V = 0.5A × 24Ω  |  P = V·I = 6W</text>
+</svg>

@@ -1,0 +1,24 @@
+.imp-shell { background: var(--color-surface-2,#1e293b); border: 1px solid var(--color-border,#334155); border-radius: 12px; overflow: hidden; }
+.imp-header { padding: .9rem 1.2rem .6rem; border-bottom: 1px solid var(--color-border,#334155); }
+.imp-title { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin: 0 0 .2rem; }
+.imp-subtitle { font-size: .78rem; color: #94a3b8; margin: 0; }
+.imp-body { padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
+.ctrl-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: .5rem;
+  @media (min-width:480px) { grid-template-columns: repeat(4,1fr); } }
+.ctrl-item { display: flex; flex-direction: column; gap: 3px; }
+.ctrl-label { font-size: .7rem; color: #94a3b8; sub { font-size: .63rem; } }
+.ctrl-input { width:100%; background: var(--color-surface-1,#0f172a); border: 1px solid var(--color-border,#475569); border-radius: 6px; color: #f1f5f9; padding: .28rem .45rem; font-size: .82rem;
+  &:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 2px rgba(167,139,250,.2); } }
+.results-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: .5rem;
+  @media (min-width:480px) { grid-template-columns: repeat(4,1fr); } }
+.r-card { display: flex; flex-direction: column; gap: 2px; padding: .55rem .7rem; border-radius: 8px; border: 1px solid transparent;
+  &--xl { background: rgba(167,139,250,.1); border-color: rgba(167,139,250,.3); }
+  &--blue { background: rgba(56,189,248,.1); border-color: rgba(56,189,248,.3); }
+  &--green { background: rgba(74,222,128,.1); border-color: rgba(74,222,128,.3); }
+  &--amber { background: rgba(251,191,36,.1); border-color: rgba(251,191,36,.3); } }
+.r-label { font-size: .68rem; color: #94a3b8; sub { font-size: .62rem; } }
+.r-val { font-size: .9rem; font-weight: 700; font-family: monospace; color: #f1f5f9; }
+.r-formula { font-size: .62rem; color: #64748b; font-family: monospace; }
+.viz-panel { background: var(--color-surface-1,#0f172a); border: 1px solid var(--color-border,#334155); border-radius: 8px; padding: .8rem; }
+.viz-label { font-size: .7rem; color: #64748b; text-transform: uppercase; letter-spacing:.05em; margin-bottom:.4rem; }
+.imp-svg { width: 100%; height: auto; font-family: monospace; }

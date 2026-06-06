@@ -7,6 +7,8 @@ import { FormulaTooltipDirective } from '../../directives/formula-tooltip.direct
 import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
 import { BodeChartComponent } from '../../components/bode-chart/bode-chart.component';
 import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
+import { AcSignalSimulatorComponent } from '../../components/ac-signal-simulator/ac-signal-simulator.component';
+import { ImpedanceLabComponent } from '../../components/impedance-lab/impedance-lab.component';
 
 @Component({
   selector: 'app-clase-ac',
@@ -18,7 +20,9 @@ import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circu
     FormulaTooltipDirective,
     PageBackBarComponent,
     BodeChartComponent,
-    DynamicCircuitSimulatorComponent
+    DynamicCircuitSimulatorComponent,
+    AcSignalSimulatorComponent,
+    ImpedanceLabComponent,
   ],
   templateUrl: './clase-ac.component.html',
   styleUrls: ['./clase-ac.component.scss']
@@ -101,5 +105,12 @@ export class ClaseAcComponent implements OnInit, OnDestroy {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  getBodeRules(): string[] {
+    const detalle = this.temaDetallado()?.detalle;
+    if (!detalle) return [];
+    // Key has accented ó — access via bracket notation
+    return (detalle as any)['reglas_bode_asint\u00f3tico'] || [];
   }
 }
