@@ -1,0 +1,105 @@
+<div class="analyzer-shell">
+  <div class="analyzer-header">
+    <h4 class="analyzer-title">🔍 Analizador de Circuitos</h4>
+    <p class="analyzer-subtitle">Ingresa la topología y el analizador recomienda el método más eficiente</p>
+  </div>
+
+  <div class="analyzer-body">
+    <div class="main-grid">
+      <!-- Form -->
+      <form [formGroup]="form" (ngSubmit)="analyze()" class="topology-form">
+        <div class="section-label">Topología del circuito</div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">Nodos (sin ref.)</span>
+            <input class="field-input" type="number" formControlName="nodes" min="2" max="20"/>
+          </label>
+          <label class="field">
+            <span class="field-label">Mallas independientes</span>
+            <input class="field-input" type="number" formControlName="meshes" min="1" max="20"/>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <label class="toggle-item">
+            <input type="checkbox" formControlName="hasSupernode" class="toggle-check"/>
+            <span class="toggle-text">¿Hay supernodo?</span>
+            <span class="toggle-hint">(fuente V entre 2 nodos)</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" formControlName="hasSupermesh" class="toggle-check"/>
+            <span class="toggle-text">¿Hay supermalla?</span>
+            <span class="toggle-hint">(fuente I compartida)</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" formControlName="isPlanar" class="toggle-check"/>
+            <span class="toggle-text">¿Circuito plano?</span>
+            <span class="toggle-hint">(sin cruces de ramas)</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--sm">
+          🔎 Analizar
+        </button>
+      </form>
+
+      <!-- Recommendation -->
+      <div class="recommendation-panel" [style.border-color]="recommendation().color">
+        <div class="rec-badge" [style.background-color]="recommendation().color + '22'" [style.color]="recommendation().color">
+          Método recomendado
+        </div>
+        <div class="rec-method" [style.color]="recommendation().color">
+          {{ recommendation().method === 'Nodos' ? '⚡' : '🔄' }}
+          Análisis de {{ recommendation().method }}
+        </div>
+        <p class="rec-reason">{{ recommendation().reason }}</p>
+        <div class="rec-savings">
+          Ahorra <strong>{{ savings() }}</strong> ecuación{{ savings() !== 1 ? 'es' : '' }} vs el otro método
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison bars -->
+    <div class="comparison-section">
+      <div class="section-label">Comparación de ecuaciones requeridas</div>
+      <div class="bar-group">
+        <div class="bar-row">
+          <span class="bar-label">Nodos (N−1)</span>
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--nodes"
+              [style.width.%]="(nodeEquations() / (nodeEquations() + meshEquations())) * 100">
+              {{ nodeEquations() }} ec.
+            </div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Mallas</span>
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--meshes"
+              [style.width.%]="(meshEquations() / (nodeEquations() + meshEquations())) * 100">
+              {{ meshEquations() }} ec.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision summary -->
+    <div class="decision-grid">
+      <div class="decision-card">
+        <span class="decision-icon">🟦</span>
+        <span class="decision-title">Nodos</span>
+        <span class="decision-eqs">{{ nodeEquations() }} ecuaciones</span>
+        <span class="decision-formula">N − 1 = {{ topology().nodes }} − 1</span>
+      </div>
+      <div class="decision-vs">VS</div>
+      <div class="decision-card">
+        <span class="decision-icon">🟣</span>
+        <span class="decision-title">Mallas</span>
+        <span class="decision-eqs">{{ meshEquations() }} ecuaciones</span>
+        <span class="decision-formula">M = {{ topology().meshes }}</span>
+      </div>
+    </div>
+  </div>
+</div>

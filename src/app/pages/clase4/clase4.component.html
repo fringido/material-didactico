@@ -165,6 +165,10 @@
             <app-norton-transformer />
           } @else if (simulador.componente === 'app-black-box-simulator') {
             <app-black-box-simulator />
+          } @else if (simulador.componente === 'app-circuit-analyzer') {
+            <app-circuit-analyzer />
+          } @else if (simulador.componente === 'app-method-comparator') {
+            <app-method-comparator />
           } @else {
             <div class="content-panel">
               <h4 class="section__title">{{ simulador.titulo }}</h4>
@@ -205,9 +209,9 @@
 
     <!-- Simulación dinámica -->
     @if (temaDetallado().detalle?.simulacion_dinamica) {
-    <section class="section">
+    <section class="section section--simulator-fullwidth">
       <h3 class="section__title">Simulación Dinámica de Circuito</h3>
-      <div class="content-panel">
+      <div class="content-panel content-panel--simulator">
         <app-dynamic-circuit-simulator
           [simulacion]="temaDetallado().detalle.simulacion_dinamica"></app-dynamic-circuit-simulator>
       </div>

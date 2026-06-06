@@ -1,0 +1,101 @@
+<div class="mc-shell">
+  <div class="mc-header">
+    <h4 class="mc-title">📊 Comparador de Métodos</h4>
+    <p class="mc-subtitle">Compara visualmente cuántas ecuaciones requiere cada método según la topología</p>
+  </div>
+
+  <div class="mc-body">
+
+    <!-- Presets -->
+    <div class="presets-row">
+      <span class="section-label">Circuitos de ejemplo:</span>
+      <div class="preset-chips">
+        @for (p of presets; track p.label) {
+          <button class="preset-chip" (click)="applyPreset(p)">{{ p.label }}</button>
+        }
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="apply()" class="mc-form">
+      <label class="mc-field">
+        <span class="field-label">Nodos (sin referencia)</span>
+        <input class="field-input" type="number" formControlName="nodes" min="2" max="20"/>
+      </label>
+      <label class="mc-field">
+        <span class="field-label">Mallas independientes</span>
+        <input class="field-input" type="number" formControlName="meshes" min="1" max="20"/>
+      </label>
+      <button type="submit" class="btn btn--primary btn--sm">Comparar</button>
+    </form>
+
+    <!-- Bar chart -->
+    <div class="chart-area">
+      <div class="chart-bar-group">
+        <!-- Nodes bar -->
+        <div class="chart-col">
+          <div class="chart-bar-wrapper">
+            <div class="chart-bar chart-bar--nodes"
+              [style.height.%]="(nodeEqs() / maxEqs()) * 85 + 10">
+              <span class="bar-value">{{ nodeEqs() }}</span>
+            </div>
+          </div>
+          <div class="chart-label" [class.chart-label--winner]="winner() === 'nodos'">
+            Nodos<br/>
+            <span class="chart-sublabel">N−1 = {{ nodeEqs() }}</span>
+            @if (winner() === 'nodos') {
+              <span class="winner-badge">✓ Mejor</span>
+            }
+          </div>
+        </div>
+
+        <!-- VS -->
+        <div class="chart-vs">vs</div>
+
+        <!-- Meshes bar -->
+        <div class="chart-col">
+          <div class="chart-bar-wrapper">
+            <div class="chart-bar chart-bar--meshes"
+              [style.height.%]="(meshEqs() / maxEqs()) * 85 + 10">
+              <span class="bar-value">{{ meshEqs() }}</span>
+            </div>
+          </div>
+          <div class="chart-label" [class.chart-label--winner]="winner() === 'mallas'">
+            Mallas<br/>
+            <span class="chart-sublabel">M = {{ meshEqs() }}</span>
+            @if (winner() === 'mallas') {
+              <span class="winner-badge">✓ Mejor</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-summary">
+        El método de
+        <strong [style.color]="winner() === 'nodos' ? '#38bdf8' : '#a78bfa'">
+          {{ winner() | titlecase }}
+        </strong>
+        ahorra {{ diff() }} ecuación{{ diff() !== 1 ? 'es' : '' }}
+      </div>
+    </div>
+
+    <!-- History -->
+    @if (history().length) {
+      <div class="history-section">
+        <div class="section-label">Historial</div>
+        <div class="history-list">
+          @for (h of history(); track $index) {
+            <div class="history-item">
+              <span class="hist-topo">N={{ h.nodes }}, M={{ h.meshes }}</span>
+              <span class="hist-winner"
+                [style.color]="h.winner === 'nodos' ? '#38bdf8' : '#a78bfa'">
+                → {{ h.winner | titlecase }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+  </div>
+</div>

@@ -9,6 +9,26 @@
   margin: $spacing-6 0;
 }
 
+.simulator-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.simulator-card__content {
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr;
+  gap: $spacing-6;
+  align-items: stretch;
+}
+
+@media (max-width: $breakpoint-lg) {
+  .simulator-card__content {
+    grid-template-columns: 1fr;
+  }
+}
+
 .simulator-header {
   margin-bottom: $spacing-6;
   text-align: center;

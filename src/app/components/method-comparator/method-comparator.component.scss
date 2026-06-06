@@ -1,0 +1,236 @@
+.mc-shell {
+  background: var(--color-surface-2, #1e293b);
+  border: 1px solid var(--color-border, #334155);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mc-header {
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--color-border, #334155);
+}
+
+.mc-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #f1f5f9);
+  margin: 0 0 0.25rem;
+}
+
+.mc-subtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #94a3b8);
+  margin: 0;
+}
+
+.mc-body {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary, #64748b);
+  font-weight: 600;
+}
+
+/* Presets */
+.presets-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.preset-chip {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border, #334155);
+  background: transparent;
+  color: var(--color-text-secondary, #94a3b8);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: #f1f5f9;
+    border-color: #475569;
+  }
+}
+
+/* Form */
+.mc-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.field-label {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary, #94a3b8);
+}
+
+.field-input {
+  background: var(--color-surface-1, #0f172a);
+  border: 1px solid var(--color-border, #475569);
+  border-radius: 6px;
+  color: var(--color-text-primary, #f1f5f9);
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+  width: 90px;
+
+  &:focus {
+    outline: none;
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
+  }
+}
+
+/* Chart */
+.chart-area {
+  background: var(--color-surface-1, #0f172a);
+  border-radius: 10px;
+  border: 1px solid var(--color-border, #334155);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chart-bar-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  height: 160px;
+}
+
+.chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100px;
+}
+
+.chart-bar-wrapper {
+  display: flex;
+  align-items: flex-end;
+  height: 120px;
+  width: 60px;
+}
+
+.chart-bar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+  transition: height 0.4s ease;
+
+  &--nodes  { background: linear-gradient(180deg, #38bdf8, #1d4ed8); }
+  &--meshes { background: linear-gradient(180deg, #a78bfa, #5b21b6); }
+}
+
+.bar-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: monospace;
+}
+
+.chart-label {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #94a3b8);
+  transition: color 0.2s;
+
+  &--winner { color: var(--color-text-primary, #f1f5f9); }
+}
+
+.chart-sublabel {
+  display: block;
+  font-size: 0.68rem;
+  font-family: monospace;
+  color: var(--color-text-secondary, #64748b);
+  font-weight: 400;
+}
+
+.winner-badge {
+  display: inline-block;
+  margin-top: 3px;
+  font-size: 0.65rem;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.chart-vs {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary, #475569);
+  padding-bottom: 40px;
+}
+
+.chart-summary {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary, #94a3b8);
+  text-align: center;
+
+  strong { font-family: monospace; }
+}
+
+/* History */
+.history-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.history-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--color-surface-1, #0f172a);
+  border: 1px solid var(--color-border, #334155);
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+}
+
+.hist-topo {
+  font-size: 0.72rem;
+  font-family: monospace;
+  color: var(--color-text-secondary, #64748b);
+}
+
+.hist-winner {
+  font-size: 0.72rem;
+  font-weight: 600;
+}

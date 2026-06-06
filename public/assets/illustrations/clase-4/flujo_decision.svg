@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" width="560" height="420" font-family="monospace, sans-serif">
+  <style>
+    .box { rx: 6; }
+    .lbl { font-size: 12px; fill: #f1f5f9; text-anchor: middle; }
+    .sub { font-size: 10px; fill: #94a3b8; text-anchor: middle; }
+    .yes { font-size: 10px; fill: #4ade80; }
+    .no  { font-size: 10px; fill: #f87171; }
+    .title { font-size: 15px; font-weight: bold; fill: #f1f5f9; text-anchor: middle; }
+  </style>
+  <rect width="560" height="420" fill="#0f172a" rx="12"/>
+  <text x="280" y="28" class="title">¿Nodos o Mallas? — Diagrama de Decisión</text>
+
+  <!-- START -->
+  <rect x="195" y="45" width="170" height="42" rx="20" fill="#334155" stroke="#64748b" stroke-width="1.5"/>
+  <text x="280" y="61" class="lbl">INICIO</text>
+  <text x="280" y="77" class="sub">Analiza el circuito</text>
+  <line x1="280" y1="87" x2="280" y2="108" stroke="#64748b" stroke-width="1.5"/>
+
+  <!-- Diamond 1: ¿Menos nodos? -->
+  <polygon points="280,108 380,143 280,178 180,143" fill="#1e3a5f" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="280" y="138" class="lbl" fill="#38bdf8">¿N_nodos − 1</text>
+  <text x="280" y="153" class="lbl" fill="#38bdf8">&lt; N_mallas?</text>
+  <!-- YES left -->
+  <line x1="180" y1="143" x2="100" y2="143" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="140" y="136" class="yes">SÍ</text>
+  <!-- NO down -->
+  <line x1="280" y1="178" x2="280" y2="205" stroke="#f87171" stroke-width="1.5"/>
+  <text x="290" y="196" class="no">NO</text>
+
+  <!-- Result box: NODOS -->
+  <rect x="20" y="120" width="130" height="46" rx="8" fill="#064e3b" stroke="#4ade80" stroke-width="2"/>
+  <text x="85" y="138" class="lbl" fill="#4ade80">✓ NODOS</text>
+  <text x="85" y="154" class="sub">Menos ecuaciones</text>
+
+  <!-- Diamond 2: ¿Plano? -->
+  <polygon points="280,205 390,243 280,281 170,243" fill="#1e1a3f" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="280" y="238" class="lbl" fill="#a78bfa">¿Circuito plano</text>
+  <text x="280" y="254" class="lbl" fill="#a78bfa">(sin cruces)?</text>
+  <!-- NO left -->
+  <line x1="170" y1="243" x2="85"  y2="243" stroke="#f87171" stroke-width="1.5"/>
+  <text x="127" y="236" class="no">NO</text>
+  <!-- YES down -->
+  <line x1="280" y1="281" x2="280" y2="308" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="290" y="300" class="yes">SÍ</text>
+
+  <!-- Result: NODOS only (non-planar) -->
+  <rect x="20" y="222" width="130" height="42" rx="8" fill="#064e3b" stroke="#4ade80" stroke-width="2"/>
+  <text x="85" y="240" class="lbl" fill="#4ade80">✓ NODOS</text>
+  <text x="85" y="255" class="sub">No-plano → Nodos</text>
+
+  <!-- Diamond 3: ¿Supernodo? -->
+  <polygon points="280,308 390,345 280,382 170,345" fill="#1c1400" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="280" y="340" class="lbl" fill="#fbbf24">¿Fuente V entre</text>
+  <text x="280" y="356" class="lbl" fill="#fbbf24">dos nodos?</text>
+  <!-- YES left = Nodos -->
+  <line x1="170" y1="345" x2="85"  y2="345" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="127" y="338" class="yes">SÍ</text>
+  <!-- NO right = Mallas -->
+  <line x1="390" y1="345" x2="470" y2="345" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="430" y="338" class="yes">NO</text>
+
+  <!-- Result: NODOS (supernodo) -->
+  <rect x="20" y="323" width="130" height="42" rx="8" fill="#064e3b" stroke="#4ade80" stroke-width="2"/>
+  <text x="85" y="341" class="lbl" fill="#4ade80">✓ NODOS</text>
+  <text x="85" y="356" class="sub">Supernodo natural</text>
+
+  <!-- Result: MALLAS -->
+  <rect x="412" y="323" width="130" height="42" rx="8" fill="#1e1a3f" stroke="#a78bfa" stroke-width="2"/>
+  <text x="477" y="341" class="lbl" fill="#a78bfa">✓ MALLAS</text>
+  <text x="477" y="356" class="sub">Más eficiente</text>
+
+  <!-- Connecting line Mallas back up from diamond3 right -->
+  <line x1="477" y1="323" x2="477" y2="243" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4,3"/>
+</svg>

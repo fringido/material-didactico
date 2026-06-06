@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" width="420" height="300" font-family="monospace, sans-serif">
+  <rect width="420" height="300" fill="#0f172a" rx="12"/>
+  <text x="210" y="26" font-size="14" font-weight="bold" fill="#f1f5f9" text-anchor="middle">LCK — Nodo Interactivo</text>
+
+  <!-- Central node -->
+  <circle cx="210" cy="155" r="14" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+  <text x="210" y="150" font-size="10" fill="#0f172a" font-weight="bold" text-anchor="middle">Nodo</text>
+
+  <!-- I1 entering from top-left -->
+  <line x1="80"  y1="80"  x2="198" y2="148" stroke="#4ade80" stroke-width="2.5"/>
+  <polygon points="198,148 185,140 192,155" fill="#4ade80"/>
+  <text x="108" y="96"  font-size="12" fill="#4ade80" font-weight="bold">I₁=3A</text>
+  <text x="108" y="110" font-size="9"  fill="#4ade80">Entra (+)</text>
+
+  <!-- I2 entering from left -->
+  <line x1="40"  y1="155" x2="196" y2="155" stroke="#4ade80" stroke-width="2.5"/>
+  <polygon points="196,155 183,148 183,162" fill="#4ade80"/>
+  <text x="60"  y="148" font-size="12" fill="#4ade80" font-weight="bold">I₂=2A</text>
+  <text x="60"  y="165" font-size="9"  fill="#4ade80">Entra (+)</text>
+
+  <!-- I3 exiting top-right -->
+  <line x1="222" y1="148" x2="340" y2="80"  stroke="#f87171" stroke-width="2.5"/>
+  <polygon points="340,80 325,84 330,96" fill="#f87171"/>
+  <text x="305" y="96"  font-size="12" fill="#f87171" font-weight="bold">I₃=4A</text>
+  <text x="305" y="110" font-size="9"  fill="#f87171">Sale (−)</text>
+
+  <!-- I4 exiting bottom-right -->
+  <line x1="222" y1="162" x2="340" y2="230" stroke="#f87171" stroke-width="2.5"/>
+  <polygon points="340,230 323,222 330,235" fill="#f87171"/>
+  <text x="305" y="222" font-size="12" fill="#f87171" font-weight="bold">I₄=1A</text>
+  <text x="305" y="236" font-size="9"  fill="#f87171">Sale (−)</text>
+
+  <!-- Balance box -->
+  <rect x="60" y="225" width="300" height="52" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="210" y="244" font-size="11" fill="#94a3b8" text-anchor="middle">ΣI_entran = ΣI_salen</text>
+  <text x="210" y="260" font-size="12" fill="#fbbf24" text-anchor="middle" font-weight="bold">3 + 2 = 4 + 1 → 5A = 5A ✓</text>
+
+  <!-- LCK equation -->
+  <text x="210" y="290" font-size="9" fill="#475569" text-anchor="middle">∑I_k = 0 → I₁ + I₂ − I₃ − I₄ = 0</text>
+</svg>

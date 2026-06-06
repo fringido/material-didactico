@@ -11,6 +11,8 @@ import { NodosMallasSvgComponent } from '../../components/nodos-mallas-svg/nodos
 import { TheveninCalculatorComponent } from '../../components/thevenin-calculator/thevenin-calculator.component';
 import { NortonTransformerComponent } from '../../components/norton-transformer/norton-transformer.component';
 import { BlackBoxSimulatorComponent } from '../../components/black-box-simulator/black-box-simulator.component';
+import { CircuitAnalyzerComponent } from '../../components/circuit-analyzer/circuit-analyzer.component';
+import { MethodComparatorComponent } from '../../components/method-comparator/method-comparator.component';
 
 @Component({
   selector: 'app-clase4',
@@ -27,6 +29,8 @@ import { BlackBoxSimulatorComponent } from '../../components/black-box-simulator
     TheveninCalculatorComponent,
     NortonTransformerComponent,
     BlackBoxSimulatorComponent,
+    CircuitAnalyzerComponent,
+    MethodComparatorComponent,
   ],
   templateUrl: './clase4.component.html',
   styleUrls: ['./clase4.component.scss']

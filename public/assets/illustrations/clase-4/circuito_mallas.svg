@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 300" width="580" height="300" font-family="monospace, sans-serif">
+  <style>
+    .lbl { font-size: 11px; fill: #e2e8f0; }
+    .mesh-lbl { font-size: 13px; font-weight: bold; }
+    .title { font-size: 14px; font-weight: bold; fill: #f1f5f9; }
+  </style>
+  <rect width="580" height="300" fill="#0f172a" rx="12"/>
+  <text x="290" y="26" class="title" text-anchor="middle">Circuito con Mallas Marcadas</text>
+
+  <!-- Outer rectangle wires -->
+  <line x1="50"  y1="55"  x2="530" y2="55"  stroke="#475569" stroke-width="2"/>
+  <line x1="50"  y1="255" x2="530" y2="255" stroke="#475569" stroke-width="2"/>
+  <line x1="50"  y1="55"  x2="50"  y2="255" stroke="#475569" stroke-width="2"/>
+  <line x1="530" y1="55"  x2="530" y2="255" stroke="#475569" stroke-width="2"/>
+  <!-- Middle vertical divider -->
+  <line x1="290" y1="55"  x2="290" y2="255" stroke="#475569" stroke-width="2"/>
+
+  <!-- Vs source (left) -->
+  <line x1="50"  y1="55"  x2="50"  y2="90"  stroke="#38bdf8" stroke-width="2"/>
+  <circle cx="50" cy="120" r="25" stroke="#38bdf8" stroke-width="2" fill="none"/>
+  <text x="50" y="116" font-size="11" fill="#38bdf8" text-anchor="middle">+</text>
+  <text x="50" y="129" font-size="9"  fill="#38bdf8" text-anchor="middle">Vs=10V</text>
+  <line x1="50"  y1="145" x2="50"  y2="255" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- R1 top-left horizontal -->
+  <line x1="70"  y1="55" x2="110" y2="55" stroke="#a78bfa" stroke-width="2"/>
+  <polyline points="110,55 117,43 125,67 133,43 141,67 149,43 157,67 165,55" stroke="#a78bfa" stroke-width="2" fill="none"/>
+  <line x1="165" y1="55" x2="210" y2="55" stroke="#a78bfa" stroke-width="2"/>
+  <text x="138" y="40" class="lbl" fill="#a78bfa" text-anchor="middle">R1=4Ω</text>
+
+  <!-- R2 top-right horizontal -->
+  <line x1="370" y1="55" x2="410" y2="55" stroke="#a78bfa" stroke-width="2"/>
+  <polyline points="410,55 417,43 425,67 433,43 441,67 449,43 457,67 465,55" stroke="#a78bfa" stroke-width="2" fill="none"/>
+  <line x1="465" y1="55" x2="510" y2="55" stroke="#a78bfa" stroke-width="2"/>
+  <text x="438" y="40" class="lbl" fill="#a78bfa" text-anchor="middle">R2=6Ω</text>
+
+  <!-- R3 shared middle vertical -->
+  <line x1="290" y1="75"  x2="290" y2="105" stroke="#fbbf24" stroke-width="2"/>
+  <polyline points="290,105 278,113 302,121 278,129 302,137 278,145 302,153 290,161" stroke="#fbbf24" stroke-width="2" fill="none"/>
+  <line x1="290" y1="161" x2="290" y2="255" stroke="#fbbf24" stroke-width="2"/>
+  <text x="306" y="135" class="lbl" fill="#fbbf24">R3=8Ω</text>
+
+  <!-- R4 right vertical (Vs2) -->
+  <line x1="530" y1="55"  x2="530" y2="90"  stroke="#4ade80" stroke-width="2"/>
+  <circle cx="530" cy="120" r="25" stroke="#4ade80" stroke-width="2" fill="none"/>
+  <text x="530" y="116" font-size="11" fill="#4ade80" text-anchor="middle">+</text>
+  <text x="530" y="129" font-size="9"  fill="#4ade80" text-anchor="middle">Vs2=6V</text>
+  <line x1="530" y1="145" x2="530" y2="255" stroke="#4ade80" stroke-width="2"/>
+
+  <!-- Mesh 1 arrow (left loop) -->
+  <path d="M 100 130 A 80 70 0 1 1 200 180" stroke="#38bdf8" stroke-width="1.5" fill="none" stroke-dasharray="6,3"/>
+  <polygon points="200,180 192,170 210,174" fill="#38bdf8"/>
+  <text x="145" y="170" class="mesh-lbl" fill="#38bdf8" text-anchor="middle">i₁</text>
+  <text x="145" y="185" font-size="9" fill="#38bdf8" text-anchor="middle">↻ horario</text>
+
+  <!-- Mesh 2 arrow (right loop) -->
+  <path d="M 370 130 A 80 70 0 1 1 470 180" stroke="#4ade80" stroke-width="1.5" fill="none" stroke-dasharray="6,3"/>
+  <polygon points="470,180 462,170 480,174" fill="#4ade80"/>
+  <text x="415" y="170" class="mesh-lbl" fill="#4ade80" text-anchor="middle">i₂</text>
+  <text x="415" y="185" font-size="9" fill="#4ade80" text-anchor="middle">↻ horario</text>
+
+  <!-- Ground -->
+  <line x1="290" y1="255" x2="290" y2="268" stroke="#64748b" stroke-width="2"/>
+  <line x1="278" y1="268" x2="302" y2="268" stroke="#64748b" stroke-width="3"/>
+  <line x1="283" y1="273" x2="297" y2="273" stroke="#64748b" stroke-width="2"/>
+
+  <!-- Bottom hint -->
+  <text x="290" y="292" font-size="10" fill="#64748b" text-anchor="middle">LVK: ΣV = 0 en cada malla — R compartida usa (i₁−i₂)</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280" width="420" height="280" font-family="monospace, sans-serif">
+  <rect width="420" height="280" fill="#0f172a" rx="12"/>
+  <text x="210" y="26" font-size="14" font-weight="bold" fill="#f1f5f9" text-anchor="middle">Divisor de Corriente</text>
+  <!-- Top rail -->
+  <line x1="50" y1="80"  x2="370" y2="80"  stroke="#475569" stroke-width="2"/>
+  <!-- Bottom rail -->
+  <line x1="50" y1="200" x2="370" y2="200" stroke="#475569" stroke-width="2"/>
+  <!-- Current source left -->
+  <line x1="65" y1="80"  x2="65" y2="112" stroke="#38bdf8" stroke-width="2"/>
+  <circle cx="65" cy="140" r="25" stroke="#38bdf8" stroke-width="2" fill="none"/>
+  <line x1="65" y1="152" x2="65" y2="138" stroke="#38bdf8" stroke-width="2"/>
+  <polygon points="65,130 60,142 70,142" fill="#38bdf8"/>
+  <line x1="65" y1="165" x2="65" y2="200" stroke="#38bdf8" stroke-width="2"/>
+  <text x="38" y="144" font-size="10" fill="#38bdf8" text-anchor="end">Is=6A</text>
+  <!-- R1 vertical -->
+  <line x1="180" y1="80"  x2="180" y2="108" stroke="#a78bfa" stroke-width="2"/>
+  <polyline points="180,108 168,116 192,124 168,132 192,140 168,148 192,156 180,164" stroke="#a78bfa" stroke-width="2" fill="none"/>
+  <line x1="180" y1="164" x2="180" y2="200" stroke="#a78bfa" stroke-width="2"/>
+  <text x="200" y="136" font-size="11" fill="#a78bfa">R1=6Ω</text>
+  <text x="155" y="136" font-size="10" fill="#7dd3fc" text-anchor="end">I₁=2A↓</text>
+  <!-- R2 vertical -->
+  <line x1="300" y1="80"  x2="300" y2="108" stroke="#4ade80" stroke-width="2"/>
+  <polyline points="300,108 288,116 312,124 288,132 312,140 288,148 312,156 300,164" stroke="#4ade80" stroke-width="2" fill="none"/>
+  <line x1="300" y1="164" x2="300" y2="200" stroke="#4ade80" stroke-width="2"/>
+  <text x="320" y="136" font-size="11" fill="#4ade80">R2=3Ω</text>
+  <text x="275" y="136" font-size="10" fill="#7dd3fc" text-anchor="end">I₂=4A↓</text>
+  <!-- Top connecting wires -->
+  <line x1="90"  y1="80" x2="180" y2="80" stroke="#475569" stroke-width="2"/>
+  <line x1="180" y1="80" x2="300" y2="80" stroke="#475569" stroke-width="2"/>
+  <line x1="300" y1="80" x2="370" y2="80" stroke="#475569" stroke-width="2"/>
+  <!-- Ground -->
+  <line x1="210" y1="200" x2="210" y2="213" stroke="#64748b" stroke-width="2"/>
+  <line x1="198" y1="213" x2="222" y2="213" stroke="#64748b" stroke-width="3"/>
+  <line x1="203" y1="218" x2="217" y2="218" stroke="#64748b" stroke-width="2"/>
+  <!-- Formula boxes -->
+  <rect x="50" y="234" width="320" height="22" rx="5" fill="#1e293b" stroke="#334155"/>
+  <text x="210" y="249" font-size="11" fill="#94a3b8" text-anchor="middle">I₁ = Is × R2/(R1+R2) = 6×3/9 = 2A  |  I₂ = Is × R1/(R1+R2) = 4A</text>
+  <text x="210" y="272" font-size="10" fill="#475569" text-anchor="middle">La mayor corriente va por la MENOR resistencia</text>
+</svg>
