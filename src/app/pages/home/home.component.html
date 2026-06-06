@@ -12,6 +12,48 @@
 
 <div class="home-wrapper" *ngIf="planData() as data">
 
+  <!-- ===== SEARCH SECTION ===== -->
+  <section class="search-section">
+    <div class="search-container">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Buscar en el temario: temas, ejercicios, proyectos..."
+          [value]="searchQuery()"
+          (input)="onSearch($any($event.target).value)"
+          (keyup.enter)="onSearch($any($event.target).value)"
+        />
+        <button class="search-clear" *ngIf="searchQuery()" (click)="onSearch('')">
+          ✕
+        </button>
+      </div>
+
+      <div class="search-results" *ngIf="searchResults().length > 0">
+        <div class="search-results__list">
+          <a
+            *ngFor="let result of searchResults()"
+            class="search-result-item"
+            [routerLink]="result.route"
+            (click)="onSearch('')"
+          >
+            <div class="search-result__type">
+              <span class="badge badge--{{result.type === 'tema' ? 'primary' : result.type === 'unidad' ? 'info' : 'neutral'}}">
+                {{ result.type }}
+              </span>
+            </div>
+            <div class="search-result__content">
+              <h4 class="search-result__title">{{ result.title }}</h4>
+              <p class="search-result__desc">{{ result.description }}</p>
+            </div>
+            <span class="search-result__arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== HERO SECTION ===== -->
   <header class="hero">
     <div class="hero__content">
@@ -22,7 +64,7 @@
       <h1 class="hero__title">{{ data.materia }}</h1>
       <p class="hero__subtitle">{{ data.carrera }}</p>
       <p class="hero__objective">{{ data.objetivo }}</p>
-      
+
       <div class="hero__actions">
         <a routerLink="/modulo/1/unidad/1" class="btn btn--primary btn--lg">
           🚀 Iniciar Curso
@@ -33,6 +75,35 @@
       </div>
     </div>
   </header>
+
+  <!-- ===== ÍNDICE POR CLASE ===== -->
+  <section class="section">
+    <div class="section__header">
+      <h2 class="section__title">Índice por Clase</h2>
+      <p class="section__subtitle">Accede directamente a cada tema agrupado por clase, sin depender de módulos o semanas.</p>
+    </div>
+
+    <div class="clase-index-grid">
+      <article class="clase-card" *ngFor="let clase of classIndex">
+        <div class="clase-card__header">
+          <h3>{{ clase.label }}</h3>
+          <p>{{ clase.title }}</p>
+        </div>
+
+        <ul class="tema-list">
+          <li *ngFor="let tema of clase.temas">
+            <a [routerLink]="tema.route" class="tema-link">{{ tema.nombre }}</a>
+          </li>
+        </ul>
+
+        <div class="clase-card__footer">
+          <a [routerLink]="clase.route" class="btn btn--ghost btn--sm btn--full">
+            Ver clase completa →
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
 
   <!-- ===== CURRICULUM OVERVIEW ===== -->
   <section class="section">
@@ -47,6 +118,7 @@
           <div>
             <span class="modulo-badge">Módulo {{ mod.numero }}</span>
             <p class="modulo-periodo">{{ mod.periodo }}</p>
+            <p class="modulo-evaluacion" *ngIf="mod.fecha_evaluacion">📅 Evaluación: {{ mod.fecha_evaluacion | date:'dd MMM' }}</p>
           </div>
         </div>
 
@@ -59,13 +131,53 @@
               </div>
               <span class="unidad-semanas badge badge--neutral">Sem. {{ u.semanas }}</span>
             </div>
-            
+
             <p class="unidad-desc" *ngIf="u.temas">{{ u.temas[0] }} y más…</p>
-            
+
             <div class="unidad-actions">
               <a [routerLink]="['/modulo', mod.numero, 'unidad', u.numero]" class="btn btn--primary btn--sm btn--full">
                 Explorar Unidad →
               </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CALENDARIO ===== -->
+  <section class="section bg-muted">
+    <div class="section__header">
+      <h2 class="section__title">📅 Calendario de Actividades</h2>
+      <p class="section__subtitle">Fechas importantes y entregables</p>
+    </div>
+
+    <div class="calendar-grid">
+      <div class="calendar-section">
+        <h3 class="calendar-section__title">Módulo 1</h3>
+        <div class="calendar-list">
+          <div class="calendar-item" *ngFor="let item of data.calendario_actividades?.modulo_1">
+            <div class="calendar-item__date">
+              <span class="calendar-date">{{ item.fecha || item.semanas }}</span>
+            </div>
+            <div class="calendar-item__content">
+              <p class="calendar-topic">{{ item.tema }}</p>
+              <p class="calendar-deliverable" *ngIf="item.entregable">📝 {{ item.entregable }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calendar-section">
+        <h3 class="calendar-section__title">Módulo 2</h3>
+        <div class="calendar-list">
+          <div class="calendar-item" *ngFor="let item of data.calendario_actividades?.modulo_2">
+            <div class="calendar-item__date">
+              <span class="calendar-date">{{ item.fecha || item.semanas }}</span>
+            </div>
+            <div class="calendar-item__content">
+              <p class="calendar-topic">{{ item.tema }}</p>
+              <p class="calendar-deliverable" *ngIf="item.entregable">📝 {{ item.entregable }}</p>
             </div>
           </div>
         </div>

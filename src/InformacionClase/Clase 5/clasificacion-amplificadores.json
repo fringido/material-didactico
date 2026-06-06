@@ -1,0 +1,79 @@
+{
+  "id": "clasificacion-amplificadores",
+  "nombre": "Clasificación de Amplificadores",
+  "descripcion": "Amplificadores clase A, B, AB y C: características, eficiencia y aplicaciones en sistemas electrónicos.",
+  "conceptos_clave": [
+    {
+      "nombre": "Clase A",
+      "descripcion": "El transistor conduce durante todo el ciclo de la señal de entrada. Máxima fidelidad pero baja eficiencia (25-50%).",
+      "variable_principal": "Ángulo de conducción",
+      "principio_fisico": "Punto de operación en el centro de la región lineal, sin distorsión de cruce.",
+      "cuando_usarlo": "Para aplicaciones de alta fidelidad donde la eficiencia no es crítica."
+    },
+    {
+      "nombre": "Clase B",
+      "descripcion": "Cada transistor conduce medio ciclo. Mayor eficiencia (78.5%) pero sufre distorsión de cruce.",
+      "variable_principal": "Ángulo de conducción",
+      "principio_fisico": "Punto de operación en corte, conduce solo cuando la señal supera V_BE.",
+      "cuando_usitario": "En etapas de potencia de audio con configuración push-pull."
+    },
+    {
+      "nombre": "Clase AB",
+      "descripcion": "Compromiso entre A y B. Pequeña polarización para eliminar distorsión de cruce. Eficiencia 50-70%.",
+      "variable_principal": "Ángulo de conducción",
+      "principio_fisico": "Polarización ligera para que ambos transistores conduzcan un poco en cruce.",
+      "cuando_usarlo": "La configuración más común en amplificadores de audio de potencia."
+    },
+    {
+      "nombre": "Clase C",
+      "descripcion": "Conduce menos de medio ciclo. Alta eficiencia pero alta distorsión. Usado en RF con circuitos resonantes.",
+      "variable_principal": "Ángulo de conducción",
+      "principio_fisico": "Punto de operación muy por debajo de corte, solo picos de señal activan.",
+      "cuando_usarlo": "En osciladores y amplificadores de RF con filtros sintonizados."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Eficiencia Clase A",
+      "katex": "\\eta = \\frac{P_{out}}{P_{in}} \\leq 50\\%",
+      "variables_tooltip": "variablesEficiencia"
+    },
+    {
+      "titulo": "Eficiencia Clase B",
+      "katex": "\\eta = \\frac{\\pi}{4} \\approx 78.5\\%",
+      "variables_tooltip": "variablesEficiencia"
+    },
+    {
+      "titulo": "Potencia de Salida",
+      "katex": "P_{out} = \\frac{V_{CC}^2}{2R_L}",
+      "variables_tooltip": "variablesPotencia"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesEficiencia": [
+      { "simbolo": "\\eta", "nombre": "Eficiencia", "unidad": "Porcentaje (%)", "descripcion": "Relación potencia salida/entrada", "category": "efficiency" },
+      { "simbolo": "P_{out}", "nombre": "Potencia de salida", "unidad": "Watts (W)", "descripcion": "Potencia entregada a carga", "category": "power" },
+      { "simbolo": "P_{in}", "nombre": "Potencia de entrada", "unidad": "Watts (W)", "descripcion": "Potencia suministrada", "category": "power" }
+    ],
+    "variablesPotencia": [
+      { "simbolo": "V_{CC}", "nombre": "Voltaje de alimentación", "unidad": "Voltios (V)", "descripcion": "Voltaje DC de fuente", "category": "voltage" },
+      { "simbolo": "R_L", "nombre": "Resistencia de carga", "unidad": "Ohmios (Ω)", "descripcion": "Impedancia de carga", "category": "resistance" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Audio de Alta Fidelidad", "descripcion": "Amplificadores clase A para etapas preamplificador." },
+    { "titulo": "Sistemas de Potencia", "descripcion": "Clase AB para amplificadores de audio de potencia." },
+    { "titulo": "Transmisión RF", "descripcion": "Clase C en amplificadores de radiofrecuencia." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-amplifier-class-simulator",
+    "justificacion": "Visualizar las formas de onda de entrada y salida para cada clase de amplificador ayuda a entender la distorsión y eficiencia.",
+    "utilidad": "Permite comparar clases A, B, AB y C en tiempo real.",
+    "interfaz_requerida": "Simulador con selección de clase, forma de onda de entrada y visualización de salida.",
+    "inputs": [
+      "Clase de amplificador (A, B, AB, C)",
+      "Amplitud de señal de entrada",
+      "Visualización de forma de onda de salida"
+    ]
+  }
+}

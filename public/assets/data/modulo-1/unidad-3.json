@@ -4,9 +4,10 @@
     "unidad": 3,
     "titulo": "Análisis de Circuitos en AC",
     "semanas": "5-6",
-    "version": "1.2.0",
-    "fecha_actualizacion": "2026-06-04",
-    "descripcion": "Estudio de señales senoidales, impedancia compleja, respuesta en frecuencia y análisis de filtros pasivos."
+    "version": "2.0.0",
+    "fecha_actualizacion": "2026-06-05",
+    "descripcion": "Estudio de señales senoidales, impedancia compleja, respuesta en frecuencia, filtros pasivos y respuesta transitoria.",
+    "ruta": "/clase/ac"
   },
   "objetivos": [
     "Identificar parámetros de señales senoidales (Amplitud, Frecuencia, Fase).",
@@ -19,73 +20,68 @@
     {
       "id": "senales-ac",
       "nombre": "Señales Senoidales y Fasores",
-      "descripcion": "Fundamentos de la corriente alterna.",
-      "contenido": {
-        "introduccion": "Las señales de CA varían en el tiempo siguiendo una función senoidal.",
-        "ecuaciones": [
-          { "nombre": "Voltaje Instantáneo", "formula": "v(t) = V_p \\sin(\\omega t + \\phi)" },
-          { "nombre": "Frecuencia Angular", "formula": "\\omega = 2\\pi f" }
-        ],
-        "conceptos_clave": [
-          { "nombre": "Fasor", "descripcion": "Representación vectorial de una senoidal en el plano complejo." }
-        ]
-      }
+      "descripcion": "Fundamentos de la corriente alterna y representación compleja.",
+      "ruta": "/clase/ac/tema/senales-ac"
     },
     {
       "id": "impedancia",
       "nombre": "Impedancia Compleja",
-      "descripcion": "Oposición al flujo en AC.",
-      "contenido": {
-        "ecuaciones": [
-          { "nombre": "Resistor", "formula": "Z_R = R" },
-          { "nombre": "Capacitor", "formula": "Z_C = \\frac{1}{j\\omega C}" },
-          { "nombre": "Inductor", "formula": "Z_L = j\\omega L" }
-        ],
-        "simulacion_dinamica": {
-          "tipo": "impedance_lab",
-          "titulo": "Laboratorio de Impedancia",
-          "descripcion": "Observa el cambio de Z con la frecuencia."
-        }
-      }
+      "descripcion": "Oposición al flujo en AC por R, L y C.",
+      "ruta": "/clase/ac/tema/impedancia-compleja"
     },
     {
       "id": "filtros-pasivos",
       "nombre": "Filtros Pasivos y Respuesta en Frecuencia",
-      "descripcion": "Selección de señales según su frecuencia.",
-      "contenido": {
-        "introduccion": "Los filtros permiten o bloquean el paso de energía en rangos específicos.",
-        "formulas": [
-          { "nombre": "Frecuencia de Corte", "formula": "f_c = \\frac{1}{2\\pi RC}" }
-        ],
-        "simulacion_dinamica": {
-          "tipo": "bode_interactive",
-          "titulo": "Analizador de Bode",
-          "descripcion": "Genera gráficas de ganancia y fase automáticamente."
-        }
-      }
+      "descripcion": "Selección de señales según su frecuencia (RC, RL, RLC).",
+      "ruta": "/clase/ac/tema/filtros-pasivos"
+    },
+    {
+      "id": "diagramas-bode",
+      "nombre": "Diagramas de Bode",
+      "descripcion": "Gráficas logarítmicas de ganancia y fase.",
+      "ruta": "/clase/ac/tema/diagramas-bode"
     },
     {
       "id": "respuesta-transitoria",
       "nombre": "Respuesta Transitoria",
       "descripcion": "Comportamiento temporal ante cambios bruscos.",
-      "contenido": {
-        "introduccion": "Estudio de la carga y descarga de elementos que almacenan energía.",
-        "simulacion_dinamica": {
-          "tipo": "rc_transient",
-          "titulo": "Laboratorio de Transitorios RC",
-          "controles": [
-            { "id": "vs", "label": "Vs", "min": 1, "max": 20, "default": 10, "step": 1 },
-            { "id": "r", "label": "R", "min": 100, "max": 10000, "default": 1000, "step": 100 },
-            { "id": "c", "label": "C", "min": 1, "max": 1000, "default": 100, "step": 10, "unidad": "µF" }
-          ],
-          "metricas": [
-            { "label": "Tau (τ)", "calculo": "(r * c) / 1000", "unidad": "ms", "formula_katex": "\\tau = RC" }
-          ],
-          "graficas": [
-             { "id": "vc", "label": "Vc(t)", "color": "#6366f1", "calculo_y": "vs * (1 - Math.exp(-x / (r * c / 1000000)))" }
-          ]
-        }
-      }
+      "ruta": "/clase/ac/tema/respuesta-transitoria"
     }
-  ]
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-ac-1",
+      "titulo": "Parámetros de señal senoidal",
+      "descripcion": "Para v(t) = 170\\sin(314t - 45°)\\,\\text{V}, calcular: f, T, V_{rms}, \\phi.",
+      "tiempo_minutos": 8,
+      "solucion": "\\omega=314\\,\\text{rad/s},\\; f=50\\,\\text{Hz},\\; T=20\\,\\text{ms},\\; V_{rms}=120\\,\\text{V},\\; \\phi=-45°"
+    },
+    {
+      "id": "ej-filtro-1",
+      "titulo": "Filtro pasa-bajas RC",
+      "descripcion": "Diseñar filtro pasa-bajas con f_c=2\\,\\text{kHz} y R=4.7\\,\\text{k}\\Omega. Calcular C.",
+      "tiempo_minutos": 10,
+      "solucion": "C = 16.9\\,\\text{nF}"
+    },
+    {
+      "id": "ej-bode-1",
+      "titulo": "Trazar Bode pasa-bajas",
+      "descripcion": "R=10\\,\\text{k}\\Omega,\\; C=15\\,\\text{nF}. Calcular la ganancia a f = 10f_c.",
+      "tiempo_minutos": 15,
+      "solucion": "-20\\,\\text{dB}"
+    }
+  ],
+  "laboratorio": {
+    "titulo": "Laboratorio Virtual — Filtros AC",
+    "descripcion": "Medición y diseño de filtros RC y diagramas de Bode.",
+    "experimentos": [
+      {
+        "id": "lab-filtros",
+        "nombre": "Construir y Medir Filtros RC",
+        "ruta": "/clase/ac/tema/laboratorio-filtros",
+        "tipo": "bode_interactive",
+        "tiempo": "45 min"
+      }
+    ]
+  }
 }

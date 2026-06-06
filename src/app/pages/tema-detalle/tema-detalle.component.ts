@@ -116,6 +116,21 @@ export class TemaDetalleComponent implements OnInit {
     return this.tema().variables_tooltips[tooltipId] || [];
   }
 
+  formulaChartType(formula?: string): ChartType {
+    if (!formula) return 'ohm';
+    const normalized = formula.toLowerCase();
+    if (normalized.includes('v = i') || normalized.includes('i = v') || normalized.includes('voltage') || normalized.includes('corriente') || normalized.includes('resistencia')) {
+      return 'ohm';
+    }
+    if (normalized.includes('x_c') || normalized.includes('capacitor') || normalized.includes('c =') || normalized.includes('xc')) {
+      return 'capacitor_reactance';
+    }
+    if (normalized.includes('x_l') || normalized.includes('inductor') || normalized.includes('l =') || normalized.includes('xl')) {
+      return 'inductor_reactance';
+    }
+    return 'ohm';
+  }
+
   get backLink(): string {
     return this.clase() ? `/clase/${this.clase()}` : `/modulo/${this.modulo()}/unidad/${this.unidad()}`;
   }

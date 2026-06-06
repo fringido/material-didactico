@@ -19,6 +19,12 @@
       "definicion": "La suma algebraica de todas las corrientes que entran y salen de un nodo es igual a cero. Toda la corriente que entra a un nodo debe salir por las demás ramas: la carga no se acumula en el nodo.",
       "ecuacion": "\\sum_{k=1}^{n} I_k = 0",
       "forma_practica": "\\sum I_{entrada} = \\sum I_{salida}",
+      "analisis_nodos": {
+        "objetivo": "Encontrar los voltajes en los nodos de un circuito respecto a un nodo de referencia (tierra).",
+        "enfoque_practico": "Funciona muy bien usar la analogía de la presión de agua en un sistema de tuberías. El nodo de referencia es el nivel del suelo, y los voltajes de nodo son la 'presión' en diferentes intersecciones.",
+        "matematicas": "Implica plantear ecuaciones de la forma I = \\frac{V_1 - V_2}{R}.",
+        "ecuacion_nodal": "\\frac{V_1 - V_n}{R_1} + \\frac{V_2 - V_n}{R_2} + \\cdots = 0"
+      },
       "ilustracion": {
         "archivo": "/assets/illustrations/clase-3/kcl-nodo.svg"
       },
@@ -31,6 +37,12 @@
       "principio": "Conservación de la energía",
       "definicion": "En cualquier malla (camino cerrado), la suma algebraica de todas las caídas y subidas de tensión es igual a cero. La energía que entrega la fuente se balancea con las caídas en los elementos de esa malla.",
       "ecuacion": "\\sum_{k=1}^{n} V_k = 0",
+      "analisis_mallas": {
+        "objetivo": "Calcular las corrientes de lazo (mallas) en lugar de las corrientes de rama individuales, lo que reduce el número de ecuaciones.",
+        "enfoque_practico": "Es útil enseñarles a asignar el mismo sentido (generalmente horario) a todas las corrientes de malla desde el principio para estandarizar los signos en sus matrices y evitar errores comunes de convención.",
+        "limitacion": "Solo es aplicable a circuitos planos (aquellos que se pueden dibujar sin que las ramas se crucen).",
+        "ecuacion_malla": "\\sum I_{malla} R = \\sum V_{fuente}"
+      },
       "ilustracion": {
         "archivo": "/assets/illustrations/clase-3/kvl-malla.svg"
       },
@@ -47,6 +59,33 @@
       "nota_dificultad": "La convención de signos es la fuente más común de error. Elige una dirección de recorrido de malla y mantén la misma regla en todo el circuito."
     }
   ],
+  "seleccion_metodo": {
+    "titulo": "Selección del Método Más Eficiente (Topología del Circuito)",
+    "descripcion": "Esta es la habilidad de nivel superior. No solo se trata de saber resolver el circuito, sino de saber 'leerlo' antes de empezar.",
+    "regla_oro": "¿Qué requiere menos matemáticas?",
+    "criterios": [
+      {
+        "condicion": "Si el circuito tiene menos nodos de no referencia que mallas independientes",
+        "metodo_recomendado": "Análisis de Nodos",
+        "razon": "Requerirá un sistema de ecuaciones más pequeño."
+      },
+      {
+        "condicion": "Si el circuito tiene menos mallas que nodos",
+        "metodo_recomendado": "Análisis de Mallas",
+        "razon": "Es el ganador en eficiencia."
+      },
+      {
+        "condicion": "Presencia de supernodos (fuentes de voltaje entre dos nodos)",
+        "metodo_recomendado": "Análisis de Nodos",
+        "razon": "Los supernodos se manejan naturalmente en análisis de nodos."
+      },
+      {
+        "condicion": "Presencia de supermallas (fuentes de corriente compartidas entre mallas)",
+        "metodo_recomendado": "Análisis de Mallas",
+        "razon": "Las supermallas se manejan naturalmente en análisis de mallas."
+      }
+    ]
+  },
   "tips_ensenanza": [
     "LCK en nodos, LVK en mallas: no intercambiar el nivel de análisis.",
     "Antes de escribir ecuaciones, marca en el diagrama las corrientes asumidas y el sentido de recorrido.",
@@ -58,14 +97,109 @@
       "tipo": "kirchhoff-lab",
       "modo": "kcl",
       "titulo": "Simulador LCK en un nodo",
-      "descripcion": "Ajusta las corrientes de entrada y salida y verifica que la suma algebraica sea cero."
+      "descripcion": "Ajusta las corrientes de entrada y salida y verifica que la suma algebraica sea cero.",
+      "componente": "app-kcl-simulator",
+      "parametros": {
+        "corrientes_entrada": ["I1", "I2"],
+        "corrientes_salida": ["I3", "I4"],
+        "visualizacion": ["flujo_corriente", "ecuacion", "balance"]
+      }
     },
     {
       "id": "kvl-demo",
       "tipo": "kirchhoff-lab",
       "modo": "kvl",
       "titulo": "Simulador LVK en una malla",
-      "descripcion": "Recorre una malla con fuente y resistencias; observa la suma de tensiones con convención de signos."
+      "descripcion": "Recorre una malla con fuente y resistencias; observa la suma de tensiones con convención de signos.",
+      "componente": "app-kvl-simulator",
+      "parametros": {
+        "voltaje_fuente": "V",
+        "resistencias": ["R1", "R2", "R3"],
+        "sentido_recorrido": "horario",
+        "visualizacion": ["caidas_tension", "ecuacion", "balance"]
+      }
+    },
+    {
+      "id": "nodos-mallas-simulator",
+      "tipo": "circuit-simulator",
+      "titulo": "Simulador de Análisis de Nodos y Mallas",
+      "descripcion": "Construye circuitos complejos y aplica análisis sistemático de nodos o mallas.",
+      "componente": "app-nodal-mesh-simulator",
+      "parametros": {
+        "metodo": ["nodos", "mallas"],
+        "nodos_configurables": true,
+        "mallas_configurables": true,
+        "visualizacion": ["ecuaciones", "matriz", "solucion"]
+      }
+    }
+  ],
+  "visualizaciones_svg": [
+    {
+      "id": "kcl-nodo-interactivo",
+      "titulo": "Nodo con Corrientes Interactivo",
+      "archivo": "/assets/illustrations/clase-3/kcl_nodo_interactivo.svg",
+      "descripcion": "Diagrama SVG de un nodo con múltiples corrientes de entrada y salida.",
+      "interactivo": true,
+      "elementos_clickeables": ["I1_entrada", "I2_entrada", "I3_salida", "I4_salida"],
+      "parametros_ajustables": ["I1", "I2", "I3", "I4"],
+      "accion_clic": "Muestra balance de corrientes en tiempo real"
+    },
+    {
+      "id": "kvl-malla-interactivo",
+      "titulo": "Malla con Tensiones Interactiva",
+      "archivo": "/assets/illustrations/clase-3/kvl_malla_interactivo.svg",
+      "descripcion": "Diagrama SVG de una malla con fuente y resistencias mostrando caídas de tensión.",
+      "interactivo": true,
+      "elementos_clickeables": ["V_fuente", "R1", "R2", "R3"],
+      "parametros_ajustables": ["V", "R1", "R2", "R3"],
+      "accion_clic": "Muestra suma de tensiones con convención de signos"
+    },
+    {
+      "id": "convencion-signos-svg",
+      "titulo": "Convención de Signos LVK",
+      "archivo": "/assets/illustrations/clase-3/convencion_signos.svg",
+      "descripcion": "Visualización de la convención de signos para LVK en fuentes y resistencias.",
+      "interactivo": true,
+      "elementos_clickeables": ["fuente_positivo", "fuente_negativo", "resistencia_mismo_sentido", "resistencia_opuesto"]
+    }
+  ],
+  "graficas_interactivas": [
+    {
+      "id": "balance-corrientes",
+      "titulo": "Balance de Corrientes en Nodo",
+      "tipo": "bar-chart",
+      "descripcion": "Gráfica de barras mostrando corrientes de entrada vs salida en un nodo.",
+      "eje_x": "Corrientes",
+      "eje_y": "Amperios (A)",
+      "parametros": {
+        "corrientes_entrada": [2, 3, 1],
+        "corrientes_salida": [4, 2],
+        "mostrar_balance": true
+      }
+    },
+    {
+      "id": "perfil-tension-malla",
+      "titulo": "Perfil de Tensión en Malla",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica mostrando cómo varía el potencial al recorrer una malla.",
+      "eje_x": "Posición en malla",
+      "eje_y": "Voltaje (V)",
+      "parametros": {
+        "voltaje_fuente": 12,
+        "resistencias": [4, 6, 2],
+        "mostrar_caidas": true
+      }
+    },
+    {
+      "id": "potencia-nodos",
+      "titulo": "Potencia en Nodos",
+      "tipo": "visualization",
+      "descripcion": "Visualización de potencia entregada y disipada en cada nodo del circuito.",
+      "parametros": {
+        "potencia_fuente": 24,
+        "potencias_disipadas": [8, 12, 4],
+        "mostrar_balance": true
+      }
     }
   ],
   "ejemplos": [

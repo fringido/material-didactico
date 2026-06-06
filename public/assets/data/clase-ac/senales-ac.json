@@ -1,0 +1,105 @@
+{
+  "metadata": { "orden": 1 },
+  "nombre": "Señales Senoidales y Fasores",
+  "descripcion": "Fundamentos de la corriente alterna: parámetros, valor RMS y representación fasorial.",
+  "introduccion": "Las señales AC son la base de la electrónica de potencia, audio y comunicaciones. A diferencia de DC, varían en el tiempo siguiendo una función senoidal. La representación fasorial simplifica enormemente los cálculos al convertir ecuaciones diferenciales en ecuaciones algebraicas complejas.",
+  "ecuaciones": [
+    { "nombre": "Voltaje instantáneo", "formula": "v(t) = V_m \\sin(\\omega t + \\phi)" },
+    { "nombre": "Frecuencia angular", "formula": "\\omega = 2\\pi f = \\frac{2\\pi}{T}" },
+    { "nombre": "Valor RMS", "formula": "V_{rms} = \\frac{V_m}{\\sqrt{2}} \\approx 0.707\\,V_m" },
+    { "nombre": "Fasor (forma polar)", "formula": "\\mathbf{V} = V_m \\angle\\phi" },
+    { "nombre": "Forma rectangular", "formula": "\\mathbf{V} = V_m\\cos\\phi + j\\,V_m\\sin\\phi" }
+  ],
+  "conceptos_clave": [
+    {
+      "nombre": "Amplitud y Valor RMS",
+      "descripcion": "El valor pico V_p es el máximo. El valor RMS (Root Mean Square) representa el voltaje DC equivalente que produce la misma potencia. Para ondas senoidales puras: V_rms = V_p / √2.",
+      "imagen": "/assets/images/ac_sine_wave_1780705572600.png"
+    },
+    {
+      "nombre": "Frecuencia (f)",
+      "descripcion": "Número de ciclos completos por segundo.",
+      "unidad": "Hz (hertz)",
+      "ejemplos": ["60 Hz — frecuencia de línea eléctrica en México", "1 kHz — audio agudo", "1 MHz — radio AM"]
+    },
+    {
+      "nombre": "Periodo (T)",
+      "descripcion": "Tiempo de un ciclo completo.",
+      "unidad": "s",
+      "formula": "T = 1/f"
+    },
+    {
+      "nombre": "Fase (φ)",
+      "descripcion": "Desplazamiento temporal de la señal respecto a una referencia.",
+      "unidad": "°  o  rad",
+      "nota": "Fase positiva = señal adelantada. Fase negativa = señal atrasada."
+    },
+    {
+      "nombre": "Fasor",
+      "descripcion": "Número complejo que representa la amplitud y fase de una senoidal. Simplifica el análisis AC al eliminar la dependencia temporal.",
+      "formula": "v(t) = V_m\\sin(\\omega t+\\phi) \\leftrightarrow \\mathbf{V} = V_m\\angle\\phi"
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Cálculo de parámetros de una señal",
+      "enunciado": "Dada v(t) = 10\\,\\sqrt{2}\\sin(377t + 30°)\\,V.",
+      "resultado": "f = 60\\,\\text{Hz},\\quad T = 16.7\\,\\text{ms},\\quad V_{rms} = 10\\,\\text{V},\\quad \\phi = 30°"
+    },
+    {
+      "titulo": "Conversión fasor a forma rectangular",
+      "enunciado": "\\mathbf{V} = 10\\angle 30°",
+      "resultado": "\\mathbf{V} = 10\\cos30° + j10\\sin30° = 8.66 + j5"
+    },
+    {
+      "titulo": "Multiplicación de fasores",
+      "enunciado": "(5\\angle 45°)(2\\angle 30°)",
+      "resultado": "10\\angle 75°"
+    }
+  ],
+  "interactivos": [
+    {
+      "id": "sim-senoidal",
+      "titulo": "Simulador de Señal Senoidal",
+      "descripcion": "Modifica amplitud, frecuencia y fase para observar el cambio en la señal.",
+      "tipo": "ac_signal_sim"
+    }
+  ],
+  "simulacion_dinamica": {
+    "tipo": "ac_signal_sim",
+    "titulo": "Explorador de Señal Senoidal",
+    "controles": [
+      { "id": "vm", "label": "Amplitud V_m", "min": 1, "max": 20, "default": 10, "step": 1, "unidad": "V" },
+      { "id": "f", "label": "Frecuencia f", "min": 10, "max": 1000, "default": 60, "step": 10, "unidad": "Hz" },
+      { "id": "phi", "label": "Fase φ", "min": -180, "max": 180, "default": 0, "step": 15, "unidad": "°" }
+    ],
+    "metricas": [
+      { "label": "V_rms", "calculo": "vm / Math.sqrt(2)", "unidad": "V", "formula_katex": "V_{rms} = V_m/\\sqrt{2}" },
+      { "label": "Periodo T", "calculo": "1000 / f", "unidad": "ms", "formula_katex": "T = 1/f" },
+      { "label": "ω (rad/s)", "calculo": "2 * Math.PI * f", "unidad": "rad/s", "formula_katex": "\\omega = 2\\pi f" }
+    ],
+    "graficas": [
+      { "id": "senoidal", "label": "v(t)", "color": "#8B5CF6", "calculo_y": "vm * Math.sin(2 * Math.PI * f * x + phi * Math.PI / 180)" }
+    ]
+  },
+  "ejercicios": [
+    {
+      "id": "ej-ac-1",
+      "numero": 8,
+      "titulo": "Parámetros de señal senoidal",
+      "descripcion": "Para v(t) = 170\\sin(314t - 45°)\\,\\text{V}, calcular: f, T, V_{rms}, \\phi.",
+      "tiempo_minutos": 8,
+      "solucion": "\\omega=314\\,\\text{rad/s},\\; f=50\\,\\text{Hz},\\; T=20\\,\\text{ms},\\; V_{rms}=120\\,\\text{V},\\; \\phi=-45°",
+      "explicacion": "ω = 314 rad/s → f = 314/(2π) ≈ 50 Hz (frecuencia de línea europea). V_rms = 170/√2 ≈ 120 V (valor de línea en México es 127 V)."
+    },
+    {
+      "id": "ej-ac-2",
+      "numero": 8,
+      "titulo": "Conversión polar↔rectangular",
+      "descripcion": "Convertir: (a)\\;12\\angle -60° \\text{ a rectangular. }(b)\\; 3 + j4 \\text{ a polar.}",
+      "tiempo_minutos": 8,
+      "solucion": "(a)\\; 6 - j10.39 \\qquad (b)\\; 5\\angle 53.13°",
+      "explicacion": "(a) a = 12cos(-60°) = 6, b = 12sin(-60°) = -10.39. (b) |V| = √(9+16) = 5, φ = arctan(4/3) = 53.13°."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "id": "osciladores-lc",
+  "nombre": "Osciladores LC",
+  "descripcion": "Osciladores Hartley, Colpitts y de cristal para generación de señales de alta frecuencia con excelente estabilidad.",
+  "conceptos_clave": [
+    {
+      "nombre": "Oscilador Hartley",
+      "descripcion": "Usa un inductor con derivación central (dos inductores en serie). Frecuencia ajustable por el inductor.",
+      "variable_principal": "Frecuencia de resonancia",
+      "principio_fisico": "El tanque LC resuena a su frecuencia natural, la realimentación mantiene la oscilación.",
+      "cuando_usitar": "Para generadores de RF donde se requiere ajuste de frecuencia."
+    },
+    {
+      "nombre": "Oscilador Colpitts",
+      "descripcion": "Usa dos capacitores en serie y un inductor. Más estable que Hartley, menos radiación.",
+      "variable_principal": "Frecuencia de resonancia",
+      "principio_fisico": "La división capacitiva proporciona realimentación, el tanque LC determina frecuencia.",
+      "cuando_usitar": "Para aplicaciones de RF que requieren alta estabilidad."
+    },
+    {
+      "nombre": "Oscilador de Cristal",
+      "descripcion": "Usa el efecto piezoeléctrico de un cristal de cuarzo. Estabilidad extrema (±0.001%).",
+      "variable_principal": "Frecuencia de resonancia",
+      "principio_fisico": "El cristal vibra mecánicamente a una frecuencia muy precisa determinada por sus dimensiones.",
+      "cuando_usitar": "Para relojes, microprocesadores y sistemas que requieren precisión extrema."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Frecuencia de Resonancia LC",
+      "katex": "f = \\frac{1}{2\\pi\\sqrt{LC}}",
+      "variables_tooltip": "variablesFrecuenciaLC"
+    },
+    {
+      "titulo": "Frecuencia Hartley",
+      "katex": "f = \\frac{1}{2\\pi\\sqrt{(L_1 + L_2)C}}",
+      "variables_tooltip": "variablesFrecuenciaHartley"
+    },
+    {
+      "titulo": "Frecuencia Colpitts",
+      "katex": "f = \\frac{1}{2\\pi\\sqrt{L\\left(\\frac{C_1 C_2}{C_1 + C_2}\\right)}}",
+      "variables_tooltip": "variablesFrecuenciaColpitts"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesFrecuenciaLC": [
+      { "simbolo": "f", "nombre": "Frecuencia", "unidad": "Hertz (Hz)", "descripcion": "Ciclos por segundo", "category": "frequency" },
+      { "simbolo": "L", "nombre": "Inductancia", "unidad": "Henrios (H)", "descripcion": "Componente reactivo", "category": "inductance" },
+      { "simbolo": "C", "nombre": "Capacitancia", "unidad": "Faradios (F)", "descripcion": "Componente reactivo", "category": "capacitance" }
+    ],
+    "variablesFrecuenciaHartley": [
+      { "simbolo": "L_1", "nombre": "Inductancia 1", "unidad": "Henrios (H)", "descripcion": "Inductor parte 1", "category": "inductance" },
+      { "simbolo": "L_2", "nombre": "Inductancia 2", "unidad": "Henrios (H)", "descripcion": "Inductor parte 2", "category": "inductance" }
+    ],
+    "variablesFrecuenciaColpitts": [
+      { "simbolo": "C_1", "nombre": "Capacitancia 1", "unidad": "Faradios (F)", "descripcion": "Capacitor parte 1", "category": "capacitance" },
+      { "simbolo": "C_2", "nombre": "Capacitancia 2", "unidad": "Faradios (F)", "descripcion": "Capacitor parte 2", "category": "capacitance" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Radiocomunicación", "descripcion": "Generación de portadoras en transmisores." },
+    { "titulo": "Relojes Digitales", "descripcion": "Cristales de cuarzo para referencia de tiempo." },
+    { "titulo": "Instrumentación de RF", "descripcion": "Generadores de señal de alta precisión." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-lc-oscillator-simulator",
+    "justificacion": "Permite simular osciladores LC y comparar Hartley vs Colpitts en estabilidad y ajustabilidad.",
+    "utilidad": "Los estudiantes pueden entender la importancia de la calidad de los componentes en la estabilidad.",
+    "interfaz_requerida": "Simulador con selector de tipo, valores L/C y visualización de estabilidad.",
+    "inputs": [
+      "Tipo de oscilador (Hartley, Colpitts, cristal)",
+      "Valores de componentes",
+      "Visualización de forma de onda y estabilidad"
+    ]
+  }
+}

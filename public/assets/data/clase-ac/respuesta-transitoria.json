@@ -1,0 +1,85 @@
+{
+  "metadata": { "orden": 5 },
+  "nombre": "Respuesta Transitoria",
+  "descripcion": "Comportamiento temporal de circuitos RC y RL cuando se aplica o retira un voltaje abruptamente.",
+  "introduccion": "La respuesta transitoria describe el comportamiento de un circuito justo DESPUÉS de un cambio (encender, apagar, conmutar). Es distinta del estado estable (régimen permanente) que ocurre mucho después. Los capacitores e inductores almacenan energía, lo que produce este comportamiento temporal.",
+  "ecuaciones": [
+    { "nombre": "Carga de capacitor (RC)", "formula": "v_C(t) = V_S\\left(1 - e^{-t/\\tau}\\right)" },
+    { "nombre": "Descarga de capacitor (RC)", "formula": "v_C(t) = V_0\\, e^{-t/\\tau}" },
+    { "nombre": "Constante de tiempo RC", "formula": "\\tau = RC" },
+    { "nombre": "Corriente en inductor (RL)", "formula": "i_L(t) = \\frac{V_S}{R}\\left(1 - e^{-t/\\tau}\\right)" },
+    { "nombre": "Constante de tiempo RL", "formula": "\\tau = \\frac{L}{R}" },
+    { "nombre": "Respuesta RLC amortiguada", "formula": "v(t) = e^{-\\alpha t}\\left(A\\cos\\omega_d t + B\\sin\\omega_d t\\right)" },
+    { "nombre": "Factor de amortiguamiento", "formula": "\\alpha = \\frac{R}{2L},\\quad \\omega_d = \\sqrt{\\omega_0^2 - \\alpha^2}" }
+  ],
+  "conceptos_clave": [
+    {
+      "nombre": "Constante de tiempo (τ)",
+      "descripcion": "Tiempo para que la respuesta llegue al 63.2% de su valor final. Después de 5τ, la respuesta es el 99.3% del valor final (estado estable prácticamente alcanzado).",
+      "imagen": "/assets/images/rc_transient_osc_1780705366239.png",
+      "tabla_porcentajes": [
+        { "t": "1τ", "porcentaje": "63.2%" },
+        { "t": "2τ", "porcentaje": "86.5%" },
+        { "t": "3τ", "porcentaje": "95.0%" },
+        { "t": "4τ", "porcentaje": "98.2%" },
+        { "t": "5τ", "porcentaje": "99.3%" }
+      ]
+    },
+    {
+      "nombre": "Condición inicial",
+      "descripcion": "El voltaje en un capacitor y la corriente en un inductor NO pueden cambiar instantáneamente. Son las condiciones iniciales del circuito.",
+      "regla_capacitor": "v_C(0⁺) = v_C(0⁻) — el voltaje no salta",
+      "regla_inductor": "i_L(0⁺) = i_L(0⁻) — la corriente no salta"
+    },
+    {
+      "nombre": "Tipos de respuesta RLC",
+      "descripcion": "Depende del factor de amortiguamiento ζ = α/ω₀.",
+      "tipos": [
+        { "tipo": "Subamortiguado (ζ < 1)", "descripcion": "Respuesta oscilante que converge al valor final. Común en circuitos de radio y PLL." },
+        { "tipo": "Críticamente amortiguado (ζ = 1)", "descripcion": "Convergencia más rápida sin oscilación. Ideal para muchas aplicaciones de control." },
+        { "tipo": "Sobreamortiguado (ζ > 1)", "descripcion": "Convergencia lenta sin oscilación. R muy grande domina sobre L y C." }
+      ]
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Carga de capacitor RC",
+      "enunciado": "R=10\\,\\text{k}\\Omega,\\; C=100\\,\\mu\\text{F},\\; V_S=10\\,\\text{V}. \\text{ Calcular }v_C \\text{ en }t=\\tau, 2\\tau, 5\\tau.",
+      "resultado": "\\tau=1\\,\\text{s};\\; v_C(\\tau)=6.32\\,\\text{V};\\; v_C(2\\tau)=8.65\\,\\text{V};\\; v_C(5\\tau)\\approx 9.93\\,\\text{V}"
+    },
+    {
+      "titulo": "Constante de tiempo RL",
+      "enunciado": "R=100\\,\\Omega,\\; L=50\\,\\text{mH}. \\text{ Calcular }\\tau\\text{ y el tiempo para alcanzar 90% de }I_{max}.",
+      "resultado": "\\tau = L/R = 0.5\\,\\text{ms};\\; t_{90\\%} \\approx 2.3\\tau = 1.15\\,\\text{ms}"
+    }
+  ],
+  "simulacion_dinamica": {
+    "tipo": "rc_transient",
+    "titulo": "Laboratorio de Transitorios RC",
+    "controles": [
+      { "id": "vs", "label": "V_S (V)", "min": 1, "max": 20, "default": 10, "step": 1 },
+      { "id": "r", "label": "R (kΩ)", "min": 1, "max": 100, "default": 10, "step": 1 },
+      { "id": "c", "label": "C (µF)", "min": 1, "max": 1000, "default": 100, "step": 10 }
+    ],
+    "metricas": [
+      { "label": "τ = RC", "calculo": "(r * 1000 * c) / 1e6", "unidad": "s", "formula_katex": "\\tau = RC" },
+      { "label": "v_C(τ)", "calculo": "vs * (1 - Math.exp(-1))", "unidad": "V", "formula_katex": "v_C(\\tau) = 0.632 V_S" },
+      { "label": "t_{5τ}", "calculo": "5 * (r * 1000 * c) / 1e6", "unidad": "s", "formula_katex": "t_{\\text{est}} = 5\\tau" }
+    ],
+    "graficas": [
+      { "id": "vc_carga", "label": "v_C(t) — Carga", "color": "#8B5CF6", "calculo_y": "vs * (1 - Math.exp(-x / (r * 1000 * c / 1e6)))" },
+      { "id": "vr", "label": "v_R(t)", "color": "#FB923C", "calculo_y": "vs * Math.exp(-x / (r * 1000 * c / 1e6))" }
+    ]
+  },
+  "ejercicios": [
+    {
+      "id": "ej-trans-1",
+      "numero": 11,
+      "titulo": "Respuesta transitoria RC — tiempo para llegar al 80%",
+      "descripcion": "R=22\\,\\text{k}\\Omega,\\; C=47\\,\\mu\\text{F},\\; V_S=15\\,\\text{V}. \\text{ Calcular }\\tau\\text{ y el tiempo para que }v_C=12\\,\\text{V}\\,(80\\%).",
+      "tiempo_minutos": 12,
+      "solucion": "\\tau=1.034\\,\\text{s};\\; 0.8=1-e^{-t/\\tau}\\implies t = -\\tau\\ln(0.2) = 1.609\\tau \\approx 1.66\\,\\text{s}",
+      "explicacion": "Se despeja t de v_C(t) = V_S(1 - e^{-t/τ}). El resultado 1.609τ es general: para llegar al 80%, siempre se necesita 1.609 constantes de tiempo."
+    }
+  ]
+}

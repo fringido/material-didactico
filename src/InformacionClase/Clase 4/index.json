@@ -31,15 +31,31 @@
       "descripcion": "Métodos fundamentales para resolver circuitos complejos mediante sistemas de ecuaciones.",
       "icono": "🔢",
       "ruta": "/clase/4/tema/nodos-mallas",
-      "archivo": "NodosYMallas.json"
+      "archivo": "nodos-mallas.json"
+    },
+    {
+      "id": "thevenin-norton",
+      "nombre": "Equivalentes de Thevenin y Norton",
+      "descripcion": "Reducción de redes lineales complejas a circuitos equivalentes simples desde dos terminales.",
+      "icono": "⚡",
+      "ruta": "/clase/4/tema/thevenin-norton",
+      "archivo": "thevenin-norton.json"
     },
     {
       "id": "maximum-power-transfer",
       "nombre": "Teorema de Máxima Transferencia de Potencia",
       "descripcion": "Condición óptima para máxima transferencia de potencia entre fuente y carga (R_L = R_th).",
-      "icono": "⚡",
+      "icono": "🔋",
       "ruta": "/clase/4/tema/maximum-power-transfer",
       "archivo": "maximum-power-transfer.json"
+    },
+    {
+      "id": "seleccion-metodo",
+      "nombre": "Selección del Método Más Eficiente",
+      "descripcion": "Estrategia para elegir el método de análisis según la topología del circuito.",
+      "icono": "🎯",
+      "ruta": "/clase/4/tema/seleccion-metodo",
+      "archivo": "seleccion-metodo.json"
     }
   ],
   "rutas_relacionadas": {

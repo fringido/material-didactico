@@ -1,0 +1,110 @@
+{
+  "metadata": { "orden": 3 },
+  "nombre": "Filtros Pasivos: RC, RL y RLC",
+  "descripcion": "Diseño y análisis de filtros que seleccionan señales según su frecuencia.",
+  "introduccion": "Un filtro es un circuito que permite el paso de señales de cierto rango de frecuencias y atenúa las demás. Los filtros pasivos usan solo resistencias, capacitores e inductores — sin amplificación activa. Son fundamentales en audio, comunicaciones y sistemas mecatrónicos.",
+  "ecuaciones": [
+    { "nombre": "Frecuencia de corte RC (pasa-bajas/altas)", "formula": "f_c = \\frac{1}{2\\pi RC}" },
+    { "nombre": "Frecuencia de corte RL", "formula": "f_c = \\frac{R}{2\\pi L}" },
+    { "nombre": "Frecuencia de resonancia RLC", "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}" },
+    { "nombre": "Factor de calidad Q (RLC serie)", "formula": "Q = \\frac{1}{R}\\sqrt{\\frac{L}{C}} = \\frac{f_0}{BW}" },
+    { "nombre": "Ancho de banda (BW)", "formula": "BW = f_2 - f_1 = \\frac{f_0}{Q} = \\frac{R}{2\\pi L}" },
+    { "nombre": "Ganancia en dB", "formula": "A_{dB} = 20\\log_{10}|H(j\\omega)|" },
+    { "nombre": "Función de transferencia pasa-bajas RC", "formula": "H(j\\omega) = \\frac{1}{1 + j\\omega RC} = \\frac{1}{1 + j(f/f_c)}" }
+  ],
+  "tipos_filtros": [
+    {
+      "tipo": "Pasa-Bajas (Low-Pass)",
+      "descripcion": "Deja pasar frecuencias MENORES que f_c. Atenúa frecuencias altas.",
+      "configuracion_rc": "Salida tomada sobre el CAPACITOR",
+      "configuracion_rl": "Salida tomada sobre el RESISTOR",
+      "funcion_transferencia": "H(j\\omega) = \\frac{1}{1 + j\\omega RC}",
+      "ganancia_fc": "-3\\,\\text{dB} \\; (0.707 \\cdot |H|_{max})",
+      "pendiente": "-20\\,\\text{dB/década}",
+      "aplicaciones": ["Eliminar ruido de alta frecuencia", "Anti-aliasing en ADC", "Suavizado de señales"]
+    },
+    {
+      "tipo": "Pasa-Altas (High-Pass)",
+      "descripcion": "Deja pasar frecuencias MAYORES que f_c. Bloquea DC y frecuencias bajas.",
+      "configuracion_rc": "Salida tomada sobre el RESISTOR",
+      "configuracion_rl": "Salida tomada sobre el INDUCTOR",
+      "funcion_transferencia": "H(j\\omega) = \\frac{j\\omega RC}{1 + j\\omega RC}",
+      "ganancia_fc": "-3\\,\\text{dB}",
+      "pendiente": "+20\\,\\text{dB/década (banda de paso)}",
+      "aplicaciones": ["Eliminar componente DC", "Acoplamiento de señales AC", "Micrófonos y audio"]
+    },
+    {
+      "tipo": "Pasa-Banda (Band-Pass)",
+      "descripcion": "Deja pasar un rango de frecuencias alrededor de f₀. Atenúa por debajo y por encima.",
+      "configuracion": "Circuito RLC serie (salida en R) o RLC paralelo",
+      "frecuencia_central": "f_0 = 1/(2\\pi\\sqrt{LC})",
+      "aplicaciones": ["Sintonización de radio/TV", "Filtros de audio (ecualizadores)", "Sensores de vibración"]
+    },
+    {
+      "tipo": "Rechaza-Banda / Notch",
+      "descripcion": "ELIMINA una frecuencia específica. Paso de todas menos la central.",
+      "configuracion": "Twin-T, RLC paralelo en serie con la carga",
+      "aplicaciones": ["Eliminación de interferencia 60 Hz (hum)", "Cancelación de ruido específico"]
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Diseño de filtro pasa-bajas RC",
+      "enunciado": "Diseñar filtro pasa-bajas con f_c = 1\\,\\text{kHz} usando R = 1\\,\\text{k}\\Omega.",
+      "resultado": "C = \\frac{1}{2\\pi R f_c} = \\frac{1}{2\\pi \\times 10^3 \\times 10^3} \\approx 159\\,\\text{nF}"
+    },
+    {
+      "titulo": "Diseño de filtro pasa-altas",
+      "enunciado": "Filtro pasa-altas con f_c=500\\,\\text{Hz},\\; R=10\\,\\text{k}\\Omega.",
+      "resultado": "C = \\frac{1}{2\\pi \\times 10^4 \\times 500} \\approx 31.8\\,\\text{nF}"
+    },
+    {
+      "titulo": "Diseño pasa-banda RLC",
+      "enunciado": "f_0=10\\,\\text{kHz},\\; BW=1\\,\\text{kHz},\\; C=10\\,\\text{nF}. \\text{Calcular L, R y Q.}",
+      "resultado": "L=25.3\\,\\mu\\text{H},\\quad Q=10,\\quad R=\\frac{1}{Q}\\sqrt{L/C}=159\\,\\Omega"
+    }
+  ],
+  "graficas_bode": {
+    "titulo": "Simulador Bode Interactivo",
+    "descripcion": "Selecciona el tipo de filtro y ajusta R, C, L para ver la respuesta en frecuencia en tiempo real.",
+    "tipo_simulador": "bode_interactive"
+  },
+  "ejercicios": [
+    {
+      "id": "ej-filtro-1",
+      "numero": 8,
+      "titulo": "Ejercicio 8a — Filtro pasa-bajas RC",
+      "descripcion": "Diseñar filtro pasa-bajas con f_c=2\\,\\text{kHz} y R=4.7\\,\\text{k}\\Omega. Calcular C y la ganancia a f=10\\,\\text{kHz}.",
+      "tiempo_minutos": 12,
+      "solucion": "C=16.9\\,\\text{nF},\\quad |H(10\\,\\text{kHz})| = \\frac{1}{\\sqrt{1+(5)^2}}=0.196\\,(-14.1\\,\\text{dB})",
+      "explicacion": "A f=5f_c, la ganancia cae aproximadamente -14 dB. La regla práctica: a 10× f_c la atenuación es ≈ -20 dB."
+    },
+    {
+      "id": "ej-filtro-2",
+      "numero": 8,
+      "titulo": "Ejercicio 8b — Filtro pasa-altas RC",
+      "descripcion": "Diseñar filtro pasa-altas con f_c=300\\,\\text{Hz} y C=1\\,\\mu\\text{F}.",
+      "tiempo_minutos": 10,
+      "solucion": "R = \\frac{1}{2\\pi f_c C} = \\frac{1}{2\\pi \\times 300 \\times 10^{-6}} \\approx 530\\,\\Omega",
+      "explicacion": "El pasa-altas bloquea DC y permite el paso de señales de audio por encima de 300 Hz."
+    },
+    {
+      "id": "ej-filtro-3",
+      "numero": 8,
+      "titulo": "Ejercicio 8c — Filtro pasa-banda RLC",
+      "descripcion": "L=1\\,\\text{mH},\\; C=100\\,\\text{nF},\\; R=10\\,\\Omega. \\text{ Calcular }f_0,\\; Q\\text{ y }BW.",
+      "tiempo_minutos": 15,
+      "solucion": "f_0=15.9\\,\\text{kHz},\\quad Q=\\frac{1}{10}\\sqrt{\\frac{0.001}{10^{-7}}}=10,\\quad BW=1.59\\,\\text{kHz}",
+      "explicacion": "Q alto = filtro selectivo (ancho de banda estrecho). Q = 10 es un filtro moderadamente selectivo."
+    },
+    {
+      "id": "ej-fc-1",
+      "numero": 9,
+      "titulo": "Ejercicio 9 — Cálculo de frecuencias de corte",
+      "descripcion": "Para R=10\\,\\text{k}\\Omega y C=0.01\\,\\mu\\text{F}: (a) calcular f_c; (b) calcular la ganancia a f=f_c; (c) a f=10\\cdot f_c.",
+      "tiempo_minutos": 12,
+      "solucion": "(a)\\; f_c=1.59\\,\\text{kHz};\\; (b)\\; |H|=0.707 \\;(-3\\,\\text{dB});\\; (c)\\; |H|=0.0995 \\;(-20\\,\\text{dB})",
+      "explicacion": "En f_c siempre caemos -3 dB. A 10×f_c la ganancia es ≈ -20 dB (regla de -20 dB/década)."
+    }
+  ]
+}

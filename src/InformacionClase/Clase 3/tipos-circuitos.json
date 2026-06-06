@@ -96,7 +96,120 @@
       "id": "topology-lab",
       "tipo": "topology-lab",
       "titulo": "Laboratorio de topologías",
-      "descripcion": "Calcula R_T, corrientes y voltajes en serie, paralelo y un circuito mixto guiado."
+      "descripcion": "Calcula R_T, corrientes y voltajes en serie, paralelo y un circuito mixto guiado.",
+      "componente": "app-circuit-topology-simulator"
+    },
+    {
+      "id": "serie-simulator",
+      "tipo": "circuit-simulator",
+      "titulo": "Simulador de Circuito en Serie",
+      "descripcion": "Ajusta valores de resistencias y observa cómo se divide el voltaje.",
+      "componente": "app-series-circuit-simulator",
+      "parametros": {
+        "resistencias": ["R1", "R2", "R3"],
+        "voltaje_fuente": "V",
+        "visualizacion": ["voltaje", "corriente", "potencia"]
+      }
+    },
+    {
+      "id": "paralelo-simulator",
+      "tipo": "circuit-simulator",
+      "titulo": "Simulador de Circuito en Paralelo",
+      "descripcion": "Ajusta valores de resistencias y observa cómo se divide la corriente.",
+      "componente": "app-parallel-circuit-simulator",
+      "parametros": {
+        "resistencias": ["R1", "R2", "R3"],
+        "voltaje_fuente": "V",
+        "visualizacion": ["corriente", "potencia", "resistencia_equivalente"]
+      }
+    },
+    {
+      "id": "mixto-simulator",
+      "tipo": "circuit-simulator",
+      "titulo": "Simulador de Circuito Mixto",
+      "descripcion": "Construye circuitos serie-paralelo y calcula equivalentes paso a paso.",
+      "componente": "app-mixed-circuit-simulator",
+      "parametros": {
+        "bloques_serie": ["bloque1", "bloque2"],
+        "bloques_paralelo": ["rama1", "rama2"],
+        "voltaje_fuente": "V",
+        "visualizacion": ["reduccion", "equivalente", "corrientes"]
+      }
+    }
+  ],
+  "visualizaciones_svg": [
+    {
+      "id": "circuito-serie-svg",
+      "titulo": "Circuito en Serie Interactivo",
+      "archivo": "/assets/illustrations/clase-3/circuito_serie_interactivo.svg",
+      "descripcion": "Diagrama SVG interactivo mostrando flujo de corriente en serie.",
+      "interactivo": true,
+      "elementos_clickeables": ["R1", "R2", "R3", "V_fuente"]
+    },
+    {
+      "id": "circuito-paralelo-svg",
+      "titulo": "Circuito en Paralelo Interactivo",
+      "archivo": "/assets/illustrations/clase-3/circuito_paralelo_interactivo.svg",
+      "descripcion": "Diagrama SVG interactivo mostrando división de corriente en paralelo.",
+      "interactivo": true,
+      "elementos_clickeables": ["R1", "R2", "R3", "V_fuente", "nodos"]
+    },
+    {
+      "id": "divisor-tension-svg",
+      "titulo": "Divisor de Tensión",
+      "archivo": "/assets/illustrations/clase-3/divisor_tension.svg",
+      "descripcion": "Visualización del principio del divisor de tensión en serie.",
+      "interactivo": true,
+      "parametros_ajustables": ["R1", "R2", "V_in"]
+    },
+    {
+      "id": "divisor-corriente-svg",
+      "titulo": "Divisor de Corriente",
+      "archivo": "/assets/illustrations/clase-3/divisor_corriente.svg",
+      "descripcion": "Visualización del principio del divisor de corriente en paralelo.",
+      "interactivo": true,
+      "parametros_ajustables": ["R1", "R2", "I_in"]
+    }
+  ],
+  "graficas_interactivas": [
+    {
+      "id": "resistencia-vs-corriente-serie",
+      "titulo": "Resistencia vs Corriente (Serie)",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica mostrando cómo la corriente varía con la resistencia total en serie.",
+      "eje_x": "Resistencia Total (Ω)",
+      "eje_y": "Corriente (A)",
+      "ecuacion": "I = V / R_total",
+      "parametros": {
+        "voltaje": 12,
+        "rango_resistencia": [10, 1000]
+      }
+    },
+    {
+      "id": "resistencia-vs-corriente-paralelo",
+      "titulo": "Resistencia vs Corriente (Paralelo)",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica mostrando cómo la corriente varía con la resistencia equivalente en paralelo.",
+      "eje_x": "Resistencia Equivalente (Ω)",
+      "eje_y": "Corriente Total (A)",
+      "ecuacion": "I_total = V / R_eq",
+      "parametros": {
+        "voltaje": 12,
+        "rango_resistencia": [1, 100]
+      }
+    },
+    {
+      "id": "potencia-vs-resistencia",
+      "titulo": "Potencia vs Resistencia",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica de potencia disipada en función de la resistencia.",
+      "eje_x": "Resistencia (Ω)",
+      "eje_y": "Potencia (W)",
+      "ecuacion": "P = V² / R",
+      "parametros": {
+        "voltaje": 12,
+        "rango_resistencia": [10, 1000]
+      }
     }
   ],
   "ejemplos": [

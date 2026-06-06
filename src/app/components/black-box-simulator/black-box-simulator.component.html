@@ -1,0 +1,225 @@
+<div class="bb-shell">
+  <div class="bb-header">
+    <h4 class="bb-title">📦 Simulador de Caja Negra</h4>
+    <p class="bb-subtitle">Conecta cargas a la red oculta y deduce su equivalente Thévenin midiendo V y I</p>
+  </div>
+
+  <div class="bb-body">
+
+    <!-- Network selector -->
+    <div class="network-row">
+      <span class="control-label">Red oculta:</span>
+      <div class="preset-tabs">
+        @for (preset of presets; track preset.label; let i = $index) {
+          <button class="preset-tab"
+            [class.preset-tab--active]="selectedPresetIndex() === i"
+            (click)="selectPreset(i)">
+            {{ preset.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Main layout -->
+    <div class="main-layout">
+
+      <!-- LEFT: Black box + terminals -->
+      <div class="box-panel">
+        <svg viewBox="0 0 260 240" class="box-svg" aria-label="Caja negra con carga conectada">
+
+          <!-- Wires top/bottom -->
+          <line x1="10"  y1="50"  x2="60"  y2="50"  stroke="#64748b" stroke-width="2"/>
+          <line x1="10"  y1="190" x2="60"  y2="190" stroke="#64748b" stroke-width="2"/>
+          <line x1="170" y1="50"  x2="240" y2="50"  stroke="#64748b" stroke-width="2"/>
+          <line x1="170" y1="190" x2="240" y2="190" stroke="#64748b" stroke-width="2"/>
+
+          <!-- Black box -->
+          <rect x="60" y="30" width="110" height="180" rx="8"
+            fill="#0f172a" stroke="#475569" stroke-width="2" stroke-dasharray="7,4"/>
+          <text x="115" y="108" font-size="13" fill="#475569" text-anchor="middle" font-weight="bold">???</text>
+          <text x="115" y="126" font-size="10" fill="#334155" text-anchor="middle">Red Lineal</text>
+          <text x="115" y="142" font-size="10" fill="#334155" text-anchor="middle">Oculta</text>
+
+          <!-- Lock icon if not revealed -->
+          @if (!revealed()) {
+            <text x="115" y="170" font-size="18" text-anchor="middle">🔒</text>
+          } @else {
+            <!-- Show internal schematic when revealed -->
+            <text x="115" y="58" font-size="8" fill="#a78bfa" text-anchor="middle">VS={{presets[selectedPresetIndex()].vs}}V</text>
+            <!-- VS source small -->
+            <circle cx="85" cy="110" r="14" stroke="#38bdf8" stroke-width="1.5" fill="none"/>
+            <text x="85" y="107" font-size="8" fill="#38bdf8" text-anchor="middle">+</text>
+            <text x="85" y="117" font-size="7" fill="#38bdf8" text-anchor="middle">VS</text>
+            <!-- R1 -->
+            <polyline points="85,80 80,73 90,66 80,59 90,52 85,45" stroke="#a78bfa" stroke-width="1.5" fill="none"/>
+            <text x="70" y="67" font-size="8" fill="#a78bfa">R1={{presets[selectedPresetIndex()].r1}}Ω</text>
+            <!-- R2 -->
+            <polyline points="130,85 125,93 135,101 125,109 135,117 130,125" stroke="#a78bfa" stroke-width="1.5" fill="none"/>
+            <text x="140" y="110" font-size="8" fill="#a78bfa">R2={{presets[selectedPresetIndex()].r2}}Ω</text>
+            <!-- connecting wires internal -->
+            <line x1="85" y1="45" x2="85" y2="30" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="85" y1="30" x2="130" y2="30" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="85" y1="124" x2="85" y2="195" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="130" y1="30" x2="130" y2="85" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="130" y1="125" x2="130" y2="195" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="85" y1="195" x2="130" y2="195" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,2"/>
+          }
+
+          <!-- Terminal A -->
+          <circle cx="210" cy="50" r="6" fill="#38bdf8"/>
+          <text x="222" y="54" font-size="10" fill="#38bdf8">A</text>
+          <!-- Terminal B -->
+          <circle cx="210" cy="190" r="6" fill="#38bdf8"/>
+          <text x="222" y="194" font-size="10" fill="#38bdf8">B</text>
+
+          <!-- Load block -->
+          <line x1="210" y1="56" x2="210" y2="85" stroke="#fbbf24" stroke-width="2"/>
+          <rect x="193" y="85" width="34" height="70" rx="4" stroke="#fbbf24" stroke-width="2" fill="#1c1400"/>
+
+          <!-- Load type icon -->
+          @if (loadType() === 'resistiva') {
+            <text x="210" y="126" font-size="9" fill="#fbbf24" text-anchor="middle">R_L</text>
+            <text x="210" y="138" font-size="8" fill="#94a3b8" text-anchor="middle">{{fmt(rl(), 1)}}Ω</text>
+          } @else if (loadType() === 'inductiva') {
+            <text x="210" y="122" font-size="9" fill="#fbbf24" text-anchor="middle">R+jXL</text>
+            <text x="210" y="134" font-size="7" fill="#94a3b8" text-anchor="middle">|Z|={{fmt(zMag(),1)}}Ω</text>
+            <text x="210" y="145" font-size="7" fill="#94a3b8" text-anchor="middle">∠{{fmt(phaseAngle(),1)}}°</text>
+          } @else {
+            <text x="210" y="122" font-size="9" fill="#fbbf24" text-anchor="middle">R−jXC</text>
+            <text x="210" y="134" font-size="7" fill="#94a3b8" text-anchor="middle">|Z|={{fmt(zMag(),1)}}Ω</text>
+            <text x="210" y="145" font-size="7" fill="#94a3b8" text-anchor="middle">∠{{fmt(phaseAngle(),1)}}°</text>
+          }
+
+          <line x1="210" y1="155" x2="210" y2="184" stroke="#fbbf24" stroke-width="2"/>
+
+          <!-- V_L measurement arrow -->
+          <line x1="248" y1="56" x2="248" y2="184" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="255" y="122" font-size="8" fill="#f59e0b" transform="rotate(90, 255, 122)">V_L = {{fmt(vLoad())}}V</text>
+
+          <!-- I arrow on top wire -->
+          <text x="190" y="44" font-size="8" fill="#4ade80">→ {{fmt(iLoad())}}A</text>
+        </svg>
+
+        <!-- Reveal button -->
+        @if (!revealed()) {
+          <button class="btn btn--ghost btn--sm reveal-btn" (click)="reveal()">
+            🔓 Revelar red interna
+          </button>
+        } @else {
+          <div class="revealed-badge">✅ Red revelada</div>
+        }
+      </div>
+
+      <!-- RIGHT: Controls + results -->
+      <div class="controls-panel">
+
+        <!-- Load type selector -->
+        <div class="section-label">Tipo de carga</div>
+        <div class="load-tabs">
+          <button class="load-tab" [class.load-tab--active]="loadType() === 'resistiva'"  (click)="setLoadType('resistiva')">⬛ Resistiva</button>
+          <button class="load-tab" [class.load-tab--active]="loadType() === 'inductiva'"  (click)="setLoadType('inductiva')">🌀 Inductiva</button>
+          <button class="load-tab" [class.load-tab--active]="loadType() === 'capacitiva'" (click)="setLoadType('capacitiva')">⚡ Capacitiva</button>
+        </div>
+
+        <!-- Parameters form -->
+        <form [formGroup]="form" (ngSubmit)="measure()" class="param-form">
+          <label class="param-field">
+            <span class="param-label">R<sub>L</sub> (Ω)</span>
+            <input class="param-input" type="number" formControlName="rl" min="0.1" step="1" />
+          </label>
+
+          @if (loadType() !== 'resistiva') {
+            <label class="param-field">
+              <span class="param-label">Frecuencia (Hz)</span>
+              <input class="param-input" type="number" formControlName="freq" min="1" step="10" />
+            </label>
+          }
+          @if (loadType() === 'inductiva') {
+            <label class="param-field">
+              <span class="param-label">Inductancia L (H)</span>
+              <input class="param-input" type="number" formControlName="l" min="0.001" step="0.01" />
+            </label>
+          }
+          @if (loadType() === 'capacitiva') {
+            <label class="param-field">
+              <span class="param-label">Capacitancia C (µF)</span>
+              <input class="param-input" type="number" formControlName="c" min="0.001" step="10" />
+            </label>
+          }
+
+          <button type="submit" class="btn btn--primary btn--sm" [disabled]="form.invalid">
+            📏 Medir
+          </button>
+        </form>
+
+        <!-- Live results -->
+        <div class="live-results">
+          <div class="result-chip result-chip--voltage">
+            <span class="chip-label">V<sub>L</sub></span>
+            <span class="chip-val">{{ fmt(vLoad()) }} V</span>
+          </div>
+          <div class="result-chip result-chip--current">
+            <span class="chip-label">I<sub>L</sub></span>
+            <span class="chip-val">{{ fmt(iLoad()) }} A</span>
+          </div>
+          <div class="result-chip result-chip--power">
+            <span class="chip-label">P<sub>L</sub></span>
+            <span class="chip-val">{{ fmt(pLoad()) }} W</span>
+          </div>
+          @if (loadType() !== 'resistiva') {
+            <div class="result-chip result-chip--phase">
+              <span class="chip-label">∠Z</span>
+              <span class="chip-val">{{ fmt(phaseAngle(), 1) }}°</span>
+            </div>
+          }
+        </div>
+
+        <!-- Thévenin deduced hint -->
+        <div class="thevenin-hint">
+          <span class="hint-label">Equivalente deducido</span>
+          <div class="hint-values">
+            <span>V<sub>TH</sub> ≈ <strong>{{ fmt(vth()) }} V</strong></span>
+            <span>R<sub>TH</sub> ≈ <strong>{{ fmt(rth()) }} Ω</strong></span>
+          </div>
+          <p class="hint-tip">
+            Mide con R_L → ∞ para obtener V_OC, y con R_L → 0 para obtener I_SC
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Measurement history table -->
+    @if (measurements().length) {
+      <div class="history-section">
+        <div class="section-label">Historial de mediciones</div>
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tipo</th>
+                <th>|Z| (Ω)</th>
+                <th>V<sub>L</sub> (V)</th>
+                <th>I<sub>L</sub> (A)</th>
+                <th>P<sub>L</sub> (W)</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (m of measurements(); track $index; let i = $index) {
+                <tr>
+                  <td class="td-num">{{ measurements().length - i }}</td>
+                  <td><span class="load-badge load-badge--{{m.loadType}}">{{ m.loadType }}</span></td>
+                  <td class="td-mono">{{ fmt(m.rl) }}</td>
+                  <td class="td-mono">{{ fmt(m.vl) }}</td>
+                  <td class="td-mono">{{ fmt(m.il) }}</td>
+                  <td class="td-mono">{{ fmt(m.pl) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+  </div>
+</div>

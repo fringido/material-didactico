@@ -8,6 +8,9 @@ import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circu
 import { EquationChartComponent } from '../../components/equation-chart/equation-chart.component';
 import { FormulaTooltipDirective } from '../../directives/formula-tooltip.directive';
 import { NodosMallasSvgComponent } from '../../components/nodos-mallas-svg/nodos-mallas-svg.component';
+import { TheveninCalculatorComponent } from '../../components/thevenin-calculator/thevenin-calculator.component';
+import { NortonTransformerComponent } from '../../components/norton-transformer/norton-transformer.component';
+import { BlackBoxSimulatorComponent } from '../../components/black-box-simulator/black-box-simulator.component';
 
 @Component({
   selector: 'app-clase4',
@@ -20,7 +23,10 @@ import { NodosMallasSvgComponent } from '../../components/nodos-mallas-svg/nodos
     DynamicCircuitSimulatorComponent,
     EquationChartComponent,
     FormulaTooltipDirective,
-    NodosMallasSvgComponent
+    NodosMallasSvgComponent,
+    TheveninCalculatorComponent,
+    NortonTransformerComponent,
+    BlackBoxSimulatorComponent,
   ],
   templateUrl: './clase4.component.html',
   styleUrls: ['./clase4.component.scss']
@@ -43,7 +49,7 @@ export class Clase4Component implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((params) => {
       const temaId = params.get('id');
       console.log('Clase4Component: Route parameter id =', temaId);
-      
+
       if (temaId) {
         // Load specific topic directly
         console.log('Clase4Component: Loading topic from', `/assets/data/clase-4/${temaId}.json`);
@@ -105,6 +111,11 @@ export class Clase4Component implements OnInit, OnDestroy {
   getVariablesForFormula(formula: any): any[] {
     const tooltipId = formula.variables_tooltip;
     return this.getTooltipVariables(tooltipId);
+  }
+
+  formatSubscripts(text: string | null | undefined): string {
+    if (!text) return '';
+    return text.replace(/([A-Za-z])_([A-Za-z0-9]+)/g, '$1<sub>$2</sub>');
   }
 
   startExerciseTimer(exerciseId: string, minutes: number) {

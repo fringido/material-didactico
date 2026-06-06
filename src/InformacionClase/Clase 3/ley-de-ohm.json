@@ -76,20 +76,131 @@
       "id": "ohm-calculator",
       "tipo": "ohm-law-lab",
       "titulo": "Calculadora interactiva V – I – R",
-      "descripcion": "Ingresa dos magnitudes y calcula la tercera; observa el triángulo de Ohm."
+      "descripcion": "Ingresa dos magnitudes y calcula la tercera; observa el triángulo de Ohm.",
+      "componente": "app-ohm-calculator"
     },
     {
       "id": "ohm-grafica",
       "tipo": "equation-chart",
       "chartType": "ohm",
       "titulo": "Gráfica V vs I (parametrizada por R)",
-      "ecuacion": "V = I \\cdot R"
+      "ecuacion": "V = I \\cdot R",
+      "componente": "app-equation-chart",
+      "parametros": {
+        "ecuacion": "V = I * R",
+        "variable_independiente": "I",
+        "variable_dependiente": "V",
+        "parametro_ajustable": "R",
+        "rango_I": [0, 5],
+        "rango_R": [1, 100]
+      }
     },
     {
       "id": "analogia-tuberia",
       "tipo": "pipe-analogy",
       "titulo": "Analogía presión–caudal–estrechamiento",
-      "descripcion": "Ajusta presión y resistencia hidráulica y observa el caudal equivalente a I."
+      "descripcion": "Ajusta presión y resistencia hidráulica y observa el caudal equivalente a I.",
+      "componente": "app-pipe-analogy-simulator",
+      "parametros": {
+        "presion": "V",
+        "caudal": "I",
+        "estrechamiento": "R",
+        "visualizacion": ["flujo_agua", "medidores"]
+      }
+    },
+    {
+      "id": "circuito-simple-simulator",
+      "tipo": "circuit-simulator",
+      "titulo": "Simulador de Circuito Simple",
+      "descripcion": "Ajusta voltaje y resistencia para ver cómo cambia la corriente en tiempo real.",
+      "componente": "app-simple-circuit-simulator",
+      "parametros": {
+        "voltaje_fuente": "V",
+        "resistencia": "R",
+        "visualizacion": ["corriente", "potencia", "medidores"]
+      }
+    }
+  ],
+  "visualizaciones_svg": [
+    {
+      "id": "triangulo-ohm-interactivo",
+      "titulo": "Triángulo de Ohm Interactivo",
+      "archivo": "/assets/illustrations/clase-3/triangulo_ohm_interactivo.svg",
+      "descripcion": "Triángulo SVG interactivo para despejar fórmulas de la Ley de Ohm.",
+      "interactivo": true,
+      "elementos_clickeables": ["V", "I", "R"],
+      "accion_clic": "Muestra fórmula despejada correspondiente"
+    },
+    {
+      "id": "circuito-ohm-svg",
+      "titulo": "Circuito Básico con Medidores",
+      "archivo": "/assets/illustrations/clase-3/circuito_ohm_basico.svg",
+      "descripcion": "Diagrama SVG de circuito simple con fuente, resistencia y medidores.",
+      "interactivo": true,
+      "elementos_clickeables": ["V_fuente", "R_resistencia", "I_corriente"],
+      "parametros_ajustables": ["V", "R"]
+    },
+    {
+      "id": "analogia-agua-svg",
+      "titulo": "Analogía Hidráulica",
+      "archivo": "/assets/illustrations/clase-3/analogia_agua.svg",
+      "descripcion": "Visualización de la analogía de tubería de agua para Ley de Ohm.",
+      "interactivo": true,
+      "elementos_clickeables": ["presion", "caudal", "estrechamiento"],
+      "parametros_ajustables": ["presion", "diametro_tuberia"]
+    }
+  ],
+  "graficas_interactivas": [
+    {
+      "id": "voltaje-vs-corriente",
+      "titulo": "Voltaje vs Corriente (Ley de Ohm)",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica lineal mostrando la relación directa entre V e I para diferentes R.",
+      "eje_x": "Corriente (A)",
+      "eje_y": "Voltaje (V)",
+      "ecuacion": "V = I × R",
+      "parametros": {
+        "valores_R": [10, 50, 100],
+        "rango_I": [0, 5],
+        "lineas_multiples": true
+      }
+    },
+    {
+      "id": "corriente-vs-resistencia",
+      "titulo": "Corriente vs Resistencia",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica hiperbólica mostrando la relación inversa entre I y R.",
+      "eje_x": "Resistencia (Ω)",
+      "eje_y": "Corriente (A)",
+      "ecuacion": "I = V / R",
+      "parametros": {
+        "voltaje": 12,
+        "rango_R": [1, 100]
+      }
+    },
+    {
+      "id": "potencia-vs-resistencia",
+      "titulo": "Potencia vs Resistencia",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica de potencia disipada P = V²/R en función de la resistencia.",
+      "eje_x": "Resistencia (Ω)",
+      "eje_y": "Potencia (W)",
+      "ecuacion": "P = V² / R",
+      "parametros": {
+        "voltaje": 12,
+        "rango_R": [1, 100]
+      }
+    },
+    {
+      "id": "triangulo-potencia",
+      "titulo": "Triángulo de Potencia",
+      "tipo": "visualization",
+      "descripcion": "Visualización de la relación P = V × I.",
+      "ecuacion": "P = V × I",
+      "parametros": {
+        "rango_V": [0, 24],
+        "rango_I": [0, 5]
+      }
     }
   ],
   "ejemplos": [

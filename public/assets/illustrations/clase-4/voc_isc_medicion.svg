@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300" width="560" height="300" font-family="monospace, sans-serif">
+  <style>
+    .label { font-size: 13px; fill: #e2e8f0; }
+    .sublabel { font-size: 11px; fill: #94a3b8; }
+    .title { font-size: 14px; font-weight: bold; }
+    .wire { stroke: #64748b; stroke-width: 2; fill: none; }
+    .note { font-size: 11px; fill: #fbbf24; }
+  </style>
+  <rect width="560" height="300" fill="#0f172a" rx="12"/>
+
+  <!-- Title -->
+  <text x="280" y="28" font-size="15" fill="#f1f5f9" font-weight="bold" text-anchor="middle" font-family="monospace">Medición de V_OC e I_SC</text>
+
+  <!-- ===== LEFT: V_OC measurement ===== -->
+  <rect x="15" y="45" width="250" height="215" rx="8" fill="#1e293b" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="140" y="68" class="title" fill="#a78bfa" text-anchor="middle">Medición V_OC</text>
+  <text x="140" y="83" class="sublabel" fill="#94a3b8" text-anchor="middle">(terminales abiertas)</text>
+
+  <!-- Network box -->
+  <rect x="30" y="95" width="110" height="100" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="85" y="140" class="label" text-anchor="middle" fill="#64748b">Red</text>
+  <text x="85" y="156" class="sublabel" text-anchor="middle">Lineal</text>
+
+  <!-- Top and bottom terminals -->
+  <line x1="140" y1="95" x2="175" y2="95" stroke="#a78bfa" stroke-width="2"/>
+  <circle cx="175" cy="95" r="5" fill="#38bdf8"/>
+  <text x="182" y="99" class="label" fill="#38bdf8">A</text>
+
+  <line x1="140" y1="195" x2="175" y2="195" stroke="#a78bfa" stroke-width="2"/>
+  <circle cx="175" cy="195" r="5" fill="#38bdf8"/>
+  <text x="182" y="199" class="label" fill="#38bdf8">B</text>
+
+  <!-- Voltmeter -->
+  <circle cx="220" cy="145" r="28" stroke="#fbbf24" stroke-width="2" fill="#1c1800"/>
+  <text x="220" y="140" font-size="10" fill="#fbbf24" text-anchor="middle" font-weight="bold">V</text>
+  <text x="220" y="154" font-size="9" fill="#fbbf24" text-anchor="middle">meter</text>
+  <!-- Voltmeter wires -->
+  <line x1="175" y1="95" x2="192" y2="117" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <line x1="175" y1="195" x2="192" y2="173" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <!-- V_OC annotation -->
+  <text x="140" y="230" class="note" text-anchor="middle">V_OC = V_TH</text>
+  <text x="140" y="245" class="sublabel" text-anchor="middle">Alta impedancia → I ≈ 0</text>
+
+  <!-- ===== RIGHT: I_SC measurement ===== -->
+  <rect x="295" y="45" width="250" height="215" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="420" y="68" class="title" fill="#4ade80" text-anchor="middle">Medición I_SC</text>
+  <text x="420" y="83" class="sublabel" fill="#94a3b8" text-anchor="middle">(terminales en corto)</text>
+
+  <!-- Network box -->
+  <rect x="310" y="95" width="110" height="100" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="365" y="140" class="label" text-anchor="middle" fill="#64748b">Red</text>
+  <text x="365" y="156" class="sublabel" text-anchor="middle">Lineal</text>
+
+  <!-- Terminal wires -->
+  <line x1="420" y1="95" x2="460" y2="95" stroke="#4ade80" stroke-width="2"/>
+  <line x1="420" y1="195" x2="460" y2="195" stroke="#4ade80" stroke-width="2"/>
+
+  <!-- Short circuit wire -->
+  <line x1="460" y1="95" x2="530" y2="95" stroke="#4ade80" stroke-width="2"/>
+  <line x1="460" y1="195" x2="530" y2="195" stroke="#4ade80" stroke-width="2"/>
+  <line x1="530" y1="95" x2="530" y2="145" stroke="#4ade80" stroke-width="2"/>
+  <line x1="530" y1="195" x2="530" y2="165" stroke="#4ade80" stroke-width="2"/>
+
+  <!-- Ammeter -->
+  <circle cx="530" cy="155" r="18" stroke="#38bdf8" stroke-width="2" fill="#001220"/>
+  <text x="530" y="151" font-size="10" fill="#38bdf8" text-anchor="middle" font-weight="bold">A</text>
+  <text x="530" y="163" font-size="8" fill="#38bdf8" text-anchor="middle">meter</text>
+
+  <!-- Terminal dots -->
+  <circle cx="460" cy="95" r="5" fill="#38bdf8"/>
+  <text x="450" y="92" class="label" fill="#38bdf8">A</text>
+  <circle cx="460" cy="195" r="5" fill="#38bdf8"/>
+  <text x="450" y="199" class="label" fill="#38bdf8">B</text>
+
+  <!-- I_SC annotation -->
+  <text x="420" y="230" class="note" fill="#4ade80" text-anchor="middle">I_SC = I_N</text>
+  <text x="420" y="245" class="sublabel" text-anchor="middle">Baja impedancia → V ≈ 0</text>
+
+  <!-- Bottom: Formula -->
+  <text x="280" y="278" font-size="12" fill="#fbbf24" text-anchor="middle" font-family="monospace">R_TH = V_OC / I_SC</text>
+</svg>

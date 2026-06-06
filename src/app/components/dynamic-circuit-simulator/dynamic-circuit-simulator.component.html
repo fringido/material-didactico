@@ -5,7 +5,7 @@
   </div>
 
   <div class="simulator-card__content">
-    
+
     <!-- LABORATORIOS ESPECIALIZADOS (CASOS ESPECÍFICOS) -->
     @if (simulacion.tipo === 'kirchhoff-lab') {
       <app-kirchhoff-lab />
@@ -20,8 +20,11 @@
       <div class="simulator-layout">
         <!-- Diagrama / Visualización -->
         <div class="simulator-viz">
+          @if (simulacion.diagrama?.length) {
           <div class="diagram-wrapper" [style.width.px]="simulacion.ancho" [style.height.px]="simulacion.alto">
-            <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet" class="diagram-svg">
+            <svg [attr.viewBox]="'0 0 ' + (simulacion.ancho || 300) + ' ' + (simulacion.alto || 200)"
+                 preserveAspectRatio="xMidYMid meet"
+                 class="diagram-svg">
               <!-- Grid Background -->
               <defs>
                 <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -38,6 +41,11 @@
                       <path d="M0,10 L10,10 L12,0 L16,20 L20,0 L24,20 L28,0 L32,20 L36,0 L40,10 L50,10" fill="none" stroke="var(--color-primary)" stroke-width="2" />
                       <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
                     </g>
+                    <!-- Resistor alias -->
+                    <g *ngSwitchCase="'resistor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <path d="M0,10 L10,10 L12,0 L16,20 L20,0 L24,20 L28,0 L32,20 L36,0 L40,10 L50,10" fill="none" stroke="var(--color-primary)" stroke-width="2" />
+                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
+                    </g>
                     <!-- Capacitor -->
                     <g *ngSwitchCase="'capacitor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
                       <path d="M0,10 L22,10 M28,10 L50,10 M22,0 L22,20 M28,0 L28,20" fill="none" stroke="var(--color-primary)" stroke-width="2" />
@@ -50,6 +58,12 @@
                     </g>
                     <!-- Fuente DC -->
                     <g *ngSwitchCase="'fuente_dc'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                      <circle cx="0" cy="0" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2" />
+                      <path d="M-5,0 L5,0 M0,-5 L0,5" stroke="var(--color-primary)" stroke-width="2" />
+                      <text x="20" y="5" class="diagram-label">{{ el.valor }}</text>
+                    </g>
+                    <!-- Fuente alias -->
+                    <g *ngSwitchCase="'fuente'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
                       <circle cx="0" cy="0" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2" />
                       <path d="M-5,0 L5,0 M0,-5 L0,5" stroke="var(--color-primary)" stroke-width="2" />
                       <text x="20" y="5" class="diagram-label">{{ el.valor }}</text>
@@ -76,14 +90,15 @@
               </g>
             </svg>
           </div>
+          }
 
           <!-- Muestras de Ondas si existen -->
           @if (simulacion.graficas?.length) {
-            <div class="wave-viewer">
-              <svg width="300" height="100" class="wave-svg">
+            <div class="wave-viewer" style="flex: 1; min-height: 200px;">
+              <svg viewBox="0 0 300 100" preserveAspectRatio="none" class="wave-svg" style="width: 100%; height: 100%;">
                 <line x1="0" y1="50" x2="300" y2="50" stroke="var(--border-color)" stroke-dasharray="4" />
                 @for (g of simulacion.graficas; track g.id) {
-                  <path [attr.d]="generateWavePath(g)" fill="none" [attr.stroke]="g.color" stroke-width="2" />
+                  <path [attr.d]="generateWavePath(g)" fill="none" [attr.stroke]="g.color" stroke-width="2" vector-effect="non-scaling-stroke" />
                 }
               </svg>
               <div class="wave-legend">
@@ -108,10 +123,10 @@
                   <span>{{ ctrl.label }}</span>
                   <span class="control-value">{{ controlValues()[ctrl.id] }}{{ ctrl.unidad }}</span>
                 </div>
-                <input type="range" 
-                       [min]="ctrl.min" 
-                       [max]="ctrl.max" 
-                       [step]="ctrl.step || 1" 
+                <input type="range"
+                       [min]="ctrl.min"
+                       [max]="ctrl.max"
+                       [step]="ctrl.step || 1"
                        [value]="controlValues()[ctrl.id]"
                        (input)="updateControl(ctrl.id, $any($event.target).value)"
                        class="slider">

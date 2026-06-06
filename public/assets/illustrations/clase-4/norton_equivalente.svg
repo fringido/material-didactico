@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" width="560" height="280" font-family="monospace, sans-serif">
+  <style>
+    .label { font-size: 13px; fill: #e2e8f0; }
+    .sublabel { font-size: 11px; fill: #94a3b8; }
+    .title { font-size: 14px; fill: #4ade80; font-weight: bold; }
+    .wire { stroke: #64748b; stroke-width: 2; fill: none; }
+    .component { stroke: #4ade80; stroke-width: 2; fill: none; }
+    .source { stroke: #38bdf8; stroke-width: 2; fill: none; }
+    .load { stroke: #a78bfa; stroke-width: 2; fill: #1e1040; }
+  </style>
+  <rect width="560" height="280" fill="#0f172a" rx="12"/>
+
+  <!-- LEFT PANEL: Original network -->
+  <rect x="10" y="10" width="245" height="260" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="20" y="32" class="title" fill="#4ade80">Red Original</text>
+
+  <!-- Terminal A (top) -->
+  <circle cx="210" cy="60" r="5" fill="#38bdf8"/>
+  <text x="220" y="64" class="label" fill="#38bdf8">A</text>
+  <!-- Terminal B (bottom) -->
+  <circle cx="210" cy="220" r="5" fill="#38bdf8"/>
+  <text x="220" y="224" class="label" fill="#38bdf8">B</text>
+
+  <!-- Complex network box -->
+  <rect x="30" y="55" width="160" height="175" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="95" y="120" class="label" text-anchor="middle">Red Lineal</text>
+  <text x="95" y="138" class="sublabel" text-anchor="middle">Compleja</text>
+  <text x="95" y="158" class="sublabel" text-anchor="middle">(fuentes + resistencias)</text>
+
+  <line x1="190" y1="60" x2="210" y2="60" class="wire" stroke="#38bdf8" stroke-width="2"/>
+  <line x1="190" y1="220" x2="210" y2="220" class="wire" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- I_SC annotation -->
+  <line x1="213" y1="65" x2="213" y2="215" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="222" y="145" class="sublabel" fill="#f59e0b">I_SC</text>
+
+  <!-- RIGHT PANEL: Norton equivalent -->
+  <rect x="305" y="10" width="245" height="260" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="315" y="32" class="title" fill="#4ade80">Equivalente Norton</text>
+
+  <!-- Top wire -->
+  <line x1="320" y1="60" x2="530" y2="60" class="wire" stroke="#4ade80" stroke-width="2"/>
+  <!-- Bottom wire -->
+  <line x1="320" y1="220" x2="530" y2="220" class="wire" stroke="#4ade80" stroke-width="2"/>
+
+  <!-- Left vertical wire -->
+  <line x1="335" y1="60" x2="335" y2="220" stroke="#4ade80" stroke-width="2"/>
+
+  <!-- I_N current source (vertical, left branch) -->
+  <line x1="335" y1="60" x2="335" y2="100" class="source" stroke="#38bdf8" stroke-width="2"/>
+  <circle cx="335" cy="140" r="30" class="source" stroke="#38bdf8"/>
+  <!-- Arrow inside circle -->
+  <line x1="335" y1="155" x2="335" y2="130" stroke="#38bdf8" stroke-width="2"/>
+  <polygon points="335,122 330,133 340,133" fill="#38bdf8"/>
+  <line x1="335" y1="170" x2="335" y2="220" class="source" stroke="#38bdf8" stroke-width="2"/>
+  <text x="310" y="145" class="label" fill="#38bdf8" text-anchor="end">I_N</text>
+
+  <!-- R_N (middle branch, vertical) -->
+  <line x1="430" y1="60" x2="430" y2="90" class="component" stroke="#4ade80" stroke-width="2"/>
+  <!-- Resistor zigzag vertical -->
+  <polyline points="430,90 418,97 442,105 418,113 442,121 418,129 442,137 430,145" class="component" stroke="#4ade80" stroke-width="2"/>
+  <line x1="430" y1="145" x2="430" y2="220" class="component" stroke="#4ade80" stroke-width="2"/>
+  <text x="448" y="120" class="label" fill="#4ade80">R_N</text>
+
+  <!-- R_L load (right branch, vertical) -->
+  <line x1="505" y1="60" x2="505" y2="90" stroke="#a78bfa" stroke-width="2"/>
+  <rect x="490" y="90" width="30" height="80" rx="3" class="load"/>
+  <text x="505" y="136" class="label" fill="#a78bfa" text-anchor="middle">R_L</text>
+  <line x1="505" y1="170" x2="505" y2="220" stroke="#a78bfa" stroke-width="2"/>
+
+  <!-- Terminal dots -->
+  <circle cx="505" cy="60" r="5" fill="#38bdf8"/>
+  <text x="515" y="64" class="label" fill="#38bdf8">A</text>
+  <circle cx="505" cy="220" r="5" fill="#38bdf8"/>
+  <text x="515" y="224" class="label" fill="#38bdf8">B</text>
+
+  <!-- Arrow between panels -->
+  <text x="269" y="148" font-size="24" fill="#f59e0b" text-anchor="middle">⟹</text>
+</svg>

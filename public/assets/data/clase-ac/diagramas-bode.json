@@ -1,0 +1,108 @@
+{
+  "metadata": { "orden": 4 },
+  "nombre": "Diagramas de Bode",
+  "descripcion": "Representación gráfica de la respuesta en frecuencia: magnitud (dB) y fase.",
+  "introduccion": "El diagrama de Bode es la herramienta estándar para visualizar cómo un filtro o sistema responde a distintas frecuencias. Usa escala logarítmica en el eje X (frecuencia) y dB en el eje Y (magnitud), lo que permite visualizar fácilmente décadas de frecuencia y pendientes de atenuación.",
+  "ecuaciones": [
+    { "nombre": "Ganancia en decibeles", "formula": "A_{dB} = 20\\log_{10}|H(j\\omega)|" },
+    { "nombre": "Función de transferencia pasa-bajas", "formula": "H(j\\omega) = \\frac{1}{1+j(\\omega/\\omega_c)}" },
+    { "nombre": "Función de transferencia pasa-altas", "formula": "H(j\\omega) = \\frac{j(\\omega/\\omega_c)}{1+j(\\omega/\\omega_c)}" },
+    { "nombre": "Magnitud dB pasa-bajas", "formula": "|H|_{dB} = -10\\log_{10}\\left[1+\\left(\\frac{f}{f_c}\\right)^2\\right]" },
+    { "nombre": "Fase pasa-bajas", "formula": "\\angle H = -\\arctan\\!\\left(\\frac{f}{f_c}\\right)" }
+  ],
+  "conceptos_bode": [
+    {
+      "concepto": "Escala logarítmica en frecuencia",
+      "descripcion": "Permite ver muchas décadas de frecuencia (ej. 10 Hz a 100 kHz) en un espacio manejable. Una 'década' es un factor de 10 en frecuencia.",
+      "imagen": "/assets/images/bode_plot_filter_1780705357147.png"
+    },
+    {
+      "concepto": "Decibel (dB)",
+      "descripcion": "Escala logarítmica de ganancia. 0 dB = ganancia 1 (sin cambio). -3 dB = 0.707× (frecuencia de corte). -20 dB = 0.1× (atenuación 10×).",
+      "tabla": [
+        { "dB": "0", "ganancia": "1.0 (100%)" },
+        { "dB": "-3", "ganancia": "0.707 (70.7%)" },
+        { "dB": "-6", "ganancia": "0.5 (50%)" },
+        { "dB": "-20", "ganancia": "0.1 (10%)" },
+        { "dB": "-40", "ganancia": "0.01 (1%)" }
+      ]
+    },
+    {
+      "concepto": "Pendiente de atenuación",
+      "descripcion": "Primer orden: -20 dB/década. Segundo orden: -40 dB/década. Cada polo añade -20 dB/déc, cada cero añade +20 dB/déc."
+    },
+    {
+      "concepto": "Frecuencia de corte (-3 dB)",
+      "descripcion": "La frecuencia donde la ganancia cae 3 dB respecto al valor de paso. Es la frecuencia de esquina del diagrama de Bode asintótico."
+    }
+  ],
+  "reglas_bode_asintótico": [
+    "Para f << f_c: ganancia ≈ constante (0 dB para pasa-bajas)",
+    "En f = f_c: ganancia exacta = -3 dB",
+    "Para f >> f_c: pendiente de -20 dB/década (primer orden)",
+    "Fase en f_c: exactamente -45° (pasa-bajas) o +45° (pasa-altas)",
+    "Fase para f << f_c: 0°",
+    "Fase para f >> f_c: -90° (pasa-bajas) o +90° (pasa-altas)"
+  ],
+  "graficas_interactivas": [
+    {
+      "titulo": "Bode Pasa-Bajas RC",
+      "descripcion": "Ajusta R y C para ver cómo cambia la frecuencia de corte en el diagrama de Bode.",
+      "tipo": "bode_lowpass",
+      "ecuacion": "H(j\\omega) = \\frac{1}{1+j\\omega RC}"
+    },
+    {
+      "titulo": "Bode Pasa-Altas RC",
+      "descripcion": "Observa la transición de 0 dB a +20 dB/déc en la pendiente de paso.",
+      "tipo": "bode_highpass",
+      "ecuacion": "H(j\\omega) = \\frac{j\\omega RC}{1+j\\omega RC}"
+    },
+    {
+      "titulo": "Bode Pasa-Banda RLC",
+      "descripcion": "Visualiza f₀, ancho de banda y factor Q en el diagrama.",
+      "tipo": "bode_bandpass",
+      "ecuacion": "H(j\\omega) = \\frac{j\\omega RC}{1 - \\omega^2 LC + j\\omega RC}"
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Análisis Bode de filtro pasa-bajas",
+      "enunciado": "R=1\\,\\text{k}\\Omega,\\; C=1\\,\\mu\\text{F}. \\text{ Calcular ganancia a } f=10\\,\\text{Hz},\\; f_c=159\\,\\text{Hz},\\; f=1590\\,\\text{Hz}.",
+      "resultado": "f=10\\,\\text{Hz}: 0\\,\\text{dB};\\quad f_c=159\\,\\text{Hz}: -3\\,\\text{dB};\\quad f=1590\\,\\text{Hz}: -20\\,\\text{dB}"
+    },
+    {
+      "titulo": "Ángulo de fase a f_c",
+      "enunciado": "Pasa-bajas RC. Calcular fase en f = f_c.",
+      "resultado": "\\angle H = -\\arctan(1) = -45°"
+    }
+  ],
+  "ejercicios": [
+    {
+      "id": "ej-bode-1",
+      "numero": 10,
+      "titulo": "Ejercicio 10a — Trazar Bode pasa-bajas",
+      "descripcion": "R=10\\,\\text{k}\\Omega,\\; C=15\\,\\text{nF}. \\text{ Calcular }f_c. \\text{ Calcular la ganancia y fase a: }f=f_c/10,\\; f_c,\\; 10f_c.",
+      "tiempo_minutos": 20,
+      "solucion": "f_c=1.06\\,\\text{kHz};\\; \\text{@}f_c/10: \\approx 0\\,\\text{dB},-5.7°;\\; \\text{@}f_c: -3\\,\\text{dB},-45°;\\; \\text{@}10f_c: \\approx -20\\,\\text{dB},-84.3°",
+      "explicacion": "La curva de Bode es suave: comienza plana, dobla en f_c con -3 dB, y luego cae a -20 dB/déc. La fase va de 0° a -90° pasando por -45° en f_c."
+    },
+    {
+      "id": "ej-bode-2",
+      "numero": 10,
+      "titulo": "Ejercicio 10b — Trazar Bode pasa-altas",
+      "descripcion": "Mismo R y C anterior. \\text{Trazar Bode del filtro pasa-altas (salida en R).}",
+      "tiempo_minutos": 15,
+      "solucion": "f_c=1.06\\,\\text{kHz};\\; \\text{@}f_c/10: \\approx -20\\,\\text{dB},+84.3°;\\; \\text{@}f_c: -3\\,\\text{dB},+45°;\\; \\text{@}10f_c: \\approx 0\\,\\text{dB},+5.7°",
+      "explicacion": "El pasa-altas es el complemento del pasa-bajas. La fase va de +90° a 0° pasando por +45° en f_c."
+    },
+    {
+      "id": "ej-bode-3",
+      "numero": 10,
+      "titulo": "Ejercicio 10c — Bode pasa-banda RLC",
+      "descripcion": "L=1\\,\\text{mH},\\; C=100\\,\\text{nF},\\; R=50\\,\\Omega. \\text{Calcular }f_0,\\; Q,\\; BW\\text{ y trazar Bode.}",
+      "tiempo_minutos": 20,
+      "solucion": "f_0=15.9\\,\\text{kHz},\\; Q=2,\\; BW=7.96\\,\\text{kHz}",
+      "explicacion": "Q=2 indica filtro poco selectivo con BW amplio. En Bode, el pico de ganancia (0 dB) ocurre en f₀, con caída de -20 dB/déc a cada lado."
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "id": "thevenin-norton",
+  "nombre": "Teoremas de Thevenin y Norton",
+  "descripcion": "Los teoremas de Thevenin y Norton son herramientas indispensables en el análisis de circuitos lineales. Permiten aislar partes de un circuito y simplificarlas.",
+  "introduccion": "Estos teoremas establecen que cualquier red lineal y bilateral de corriente continua que tenga dos terminales puede ser reemplazada por un circuito equivalente muy simple.",
+  "conceptos_clave": [
+    {
+      "nombre": "Teorema de Thevenin",
+      "descripcion": "Establece que cualquier red lineal puede ser reemplazada por una única fuente de voltaje en serie con una única resistencia."
+    },
+    {
+      "nombre": "Voltaje de Thevenin (V_th)",
+      "descripcion": "Es el voltaje equivalente que aparece en las terminales A y B cuando el circuito está en circuito abierto (sin ninguna carga conectada)."
+    },
+    {
+      "nombre": "Resistencia de Thevenin (R_th)",
+      "descripcion": "Es la resistencia equivalente vista desde las terminales A y B cuando todas las fuentes independientes se apagan (fuentes de voltaje se sustituyen por cortocircuitos y las de corriente por circuitos abiertos)."
+    },
+    {
+      "nombre": "Teorema de Norton",
+      "descripcion": "El hermano dual de Thevenin. Establece que la misma red puede ser reemplazada por una única fuente de corriente en paralelo con una única resistencia."
+    },
+    {
+      "nombre": "Corriente de Norton (I_N)",
+      "descripcion": "Es la corriente que fluiría entre las terminales A y B si se conectaran entre sí con un cable ideal (cortocircuito)."
+    },
+    {
+      "nombre": "Resistencia de Norton (R_N)",
+      "descripcion": "Es exactamente igual a la resistencia de Thevenin (R_th). Se calcula de la misma manera, apagando las fuentes independientes."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Corriente en la carga (usando Thevenin)",
+      "katex": "I_L = \\frac{V_{th}}{R_{th} + R_L}"
+    },
+    {
+      "titulo": "Para pasar de Thevenin a Norton",
+      "katex": "I_N = \\frac{V_{th}}{R_{th}} \\quad ; \\quad R_N = R_{th}"
+    },
+    {
+      "titulo": "Para pasar de Norton a Thevenin",
+      "katex": "V_{th} = I_N \\cdot R_N \\quad ; \\quad R_{th} = R_N"
+    }
+  ],
+  "simulacion_dinamica": {
+    "tipo": "thevenin_sim",
+    "titulo": "Simulador Interactivo: Equivalentes de Thevenin y Norton",
+    "descripcion": "Ajusta los valores del circuito equivalente y la carga R_L. Observa cómo la carga recibe exactamente los mismos valores eléctricos usando las ecuaciones de Thevenin o Norton.",
+    "ancho": 800,
+    "alto": 350,
+    "diagrama": [
+      { "tipo": "fuente_dc", "id": "Vth", "valor": "V_th", "x": 100, "y": 150, "rotacion": 90 },
+      { "tipo": "resistencia", "id": "Rth", "valor": "R_th", "x": 200, "y": 50, "rotacion": 0 },
+      { "tipo": "nodo", "x": 300, "y": 50, "valor": "A" },
+      { "tipo": "resistencia", "id": "RL", "valor": "R_L", "x": 350, "y": 150, "rotacion": 90 },
+      { "tipo": "nodo", "x": 300, "y": 250, "valor": "B" },
+      { "tipo": "tierra", "id": "GND", "x": 100, "y": 270 },
+      { "tipo": "linea", "x1": 100, "y1": 50, "x2": 200, "y2": 50 },
+      { "tipo": "linea", "x1": 250, "y1": 50, "x2": 350, "y2": 50 },
+      { "tipo": "linea", "x1": 100, "y1": 200, "x2": 100, "y2": 250 },
+      { "tipo": "linea", "x1": 100, "y1": 250, "x2": 350, "y2": 250 },
+      { "tipo": "linea", "x1": 350, "y1": 50, "x2": 350, "y2": 100 },
+      { "tipo": "linea", "x1": 350, "y1": 200, "x2": 350, "y2": 250 }
+    ],
+    "controles": [
+      { "id": "vth", "label": "Voltaje de Thevenin (V_th)", "min": 1, "max": 100, "default": 12, "step": 1, "unidad": "V" },
+      { "id": "rth", "label": "Resistencia Thevenin (R_th)", "min": 10, "max": 1000, "default": 100, "step": 10, "unidad": "Ω" },
+      { "id": "rl", "label": "Resistencia de Carga (R_L)", "min": 10, "max": 1000, "default": 330, "step": 10, "unidad": "Ω" }
+    ],
+    "metricas": [
+      {
+        "label": "Corriente de Norton equivalente (I_N)",
+        "formula_katex": "I_N = V_{th}/R_{th}",
+        "calculo": "vth / rth",
+        "unidad": "A"
+      },
+      {
+        "label": "Corriente en la carga (I_L)",
+        "formula_katex": "I_L = \\frac{V_{th}}{R_{th} + R_L}",
+        "calculo": "vth / (rth + rl)",
+        "unidad": "A"
+      },
+      {
+        "label": "Voltaje en la carga (V_L)",
+        "formula_katex": "V_L = I_L \\cdot R_L",
+        "calculo": "(vth / (rth + rl)) * rl",
+        "unidad": "V"
+      }
+    ],
+    "graficas": [
+      {
+        "id": "potencia_rl",
+        "label": "Potencia en R_L vs R_L (Teorema Max Transferencia)",
+        "color": "#ef4444",
+        "calculo_y": "(Math.pow(vth / (rth + x), 2)) * x"
+      }
+    ]
+  }
+}

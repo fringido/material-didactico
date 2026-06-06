@@ -1,0 +1,70 @@
+{
+  "id": "componentes-electronicos",
+  "nombre": "Componentes Electrónicos",
+  "descripcion": "Clasificación completa de componentes activos y pasivos en electrónica analógica.",
+  "conceptos_clave": [
+    {
+      "nombre": "Componentes Activos",
+      "descripcion": "Un componente activo es aquel capaz de controlar el flujo de electricidad (generalmente introduciendo ganancia o dirección) y requiere una fuente externa de energía para operar.",
+      "variable_principal": "Ganancia",
+      "principio_fisico": "A diferencia de los componentes pasivos, los activos pueden usar una señal pequeña para controlar una más grande.",
+      "cuando_usarlo": "Es la base de la amplificación y la conmutación en circuitos electrónicos."
+    },
+    {
+      "nombre": "Componentes Pasivos",
+      "descripcion": "Componentes que no pueden introducir ganancia ni controlar corriente por sí mismos. Solo consumen, disipan o almacenan energía.",
+      "variable_principal": "Impedancia",
+      "principio_fisico": "La energía es almacenada en campos eléctricos (capacitores) o magnéticos (inductores) o disipada como calor (resistencias).",
+      "cuando_usarlo": "Se usan para filtrado, acoplamiento, polarización y almacenamiento temporal de energía."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Resistencia (Ohm)",
+      "katex": "R = \\frac{V}{I}",
+      "variables_tooltip": "variablesResistencia"
+    },
+    {
+      "titulo": "Capacitancia",
+      "katex": "C = \\frac{Q}{V}",
+      "variables_tooltip": "variablesCapacitancia"
+    },
+    {
+      "titulo": "Inductancia",
+      "katex": "L = \\frac{N\\Phi}{I}",
+      "variables_tooltip": "variablesInductancia"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesResistencia": [
+      { "simbolo": "R", "nombre": "Resistencia", "unidad": "Ohmios (Ω)", "descripcion": "Opposition al flujo de corriente", "category": "resistance" },
+      { "simbolo": "V", "nombre": "Voltaje", "unidad": "Voltios (V)", "descripcion": "Diferencia de potencial", "category": "voltage" },
+      { "simbolo": "I", "nombre": "Corriente", "unidad": "Amperios (A)", "descripcion": "Flujo de carga eléctrica", "category": "current" }
+    ],
+    "variablesCapacitancia": [
+      { "simbolo": "C", "nombre": "Capacitancia", "unidad": "Faradios (F)", "descripcion": "Capacidad de almacenar carga", "category": "capacitance" },
+      { "simbolo": "Q", "nombre": "Carga", "unidad": "Coulombs (C)", "descripcion": "Cantidad de electricidad", "category": "charge" }
+    ],
+    "variablesInductancia": [
+      { "simbolo": "L", "nombre": "Inductancia", "unidad": "Henrios (H)", "descripcion": "Opposición al cambio de corriente", "category": "inductance" },
+      { "simbolo": "N", "nombre": "Número de vueltas", "unidad": "Adimensional", "descripcion": "Vueltas de alambre en bobina", "category": "count" },
+      { "simbolo": "\\Phi", "nombre": "Flujo magnético", "unidad": "Weber (Wb)", "descripcion": "Líneas de campo magnético", "category": "magnetic" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Resistencias en Circuitos de Polarización", "descripcion": "Establecen puntos de operación en amplificadores." },
+    { "titulo": "Capacitores en Filtros", "descripcion": "Bloquean DC y permiten AC según la frecuencia." },
+    { "titulo": "Inductores en Fuentes de Poder", "descripcion": "Almacenamiento de energía y filtrado de ripple." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-component-visualizer",
+    "justificacion": "Visualizar componentes interactivamente ayuda a entender sus características físicas y símbolos esquemáticos.",
+    "utilidad": "Permite explorar componentes activos y pasivos con información detallada.",
+    "interfaz_requerida": "Catálogo interactivo con filtros por tipo, símbolos esquemáticos y especificaciones.",
+    "inputs": [
+      "Filtros por tipo de componente",
+      "Búsqueda por nombre",
+      "Visualización de símbolos"
+    ]
+  }
+}

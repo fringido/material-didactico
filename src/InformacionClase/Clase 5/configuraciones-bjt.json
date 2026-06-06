@@ -1,0 +1,75 @@
+{
+  "id": "configuraciones-bjt",
+  "nombre": "Configuraciones BJT",
+  "descripcion": "Emisor común, base común y colector común: características, ganancia y aplicaciones en amplificadores con transistores bipolares.",
+  "conceptos_clave": [
+    {
+      "nombre": "Emisor Común",
+      "descripcion": "La entrada es en la base, la salida en el colector. Alta ganancia de voltaje, ganancia de corriente moderada. La más usada.",
+      "variable_principal": "Ganancia de voltaje",
+      "principio_fisico": "El emisor está aterrizado, la señal de entrada controla la corriente de colector.",
+      "cuando_usarlo": "Para amplificación de voltaje en etapas de audio y preamplificadores."
+    },
+    {
+      "nombre": "Colector Común (Seguidor de Emisor)",
+      "descripcion": "Entrada en base, salida en emisor. Ganancia de voltaje ≈ 1, alta ganancia de corriente, baja impedancia de salida.",
+      "variable_principal": "Impedancia",
+      "principio_fisico": "La salida sigue el voltaje de entrada menos V_BE, ideal para acoplamiento de impedancia.",
+      "cuando_usarlo": "Como buffer de impedancia y etapas de salida de baja impedancia."
+    },
+    {
+      "nombre": "Base Común",
+      "descripcion": "Entrada en emisor, salida en colector. Ganancia de voltaje alta, baja impedancia de entrada. Usado en RF.",
+      "variable_principal": "Ganancia de voltaje",
+      "principio_fisico": "La base está aterrizada por capacitor, la señal entra por el emisor.",
+      "cuando_usarlo": "En amplificadores de radiofrecuencia por su buena respuesta en alta frecuencia."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Ganancia Emisor Común",
+      "katex": "A_v = -g_m R_C = -\\frac{R_C}{r_e}",
+      "variables_tooltip": "variablesGananciaEC"
+    },
+    {
+      "titulo": "Ganancia Colector Común",
+      "katex": "A_v = \\frac{g_m R_E}{1 + g_m R_E} \\approx 1",
+      "variables_tooltip": "variablesGananciaCC"
+    },
+    {
+      "titulo": "Ganancia Base Común",
+      "katex": "A_v = \\frac{g_m R_C}{1 + g_m R_E}",
+      "variables_tooltip": "variablesGananciaBC"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesGananciaEC": [
+      { "simbolo": "A_v", "nombre": "Ganancia de voltaje", "unidad": "Adimensional", "descripcion": "Relación Vout/Vin", "category": "gain" },
+      { "simbolo": "g_m", "nombre": "Transconductancia", "unidad": "Siemens (S)", "descripcion": "dI_C/dV_BE", "category": "transconductance" },
+      { "simbolo": "R_C", "nombre": "Resistencia de colector", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia de carga", "category": "resistance" },
+      { "simbolo": "r_e", "nombre": "Resistencia de emisor", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia dinámica", "category": "resistance" }
+    ],
+    "variablesGananciaCC": [
+      { "simbolo": "R_E", "nombre": "Resistencia de emisor", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia de carga", "category": "resistance" }
+    ],
+    "variablesGananciaBC": [
+      { "simbolo": "R_E", "nombre": "Resistencia de emisor", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia de carga", "category": "resistance" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Preamplificadores de Audio", "descripcion": "Emisor común para alta ganancia." },
+    { "titulo": "Buffers de Impedancia", "descripcion": "Colector común para acoplamiento." },
+    { "titulo": "Amplificadores RF", "descripcion": "Base común para alta frecuencia." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-bjt-configurator",
+    "justificacion": "Permite a los estudiantes configurar diferentes topologías BJT y observar las diferencias en ganancia e impedancia.",
+    "utilidad": "Visualización interactiva de las tres configuraciones con parámetros ajustables.",
+    "interfaz_requerida": "Selector de configuración, controles de componentes y visualización de ganancia.",
+    "inputs": [
+      "Configuración (emisor común, colector común, base común)",
+      "Valores de resistencias",
+      "Visualización de ganancia e impedancia"
+    ]
+  }
+}

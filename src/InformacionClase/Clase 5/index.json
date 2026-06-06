@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "clase": 5,
+    "modulo": 2,
+    "unidad": 4,
+    "titulo": "Amplificadores y Etapas de Potencia",
+    "semanas": "7-8",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-05",
+    "descripcion": "Clasificación de amplificadores: clase A, B, AB y C. Configuraciones: emisor común, base común, colector común. Diseño de amplificadores de bajo y alto nivel. Etapas de potencia y aplicaciones.",
+    "ruta": "/clase/5"
+  },
+  "objetivos": [
+    "Calcular ganancia en amplificadores BJT",
+    "Diseñar amplificador emisor común con ganancia de 50",
+    "Comparar eficiencia entre clases de amplificadores",
+    "Simular amplificadores en Proteus",
+    "Comprender configuraciones de amplificadores: emisor común, base común, colector común",
+    "Diseñar etapas de potencia para aplicaciones mecatrónicas"
+  ],
+  "temas": [
+    {
+      "id": "clasificacion-amplificadores",
+      "nombre": "Clasificación de Amplificadores",
+      "descripcion": "Amplificadores clase A, B, AB y C: características, eficiencia y aplicaciones.",
+      "icono": "📊",
+      "ruta": "/clase/5/tema/clasificacion-amplificadores",
+      "archivo": "clasificacion-amplificadores.json"
+    },
+    {
+      "id": "configuraciones-bjt",
+      "nombre": "Configuraciones BJT",
+      "descripcion": "Emisor común, base común y colector común: características y aplicaciones.",
+      "icono": "🔌",
+      "ruta": "/clase/5/tema/configuraciones-bjt",
+      "archivo": "configuraciones-bjt.json"
+    },
+    {
+      "id": "etapas-potencia",
+      "nombre": "Etapas de Potencia",
+      "descripcion": "Diseño de amplificadores de bajo y alto nivel para aplicaciones de potencia.",
+      "icono": "⚡",
+      "ruta": "/clase/5/tema/etapas-potencia",
+      "archivo": "etapas-potencia.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "unidad_completa": "/modulo/2/unidad/4",
+    "componentes": "/componentes/activos"
+  }
+}

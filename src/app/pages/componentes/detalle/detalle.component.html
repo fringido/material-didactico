@@ -251,6 +251,138 @@
     </div>
   </section>
 
+  <!-- CONFIGURACIONES BJT (AMPLIFICADORES) -->
+  <section class="section" *ngIf="componente().configuraciones_bjt?.length">
+    <h2 class="section__title">⚙️ Configuraciones de Amplificador BJT</h2>
+    <div class="variants-grid">
+      <div class="variant-card" *ngFor="let config of componente().configuraciones_bjt">
+        <p class="variant-card__name">{{ config.nombre }}</p>
+        
+        <div class="behavior-card behavior-card--info mt-3" *ngIf="config.conexion">
+          <p class="behavior-card__label">🔌 Conexión</p>
+          <p>{{ config.conexion }}</p>
+        </div>
+
+        <div class="behavior-card behavior-card--success mt-2" *ngIf="config.comportamiento_clave">
+          <p class="behavior-card__label">⚡ Comportamiento Clave</p>
+          <p>{{ config.comportamiento_clave }}</p>
+        </div>
+
+        <div class="behavior-card behavior-card--warning mt-2" *ngIf="config.particularidad">
+          <p class="behavior-card__label">💡 Particularidad</p>
+          <p>{{ config.particularidad }}</p>
+        </div>
+
+        <div class="behavior-card behavior-card--neutral mt-2" *ngIf="config.impedancia">
+          <p class="behavior-card__label">🔧 Impedancia</p>
+          <p>{{ config.impedancia }}</p>
+        </div>
+
+        <div class="behavior-card behavior-card--primary mt-2" *ngIf="config.ventaja_secreta">
+          <p class="behavior-card__label">🌟 Ventaja Secreta</p>
+          <p>{{ config.ventaja_secreta }}</p>
+        </div>
+
+        <p class="variant-card__meta mt-3" *ngIf="config.uso_tipico">
+          <strong>Uso típico:</strong> {{ config.uso_tipico }}
+        </p>
+
+        <div class="param-table mt-3">
+          <div class="param-row" *ngIf="config.ganancia_voltaje">
+            <span class="v-key">Ganancia Voltaje:</span>
+            <span class="v-desc">{{ config.ganancia_voltaje }}</span>
+          </div>
+          <div class="param-row" *ngIf="config.ganancia_corriente">
+            <span class="v-key">Ganancia Corriente:</span>
+            <span class="v-desc">{{ config.ganancia_corriente }}</span>
+          </div>
+          <div class="param-row" *ngIf="config.impedancia_entrada">
+            <span class="v-key">Impedancia Entrada:</span>
+            <span class="v-desc">{{ config.impedancia_entrada }}</span>
+          </div>
+          <div class="param-row" *ngIf="config.impedancia_salida">
+            <span class="v-key">Impedancia Salida:</span>
+            <span class="v-desc">{{ config.impedancia_salida }}</span>
+          </div>
+          <div class="param-row" *ngIf="config.inversion_fase">
+            <span class="v-key">Inversión de Fase:</span>
+            <span class="v-desc">{{ config.inversion_fase }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLA RESUMEN CONFIGURACIONES -->
+  <section class="section" *ngIf="componente().tabla_resumen_configuraciones">
+    <h2 class="section__title">📊 {{ componente().tabla_resumen_configuraciones.titulo }}</h2>
+    <div class="table-responsive">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th *ngFor="let header of componente().tabla_resumen_configuraciones.headers">{{ header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fila of componente().tabla_resumen_configuraciones.filas">
+            <td><strong>{{ fila.configuracion }}</strong></td>
+            <td>{{ fila.ganancia_voltaje }}</td>
+            <td>{{ fila.ganancia_corriente }}</td>
+            <td>{{ fila.impedancia_entrada }}</td>
+            <td>{{ fila.impedancia_salida }}</td>
+            <td>{{ fila.inversion_fase }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CLASIFICACIÓN POR CLASE (AMPLIFICADORES) -->
+  <section class="section" *ngIf="componente().clasificacion_clase?.length">
+    <h2 class="section__title">🎚️ Clasificación por Clase de Operación</h2>
+    <div class="variants-grid">
+      <div class="variant-card" *ngFor="let clase of componente().clasificacion_clase">
+        <span class="badge badge--lg mb-2" 
+          [ngClass]="{
+            'badge--success': clase.clase === 'A',
+            'badge--warning': clase.clase === 'B',
+            'badge--info': clase.clase === 'AB',
+            'badge--error': clase.clase === 'C'
+          }">Clase {{ clase.clase }}</span>
+        <p class="variant-card__name">{{ clase.nombre }}</p>
+
+        <div class="param-table mt-3">
+          <div class="param-row" *ngIf="clase.conduccion">
+            <span class="v-key">Conducción:</span>
+            <span class="v-desc">{{ clase.conduccion }}</span>
+          </div>
+          <div class="param-row" *ngIf="clase.punto_q">
+            <span class="v-key">Punto Q:</span>
+            <span class="v-desc">{{ clase.punto_q }}</span>
+          </div>
+          <div class="param-row" *ngIf="clase.eficiencia_teorica">
+            <span class="v-key">Eficiencia Teórica:</span>
+            <span class="v-desc">{{ clase.eficiencia_teorica }}</span>
+          </div>
+        </div>
+
+        <div class="behavior-card behavior-card--success mt-3" *ngIf="clase.ventajas">
+          <p class="behavior-card__label">✅ Ventajas</p>
+          <p>{{ clase.ventajas }}</p>
+        </div>
+
+        <div class="behavior-card behavior-card--warning mt-2" *ngIf="clase.desventajas">
+          <p class="behavior-card__label">⚠️ Desventajas</p>
+          <p>{{ clase.desventajas }}</p>
+        </div>
+
+        <p class="variant-card__meta mt-3" *ngIf="clase.uso_tipico">
+          <strong>Uso típico:</strong> {{ clase.uso_tipico }}
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- SHOCKLEY LAB (ONLY FOR DIODES) -->
   <app-shockley-lab *ngIf="componente().id === 'diodo'"></app-shockley-lab>
 

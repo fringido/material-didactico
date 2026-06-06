@@ -1,4 +1,4 @@
-﻿{
+{
   "id": "nodos-mallas",
   "nombre": "Análisis de Nodos y Mallas",
   "descripcion": "El análisis de circuitos eléctricos requiere métodos sistemáticos para resolver redes complejas donde la simple reducción de resistencias en serie y paralelo no es suficiente. Los dos métodos fundamentales son el Análisis de Nodos y el Análisis de Mallas.",
@@ -53,12 +53,12 @@
   "formulas": [
     {
       "titulo": "Resistencia equivalente en serie",
-      "katex": "R_{eq} = R_1 + R_2 + \\\dots + R_n",
+      "katex": "R_{eq} = R_1 + R_2 + \\dots + R_n",
       "variables_tooltip": "variablesReduccion"
     },
     {
       "titulo": "Resistencia equivalente en paralelo",
-      "katex": "\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\\dots + \\frac{1}{R_n}",
+      "katex": "\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\dots + \\frac{1}{R_n}",
       "variables_tooltip": "variablesReduccion"
     },
     {

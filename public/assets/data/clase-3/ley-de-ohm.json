@@ -1,228 +1,234 @@
 {
-  "id": "ley-de-ohm",
-  "nombre": "La Ley de Ohm",
-  "descripcion": "Relación fundamental entre voltaje, corriente y resistencia en circuitos eléctricos.",
-  "introduccion": "La Ley de Ohm es el pilar fundamental de la electrónica y la teoría de circuitos. Formulada por Georg Simon Ohm en 1827, establece que la corriente que fluye a través de un conductor es directamente proporcional al voltaje aplicado e inversamente proporcional a su resistencia. Esta ley aplica a todos los componentes resistivos lineales y es la primera herramienta que un ingeniero electrónico usa para analizar cualquier circuito.",
   "metadata": {
     "clase": 3,
-    "orden": 1,
-    "titulo": "La Ley de Ohm",
-    "semana": "3",
+    "modulo": 1,
     "unidad": 2,
-    "modulo": 1
+    "id": "ley-de-ohm",
+    "titulo": "La Ley de Ohm",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-05-21",
+    "ruta": "/clase/3/tema/ley-de-ohm",
+    "orden": 1
   },
-  "conceptos_clave": [
+  "introduccion": "La Ley de Ohm es el cimiento de toda la electrónica analógica. Establece que la corriente que atraviesa un conductor es directamente proporcional a la tensión (voltaje) aplicada e inversamente proporcional a la resistencia del circuito.",
+  "ecuaciones": [
     {
-      "nombre": "Voltaje (V)",
-      "descripcion": "Diferencia de potencial eléctrico entre dos puntos. Representa la 'presión' que empuja a los electrones a través de un circuito.",
+      "nombre": "Ley de Ohm (forma principal)",
+      "formula": "V = I \\cdot R",
+      "descripcion": "Voltaje igual a corriente por resistencia."
+    },
+    {
+      "nombre": "Despeje — Corriente",
+      "formula": "I = \\frac{V}{R}",
+      "descripcion": "Corriente cuando se conocen V y R."
+    },
+    {
+      "nombre": "Despeje — Resistencia",
+      "formula": "R = \\frac{V}{I}",
+      "descripcion": "Resistencia cuando se conocen V e I."
+    }
+  ],
+  "variables": [
+    {
+      "simbolo": "V",
+      "nombre": "Voltaje o Tensión",
       "unidad": "Voltios (V)",
-      "analogia": "Es como la presión del agua en una tubería: a mayor presión, mayor flujo.",
-      "simbolo": "V o E"
+      "descripcion": "Diferencia de potencial que empuja los electrones a través del circuito."
     },
     {
-      "nombre": "Corriente (I)",
-      "descripcion": "Flujo de carga eléctrica por unidad de tiempo. Indica cuántos electrones pasan por un punto del circuito cada segundo.",
+      "simbolo": "I",
+      "nombre": "Corriente o Intensidad",
       "unidad": "Amperios (A)",
-      "analogia": "Es como el caudal de agua que fluye por la tubería.",
-      "simbolo": "I"
+      "descripcion": "Flujo de carga eléctrica por el conductor."
     },
     {
-      "nombre": "Resistencia (R)",
-      "descripcion": "Oposición que ofrece un material al flujo de corriente eléctrica. Depende del material, longitud y sección transversal del conductor.",
-      "unidad": "Ohmios (Ω)",
-      "analogia": "Es como el diámetro de la tubería: a menor diámetro, mayor resistencia al flujo.",
-      "simbolo": "R"
-    },
-    {
-      "nombre": "Linealidad",
-      "descripcion": "La relación V-I es lineal para materiales óhmicos: si duplicas el voltaje, la corriente se duplica. Esto lo hace un componente muy predecible.",
-      "principio_fisico": "Conservación de energía y movimiento de portadores de carga.",
-      "cuando_usarlo": "Para resistencias, galgas extensiométricas, y cualquier componente cuya curva I-V es una recta."
+      "simbolo": "R",
+      "nombre": "Resistencia",
+      "unidad": "Ohmios (\\Omega)",
+      "descripcion": "Oposición del material al flujo de corriente."
     }
   ],
-  "formulas": [
-    {
-      "titulo": "Ley de Ohm — Forma Básica",
-      "katex": "V = I \\cdot R",
-      "derivacion": "El voltaje V es el producto de la corriente I por la resistencia R. Esta es la forma más directa y usada.",
-      "variables": [
-        {"simbolo": "V", "nombre": "Voltaje", "unidad": "V (Voltios)"},
-        {"simbolo": "I", "nombre": "Corriente", "unidad": "A (Amperios)"},
-        {"simbolo": "R", "nombre": "Resistencia", "unidad": "Ω (Ohmios)"}
-      ]
-    },
-    {
-      "titulo": "Despeje de Corriente",
-      "katex": "I = \\frac{V}{R}",
-      "derivacion": "Despejando I: si dividimos ambos lados por R, obtenemos la corriente."
-    },
-    {
-      "titulo": "Despeje de Resistencia",
-      "katex": "R = \\frac{V}{I}",
-      "derivacion": "Despejando R: si dividimos el voltaje entre la corriente, obtenemos la resistencia."
-    },
-    {
-      "titulo": "Potencia Disipada",
-      "katex": "P = V \\cdot I = I^2 R = \\frac{V^2}{R}",
-      "derivacion": "La potencia eléctrica disipada como calor en una resistencia combina V, I y R de tres formas equivalentes."
-    }
-  ],
-  "circuito_svg": {
-    "descripcion": "Circuito resistivo básico con fuente de voltaje y resistencia",
-    "tipo": "resistor_basico",
-    "elementos": [
-      {"tipo": "fuente_voltaje", "valor": "V", "pos": {"x": 50, "y": 100}},
-      {"tipo": "resistor", "valor": "R", "pos": {"x": 200, "y": 50}},
-      {"tipo": "amperimetro", "pos": {"x": 200, "y": 150}},
-      {"tipo": "nodo", "label": "A", "pos": {"x": 150, "y": 50}},
-      {"tipo": "nodo", "label": "B", "pos": {"x": 150, "y": 150}}
-    ]
-  },
-  "chart_config": {
-    "type": "line",
-    "titulo": "Relación V–I para diferentes resistencias",
-    "descripcion": "A mayor resistencia, menor pendiente en la curva I-V",
-    "data": {
-      "labels": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      "datasets": [
-        {
-          "label": "R = 1 Ω",
-          "data": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          "borderColor": "#6366f1",
-          "tension": 0.1
-        },
-        {
-          "label": "R = 2 Ω",
-          "data": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
-          "borderColor": "#10b981",
-          "tension": 0.1
-        },
-        {
-          "label": "R = 5 Ω",
-          "data": [0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0],
-          "borderColor": "#f59e0b",
-          "tension": 0.1
-        }
-      ]
-    },
-    "options": {
-      "xLabel": "Voltaje V (V)",
-      "yLabel": "Corriente I (A)"
-    }
-  },
-  "triangulo_ohm": {
-    "descripcion": "Herramienta mnemotécnica: coloca el dedo sobre la variable a despejar",
-    "regla": "V arriba, I y R abajo. Tapa la variable que quieres obtener: si tapas V → I×R; si tapas I → V/R; si tapas R → V/I",
-    "variables": {"top": "V", "bottom_left": "I", "bottom_right": "R"}
-  },
   "secciones": [
     {
-      "id": "conductores-ohmicos",
-      "titulo": "Materiales Óhmicos vs No Óhmicos",
-      "contenido": "Un material es 'óhmico' cuando su resistencia permanece constante independientemente del voltaje aplicado (curva I-V lineal). Los materiales no óhmicos, como los diodos y transistores, tienen una resistencia que varía con el voltaje. La Ley de Ohm aplica SOLO a componentes óhmicos en condiciones normales de temperatura."
+      "id": "triangulo-ohm",
+      "titulo": "Triángulo de Ohm",
+      "contenido": "Recurso visual para despejar la fórmula: tapa con el dedo la variable que deseas calcular. Si las otras dos quedan juntas en la base, se multiplican (I × R). Si queda una arriba de la otra, se dividen (V/I o V/R).",
+      "ilustracion": {
+        "id": "triangulo-ohm",
+        "titulo": "Triángulo de la Ley de Ohm",
+        "archivo": "/assets/illustrations/clase-3/triangulo-ohm.svg",
+        "credito": "Adaptado de recursos didácticos — petrroudny / Getty Images (referencia visual)"
+      }
     },
     {
-      "id": "resistividad",
-      "titulo": "Resistencia y Resistividad",
-      "contenido": "La resistencia de un conductor depende de: (1) el material —caracterizado por su resistividad ρ (rho)—, (2) la longitud L del conductor, y (3) el área de sección transversal A.",
-      "formula": "R = \\rho \\cdot \\frac{L}{A}"
-    },
-    {
-      "id": "temperatura",
-      "titulo": "Efecto de la Temperatura",
-      "contenido": "Para la mayoría de los conductores metálicos, la resistencia aumenta con la temperatura. La relación se expresa como: R(T) = R₀[1 + α(T − T₀)], donde α es el coeficiente de temperatura del material (positivo para metales, negativo para semiconductores)."
-    },
-    {
-      "id": "aplicaciones",
-      "titulo": "Aplicaciones Prácticas en Mecatrónica",
-      "contenido": "La Ley de Ohm se usa para: (1) calcular la resistencia de protección de un LED, (2) diseñar divisores de voltaje para sensores, (3) establecer el punto de operación de transistores, (4) calcular potencia disipada en actuadores resistivos."
+      "id": "analogia-tuberia",
+      "titulo": "Analogía de la tubería de agua",
+      "contenido": "El voltaje es como la presión del agua; la corriente, el caudal que circula; la resistencia, el estrechamiento de la tubería. A mayor presión (V) con la misma R, mayor caudal (I). A mayor estrechamiento (R), menor caudal para la misma presión."
     }
   ],
-  "ejemplos_resueltos": [
+  "tips_ensenanza": [
+    "Usa el triángulo de Ohm antes de sustituir números en la calculadora.",
+    "Verifica unidades: V en voltios, I en amperios, R en ohmios.",
+    "La analogía hidráulica ayuda a intuir por qué R limita I sin confundir causa y efecto."
+  ],
+  "interactivos": [
     {
-      "id": "ej1",
-      "titulo": "Ejemplo 1: Calcular corriente",
-      "enunciado": "Un resistor de 470 Ω está conectado a una fuente de 12 V. ¿Cuánta corriente fluye?",
-      "pasos": [
-        "Identificar datos: V = 12 V, R = 470 Ω, I = ?",
-        "Aplicar Ley de Ohm despejando I: I = V/R",
-        "Sustituir: I = 12 V / 470 Ω",
-        "Calcular: I = 0.0255 A = 25.5 mA"
-      ],
-      "resultado_katex": "I = \\frac{12\\,\\text{V}}{470\\,\\Omega} \\approx 25.5\\,\\text{mA}",
-      "verificacion": "V = I × R = 0.0255 A × 470 Ω = 11.99 V ✓"
+      "id": "ohm-calculator",
+      "tipo": "ohm-law-lab",
+      "titulo": "Calculadora interactiva V – I – R",
+      "descripcion": "Ingresa dos magnitudes y calcula la tercera; observa el triángulo de Ohm.",
+      "componente": "app-ohm-calculator"
     },
     {
-      "id": "ej2",
-      "titulo": "Ejemplo 2: Resistencia de protección de LED",
-      "enunciado": "Un LED requiere 20 mA y cae 2.0 V. La fuente es 5 V. ¿Qué resistencia en serie se necesita?",
-      "pasos": [
-        "Voltaje disponible para la resistencia: V_R = V_s - V_LED = 5 V - 2 V = 3 V",
-        "Corriente deseada: I = 20 mA = 0.020 A",
-        "Aplicar Ley de Ohm: R = V_R / I",
-        "Calcular: R = 3 V / 0.020 A = 150 Ω"
-      ],
-      "resultado_katex": "R = \\frac{V_s - V_{LED}}{I} = \\frac{3\\,\\text{V}}{20\\,\\text{mA}} = 150\\,\\Omega",
-      "verificacion": "Potencia en R: P = I²R = (0.02)² × 150 = 0.06 W = 60 mW (usar resistor de 1/8 W o mayor)"
+      "id": "ohm-grafica",
+      "tipo": "equation-chart",
+      "chartType": "ohm",
+      "titulo": "Gráfica V vs I (parametrizada por R)",
+      "ecuacion": "V = I \\cdot R",
+      "componente": "app-equation-chart",
+      "parametros": {
+        "ecuacion": "V = I * R",
+        "variable_independiente": "I",
+        "variable_dependiente": "V",
+        "parametro_ajustable": "R",
+        "rango_I": [0, 5],
+        "rango_R": [1, 100]
+      }
     },
     {
-      "id": "ej3",
-      "titulo": "Ejemplo 3: Potencia disipada",
-      "enunciado": "Un calefactor eléctrico tiene resistencia de 22 Ω y opera a 110 V. ¿Cuánta potencia disipa?",
-      "pasos": [
-        "Datos: V = 110 V, R = 22 Ω, P = ?",
-        "Usar la fórmula de potencia: P = V²/R",
-        "P = (110 V)² / 22 Ω = 12100 / 22",
-        "P = 550 W"
-      ],
-      "resultado_katex": "P = \\frac{V^2}{R} = \\frac{(110)^2}{22} = 550\\,\\text{W}",
-      "verificacion": "También: I = 110/22 = 5 A → P = I×V = 5×110 = 550 W ✓"
+      "id": "analogia-tuberia",
+      "tipo": "pipe-analogy",
+      "titulo": "Analogía presión–caudal–estrechamiento",
+      "descripcion": "Ajusta presión y resistencia hidráulica y observa el caudal equivalente a I.",
+      "componente": "app-pipe-analogy-simulator",
+      "parametros": {
+        "presion": "V",
+        "caudal": "I",
+        "estrechamiento": "R",
+        "visualizacion": ["flujo_agua", "medidores"]
+      }
+    },
+    {
+      "id": "circuito-simple-simulator",
+      "tipo": "circuit-simulator",
+      "titulo": "Simulador de Circuito Simple",
+      "descripcion": "Ajusta voltaje y resistencia para ver cómo cambia la corriente en tiempo real.",
+      "componente": "app-simple-circuit-simulator",
+      "parametros": {
+        "voltaje_fuente": "V",
+        "resistencia": "R",
+        "visualizacion": ["corriente", "potencia", "medidores"]
+      }
     }
   ],
-  "ejercicios": [
+  "visualizaciones_svg": [
     {
-      "id": "ej-ohm-1",
-      "titulo": "Calcular resistencia",
-      "descripcion": "Una fuente de $9\\,\\text{V}$ produce $45\\,\\text{mA}$ en un circuito resistivo. ¿Cuál es el valor de la resistencia?",
-      "solucion": "$R = \\dfrac{9\\,\\text{V}}{0.045\\,\\text{A}} = 200\\,\\Omega$",
-      "explicacion": "Despejamos R de la Ley de Ohm: R = V/I. Convertimos mA a A dividiendo entre 1000.",
-      "tiempo_minutos": 3,
-      "dificultad": "basico"
+      "id": "triangulo-ohm-interactivo",
+      "titulo": "Triángulo de Ohm Interactivo",
+      "archivo": "/assets/illustrations/clase-3/triangulo_ohm_interactivo.svg",
+      "descripcion": "Triángulo SVG interactivo para despejar fórmulas de la Ley de Ohm.",
+      "interactivo": true,
+      "elementos_clickeables": ["V", "I", "R"],
+      "accion_clic": "Muestra fórmula despejada correspondiente"
     },
     {
-      "id": "ej-ohm-2",
-      "titulo": "Verificar con potencia",
-      "descripcion": "Una resistencia de $100\\,\\Omega$ disipa $0.25\\,\\text{W}$. ¿Qué corriente fluye y cuál es el voltaje?",
-      "solucion": "$I = \\sqrt{P/R} = \\sqrt{0.25/100} = 0.05\\,\\text{A} = 50\\,\\text{mA}$; $V = IR = 0.05 \\times 100 = 5\\,\\text{V}$",
-      "explicacion": "Usamos P = I²R despejando I, luego aplicamos V = IR.",
-      "tiempo_minutos": 5,
-      "dificultad": "intermedio"
+      "id": "circuito-ohm-svg",
+      "titulo": "Circuito Básico con Medidores",
+      "archivo": "/assets/illustrations/clase-3/circuito_ohm_basico.svg",
+      "descripcion": "Diagrama SVG de circuito simple con fuente, resistencia y medidores.",
+      "interactivo": true,
+      "elementos_clickeables": ["V_fuente", "R_resistencia", "I_corriente"],
+      "parametros_ajustables": ["V", "R"]
     },
     {
-      "id": "ej-ohm-3",
-      "titulo": "Diseño de sensor",
-      "descripcion": "Un sensor resistivo varía entre $500\\,\\Omega$ y $2\\,\\text{k}\\Omega$. Con $V_s = 5\\,\\text{V}$, ¿cuál es el rango de corriente a través del sensor?",
-      "solucion": "$I_{max} = 5/500 = 10\\,\\text{mA}$; $I_{min} = 5/2000 = 2.5\\,\\text{mA}$. Rango: $2.5\\,\\text{mA}$ a $10\\,\\text{mA}$",
-      "explicacion": "A mayor resistencia, menor corriente (relación inversamente proporcional).",
-      "tiempo_minutos": 4,
-      "dificultad": "intermedio"
+      "id": "analogia-agua-svg",
+      "titulo": "Analogía Hidráulica",
+      "archivo": "/assets/illustrations/clase-3/analogia_agua.svg",
+      "descripcion": "Visualización de la analogía de tubería de agua para Ley de Ohm.",
+      "interactivo": true,
+      "elementos_clickeables": ["presion", "caudal", "estrechamiento"],
+      "parametros_ajustables": ["presion", "diametro_tuberia"]
     }
   ],
-  "notas_profesor": {
-    "enfasis": [
-      "Insistir en el triángulo mnemotécnico para despejes",
-      "Siempre verificar con la variable alternativa",
-      "Distinguir claramente cuándo la ley NO aplica (diodos, transistores en saturación)"
-    ],
-    "errores_comunes": [
-      "Olvidar convertir mA a A antes de calcular",
-      "Confundir voltaje de la fuente con voltaje en el resistor cuando hay múltiples elementos",
-      "No considerar la potencia máxima del resistor"
-    ]
-  },
+  "graficas_interactivas": [
+    {
+      "id": "voltaje-vs-corriente",
+      "titulo": "Voltaje vs Corriente (Ley de Ohm)",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica lineal mostrando la relación directa entre V e I para diferentes R.",
+      "eje_x": "Corriente (A)",
+      "eje_y": "Voltaje (V)",
+      "ecuacion": "V = I × R",
+      "parametros": {
+        "valores_R": [10, 50, 100],
+        "rango_I": [0, 5],
+        "lineas_multiples": true
+      }
+    },
+    {
+      "id": "corriente-vs-resistencia",
+      "titulo": "Corriente vs Resistencia",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica hiperbólica mostrando la relación inversa entre I y R.",
+      "eje_x": "Resistencia (Ω)",
+      "eje_y": "Corriente (A)",
+      "ecuacion": "I = V / R",
+      "parametros": {
+        "voltaje": 12,
+        "rango_R": [1, 100]
+      }
+    },
+    {
+      "id": "potencia-vs-resistencia",
+      "titulo": "Potencia vs Resistencia",
+      "tipo": "line-chart",
+      "descripcion": "Gráfica de potencia disipada P = V²/R en función de la resistencia.",
+      "eje_x": "Resistencia (Ω)",
+      "eje_y": "Potencia (W)",
+      "ecuacion": "P = V² / R",
+      "parametros": {
+        "voltaje": 12,
+        "rango_R": [1, 100]
+      }
+    },
+    {
+      "id": "triangulo-potencia",
+      "titulo": "Triángulo de Potencia",
+      "tipo": "visualization",
+      "descripcion": "Visualización de la relación P = V × I.",
+      "ecuacion": "P = V × I",
+      "parametros": {
+        "rango_V": [0, 24],
+        "rango_I": [0, 5]
+      }
+    }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Lámpara de 12 V",
+      "enunciado": "Una resistencia de 24\\,\\Omega se conecta a una fuente de 12\\,V. ¿Qué corriente circula?",
+      "solucion_pasos": [
+        "I = \\frac{V}{R} = \\frac{12\\,V}{24\\,\\Omega} = 0{,}5\\,A"
+      ],
+      "resultado": "I = 0{,}5\\,A \\text{ (500 mA)}"
+    },
+    {
+      "titulo": "Caída en conductor",
+      "enunciado": "Circulan 2 \\, A por una resistencia de 3 \\, \\Omega. ¿Cuál es la caída de tensión?",
+      "solucion_pasos": [
+        "V = I \\cdot R = 2 \\times 3 = 6 \\, V"
+      ],
+      "resultado": "6 \\, V"
+    }
+  ],
   "enlaces": [
-    {"ruta": "/clase/3", "texto": "Volver a Clase 3"},
-    {"ruta": "/clase/3/tema/tipos-circuitos", "texto": "Siguiente: Tipos de Circuitos"},
-    {"ruta": "/componentes/pasivos/resistencia", "texto": "Ver: Resistencias"}
+    {
+      "texto": "Componente Resistencia (catálogo)",
+      "ruta": "/componentes/pasivos/resistencia"
+    },
+    {
+      "texto": "Volver a Clase 3",
+      "ruta": "/clase/3"
+    }
   ]
 }

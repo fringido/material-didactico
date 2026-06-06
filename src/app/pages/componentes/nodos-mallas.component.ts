@@ -28,7 +28,7 @@ export class NodosMallasComponent implements OnInit {
   error = signal<string | null>(null);
 
   ngOnInit() {
-    this.http.get<any>('/assets/data/clase-4/NodosYMallas.json').subscribe({
+    this.http.get<any>('/assets/data/clase-4/nodos-mallas.json').subscribe({
       next: (data) => {
         this.data.set(data);
         this.loading.set(false);

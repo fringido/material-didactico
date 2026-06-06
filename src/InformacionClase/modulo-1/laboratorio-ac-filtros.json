@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "titulo": "Laboratorio Avanzado - Análisis de Circuitos AC y Filtros",
+    "unidad": 3,
+    "descripcion": "Laboratorio completo para dominar análisis en AC, diseño de filtros y aplicaciones en sistemas mecatrónicos",
+    "duracion_total": "6 horas",
+    "prerrequisitos": ["Números complejos", "Análisis fasorial", "Funciones trigonométricas"]
+  },
+  "laboratorios_virtuales": {
+    "titulo": "Laboratorios Interactivos - Análisis AC y Filtros",
+    "descripcion": "Experiencias virtuales para dominar el análisis en corriente alterna",
+    "laboratorios": [
+      {
+        "id": "lab_senales_ac",
+        "titulo": "Lab 1: Caracterización de Señales Senoidales",
+        "objetivos": [
+          "Medir parámetros fundamentales de señales AC",
+          "Relacionar valores pico, RMS y promedio",
+          "Usar osciloscopio virtual correctamente"
+        ],
+        "equipos_virtuales": [
+          "Generador de funciones con control de amplitud, frecuencia y fase",
+          "Osciloscopio digital de 2 canales",
+          "Multímetro True-RMS",
+          "Analizador de espectro básico"
+        ],
+        "experimentos": [
+          {
+            "experimento": "Medición de parámetros temporales",
+            "señal_ejemplo": "v(t) = 10sin(2π×100t + 30°) V",
+            "mediciones_requeridas": [
+              "Amplitud pico (Vp = 10V)",
+              "Frecuencia (f = 100Hz)",
+              "Período (T = 10ms)",
+              "Fase (φ = 30°)",
+              "Valor RMS (Vrms = 7.07V)"
+            ]
+          },
+          {
+            "experimento": "Comparación de formas de onda",
+            "tipos": ["Senoidal", "Cuadrada", "Triangular", "Diente de sierra"],
+            "análisis": "Factor de cresta y contenido armónico"
+          }
+        ]
+      },
+      {
+        "id": "lab_fasores",
+        "titulo": "Lab 2: Operaciones con Fasores y Números Complejos",
+        "objetivos": [
+          "Dominar conversiones polar ↔ rectangular",
+          "Realizar operaciones aritméticas con fasores",
+          "Visualizar fasores en plano complejo"
+        ],
+        "herramientas_interactivas": [
+          {
+            "herramienta": "Calculadora de Fasores",
+            "componente": "app-phasor-calculator",
+            "funciones": [
+              "Conversión automática entre formas",
+              "Operaciones paso a paso",
+              "Visualización gráfica en tiempo real"
+            ]
+          },
+          {
+            "herramienta": "Diagrama Fasorial Animado",
+            "descripcion": "Visualización de fasores giratorios sincronizados",
+            "aplicaciones": ["Suma de señales", "Diferencia de fase", "Interferencia"]
+          }
+        ]
+      },
+      {
+        "id": "lab_impedancias",
+        "titulo": "Lab 3: Impedancia Compleja y Circuitos RLC",
+        "objetivos": [
+          "Calcular impedancias de R, L, C en función de frecuencia",
+          "Analizar circuitos RLC serie y paralelo",
+          "Encontrar frecuencia de resonancia experimentalmente"
+        ],
+        "circuitos_estudio": [
+          {
+            "circuito": "RLC Serie",
+            "componentes": "R=100Ω, L=10mH, C=1μF",
+            "f_resonancia": "f0 = 1/(2π√LC) ≈ 1.59kHz",
+            "características": [
+              "Impedancia mínima en resonancia",
+              "Corriente máxima en f0",
+              "Factor Q = ωL/R"
+            ]
+          },
+          {
+            "circuito": "RLC Paralelo",
+            "comportamiento": "Dual del circuito serie",
+            "características": [
+              "Impedancia máxima en resonancia",
+              "Corriente mínima de fuente en f0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "experimentos_especializados": [
+    {
+      "id": "exp_filtros_activos",
+      "titulo": "Experimento 1: Diseño de Filtros Activos con Op-Amps",
+      "objetivos": [
+        "Diseñar filtros Sallen-Key de 2do orden",
+        "Comparar respuesta Butterworth vs Chebyshev",
+        "Medir ganancia y fase simultáneamente"
+      ],
+      "duracion": "120 min",
+      "topologías": [
+        {
+          "tipo": "Sallen-Key Pasa-Bajas",
+          "configuración": "Ganancia unitaria con buffer",
+          "ecuaciones": [
+            "fc = 1/(2π√(R1×R2×C1×C2))",
+            "Q = √(R1×R2×C1×C2)/(R1×C2 + R2×C2 + R1×C1×(1-K))",
+            "K = 1 + Rf/Rg (ganancia DC)"
+          ],
+          "diseño_ejemplo": {
+            "fc_objetivo": "1kHz",
+            "Q_butterworth": "0.707",
+            "componentes": "R1=R2=1.59kΩ, C1=C2=100nF"
+          }
+        },
+        {
+          "tipo": "Filtro de Variables de Estado",
+          "ventajas": [
+            "Salidas simultáneas: pasa-bajas, pasa-altas, pasa-banda",
+            "Q independiente de fc",
+            "Baja sensibilidad a componentes"
+          ]
+        }
+      ],
+      "mediciones_requeridas": [
+        {
+          "parámetro": "Respuesta en frecuencia",
+          "rango": "10Hz - 100kHz",
+          "puntos_críticos": ["fc", "fc/10", "10×fc"]
+        },
+        {
+          "parámetro": "Fase vs frecuencia",
+          "análisis": "Retardo de grupo = -dφ/dω"
+        },
+        {
+          "parámetro": "Respuesta al escalón",
+          "correlación": "Sobreimpulso vs Q del filtro"
+        }
+      ]
+    },
+    {
+      "id": "exp_resonancia_rlc",
+      "titulo": "Experimento 2: Fenómenos de Resonancia en Circuitos RLC",
+      "objetivos": [
+        "Caracterizar resonancia serie y paralelo",
+        "Medir factor Q experimentalmente",
+        "Analizar transferencia de energía L ↔ C"
+      ],
+      "duracion": "90 min",
+      "circuito_resonante": {
+        "componentes": "L=47mH, C=100nF, R variable",
+        "f0_teórica": "f0 = 1/(2π√LC) ≈ 2.32kHz",
+        "Q_teórico": "Q = ωL/R = 2πf0L/R"
+      },
+      "procedimiento_experimental": [
+        {
+          "fase": "Barrido de frecuencia",
+          "objetivo": "Localizar f0 experimental",
+          "criterio": "Corriente máxima (serie) o mínima (paralelo)"
+        },
+        {
+          "fase": "Medición de ancho de banda",
+          "definición": "BW = f2 - f1 donde I = I_max/√2",
+          "cálculo_Q": "Q = f0/BW"
+        },
+        {
+          "fase": "Efecto de R en Q",
+          "valores_R": ["10Ω", "50Ω", "100Ω", "500Ω"],
+          "observación": "Q inversamente proporcional a R"
+        }
+      ],
+      "aplicaciones_prácticas": [
+        "Sintonización de receptores de radio",
+        "Filtros de RF en comunicaciones",
+        "Transformadores de acoplamiento",
+        "Circuitos osciladores"
+      ]
+    },
+    {
+      "id": "exp_bode_analyzer",
+      "titulo": "Experimento 3: Análisis de Bode con Instrumentación Real",
+      "objetivos": [
+        "Usar analizador de redes vectorial",
+        "Generar diagramas de Bode automáticamente",
+        "Correlacionar polos/ceros con respuesta"
+      ],
+      "duracion": "75 min",
+      "instrumentación": {
+        "analizador": "Simulación de HP 4395A o similar",
+        "rango_frecuencia": "10Hz - 500MHz",
+        "parámetros_s": ["S11", "S21", "S12", "S22"]
+      },
+      "circuitos_análisis": [
+        {
+          "circuito": "Filtro RC simple",
+          "función_transferencia": "H(s) = 1/(1 + sRC)",
+          "características": [
+            "Un polo en s = -1/RC",
+            "Atenuación -20dB/década después de fc",
+            "Fase: 0° → -90°"
+          ]
+        },
+        {
+          "circuito": "Filtro RLC pasa-banda",
+          "función_transferencia": "H(s) = (sRC)/(s²LC + sRC + 1)",
+          "características": [
+            "Dos polos complejos conjugados",
+            "Cero en s = 0 y s = ∞",
+            "Pico de resonancia si Q > 0.707"
+          ]
+        }
+      ]
+    }
+  ],
+  "simuladores_especializados": {
+    "titulo": "Herramientas de Simulación Avanzada",
+    "simuladores": [
+      {
+        "id": "sim_analizador_red",
+        "titulo": "Analizador de Redes Vectorial Virtual",
+        "descripcion": "Simulación de equipo profesional para caracterización de dispositivos",
+        "parámetros_s": {
+          "S11": "Coeficiente de reflexión (entrada)",
+          "S21": "Coeficiente de transmisión (ganancia)",
+          "S12": "Aislamiento reverso",
+          "S22": "Coeficiente de reflexión (salida)"
+        },
+        "mediciones": [
+          "Impedancia vs frecuencia",
+          "VSWR (Relación de Onda Estacionaria)",
+          "Carta de Smith interactiva",
+          "Pérdida de retorno"
+        ]
+      },
+      {
+        "id": "sim_sintesis_filtros",
+        "titulo": "Sintetizador Automático de Filtros",
+        "descripcion": "Diseño automático de filtros a partir de especificaciones",
+        "tipos_respuesta": [
+          "Butterworth (respuesta plana)",
+          "Chebyshev Tipo I (rizado en banda pasante)",
+          "Chebyshev Tipo II (rizado en banda eliminada)",
+          "Elíptico (rizado en ambas bandas)",
+          "Bessel (fase lineal)"
+        ],
+        "salidas": [
+          "Esquemático completo",
+          "Lista de componentes",
+          "Respuesta simulada",
+          "Análisis de sensibilidad"
+        ]
+      }
+    ]
+  },
+  "casos_estudio_aplicados": {
+    "titulo": "Aplicaciones en Ingeniería Mecatrónica",
+    "casos": [
+      {
+        "aplicacion": "Acondicionamiento de Señales de Sensores",
+        "contexto": "Sistema de control de temperatura con termocupla",
+        "problemas": [
+          "Señal débil (μV) con ruido de 60Hz",
+          "Interferencia electromagnética",
+          "Necesidad de aislamiento galvánico"
+        ],
+        "solucion_filtros": [
+          "Filtro pasa-bajas fc=10Hz para eliminar 60Hz",
+          "Filtro notch en 60Hz para interferencia específica",
+          "Amplificador de instrumentación con rechazo de modo común"
+        ],
+        "diseño_detallado": {
+          "etapa_1": "Amplificación diferencial (Ganancia = 100)",
+          "etapa_2": "Filtro activo pasa-bajas Butterworth 2º orden",
+          "etapa_3": "Buffer de salida con protección"
+        }
+      },
+      {
+        "aplicacion": "Control de Motores con PWM",
+        "contexto": "Servo control de posición en robot industrial",
+        "señales_involucradas": [
+          "Encoder cuadrático (pulsos digitales)",
+          "PWM de control (20kHz)",
+          "Realimentación de corriente (analógica)"
+        ],
+        "filtros_necesarios": [
+          "Filtro anti-aliasing para ADC (fc = fs/2.56)",
+          "Filtro de reconstrucción para DAC",
+          "Filtros de modo común para EMI"
+        ]
+      }
+    ]
+  },
+  "evaluacion_laboratorio": {
+    "criterios": [
+      {
+        "aspecto": "Diseño de Filtros",
+        "peso": "30%",
+        "incluye": ["Cálculo correcto de componentes", "Cumplimiento de especificaciones", "Optimización práctica"]
+      },
+      {
+        "aspecto": "Análisis Experimental",
+        "peso": "25%",
+        "incluye": ["Mediciones precisas", "Interpretación de Bode", "Correlación teoría-práctica"]
+      },
+      {
+        "aspecto": "Uso de Instrumentación",
+        "peso": "20%",
+        "incluye": ["Configuración correcta", "Técnicas de medición", "Análisis de errores"]
+      },
+      {
+        "aspecto": "Simulación y Verificación",
+        "peso": "15%",
+        "incluye": ["Modelos precisos", "Validación cruzada", "Análisis paramétrico"]
+      },
+      {
+        "aspecto": "Aplicación Práctica",
+        "peso": "10%",
+        "incluye": ["Identificación de problemas reales", "Propuestas de solución", "Viabilidad técnica"]
+      }
+    ]
+  },
+  "recursos_adicionales": {
+    "software_recomendado": [
+      {
+        "nombre": "LTSpice",
+        "aplicación": "Simulación de circuitos analógicos",
+        "análisis_disponibles": [".ac", ".tran", ".noise", ".step"]
+      },
+      {
+        "nombre": "MATLAB/Simulink",
+        "aplicación": "Diseño de filtros digitales y análisis de sistemas",
+        "toolboxes": ["Signal Processing", "Control Systems", "DSP System"]
+      },
+      {
+        "nombre": "Python + SciPy",
+        "aplicación": "Análisis numérico y visualización",
+        "librerías": ["scipy.signal", "matplotlib", "numpy"]
+      }
+    ],
+    "referencias_técnicas": [
+      "Sedra & Smith - Microelectronic Circuits (Capítulos de filtros)",
+      "Razavi - RF Microelectronics (Análisis de redes)",
+      "IEEE Standards for RF measurements"
+    ]
+  }
+}

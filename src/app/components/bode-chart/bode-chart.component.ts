@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges, signal, computed, PLATFORM_ID, inject, Input } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnChanges, OnDestroy, SimpleChanges, signal, computed, PLATFORM_ID, inject, Input } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { KatexDirective } from '../../directives/katex.directive';
@@ -12,7 +12,7 @@ export type FilterType = 'lowpass' | 'highpass' | 'bandpass';
   templateUrl: './bode-chart.component.html',
   styleUrls: ['./bode-chart.component.scss']
 })
-export class BodeChartComponent implements AfterViewInit, OnChanges {
+export class BodeChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   private platformId = inject(PLATFORM_ID);
 
   @Input() set type(value: FilterType) { this.filterType.set(value); }
@@ -21,7 +21,7 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
   @Input() set L(value: number) { this.lValue.set(value); }
 
   filterType = signal<FilterType>('lowpass');
-  
+
   // Component Values
   rValue = signal(1000);  // Ω
   cValue = signal(1);     // µF (1e-6 F)
@@ -29,6 +29,8 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('magnitudeChart') magCanvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('phaseChart') phaseCanvasRef!: ElementRef<HTMLCanvasElement>;
+
+  private resizeObserver: ResizeObserver | null = null;
 
   // Calculated values
   cutoffFreq = computed(() => {
@@ -100,12 +102,12 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
       const numImag = w * r * c;
       const denomReal = 1;
       const denomImag = w * r * c;
-      
+
       const numMag = numImag;
       const denomMag = Math.sqrt(denomReal * denomReal + denomImag * denomImag);
       const mag = numMag / denomMag;
       const magDb = 20 * Math.log10(mag);
-      
+
       const numAngle = Math.PI / 2;
       const denomAngle = Math.atan2(denomImag, denomReal);
       const phaseDeg = (numAngle - denomAngle) * (180 / Math.PI);
@@ -132,15 +134,20 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.draw();
+    this.setupResizeObserver();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (Object.keys(changes).length) {
       this.draw();
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.draw();
-    }
+  ngOnDestroy() {
+    this.resizeObserver?.disconnect();
   }
 
   setFilterType(type: FilterType) {
@@ -154,8 +161,7 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
 
   draw() {
     if (!isPlatformBrowser(this.platformId)) return;
-    
-    // Draw Magnitude Chart
+
     const magCanvas = this.magCanvasRef?.nativeElement;
     const phaseCanvas = this.phaseCanvasRef?.nativeElement;
     if (!magCanvas || !phaseCanvas) return;
@@ -164,15 +170,27 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
     this.drawChart(phaseCanvas, 'phase');
   }
 
+  private setupResizeObserver() {
+    const canvasRoot = this.magCanvasRef?.nativeElement?.parentElement;
+    if (!canvasRoot || !window.ResizeObserver) return;
+
+    this.resizeObserver = new ResizeObserver(() => this.draw());
+    this.resizeObserver.observe(canvasRoot);
+    this.resizeObserver.observe(this.phaseCanvasRef.nativeElement.parentElement || this.phaseCanvasRef.nativeElement);
+  }
+
   drawChart(canvas: HTMLCanvasElement, mode: 'magnitude' | 'phase') {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.scale(dpr, dpr);
+    if (rect.width === 0 || rect.height === 0) return;
+
+    canvas.width = Math.max(1, Math.round(rect.width * dpr));
+    canvas.height = Math.max(1, Math.round(rect.height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, rect.width, rect.height);
 
     const W = rect.width;
     const H = rect.height;
@@ -200,7 +218,7 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
     // Draw logarithmic grid lines (X axis)
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
     ctx.lineWidth = 1;
-    
+
     for (let dec = minDec; dec < maxDec; dec++) {
       const baseFreq = Math.pow(10, dec);
       for (let i = 1; i <= 9; i++) {
@@ -294,7 +312,7 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
       const logFreq = minDec + (i / pointsCount) * (maxDec - minDec);
       const freq = Math.pow(10, logFreq);
       const data = this.getTransferFunctionData(freq);
-      
+
       const x = getX(freq);
       const y = getY(mode === 'magnitude' ? data.magDb : data.phaseDeg);
 
@@ -341,7 +359,7 @@ export class BodeChartComponent implements AfterViewInit, OnChanges {
       ctx.strokeStyle = '#34D399';
       ctx.lineWidth = 1;
       ctx.setLineDash([4, 4]);
-      
+
       // Vertical line
       ctx.beginPath();
       ctx.moveTo(fcX, PAD.top);

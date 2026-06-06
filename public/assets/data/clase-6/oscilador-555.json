@@ -1,0 +1,81 @@
+{
+  "id": "oscilador-555",
+  "nombre": "Oscilador con Timer 555",
+  "descripcion": "Generador de señales no senoidales usando el circuito integrado 555 en configuración astable para ondas cuadradas y triangulares.",
+  "conceptos_clave": [
+    {
+      "nombre": "Configuración Astable",
+      "descripcion": "El 555 oscila continuamente sin señal de entrada externa. Genera ondas cuadradas con ciclo de trabajo ajustable.",
+      "variable_principal": "Frecuencia de oscilación",
+      "principio_fisico": "La carga y descarga del capacitor a través de resistencias R1 y R2 determina el tiempo de cada estado.",
+      "cuando_usitar": "Para relojes, temporizadores, generadores de pulsos y modulación PWM."
+    },
+    {
+      "nombre": "Ciclo de Trabajo",
+      "descripcion": "Proporción de tiempo que la salida está en estado alto. Ajustable mediante R1 y R2.",
+      "variable_principal": "Porcentaje de ciclo de trabajo",
+      "principio_fisico": "El tiempo de carga (R1+R2)C vs tiempo de descarga R2C determina el ciclo de trabajo.",
+      "cuando_usitar": "Para controlar velocidad de motores, brillo de LEDs y modulación."
+    },
+    {
+      "nombre": "Modulación PWM",
+      "descripcion": "Modulación por ancho de pulso. El ciclo de trabajo varía para codificar información.",
+      "variable_principal": "Ciclo de trabajo variable",
+      "principio_fisico": "Variando el ciclo de trabajo se simula un voltaje analógico promedio.",
+      "cuando_usitar": "Para control de motores DC, conversión D/A y comunicación."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Frecuencia 555 Astable",
+      "katex": "f = \\frac{1.44}{(R_1 + 2R_2)C}",
+      "variables_tooltip": "variablesFrecuencia555"
+    },
+    {
+      "titulo": "Tiempo Alto",
+      "katex": "t_H = 0.693(R_1 + R_2)C",
+      "variables_tooltip": "variablesTiempo"
+    },
+    {
+      "titulo": "Tiempo Bajo",
+      "katex": "t_L = 0.693 R_2 C",
+      "variables_tooltip": "variablesTiempo"
+    },
+    {
+      "titulo": "Ciclo de Trabajo",
+      "katex": "D = \\frac{R_1 + R_2}{R_1 + 2R_2} \\times 100\\%",
+      "variables_tooltip": "variablesCiclo"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesFrecuencia555": [
+      { "simbolo": "f", "nombre": "Frecuencia", "unidad": "Hertz (Hz)", "descripcion": "Ciclos por segundo", "category": "frequency" },
+      { "simbolo": "R_1", "nombre": "Resistencia 1", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia de carga", "category": "resistance" },
+      { "simbolo": "R_2", "nombre": "Resistencia 2", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia de descarga", "category": "resistance" },
+      { "simbolo": "C", "nombre": "Capacitancia", "unidad": "Faradios (F)", "descripcion": "Capacitor de temporización", "category": "capacitance" }
+    ],
+    "variablesTiempo": [
+      { "simbolo": "t_H", "nombre": "Tiempo alto", "unidad": "Segundos (s)", "descripcion": "Duración pulso alto", "category": "time" },
+      { "simbolo": "t_L", "nombre": "Tiempo bajo", "unidad": "Segundos (s)", "descripcion": "Duración pulso bajo", "category": "time" }
+    ],
+    "variablesCiclo": [
+      { "simbolo": "D", "nombre": "Ciclo de trabajo", "unidad": "Porcentaje (%)", "descripcion": "Proporción tiempo alto", "category": "duty" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Control de Motores DC", "descripcion": "PWM para controlar velocidad y torque." },
+    { "titulo": "Generación de Audio", "descripcion": "Tonos y efectos de sonido simples." },
+    { "titulo": "Temporizadores", "descripcion": "Relojes y alarmas con precisión razonable." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-555-simulator",
+    "justificacion": "Permite simular el 555 en configuración astable y ajustar R1, R2 y C para variar frecuencia y ciclo de trabajo.",
+    "utilidad": "Los estudiantes pueden entender la relación entre componentes y parámetros de salida.",
+    "interfaz_requerida": "Simulador con controles R1, R2, C y visualización de forma de onda.",
+    "inputs": [
+      "Valores de R1, R2 y C",
+      "Visualización de forma de onda cuadrada",
+      "Indicadores de frecuencia y ciclo de trabajo"
+    ]
+  }
+}

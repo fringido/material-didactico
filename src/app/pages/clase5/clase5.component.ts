@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { KatexDirective } from '../../directives/katex.directive';
 import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
 import { EquationChartComponent } from '../../components/equation-chart/equation-chart.component';
+import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
 
 @Component({
   selector: 'app-clase5',
@@ -13,7 +14,8 @@ import { EquationChartComponent } from '../../components/equation-chart/equation
     CommonModule,
     RouterLink,
     KatexDirective,
-    PageBackBarComponent
+    PageBackBarComponent,
+    DynamicCircuitSimulatorComponent
   ],
   template: `
 <div class="page-shell clase5-page">
@@ -128,6 +130,13 @@ import { EquationChartComponent } from '../../components/equation-chart/equation
                 </div>
               }
             </div>
+          </section>
+        }
+
+        <!-- Simulador -->
+        @if (temaDetallado().detalle?.simulacion_dinamica) {
+          <section class="section">
+            <app-dynamic-circuit-simulator [simulacion]="temaDetallado().detalle.simulacion_dinamica" />
           </section>
         }
 

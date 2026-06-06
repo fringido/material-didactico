@@ -53,6 +53,24 @@
   align-items: center;
 }
 
+.diagram-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.diagram-label {
+  font-size: 12px;
+  font-family: system-ui, sans-serif;
+  fill: var(--text-secondary);
+}
+
+.diagram-label--important {
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--text-primary);
+}
+
 .panel-subtitle {
   font-size: $font-size-base;
   font-weight: $font-weight-semibold;

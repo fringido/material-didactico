@@ -1,0 +1,71 @@
+{
+  "id": "osciladores-rc",
+  "nombre": "Osciladores RC",
+  "descripcion": "Osciladores de puente de Wien, desfasador y multivibrador para generación de señales en rango de audio.",
+  "conceptos_clave": [
+    {
+      "nombre": "Puente de Wien",
+      "descripcion": "Oscilador senoidal que usa un puente RC como red de realimentación. Frecuencia ajustable, baja distorsión.",
+      "variable_principal": "Frecuencia de oscilación",
+      "principio_fisico": "La realimentación positiva del puente RC crea oscilación cuando la ganancia del amplificador es ≥3.",
+      "cuando_usitar": "Para generar ondas senoidales en rango de audio (20 Hz - 20 kHz)."
+    },
+    {
+      "nombre": "Oscilador de Desfasador",
+      "descripcion": "Usa tres redes RC en cascada para crear 180° de desfasamiento. Simple pero menos estable.",
+      "variable_principal": "Frecuencia de oscilación",
+      "principio_fisico": "Cada red RC desfasa 60°, tres en cascada dan 180° para realimentación positiva.",
+      "cuando_usitar": "Para aplicaciones simples donde la estabilidad no es crítica."
+    },
+    {
+      "nombre": "Multivibrador RC",
+      "descripcion": "Genera ondas cuadradas o triangulares. Usa comparadores y redes RC para temporización.",
+      "variable_principal": "Periodo de oscilación",
+      "principio_fisico": "La carga y descarga de capacitores determina el tiempo de cada estado.",
+      "cuando_usitar": "Para relojes digitales, temporizadores y generación de pulsos."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Frecuencia Puente de Wien",
+      "katex": "f = \\frac{1}{2\\pi RC}",
+      "variables_tooltip": "variablesFrecuenciaRC"
+    },
+    {
+      "titulo": "Ganancia Mínima Puente de Wien",
+      "katex": "A_v \\geq 3",
+      "variables_tooltip": "variablesGanancia"
+    },
+    {
+      "titulo": "Frecuencia Desfasador",
+      "katex": "f = \\frac{\\sqrt{6}}{2\\pi RC}",
+      "variables_tooltip": "variablesFrecuenciaRC"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesFrecuenciaRC": [
+      { "simbolo": "f", "nombre": "Frecuencia", "unidad": "Hertz (Hz)", "descripcion": "Ciclos por segundo", "category": "frequency" },
+      { "simbolo": "R", "nombre": "Resistencia", "unidad": "Ohmios (Ω)", "descripcion": "Componente pasivo", "category": "resistance" },
+      { "simbolo": "C", "nombre": "Capacitancia", "unidad": "Faradios (F)", "descripcion": "Componente reactivo", "category": "capacitance" }
+    ],
+    "variablesGanancia": [
+      { "simbolo": "A_v", "nombre": "Ganancia de voltaje", "unidad": "Adimensional", "descripcion": "Relación Vout/Vin", "category": "gain" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Generadores de Audio", "descripcion": "Producción de tonos para instrumentos y pruebas." },
+    { "titulo": "Sistemas de Comunicación", "descripcion": "Generación de portadoras moduladas." },
+    { "titulo": "Instrumentación", "descripcion": "Generación de señales de prueba y calibración." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-oscillator-simulator",
+    "justificacion": "Permite simular diferentes tipos de osciladores RC y ajustar componentes para variar la frecuencia.",
+    "utilidad": "Los estudiantes pueden experimentar con la relación R-C y observar el efecto en la frecuencia y forma de onda.",
+    "interfaz_requerida": "Simulador con selector de tipo, controles R/C y visualización de forma de onda.",
+    "inputs": [
+      "Tipo de oscilador (puente Wien, desfasador, multivibrador)",
+      "Valores de R y C",
+      "Visualización de forma de onda y frecuencia"
+    ]
+  }
+}

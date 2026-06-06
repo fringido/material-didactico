@@ -1,0 +1,60 @@
+{
+  "metadata": { "orden": 6 },
+  "nombre": "Laboratorio: Filtros RC",
+  "descripcion": "Laboratorio virtual: Construcción, medición y trazado de diagramas de Bode para filtros pasa-bajas y pasa-altas.",
+  "introduccion": "En este laboratorio simularás el proceso real de caracterización de un filtro. Usarás un generador de funciones para barrer frecuencias y un osciloscopio para medir las amplitudes de entrada y salida, calculando así la atenuación y el desfase.",
+  "objetivos": [
+    "Construir circuitos de filtros pasa-bajas y pasa-altas usando R y C.",
+    "Medir experimentalmente la frecuencia de corte f_c y compararla con el valor teórico.",
+    "Trazar la curva de respuesta en frecuencia (Diagrama de Bode de magnitud).",
+    "Comprobar la atenuación de -20 dB/década en la banda de rechazo."
+  ],
+  "materiales": [
+    "Generador de Funciones (Fuente AC de frecuencia variable)",
+    "Osciloscopio de 2 canales",
+    "Resistor: 1 kΩ",
+    "Capacitor: 150 nF"
+  ],
+  "procedimiento": [
+    {
+      "paso": 1,
+      "titulo": "Cálculo teórico",
+      "descripcion": "Calcula la frecuencia de corte teórica f_c = 1 / (2πRC) para R=1kΩ y C=150nF."
+    },
+    {
+      "paso": 2,
+      "titulo": "Construcción Pasa-Bajas",
+      "descripcion": "Conecta R en serie con C. La entrada (V_in) se aplica al conjunto RC. La salida (V_out) se toma sobre el capacitor."
+    },
+    {
+      "paso": 3,
+      "titulo": "Barrido de Frecuencias (Medición)",
+      "descripcion": "Mantén V_in constante (ej. 10 Vpp). Varía la frecuencia desde 10 Hz hasta 100 kHz en pasos logarítmicos (10, 20, 50, 100, 200...). Mide V_out en cada paso."
+    },
+    {
+      "paso": 4,
+      "titulo": "Cálculo de Ganancia",
+      "descripcion": "Para cada medición, calcula la ganancia en dB: A_{dB} = 20 * log10(V_out / V_in)."
+    },
+    {
+      "paso": 5,
+      "titulo": "Filtro Pasa-Altas",
+      "descripcion": "Intercambia las posiciones de R y C. Ahora la salida V_out se toma sobre el resistor. Repite el barrido y las mediciones."
+    }
+  ],
+  "simulacion_dinamica": {
+    "tipo": "bode_interactive",
+    "titulo": "Simulador de Laboratorio Bode",
+    "descripcion": "Usa este simulador interactivo para comprobar tus cálculos y mediciones teóricas.",
+    "controles_extra": true
+  },
+  "ejercicio_laboratorio": {
+    "id": "ej-lab-filtros",
+    "numero": 12,
+    "titulo": "Análisis de Datos del Laboratorio",
+    "descripcion": "Con R=1\\,\\text{k}\\Omega y C=150\\,\\text{nF}, completa la tabla de mediciones teóricas para un pasa-bajas y traza el diagrama de Bode.",
+    "tiempo_minutos": 25,
+    "solucion": "f_c \\approx 1.06\\,\\text{kHz}. \\text{ Ganancia a }10\\,\\text{Hz}\\approx 0\\,\\text{dB}. \\text{ Ganancia a }1\\,\\text{kHz}\\approx -2.8\\,\\text{dB}. \\text{ Ganancia a }10\\,\\text{kHz}\\approx -19.5\\,\\text{dB}.",
+    "explicacion": "El alumno debe usar la fórmula |H_{dB}| = -10 * log10(1 + (f/f_c)^2) para verificar sus puntos. El gráfico final debe mostrar la curva característica de -20dB/dec."
+  }
+}

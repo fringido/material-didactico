@@ -1,0 +1,74 @@
+{
+  "id": "etapas-potencia",
+  "nombre": "Etapas de Potencia",
+  "descripcion": "Diseño de amplificadores de bajo y alto nivel para aplicaciones de potencia en sistemas mecatrónicos.",
+  "conceptos_clave": [
+    {
+      "nombre": "Amplificador de Bajo Nivel",
+      "descripcion": "Etapa inicial que amplifica señales débiles de sensores o micrófonos. Alta ganancia, baja distorsión.",
+      "variable_principal": "Ganancia",
+      "principio_fisico": "Opera con señales pequeñas, requiere bajo ruido y alta impedancia de entrada.",
+      "cuando_usarlo": "Para acondicionar señales de sensores antes de procesamiento adicional."
+    },
+    {
+      "nombre": "Amplificador de Alto Nivel",
+      "descripcion": "Etapa final que entrega potencia a la carga (altavoz, motor, actuador). Alta eficiencia, maneja alta corriente.",
+      "variable_principal": "Potencia de salida",
+      "principio_fisico": "Opera con señales grandes, requiere disipación de calor y manejo de corriente.",
+      "cuando_usarlo": "Para controlar motores, altavoces y otras cargas de potencia."
+    },
+    {
+      "nombre": "Disipación de Calor",
+      "descripcion": "La potencia no entregada a la carga se disipa como calor en el transistor. Requiere disipador térmico.",
+      "variable_principal": "Potencia disipada",
+      "principio_fisico": "P_D = P_CC - P_out, donde P_CC es la potencia de la fuente.",
+      "cuando_usarlo": "Siempre en etapas de potencia para evitar daño al transistor."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Potencia de Salida",
+      "katex": "P_{out} = \\frac{V_{p-p}^2}{8R_L}",
+      "variables_tooltip": "variablesPotenciaSalida"
+    },
+    {
+      "titulo": "Potencia Disipada",
+      "katex": "P_D = V_{CC} I_C - P_{out}",
+      "variables_tooltip": "variablesPotenciaDisipada"
+    },
+    {
+      "titulo": "Eficiencia",
+      "katex": "\\eta = \\frac{P_{out}}{V_{CC} I_C} \\times 100\\%",
+      "variables_tooltip": "variablesEficiencia"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesPotenciaSalida": [
+      { "simbolo": "V_{p-p}", "nombre": "Voltaje pico a pico", "unidad": "Voltios (V)", "descripcion": "Amplitud total de señal", "category": "voltage" },
+      { "simbolo": "R_L", "nombre": "Resistencia de carga", "unidad": "Ohmios (Ω)", "descripcion": "Impedancia de carga", "category": "resistance" }
+    ],
+    "variablesPotenciaDisipada": [
+      { "simbolo": "V_{CC}", "nombre": "Voltaje de alimentación", "unidad": "Voltios (V)", "descripcion": "Voltaje DC de fuente", "category": "voltage" },
+      { "simbolo": "I_C", "nombre": "Corriente de colector", "unidad": "Amperios (A)", "descripcion": "Corriente promedio", "category": "current" }
+    ],
+    "variablesEficiencia": [
+      { "simbolo": "\\eta", "nombre": "Eficiencia", "unidad": "Porcentaje (%)", "descripcion": "Relación Pout/Pin", "category": "efficiency" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Control de Motores DC", "descripcion": "Etapas de potencia para controlar velocidad y torque." },
+    { "titulo": "Sistemas de Audio", "descripcion": "Amplificadores de potencia para altavoces." },
+    { "titulo": "Actuadores Hidráulicos", "descripcion": "Control de válvulas y cilindros." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-power-stage-simulator",
+    "justificacion": "Permite simular etapas de potencia y observar la disipación de calor y eficiencia.",
+    "utilidad": "Los estudiantes pueden diseñar etapas de potencia y verificar especificaciones térmicas.",
+    "interfaz_requerida": "Simulador con selección de configuración, carga y visualización de potencia.",
+    "inputs": [
+      "Configuración de etapa (push-pull, single-ended)",
+      "Nivel de potencia requerido",
+      "Visualización de disipación de calor"
+    ]
+  }
+}

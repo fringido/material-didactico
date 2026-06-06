@@ -219,6 +219,8 @@
   &--error   { background: $color-error-bg;   border: 1px solid rgba($color-error, 0.2);   .behavior-card__label { color: $color-error-light; } }
   &--warning { background: $color-warning-bg; border: 1px solid rgba($color-warning, 0.2); .behavior-card__label { color: $color-warning-light; } }
   &--info    { background: $color-info-bg;    border: 1px solid rgba($color-info, 0.2);    .behavior-card__label { color: $color-info-light; } }
+  &--neutral { background: $bg-secondary;     border: 1px solid $border-primary;           .behavior-card__label { color: $text-secondary; } }
+  &--primary { background: rgba($color-primary, 0.05); border: 1px solid rgba($color-primary, 0.2); .behavior-card__label { color: $color-primary; } }
 }
 
 // Variants
@@ -330,4 +332,69 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: $spacing-2;
+}
+
+// Comparison table
+.table-responsive {
+  overflow-x: auto;
+  margin-top: $spacing-4;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid $border-primary;
+
+  thead {
+    background: $bg-secondary;
+    
+    th {
+      padding: $spacing-3 $spacing-4;
+      text-align: left;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      color: $text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 2px solid $border-primary;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $border-primary;
+      transition: background-color $transition-base;
+
+      &:hover {
+        background: rgba($color-primary, 0.05);
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: $spacing-3 $spacing-4;
+      font-size: $font-size-sm;
+      color: $text-primary;
+      vertical-align: middle;
+
+      &:first-child {
+        font-weight: $font-weight-semibold;
+        color: $color-primary;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-xs;
+    
+    th, td {
+      padding: $spacing-2 $spacing-3;
+    }
+  }
 }

@@ -1,9 +1,9 @@
-import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges, PLATFORM_ID, inject } from '@angular/core';
+import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnChanges, OnDestroy, SimpleChanges, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 import { KatexDirective } from '../../directives/katex.directive';
 
-export type ChartType = 'ohm' | 'capacitor_diff' | 'inductor_diff' | 'capacitor_reactance' | 'inductor_reactance' | 'bjt_gain' | 'opamp_diff' | 'opamp_gain' | 'diode_iv' | 'zener_iv' | 'varactor_cv' | 'photodiode_iv';
+export type ChartType = 'ohm' | 'capacitor_diff' | 'inductor_diff' | 'capacitor_reactance' | 'inductor_reactance' | 'bjt_gain' | 'opamp_diff' | 'opamp_gain' | 'diode_iv' | 'zener_iv' | 'varactor_cv' | 'photodiode_iv' | 'line-chart' | 'bar-chart' | 'visualization';
 
 @Component({
   selector: 'app-equation-chart',
@@ -120,13 +120,15 @@ export type ChartType = 'ohm' | 'capacitor_diff' | 'inductor_diff' | 'capacitor_
     }
   `]
 })
-export class EquationChartComponent implements AfterViewInit, OnChanges {
+export class EquationChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() chartType: ChartType = 'ohm';
   @Input() title = '';
   @Input() equation = '';
+  @Input() parameters: Record<string, any> = {};
   @ViewChild('chart') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   private platformId = inject(PLATFORM_ID);
+  private resizeObserver: ResizeObserver | null = null;
 
   rValue = 100;
   cValue = 10;
@@ -154,8 +156,193 @@ export class EquationChartComponent implements AfterViewInit, OnChanges {
   onC0Change(e: Event) { this.c0Value = +(e.target as HTMLInputElement).value; this.draw(); }
   onRespChange(e: Event) { this.respValue = +(e.target as HTMLInputElement).value; this.draw(); }
 
-  ngAfterViewInit() { if (isPlatformBrowser(this.platformId)) this.draw(); }
-  ngOnChanges(c: SimpleChanges) { if (c['chartType'] && this.canvasRef) this.draw(); }
+  private parseNumber(...values: any[]): number {
+    for (const value of values) {
+      if (typeof value === 'number' && !Number.isNaN(value)) {
+        return value;
+      }
+      const num = Number(value);
+      if (!Number.isNaN(num)) {
+        return num;
+      }
+    }
+    return 0;
+  }
+
+  private rangeFromParam(range: any, fallback: [number, number]): [number, number] {
+    if (Array.isArray(range) && range.length >= 2) {
+      const [first, second] = range;
+      const start = this.parseNumber(first, fallback[0]);
+      const end = this.parseNumber(second, fallback[1]);
+      return [start, end];
+    }
+    return fallback;
+  }
+
+  private linspace(start: number, end: number, count: number): number[] {
+    if (count <= 1) return [start];
+    const step = (end - start) / (count - 1);
+    return Array.from({ length: count }, (_, i) => start + i * step);
+  }
+
+  private normalizeEquation(equation: string): string {
+    return equation
+      .replace(/\\cdot|\\times|×/g, '*')
+      .replace(/\\,/g, '')
+      .replace(/\\left|\\right/g, '')
+      .replace(/\s+/g, '')
+      .replace(/([A-Za-z0-9_]+)²/g, '($1**2)')
+      .replace(/\^/g, '**')
+      .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '($1)/($2)');
+  }
+
+  private buildLineChartData() {
+    const params = (this.parameters || {}) as any;
+    const equation = this.normalizeEquation(this.equation || '');
+    const lowerEq = equation.toLowerCase();
+    const color = '#7c6af7';
+    const color2 = '#f05a7e';
+
+    const [timeMin, timeMax] = this.rangeFromParam(params.rango_tiempo ?? params.rangoTiempo, [0, 2]);
+    const [currentMin, currentMax] = this.rangeFromParam(params.rango_corriente ?? params.rango_I ?? params.rangoCorriente, [0, 5]);
+    const [resistanceMin, resistanceMax] = this.rangeFromParam(params.rango_R ?? params.rango_resistencia ?? params.rangoR ?? params.rango_RL, [1, 100]);
+
+    if (params.tipo_onda) {
+      const amplitude = this.parseNumber(params.amplitud, params.amplitude, 5);
+      const frequency = this.parseNumber(params.frecuencia, params.freq, 1);
+      const xs = this.linspace(timeMin, timeMax, 100);
+      const ys = xs.map((t) => {
+        const phase = 2 * Math.PI * frequency * t;
+        switch ((params.tipo_onda || '').toString().toLowerCase()) {
+          case 'cuadrada': return Math.sign(Math.sin(phase)) * amplitude;
+          case 'triangular': return (2 * amplitude / Math.PI) * Math.asin(Math.sin(phase));
+          default: return Math.sin(phase) * amplitude;
+        }
+      });
+      return { xs, ys, xLabel: params.eje_x || 'Tiempo (s)', yLabel: params.eje_y || 'Voltaje (V)', color };
+    }
+
+    if (lowerEq.includes('p=v*i') || lowerEq.includes('p=v×i') || lowerEq.includes('p=v*i')) {
+      const voltage = this.parseNumber(params.voltaje, params.V, 12);
+      const xs = this.linspace(currentMin, currentMax, 100);
+      const ys = xs.map((i) => voltage * i);
+      return { xs, ys, xLabel: params.eje_x || 'Corriente (A)', yLabel: params.eje_y || 'Potencia (W)', color };
+    }
+
+    if (lowerEq.includes('e=p*t') || lowerEq.includes('e=p**t')) {
+      const power = this.parseNumber(params.potencia, params.P, 10);
+      const xs = this.linspace(timeMin, timeMax, 100);
+      const ys = xs.map((t) => power * t);
+      return { xs, ys, xLabel: params.eje_x || 'Tiempo (s)', yLabel: params.eje_y || 'Energía (J)', color };
+    }
+
+    if (lowerEq.includes('v=i*r') || lowerEq.includes('v=r*i')) {
+      const resistance = this.parseNumber(params.R, params.resistencia, params.valores_R?.[0], 10);
+      const xs = this.linspace(currentMin, currentMax, 100);
+      const ys = xs.map((i) => i * resistance);
+      if (Array.isArray(params.valores_R) && params.valores_R.length >= 2) {
+        const r1 = this.parseNumber(params.valores_R[0], 10);
+        const r2 = this.parseNumber(params.valores_R[1], r1);
+        const ys2 = xs.map((i) => i * r2);
+        return { xs, ys, xLabel: params.eje_x || 'Corriente (A)', yLabel: params.eje_y || 'Voltaje (V)', color, color2, ys2 };
+      }
+      return { xs, ys, xLabel: params.eje_x || 'Corriente (A)', yLabel: params.eje_y || 'Voltaje (V)', color };
+    }
+
+    if (lowerEq.includes('i=v/r') || lowerEq.includes('i=v÷r') || lowerEq.includes('i=v/r_eq') || lowerEq.includes('i_total=v/r_eq')) {
+      const voltage = this.parseNumber(params.voltaje, params.V, 12);
+      const xs = this.linspace(resistanceMin, resistanceMax, 100);
+      const ys = xs.map((r) => voltage / Math.max(0.1, r));
+      return { xs, ys, xLabel: params.eje_x || 'Resistencia (Ω)', yLabel: params.eje_y || 'Corriente (A)', color };
+    }
+
+    if (lowerEq.includes('p=v**2/r') || lowerEq.includes('p=v²/r') || lowerEq.includes('p=v^2/r')) {
+      const voltage = this.parseNumber(params.voltaje, params.V, 12);
+      const xs = this.linspace(resistanceMin, resistanceMax, 100);
+      const ys = xs.map((r) => (voltage * voltage) / Math.max(0.1, r));
+      return { xs, ys, xLabel: params.eje_x || 'Resistencia (Ω)', yLabel: params.eje_y || 'Potencia (W)', color };
+    }
+
+    if (lowerEq.includes('v=v_th-i*r_th') || lowerEq.includes('v=vth-i*rth')) {
+      const vth = this.parseNumber(params.V_TH, params.Vth, 12);
+      const rth = this.parseNumber(params.R_TH, params.Rth, 10);
+      const xs = this.linspace(currentMin, currentMax, 100);
+      const ys = xs.map((i) => vth - i * rth);
+      return { xs, ys, xLabel: params.eje_x || 'Corriente (A)', yLabel: params.eje_y || 'Voltaje (V)', color };
+    }
+
+    if (lowerEq.includes('p=(v_th/(r_th+r_l))**2*r_l') || lowerEq.includes('p=(vth/(rth+rl))**2*rl')) {
+      const vth = this.parseNumber(params.V_TH, params.Vth, 12);
+      const rth = this.parseNumber(params.R_TH, params.Rth, 10);
+      const [rlMin, rlMax] = this.rangeFromParam(params.rango_R_L ?? params.rango_RL, [1, 100]);
+      const xs = this.linspace(rlMin, rlMax, 100);
+      const ys = xs.map((rl) => Math.pow(vth / (rth + rl), 2) * rl);
+      return { xs, ys, xLabel: params.eje_x || 'Resistencia de carga (Ω)', yLabel: params.eje_y || 'Potencia (W)', color };
+    }
+
+    if (equation) {
+      const labels = (params.eje_x || 'x').toString().toLowerCase();
+      const xVar = labels.includes('corriente') ? 'I' : labels.includes('resistencia') ? 'R' : labels.includes('tiempo') ? 't' : labels.includes('frecuencia') ? 'f' : 'x';
+      const [min, max] = this.rangeFromParam(params.rango || params.rango_x || params.rango_X || (xVar === 'R' ? [1, 100] : [0, 5]), [0, 5]);
+      const xs = this.linspace(min, max, 100);
+      const constants: Record<string, number> = {
+        V: this.parseNumber(params.voltaje, params.V, 12),
+        R: this.parseNumber(params.resistencia, params.R, 10),
+        P: this.parseNumber(params.potencia, params.P, 10),
+        V_TH: this.parseNumber(params.V_TH, params.Vth, 12),
+        R_TH: this.parseNumber(params.R_TH, params.Rth, 10),
+        RL: this.parseNumber(params.R_L, params.RL, params.rango_R_L?.[0], 10),
+        t: this.parseNumber(params.t, 1),
+        f: this.parseNumber(params.frecuencia, params.freq, 1),
+      };
+      const expression = equation.includes('=') ? equation.split('=')[1] : equation;
+      try {
+        const expr = expression
+          .replace(/\bR_eq\b/g, 'R')
+          .replace(/\bR_total\b/g, 'R')
+          .replace(/\bV_th\b/g, 'V_TH')
+          .replace(/\bR_th\b/g, 'R_TH')
+          .replace(/\bR_l\b/g, 'RL')
+          .replace(/\bI_total\b/g, 'I');
+        const f = new Function('x', ...Object.keys(constants), `return ${expr};`);
+        const ys = xs.map((x) => {
+          const values = Object.values(constants);
+          const result = f(x, ...values);
+          return typeof result === 'number' && Number.isFinite(result) ? result : 0;
+        });
+        return { xs, ys, xLabel: params.eje_x || 'x', yLabel: params.eje_y || 'y', color };
+      } catch {
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.draw();
+    this.setupResizeObserver();
+  }
+
+  ngOnChanges(_: SimpleChanges) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.draw();
+  }
+
+  ngOnDestroy() {
+    this.resizeObserver?.disconnect();
+  }
+
+  private setupResizeObserver() {
+    if (!window.ResizeObserver) return;
+    const canvas = this.canvasRef?.nativeElement;
+    if (!canvas) return;
+
+    this.resizeObserver = new ResizeObserver(() => this.draw());
+    this.resizeObserver.observe(canvas);
+    this.resizeObserver.observe(canvas.parentElement || canvas);
+  }
 
   draw() {
     const canvas = this.canvasRef?.nativeElement;
@@ -165,9 +352,12 @@ export class EquationChartComponent implements AfterViewInit, OnChanges {
 
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.scale(dpr, dpr);
+    if (rect.width === 0 || rect.height === 0) return;
+
+    canvas.width = Math.max(1, Math.round(rect.width * dpr));
+    canvas.height = Math.max(1, Math.round(rect.height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, rect.width, rect.height);
 
     const W = rect.width;
     const H = rect.height;
@@ -208,14 +398,24 @@ export class EquationChartComponent implements AfterViewInit, OnChanges {
       const { xs, ys, xLabel, yLabel, color = '#7c6af7', color2, ys2 } = getData();
       if (!xs.length) return;
 
-      const maxY = Math.max(...ys, ...(ys2 || [0])) * 1.05 || 1;
-      const minY = 0;
-      const maxX = xs[xs.length - 1];
+      const allYs = ys.concat(ys2 || []);
+      let maxY = Math.max(...allYs, 0);
+      let minY = Math.min(...allYs, 0);
+      if (Math.abs(maxY - minY) < 1e-3) {
+        maxY += 1;
+        minY -= 1;
+      }
+      maxY = maxY * 1.05;
+      minY = minY * 1.05;
+      const minX = Math.min(...xs, 0);
+      const maxX = Math.max(...xs, 0);
+      const xRange = maxX - minX || 1;
+      const yRange = maxY - minY || 1;
 
       // Y-axis labels
       ctx.textAlign = 'right';
       for (let i = 0; i <= 4; i++) {
-        const val = maxY - (maxY / 4) * i;
+        const val = maxY - (yRange / 4) * i;
         const y = PAD.top + (plotH / 4) * i;
         const text = val < 10 ? val.toFixed(1) : val < 1000 ? val.toFixed(0) : (val / 1000).toFixed(1) + 'k';
         ctx.fillText(text, PAD.left - 4, y + 3);
@@ -224,7 +424,7 @@ export class EquationChartComponent implements AfterViewInit, OnChanges {
       // X-axis labels
       ctx.textAlign = 'center';
       for (let i = 0; i <= 6; i++) {
-        const val = (maxX / 6) * i;
+        const val = minX + (xRange / 6) * i;
         const x = PAD.left + (plotW / 6) * i;
         const text = val < 10 ? val.toFixed(1) : val < 1000 ? val.toFixed(0) : (val / 1000).toFixed(0) + 'k';
         ctx.fillText(text, x, PAD.top + plotH + 16);
@@ -236,17 +436,18 @@ export class EquationChartComponent implements AfterViewInit, OnChanges {
       ctx.save(); ctx.translate(10, PAD.top + plotH / 2); ctx.rotate(-Math.PI / 2);
       ctx.fillText(yLabel, 0, 0); ctx.restore();
 
-      const toX = (v: number) => PAD.left + (v / maxX) * plotW;
-      const toY = (v: number) => PAD.top + plotH - ((v - minY) / (maxY - minY)) * plotH;
+      const toX = (v: number) => PAD.left + ((v - minX) / xRange) * plotW;
+      const toY = (v: number) => PAD.top + plotH - ((v - minY) / yRange) * plotH;
 
       // Fill area
+      const baselineY = toY(Math.min(Math.max(0, minY), maxY));
       const grad = ctx.createLinearGradient(0, PAD.top, 0, PAD.top + plotH);
       grad.addColorStop(0, color + '33');
       grad.addColorStop(1, color + '00');
       ctx.beginPath();
-      ctx.moveTo(toX(xs[0]), PAD.top + plotH);
+      ctx.moveTo(toX(xs[0]), baselineY);
       xs.forEach((x, i) => ctx.lineTo(toX(x), toY(ys[i])));
-      ctx.lineTo(toX(xs[xs.length - 1]), PAD.top + plotH);
+      ctx.lineTo(toX(xs[xs.length - 1]), baselineY);
       ctx.closePath();
       ctx.fillStyle = grad;
       ctx.fill();
@@ -374,6 +575,31 @@ export class EquationChartComponent implements AfterViewInit, OnChanges {
           xs, ys: xs.map(v => v * gain),
           xLabel: 'Vin (V)', yLabel: '|Vout| (V)', color: '#4da6ff'
         }));
+        break;
+      }
+      case 'line-chart': {
+        const lineData = this.buildLineChartData();
+        if (lineData) {
+          draw(() => lineData);
+        } else {
+          const xs = Array.from({ length: N }, (_, i) => i);
+          draw(() => ({ xs, ys: xs.map(() => 0), xLabel: 'x', yLabel: 'y', color: '#7c6af7' }));
+        }
+        break;
+      }
+      case 'bar-chart': {
+        const lineData = this.buildLineChartData();
+        if (lineData) {
+          draw(() => lineData);
+        } else {
+          const xs = Array.from({ length: N }, (_, i) => i);
+          draw(() => ({ xs, ys: xs.map(() => 0), xLabel: 'Categoría', yLabel: 'Valor', color: '#7c6af7' }));
+        }
+        break;
+      }
+      case 'visualization': {
+        const xs = Array.from({ length: N }, (_, i) => i);
+        draw(() => ({ xs, ys: xs.map(() => 0), xLabel: '', yLabel: '', color: '#7c6af7' }));
         break;
       }
       case 'diode_iv': {

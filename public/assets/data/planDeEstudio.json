@@ -42,6 +42,7 @@
     "modulos": [
       {
         "numero": 1,
+        "titulo": "Módulo 1: Fundamentos de Circuitos",
         "periodo": "9 de Mayo - 20 de Junio de 2026",
         "fecha_evaluacion": "2026-06-20",
         "fecha_extraordinario": "2026-06-27",
@@ -50,7 +51,11 @@
             "numero": 1,
             "titulo": "Introducción a la Electrónica Analógica",
             "semanas": "1-2",
-            "data_file": "modulo-1/unidad-1.json",
+            "semana_detalle": [
+              { "semana": 1, "tema": "Conceptos básicos de electrónica analógica", "clase": 1, "actividad": "Introducción a señales analógicas, voltaje, corriente y potencia" },
+              { "semana": 2, "tema": "Componentes electrónicos y circuitos básicos", "clase": 1, "actividad": "Componentes activos/pasivos, amplificadores, filtros, osciladores" }
+            ],
+            "data_file": "clase-1/index.json",
             "temas": [
               "Conceptos básicos de electrónica analógica",
               "Características y propiedades de los componentes electrónicos",
@@ -66,7 +71,11 @@
             "numero": 2,
             "titulo": "Análisis de Circuitos en DC",
             "semanas": "3-4",
-            "data_file": "modulo-1/unidad-2.json",
+            "semana_detalle": [
+              { "semana": 3, "tema": "Leyes fundamentales y circuitos básicos", "clase": 3, "actividad": "Ley de Ohm, circuitos serie/paralelo, tipos de circuitos" },
+              { "semana": 4, "tema": "Leyes de Kirchhoff y análisis sistemático", "clase": 4, "actividad": "LCK y LVK, análisis de nodos y mallas, Thevenin/Norton" }
+            ],
+            "data_file": "clase-3/index.json",
             "temas": [
               "Leyes y teoremas fundamentales (Ohm, Kirchhoff)",
               "Resistencia equivalente en serie y paralelo",
@@ -88,7 +97,11 @@
             "numero": 3,
             "titulo": "Análisis de Circuitos en AC",
             "semanas": "5-6",
-            "data_file": "modulo-1/unidad-3.json",
+            "semana_detalle": [
+              { "semana": 5, "tema": "Señales AC y respuesta en frecuencia", "clase": 3, "actividad": "Señales senoidales, fasores, respuesta en frecuencia" },
+              { "semana": 6, "tema": "Filtros pasivos y respuesta transitoria", "clase": 3, "actividad": "Filtros RC, RL, RLC, diagramas de Bode, laboratorio" }
+            ],
+            "data_file": "clase-3/index.json",
             "temas": [
               "Conceptos de señales y sistemas en AC",
               "Filtros pasivos (RC, RL, RLC)",
@@ -106,6 +119,7 @@
       },
       {
         "numero": 2,
+        "titulo": "Módulo 2: Amplificadores y Sistemas",
         "periodo": "4 de Julio - 15 de Agosto de 2026",
         "fecha_evaluacion": "2026-08-15",
         "fecha_extraordinario": "2026-08-22",
@@ -114,7 +128,11 @@
             "numero": 4,
             "titulo": "Amplificadores y Etapas de Potencia",
             "semanas": "7-8",
-            "data_file": "modulo-2/unidad-4.json",
+            "semana_detalle": [
+              { "semana": 7, "tema": "Clasificación de amplificadores", "clase": 5, "actividad": "Clases A, B, AB, C: características y eficiencia" },
+              { "semana": 8, "tema": "Configuraciones BJT y etapas de potencia", "clase": 5, "actividad": "Emisor común, colector común, etapas de potencia" }
+            ],
+            "data_file": "clase-5/index.json",
             "temas": [
               "Clasificación de amplificadores: clase A, B, AB y C",
               "Configuraciones: emisor común, base común, colector común",
@@ -132,7 +150,11 @@
             "numero": 5,
             "titulo": "Osciladores y Generadores de Señales",
             "semanas": "9-10",
-            "data_file": "modulo-2/unidad-5.json",
+            "semana_detalle": [
+              { "semana": 9, "tema": "Osciladores RC y LC", "clase": 6, "actividad": "Puente de Wien, Hartley, Colpitts, cristal" },
+              { "semana": 10, "tema": "Osciladores con Timer 555", "clase": 6, "actividad": "Configuración astable, PWM, laboratorio" }
+            ],
+            "data_file": "clase-6/index.json",
             "temas": [
               "Osciladores LC e RC",
               "Osciladores de cristal y PLL",
@@ -149,7 +171,11 @@
             "numero": 6,
             "titulo": "Amplificadores Operacionales",
             "semanas": "11-12",
-            "data_file": "modulo-2/unidad-6.json",
+            "semana_detalle": [
+              { "semana": 11, "tema": "Configuraciones básicas de Op-Amp", "clase": 2, "actividad": "Inversor, no inversor, sumador, seguidor" },
+              { "semana": 12, "tema": "Filtros activos y aplicaciones", "clase": 2, "actividad": "Integrador, derivador, filtros activos, proyecto final" }
+            ],
+            "data_file": "clase-2/index.json",
             "temas": [
               "Características del amplificador operacional ideal",
               "Configuraciones básicas: inversor, no inversor, sumador",
@@ -215,6 +241,113 @@
       { "criterio": "Simulación, ejercicios y esquemas",   "porcentaje": 10 },
       { "criterio": "Discusiones y mesas de trabajo",      "porcentaje": 10 },
       { "criterio": "Mapas mentales y trabajo escrito",    "porcentaje": 10 }
-    ]
+    ],
+
+    "notas_importantes": [
+      "La calificación mínima aprobatoria es 6.0",
+      "Se requiere 80% de asistencia para tener derecho a evaluación ordinaria",
+      "Los trabajos se entregan en la fecha establecida, no se aceptan entregas extemporáneas"
+    ],
+
+    "calendario_actividades": {
+      "modulo_1": [
+        { "semanas": "1-2", "tema": "Introducción a Electrónica Analógica", "entregable": "Mapa mental de componentes" },
+        { "semanas": "3-4", "tema": "Análisis de Circuitos DC", "entregable": "10 ejercicios resueltos + simulaciones" },
+        { "semanas": "5-6", "tema": "Análisis de Circuitos AC", "entregable": "Diseño de filtros + reporte de lab" },
+        { "fecha": "20 Jun", "tema": "EVALUACIÓN MÓDULO 1", "entregable": null }
+      ],
+      "modulo_2": [
+        { "semanas": "7-8", "tema": "Amplificadores y Etapas de Potencia", "entregable": "Diseño de amplificador + simulación" },
+        { "semanas": "9-10", "tema": "Osciladores y Generadores", "entregable": "Construcción oscilador 555" },
+        { "semanas": "11-12", "tema": "Amplificadores Operacionales", "entregable": "Proyecto final integrador" },
+        { "fecha": "15 Ago", "tema": "EVALUACIÓN MÓDULO 2", "entregable": null }
+      ]
+    },
+
+    "banco_ejercicios": {
+      "analisis_circuitos_dc": [
+        {
+          "numero": 1,
+          "descripcion": "Dado un circuito con 3 resistencias en serie (R1=100Ω, R2=220Ω, R3=330Ω) conectadas a una fuente de 12V, calcular: Resistencia equivalente total, Corriente total del circuito, Voltaje en cada resistencia"
+        },
+        {
+          "numero": 2,
+          "descripcion": "Aplicar el análisis de mallas a un circuito con dos mallas y calcular las corrientes de malla. Usar valores R1=1kΩ, R2=2.2kΩ, R3=3.3kΩ, V1=10V, V2=5V."
+        },
+        {
+          "numero": 3,
+          "descripcion": "Encontrar el equivalente de Thevenin visto desde los terminales A-B en un circuito divisor de voltaje con carga."
+        }
+      ],
+      "filtros_pasivos": [
+        {
+          "numero": 4,
+          "descripcion": "Diseñar un filtro RC pasa-bajas con frecuencia de corte de 1 kHz. Calcular valores de R y C. Si R=10kΩ, ¿qué valor debe tener C?"
+        },
+        {
+          "numero": 5,
+          "descripcion": "Calcular la atenuación en dB de un filtro pasa-altas RC a una frecuencia de f/10, donde f es la frecuencia de corte."
+        }
+      ],
+      "amplificadores_bjt": [
+        {
+          "numero": 6,
+          "descripcion": "Diseñar un amplificador emisor común con ganancia de voltaje de -50. Calcular valores de resistencias de polarización y ganancia real considerando β=100."
+        },
+        {
+          "numero": 7,
+          "descripcion": "Calcular el punto Q de un amplificador clase A y determinar la máxima excursión de salida sin distorsión."
+        }
+      ],
+      "amplificadores_operacionales": [
+        {
+          "numero": 8,
+          "descripcion": "Diseñar un amplificador inversor con ganancia de -10 usando un LM741. Si Rf=100kΩ, calcular Rin y la impedancia de entrada."
+        },
+        {
+          "numero": 9,
+          "descripcion": "Implementar un sumador de 3 entradas con ganancias diferentes: V1 con ganancia 2, V2 con ganancia 3, V3 con ganancia 1. Diseñar el circuito."
+        },
+        {
+          "numero": 10,
+          "descripcion": "Diseñar un filtro activo pasa-bajas Sallen-Key de segundo orden con frecuencia de corte de 1 kHz y Q=0.707 (Butterworth)."
+        }
+      ]
+    },
+
+    "proyectos_integradores": [
+      {
+        "numero": 1,
+        "titulo": "Sistema de Acondicionamiento de Señales",
+        "objetivo": "Diseñar un sistema completo de acondicionamiento para sensores que incluya: Amplificación con ganancia ajustable, Filtrado de ruido, Offset ajustable, Indicador LED de rangos de voltaje"
+      },
+      {
+        "numero": 2,
+        "titulo": "Generador de Formas de Onda",
+        "objetivo": "Construir un generador que produzca: Onda cuadrada ajustable (100 Hz - 10 kHz), Onda triangular, Onda senoidal"
+      },
+      {
+        "numero": 3,
+        "titulo": "Control de Motor DC con Realimentación",
+        "objetivo": "Diseñar un sistema de control analógico que incluya: Sensor de velocidad (tacómetro), Amplificador de error, Driver de potencia, Control de velocidad proporcional"
+      }
+    ],
+
+    "recomendaciones_estudiantes": [
+      "Mantener el ritmo de estudio semanal para evitar rezagos",
+      "Practicar la simulación antes de construir circuitos físicos",
+      "Documentar todas las prácticas con fotografías y mediciones",
+      "Consultar dudas en clase o por correo electrónico",
+      "Formar equipos de estudio para discusión de ejercicios",
+      "Revisar hojas de datos de componentes antes de usarlos",
+      "Cuidar el equipo de laboratorio y reportar fallas inmediatamente"
+    ],
+
+    "contacto": {
+      "profesor": "Camacho Ríos Maximiliano Alfredo",
+      "correo_electronico": "[A definir]",
+      "horario_atencion": "Sábados antes y después de clase, previa cita",
+      "plataforma": "[Teams / Classroom / Según indique la institución]"
+    }
   }
 }

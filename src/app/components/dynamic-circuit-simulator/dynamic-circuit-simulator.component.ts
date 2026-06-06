@@ -104,31 +104,48 @@ export class DynamicCircuitSimulatorComponent implements OnInit, OnDestroy {
       // Build a function where 'x' is the first arg, then time 't', then control keys
       const func = new Function('x', 't', ...keys, `return ${grafica.calculo_y}`);
 
-      // Determine if the formula uses a control-like "x" axis.
-      // If so, map screen x to the range of the first control (commonly R2 in our JSON).
+      // Check for standalone 'x' variable (word boundary) to avoid false positives like 'r1_val' containing 'x'
       const firstCtrl = this.simulacion?.controles?.length ? this.simulacion.controles[0] : null;
-      const xIsControlRange = typeof grafica.calculo_y === 'string' && grafica.calculo_y.includes('x') && !!firstCtrl;
+      const xIsControlRange = typeof grafica.calculo_y === 'string' && /\bx\b/.test(grafica.calculo_y) && !!firstCtrl;
+
+      // First pass: collect all y values to compute range for auto-scaling
+      const rawValues: number[] = [];
+      for (let i = 0; i <= samples; i++) {
+        const normalized = i / samples;
+        let xArg: number;
+        if (xIsControlRange) {
+          xArg = normalized; // x in [0,1], formula uses it directly
+        } else {
+          xArg = (normalized * 4 * Math.PI) - t;
+        }
+        try {
+          const yVal = func(xArg, t, ...values);
+          if (Number.isFinite(yVal)) rawValues.push(yVal);
+        } catch (_) { /* skip */ }
+      }
+
+      if (rawValues.length === 0) return '';
+
+      const minVal = Math.min(...rawValues);
+      const maxVal = Math.max(...rawValues);
+      const range = maxVal - minVal || 1;
 
       for (let i = 0; i <= samples; i++) {
         const x_screen = (i / samples) * width;
         const normalized = i / samples;
-
-        // If formula expects 'x' to be a control (e.g., R2), map normalized into [min,max]
         let xArg: number;
-        if (xIsControlRange && firstCtrl) {
-          const min = Number(firstCtrl.min) || 0;
-          const max = Number(firstCtrl.max) || 1;
-          // Map normalized [0,1] to [min,max]
-          xArg = min + normalized * (max - min);
+        if (xIsControlRange) {
+          xArg = normalized;
         } else {
-          // Use a time-like x so waves look animated
           xArg = (normalized * 4 * Math.PI) - t;
         }
 
         const yVal = func(xArg, t, ...values);
+        if (!Number.isFinite(yVal)) continue;
 
-        // Scale for rendering (hardcoded scaling for now, could be dynamic)
-        const scaledY = centerY - (yVal * 5);
+        // Normalize to [0,1] then map to SVG height (invert: high value → top)
+        const normalized_y = (yVal - minVal) / range;
+        const scaledY = (height - 10) - normalized_y * (height - 20) + 5;
 
         if (i === 0) {
           points.push(`M ${x_screen} ${scaledY}`);

@@ -204,6 +204,35 @@
       </section>
     }
 
+    <!-- ── CLASE 4: Gráficas automáticas a partir de ecuaciones y fórmulas ── -->
+    @if (tema().ecuaciones?.length || tema().formulas?.length) {
+      <section class="section">
+        <h2 class="section__title">Gráficas derivadas de ecuaciones</h2>
+        <div class="content-grid content-grid--2">
+          @for (eq of tema().ecuaciones || []; track eq.nombre) {
+            <div class="chart-card card card--bordered">
+              <p class="formula-card__label">{{ eq.nombre }}</p>
+              <app-equation-chart
+                [chartType]="formulaChartType(eq.formula)"
+                [title]="eq.nombre"
+                [equation]="eq.formula">
+              </app-equation-chart>
+            </div>
+          }
+          @for (f of tema().formulas || []; track f.titulo) {
+            <div class="chart-card card card--bordered">
+              <p class="formula-card__label">{{ f.titulo }}</p>
+              <app-equation-chart
+                [chartType]="formulaChartType(f.katex)"
+                [title]="f.titulo"
+                [equation]="f.katex">
+              </app-equation-chart>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
     <!-- ── CLASE 4: Simulación dinámica ── -->
     @if (tema().simulacion_dinamica) {
       <section class="section">

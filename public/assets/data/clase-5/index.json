@@ -1,41 +1,59 @@
 {
   "metadata": {
     "clase": 5,
-    "modulo": 1,
-    "unidad": 3,
-    "titulo": "Circuitos en AC y Filtros Pasivos",
-    "semanas": "5",
+    "modulo": 2,
+    "unidad": 4,
+    "titulo": "Amplificadores y Etapas de Potencia",
+    "semanas": "7-8",
     "version": "1.0.0",
-    "fecha_actualizacion": "2026-05-30",
-    "descripcion": "Fundamentos de corriente alterna, fasores e introducción a los filtros RC y RL.",
+    "fecha_actualizacion": "2026-06-05",
+    "descripcion": "Clasificación de amplificadores: clase A, B, AB y C. Configuraciones: emisor común, base común, colector común. Diseño de amplificadores de bajo y alto nivel. Etapas de potencia y aplicaciones.",
     "ruta": "/clase/5"
   },
   "objetivos": [
-    "Identificar los parámetros fundamentales de una señal senoidal",
-    "Realizar conversiones entre el dominio del tiempo y el dominio de la frecuencia (fasores)",
-    "Calcular la impedancia de elementos pasivos (R, L, C)",
-    "Diseñar filtros pasa-bajas y pasa-altas básicos"
+    "Calcular ganancia en amplificadores BJT",
+    "Diseñar amplificador emisor común con ganancia de 50",
+    "Comparar eficiencia entre clases de amplificadores",
+    "Simular amplificadores en Proteus",
+    "Comprender configuraciones de amplificadores: emisor común, base común, colector común",
+    "Diseñar etapas de potencia para aplicaciones mecatrónicas"
   ],
   "temas": [
     {
-      "id": "senales-ac",
-      "nombre": "Señales Senoidales y Fasores",
-      "descripcion": "Representación matemática y vectorial de señales que varían en el tiempo.",
-      "icono": "🌊",
-      "ruta": "/clase/5/tema/senales-ac",
-      "archivo": "senales-ac.json"
+      "id": "clasificacion-amplificadores",
+      "nombre": "Clasificación de Amplificadores",
+      "descripcion": "Amplificadores clase A, B, AB y C: características, eficiencia y aplicaciones.",
+      "icono": "📊",
+      "ruta": "/clase/5/tema/clasificacion-amplificadores",
+      "archivo": "clasificacion-amplificadores.json"
     },
     {
-      "id": "filtros-pasivos",
-      "nombre": "Filtros Pasivos",
-      "descripcion": "Redes RC, RL y RLC que seleccionan rangos de frecuencia.",
-      "icono": "🧹",
-      "ruta": "/clase/5/tema/filtros-pasivos",
-      "archivo": "filtros-pasivos.json"
+      "id": "configuraciones-bjt",
+      "nombre": "Configuraciones BJT",
+      "descripcion": "Emisor común, base común y colector común: características y aplicaciones.",
+      "icono": "🔌",
+      "ruta": "/clase/5/tema/configuraciones-bjt",
+      "archivo": "configuraciones-bjt.json"
+    },
+    {
+      "id": "etapas-potencia",
+      "nombre": "Etapas de Potencia",
+      "descripcion": "Diseño de amplificadores de bajo y alto nivel para aplicaciones de potencia.",
+      "icono": "⚡",
+      "ruta": "/clase/5/tema/etapas-potencia",
+      "archivo": "etapas-potencia.json"
+    },
+    {
+      "id": "thevenin-norton",
+      "nombre": "Teoremas de Thevenin y Norton",
+      "descripcion": "Herramientas indispensables para el análisis y simplificación de circuitos lineales y equivalencia de fuentes.",
+      "icono": "⚡",
+      "ruta": "/clase/5/tema/thevenin-norton",
+      "archivo": "thevenin-norton.json"
     }
   ],
   "rutas_relacionadas": {
-    "unidad_completa": "/modulo/1/unidad/3",
-    "siguiente_clase": "/clase/6"
+    "unidad_completa": "/modulo/2/unidad/4",
+    "componentes": "/componentes/activos"
   }
 }

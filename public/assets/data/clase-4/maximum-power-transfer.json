@@ -8,7 +8,9 @@
       "descripcion": "Establece que para obtener la máxima potencia de transferencia de una fuente a una carga, la resistencia de la carga debe ser igual a la resistencia interna de la fuente (R_L = R_th).",
       "variable_principal": "Resistencia de carga (R_L)",
       "principio_fisico": "Maximización de la transferencia de energía entre fuente y carga.",
-      "cuando_usarlo": "Es fundamental en diseño de amplificadores, antenas y sistemas de transmisión de señales donde se requiere máxima transferencia de potencia."
+      "cuando_usarlo": "Es fundamental en diseño de amplificadores, antenas y sistemas de transmisión de señales donde se requiere máxima transferencia de potencia.",
+      "demostracion_matematica": "Demostrar esto matemáticamente calculando la potencia P = I² × R_L y mostrando gráficamente cómo la curva de potencia forma una parábola que alcanza su pico máximo exactamente cuando las resistencias se igualan.",
+      "conexion_conceptos": "Es un gran momento para conectarlo con conceptos como el acoplamiento de impedancias en amplificadores o sistemas de audio."
     },
     {
       "nombre": "Circuito Equivalente de Thevenin",

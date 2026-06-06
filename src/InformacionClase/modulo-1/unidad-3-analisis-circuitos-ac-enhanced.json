@@ -1,0 +1,222 @@
+{
+    "metadata": {
+        "modulo": 1,
+        "unidad": 3,
+        "titulo": "Análisis de Circuitos en AC",
+        "semanas": "5-6",
+        "version": "2.0.0",
+        "fecha_actualizacion": "2026-05-30",
+        "descripcion": "Señales senoidales, fasores, impedancia compleja, filtros y respuesta en frecuencia"
+    },
+    "objetivos": [
+        "Comprender los parámetros de señales senoidales (amplitud, frecuencia, fase)",
+        "Aplicar notación fasorial para análisis de circuitos en AC",
+        "Calcular impedancia compleja de resistencias, inductores y capacitores",
+        "Analizar circuitos RLC en régimen senoidal permanente",
+        "Diseñar y analizar filtros pasa-bajas, pasa-altas, pasa-banda y rechaza-banda",
+        "Interpretar diagramas de Bode de magnitud y fase",
+        "Comprender respuesta transitoria vs respuesta en estado estable"
+    ],
+    "temas": [
+        {
+            "id": "senales-senoidales",
+            "nombre": "Señales Senoidales",
+            "descripcion": "Parámetros fundamentales de señales AC: amplitud, frecuencia, período, fase y valor RMS.",
+            "ecuaciones": [
+                {
+                    "nombre": "Señal senoidal",
+                    "formula": "v(t) = V_m \\sin(\\omega t + \\phi)"
+                },
+                {
+                    "nombre": "Frecuencia angular",
+                    "formula": "\\omega = 2\\pi f = \\frac{2\\pi}{T}"
+                },
+                {
+                    "nombre": "Valor RMS",
+                    "formula": "V_{rms} = \\frac{V_m}{\\sqrt{2}}"
+                },
+                {
+                    "nombre": "Valor promedio",
+                    "formula": "V_{avg} = \\frac{2}{\\pi} V_m \\approx 0.637 V_m"
+                }
+            ]
+        },
+        {
+            "id": "fasores-numeros-complejos",
+            "nombre": "Fasores y Números Complejos",
+            "descripcion": "Representación fasorial de señales senoidales y operaciones con números complejos.",
+            "ecuaciones": [
+                {
+                    "nombre": "Representación fasorial",
+                    "formula": "\\mathbf{V} = V_m \\angle \\phi = V_m e^{j\\phi}"
+                },
+                {
+                    "nombre": "Forma rectangular",
+                    "formula": "\\mathbf{V} = a + jb"
+                },
+                {
+                    "nombre": "Conversión polar a rectangular",
+                    "formula": "a = V_m \\cos\\phi, \\quad b = V_m \\sin\\phi"
+                }
+            ]
+        },
+        {
+            "id": "impedancia-compleja",
+            "nombre": "Impedancia Compleja",
+            "descripcion": "Impedancia de resistencias, inductores y capacitores en el dominio de frecuencia.",
+            "ecuaciones": [
+                {
+                    "nombre": "Impedancia de resistencia",
+                    "formula": "\\mathbf{Z}_R = R"
+                },
+                {
+                    "nombre": "Impedancia de inductor",
+                    "formula": "\\mathbf{Z}_L = j\\omega L = jX_L"
+                },
+                {
+                    "nombre": "Impedancia de capacitor",
+                    "formula": "\\mathbf{Z}_C = \\frac{1}{j\\omega C} = -jX_C"
+                }
+            ]
+        },
+        {
+            "id": "filtros-rc-rl-rlc",
+            "nombre": "Filtros RC, RL y RLC",
+            "descripcion": "Diseño y análisis de filtros pasa-bajas, pasa-altas, pasa-banda y rechaza-banda.",
+            "ecuaciones": [
+                {
+                    "nombre": "Frecuencia de corte RC",
+                    "formula": "f_c = \\frac{1}{2\\pi RC}"
+                },
+                {
+                    "nombre": "Frecuencia de resonancia RLC",
+                    "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}"
+                }
+            ]
+        }
+    ],
+    "ejercicios": [
+        {
+            "numero": 8,
+            "titulo": "Diseñar filtros pasa-bajas, pasa-altas y pasa-banda",
+            "descripcion": "Calcular valores de componentes para diferentes tipos de filtros según especificaciones.",
+            "tipo": "practico",
+            "dificultad": "intermedio",
+            "tiempo_estimado": "90 minutos",
+            "simulacion_interactiva": true,
+            "componente_angular": "filter-designer",
+            "objetivos": [
+                "Calcular R y C para frecuencia de corte específica",
+                "Diseñar filtros de diferentes tipos",
+                "Analizar respuesta en frecuencia"
+            ]
+        },
+        {
+            "numero": 9,
+            "titulo": "Calcular frecuencias de corte",
+            "descripcion": "Determinar frecuencias características en filtros RC, RL y RLC.",
+            "tipo": "practico",
+            "dificultad": "básico",
+            "tiempo_estimado": "45 minutos",
+            "simulacion_interactiva": true,
+            "componente_angular": "frequency-calculator"
+        },
+        {
+            "numero": 10,
+            "titulo": "Graficar diagramas de Bode",
+            "descripcion": "Crear y analizar diagramas de Bode de magnitud y fase.",
+            "tipo": "practico",
+            "dificultad": "avanzado",
+            "tiempo_estimado": "120 minutos",
+            "simulacion_interactiva": true,
+            "componente_angular": "bode-chart"
+        },
+        {
+            "numero": 11,
+            "titulo": "Laboratorio: Construir y medir filtros RC",
+            "descripcion": "Construcción física y medición de filtros pasivos.",
+            "tipo": "laboratorio",
+            "dificultad": "práctico",
+            "tiempo_estimado": "150 minutos",
+            "simulacion_interactiva": true,
+            "componente_angular": "filter-lab"
+        }
+    ],
+    "laboratorios": [
+        {
+            "numero": 1,
+            "titulo": "Simulador de Señales AC",
+            "descripcion": "Generador interactivo de señales senoidales",
+            "objetivo": "Comprender parámetros de señales AC: amplitud, frecuencia, fase",
+            "componente_angular": "ac-signal-generator",
+            "tiempo_estimado": "30 minutos"
+        },
+        {
+            "numero": 2,
+            "titulo": "Calculadora de Fasores",
+            "descripcion": "Operaciones con números complejos y fasores",
+            "objetivo": "Dominar conversiones y operaciones fasoriales",
+            "componente_angular": "phasor-calculator",
+            "tiempo_estimado": "45 minutos"
+        },
+        {
+            "numero": 3,
+            "titulo": "Analizador de Impedancia",
+            "descripcion": "Cálculo de impedancia compleja de R, L, C",
+            "objetivo": "Analizar comportamiento de componentes en AC",
+            "componente_angular": "impedance-analyzer",
+            "tiempo_estimado": "40 minutos"
+        },
+        {
+            "numero": 4,
+            "titulo": "Simulador de Filtros Pasivos",
+            "descripcion": "Diseño y análisis de filtros RC, RL, RLC",
+            "objetivo": "Visualizar respuesta en frecuencia de filtros",
+            "componente_angular": "filter-simulator",
+            "tiempo_estimado": "60 minutos"
+        }
+    ],
+    "ejemplos_practicos": [
+        {
+            "titulo": "Sistema de Audio - Crossover Pasivo",
+            "descripcion": "Diseño de filtros para separar frecuencias en altavoces",
+            "aplicacion": "Filtro pasa-altas para tweeter (fc=3kHz), pasa-bajas para woofer (fc=800Hz)",
+            "componentes": "Inductores y capacitores de audio"
+        },
+        {
+            "titulo": "Eliminador de Ruido 60Hz",
+            "descripcion": "Filtro notch para eliminar interferencia de la red eléctrica",
+            "aplicacion": "Instrumentación médica y equipos de audio",
+            "componentes": "Circuito RLC paralelo resonante a 60Hz"
+        }
+    ],
+    "evaluacion": {
+        "criterios": [
+            "Cálculo correcto de parámetros de señales (amplitud, frecuencia, fase, RMS)",
+            "Manejo adecuado de números complejos y operaciones fasoriales",
+            "Aplicación correcta de impedancias complejas en análisis de circuitos",
+            "Diseño de filtros según especificaciones de frecuencia",
+            "Interpretación correcta de diagramas de Bode"
+        ],
+        "instrumentos": [
+            "Examen teórico-práctico (40%)",
+            "Reportes de laboratorio (30%)",
+            "Diseño de filtros (20%)",
+            "Participación en simulaciones (10%)"
+        ]
+    },
+    "recursos_adicionales": {
+        "simuladores": [
+            {
+                "nombre": "Generador de diagramas de Bode",
+                "descripcion": "Herramienta interactiva para visualizar respuesta en frecuencia",
+                "ruta": "/simuladores/bode"
+            },
+            {
+                "nombre": "Calculadora de impedancia",
+                "descripcion": "Calculadora interactiva de impedancia compleja",
+                "ruta": "/simuladores/impedancia"
+            }
+        ]
+    }
+}

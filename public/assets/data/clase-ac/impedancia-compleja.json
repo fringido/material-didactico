@@ -1,0 +1,93 @@
+{
+  "metadata": { "orden": 2 },
+  "nombre": "Impedancia Compleja",
+  "descripcion": "Oposición de R, L y C al flujo de corriente AC en el dominio de frecuencia.",
+  "introduccion": "En AC, cada elemento tiene una impedancia Z que generaliza la resistencia al dominio complejo. La Ley de Ohm se convierte en V = I·Z. La impedancia depende de la frecuencia para L y C.",
+  "ecuaciones": [
+    { "nombre": "Ley de Ohm en AC", "formula": "\\mathbf{V} = \\mathbf{I} \\cdot \\mathbf{Z}" },
+    { "nombre": "Impedancia de Resistor", "formula": "\\mathbf{Z}_R = R \\quad (\\text{independiente de }f)" },
+    { "nombre": "Impedancia de Inductor", "formula": "\\mathbf{Z}_L = j\\omega L = jX_L \\quad X_L = 2\\pi f L" },
+    { "nombre": "Impedancia de Capacitor", "formula": "\\mathbf{Z}_C = \\frac{1}{j\\omega C} = -jX_C \\quad X_C = \\frac{1}{2\\pi f C}" },
+    { "nombre": "Impedancia total RLC serie", "formula": "\\mathbf{Z} = R + j(X_L - X_C)" },
+    { "nombre": "Módulo de impedancia", "formula": "|\\mathbf{Z}| = \\sqrt{R^2 + (X_L - X_C)^2}" },
+    { "nombre": "Ángulo de fase", "formula": "\\theta = \\arctan\\!\\left(\\frac{X_L - X_C}{R}\\right)" }
+  ],
+  "conceptos_clave": [
+    {
+      "nombre": "Reactancia (X)",
+      "descripcion": "Oposición al flujo de CA causada por capacitores e inductores. A diferencia de la resistencia, no disipa energía térmica, sino que almacena y devuelve energía al circuito. Se mide en Ohmios (Ω).",
+      "imagen": "/assets/images/phasor_diagram_1780705582109.png",
+      "comportamiento_dc": "Inductor es un corto (0 Ω), Capacitor es un circuito abierto (∞ Ω).",
+      "comportamiento_ac_alto": "X_L → ∞ (circuito abierto a frecuencias muy altas)"
+    },
+    {
+      "nombre": "Reactancia Capacitiva (X_C)",
+      "descripcion": "La impedancia del capacitor DISMINUYE con la frecuencia. A frecuencias altas, el capacitor conduce fácilmente.",
+      "comportamiento_dc": "X_C → ∞ (circuito abierto en DC)",
+      "comportamiento_ac_alto": "X_C → 0 (cortocircuito a frecuencias muy altas)"
+    },
+    {
+      "nombre": "Resonancia (RLC)",
+      "descripcion": "Cuando X_L = X_C, la impedancia es puramente resistiva y mínima. La frecuencia de resonancia es:",
+      "formula": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}}"
+    }
+  ],
+  "tabla_componentes": [
+    { "componente": "Resistor (R)", "impedancia": "Z = R", "fase": "0° (V e I en fase)", "a_alta_f": "Igual", "a_baja_f": "Igual" },
+    { "componente": "Inductor (L)", "impedancia": "Z = jωL", "fase": "+90° (V adelanta a I)", "a_alta_f": "Z → ∞ (bloquea)", "a_baja_f": "Z → 0 (pasa)" },
+    { "componente": "Capacitor (C)", "impedancia": "Z = 1/jωC", "fase": "-90° (V retrasa a I)", "a_alta_f": "Z → 0 (pasa)", "a_baja_f": "Z → ∞ (bloquea)" }
+  ],
+  "ejemplos": [
+    {
+      "titulo": "Impedancia de inductor a 60 Hz",
+      "enunciado": "L = 10\\,\\text{mH}, \\; f = 60\\,\\text{Hz}. \\text{ Calcular }Z_L.",
+      "resultado": "Z_L = j\\,3.77\\,\\Omega = 3.77\\angle 90°\\,\\Omega"
+    },
+    {
+      "titulo": "Impedancia de capacitor a 1 kHz",
+      "enunciado": "C = 10\\,\\mu\\text{F}, \\; f = 1\\,\\text{kHz}. \\text{ Calcular }Z_C.",
+      "resultado": "Z_C = -j\\,15.9\\,\\Omega = 15.9\\angle{-90°}\\,\\Omega"
+    },
+    {
+      "titulo": "Impedancia total RLC serie",
+      "enunciado": "R=100\\,\\Omega,\\; L=50\\,\\text{mH},\\; C=100\\,\\mu\\text{F},\\; f=100\\,\\text{Hz}.",
+      "resultado": "Z = 100 + j(31.4 - 15.9) = 100 + j15.5 = 101.2\\angle 8.8°\\,\\Omega"
+    }
+  ],
+  "simulacion_dinamica": {
+    "tipo": "impedance_lab",
+    "titulo": "Calculadora de Impedancia RLC",
+    "controles": [
+      { "id": "r", "label": "R (Ω)", "min": 0, "max": 1000, "default": 100, "step": 10 },
+      { "id": "l", "label": "L (mH)", "min": 0, "max": 500, "default": 50, "step": 5 },
+      { "id": "c", "label": "C (µF)", "min": 1, "max": 500, "default": 100, "step": 10 },
+      { "id": "f", "label": "f (Hz)", "min": 10, "max": 10000, "default": 100, "step": 10 }
+    ],
+    "metricas": [
+      { "label": "X_L", "calculo": "2 * Math.PI * f * l / 1000", "unidad": "Ω", "formula_katex": "X_L = 2\\pi fL" },
+      { "label": "X_C", "calculo": "1 / (2 * Math.PI * f * c / 1e6)", "unidad": "Ω", "formula_katex": "X_C = \\frac{1}{2\\pi fC}" },
+      { "label": "|Z|", "calculo": "Math.sqrt(r*r + Math.pow((2*Math.PI*f*l/1000 - 1/(2*Math.PI*f*c/1e6)),2))", "unidad": "Ω", "formula_katex": "|Z|=\\sqrt{R^2+(X_L-X_C)^2}" },
+      { "label": "θ", "calculo": "Math.atan2(2*Math.PI*f*l/1000 - 1/(2*Math.PI*f*c/1e6), r) * 180 / Math.PI", "unidad": "°", "formula_katex": "\\theta = \\arctan(X/R)" }
+    ]
+  },
+  "ejercicios": [
+    {
+      "id": "ej-imp-1",
+      "numero": 9,
+      "titulo": "Circuito RC serie a 60 Hz",
+      "descripcion": "R=220\\,\\Omega,\\; C=47\\,\\mu\\text{F},\\; f=60\\,\\text{Hz},\\; V_s=120\\angle 0°\\,\\text{V}. \\text{Calcular } I \\text{ y el ángulo de fase.}",
+      "tiempo_minutos": 12,
+      "solucion": "X_C=56.4\\,\\Omega,\\; Z=220-j56.4=227\\angle{-14.4°}\\,\\Omega,\\; I=0.529\\angle 14.4°\\,\\text{A}",
+      "explicacion": "El capacitor produce un ángulo de fase negativo (corriente adelanta al voltaje). En un RC puro, la corriente siempre adelanta entre 0° y 90°."
+    },
+    {
+      "id": "ej-imp-2",
+      "numero": 9,
+      "titulo": "Resonancia en circuito RLC",
+      "descripcion": "L=10\\,\\text{mH},\\; C=1\\,\\mu\\text{F}. \\text{ Calcular frecuencia de resonancia }f_0.",
+      "tiempo_minutos": 8,
+      "solucion": "f_0 = \\frac{1}{2\\pi\\sqrt{LC}} = \\frac{1}{2\\pi\\sqrt{0.01\\times 10^{-6}}} \\approx 1592\\,\\text{Hz}",
+      "explicacion": "En resonancia X_L = X_C y la impedancia es puramente resistiva (mínima para RLC serie). La corriente es máxima."
+    }
+  ]
+}

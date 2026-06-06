@@ -1,0 +1,84 @@
+{
+  "id": "configuraciones-opamp",
+  "nombre": "Configuraciones Básicas Op-Amp",
+  "descripcion": "Amplificador inversor, no inversor, sumador y seguidor de voltaje usando amplificadores operacionales.",
+  "conceptos_clave": [
+    {
+      "nombre": "Amplificador Inversor",
+      "descripcion": "La entrada está en el terminal inversor. La salida está desfasada 180° respecto a la entrada.",
+      "variable_principal": "Ganancia de voltaje",
+      "principio_fisico": "La realimentación negativa mantiene el terminal inversor a potencial virtual de tierra.",
+      "cuando_usitar": "Para inversión de señal y amplificación con ganancia controlada."
+    },
+    {
+      "nombre": "Amplificador No Inversor",
+      "descripcion": "La entrada está en el terminal no inversor. La salida está en fase con la entrada.",
+      "variable_principal": "Ganancia de voltaje",
+      "principio_fisico": "La realimentación negativa mantiene igualdad de voltaje en ambas entradas.",
+      "cuando_usitar": "Para amplificación sin inversión y alta impedancia de entrada."
+    },
+    {
+      "nombre": "Sumador",
+      "descripcion": "Suma múltiples señales con ganancias individuales. Base de mezcladores de audio y procesadores.",
+      "variable_principal": "Ganancia de cada entrada",
+      "principio_fisico": "La corriente de cada entrada se suma en el nodo inversor (tierra virtual).",
+      "cuando_usitar": "Para mezcla de señales, promediado y procesamiento múltiple."
+    },
+    {
+      "nombre": "Seguidor de Voltaje",
+      "descripcion": "Ganancia unitaria, alta impedancia de entrada, baja impedancia de salida. Buffer ideal.",
+      "variable_principal": "Impedancia",
+      "principio_fisico": "La salida sigue exactamente la entrada debido a realimentación negativa total.",
+      "cuando_usitar": "Para acoplamiento de impedancia y aislamiento de etapas."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Ganancia Inversor",
+      "katex": "A_v = -\\frac{R_f}{R_{in}}",
+      "variables_tooltip": "variablesGananciaInversor"
+    },
+    {
+      "titulo": "Ganancia No Inversor",
+      "katex": "A_v = 1 + \\frac{R_f}{R_{in}}",
+      "variables_tooltip": "variablesGananciaNoInversor"
+    },
+    {
+      "titulo": "Salida Sumador",
+      "katex": "V_{out} = -R_f \\left(\\frac{V_1}{R_1} + \\frac{V_2}{R_2} + \\frac{V_3}{R_3}\\right)",
+      "variables_tooltip": "variablesSumador"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesGananciaInversor": [
+      { "simbolo": "A_v", "nombre": "Ganancia de voltaje", "unidad": "Adimensional", "descripcion": "Relación Vout/Vin", "category": "gain" },
+      { "simbolo": "R_f", "nombre": "Resistencia de realimentación", "unidad": "Ohmios (Ω)", "descripcion": "Determina ganancia", "category": "resistance" },
+      { "simbolo": "R_{in}", "nombre": "Resistencia de entrada", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia de entrada", "category": "resistance" }
+    ],
+    "variablesGananciaNoInversor": [
+      { "simbolo": "R_f", "nombre": "Resistencia de realimentación", "unidad": "Ohmios (Ω)", "descripcion": "Determina ganancia", "category": "resistance" },
+      { "simbolo": "R_{in}", "nombre": "Resistencia de entrada", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia a tierra", "category": "resistance" }
+    ],
+    "variablesSumador": [
+      { "simbolo": "V_{out}", "nombre": "Voltaje de salida", "unidad": "Voltios (V)", "descripcion": "Suma ponderada", "category": "voltage" },
+      { "simbolo": "V_1, V_2, V_3", "nombre": "Voltajes de entrada", "unidad": "Voltios (V)", "descripcion": "Señales a sumar", "category": "voltage" },
+      { "simbolo": "R_1, R_2, R_3", "nombre": "Resistencias de entrada", "unidad": "Ohmios (Ω)", "descripcion": "Ganancias individuales", "category": "resistance" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Audio", "descripcion": "Mezcladores y ecualizadores con sumadores." },
+    { "titulo": "Instrumentación", "descripcion": "Acondicionamiento de señales de sensores." },
+    { "titulo": "Control", "descripcion": "Amplificación de error en sistemas de control." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-opamp-configurator",
+    "justificacion": "Permite a los estudiantes configurar diferentes topologías de op-amp y observar la ganancia y respuesta.",
+    "utilidad": "Visualización interactiva de las configuraciones básicas con parámetros ajustables.",
+    "interfaz_requerida": "Selector de configuración, controles de resistencias y visualización de ganancia.",
+    "inputs": [
+      "Configuración (inversor, no inversor, sumador, seguidor)",
+      "Valores de resistencias",
+      "Visualización de ganancia y forma de onda"
+    ]
+  }
+}

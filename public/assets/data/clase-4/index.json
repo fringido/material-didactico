@@ -3,25 +3,24 @@
     "clase": 4,
     "modulo": 1,
     "unidad": 2,
-    "titulo": "Análisis Avanzado de Redes DC",
-    "semanas": "3-4",
-    "version": "2.0.0",
-    "fecha_actualizacion": "2026-06-04",
-    "descripcion": "Métodos sistemáticos para resolver redes complejas: Análisis de Nodos (LCK), Análisis de Mallas (LVK), Theoremas de Thevenin y Norton, y Máxima Transferencia de Potencia.",
+    "titulo": "Análisis de Nodos y Mallas",
+    "semanas": "5-6",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-05",
+    "descripcion": "Métodos sistemáticos para resolver redes complejas: Análisis de Nodos (LCK) y Análisis de Mallas (LVK).",
     "ruta": "/clase/4"
   },
   "objetivos": [
     "Aplicar el método de análisis de nodos basado en la Ley de Corrientes de Kirchhoff",
     "Aplicar el método de análisis de mallas basado en la Ley de Voltajes de Kirchhoff",
-    "Obtener el equivalente de Thevenin y Norton de cualquier red lineal de dos terminales",
-    "Aplicar el Teorema de Máxima Transferencia de Potencia",
+    "Formular matrices de conductancias y resistencias para sistemas de ecuaciones",
     "Seleccionar el método más eficiente según la topología del circuito"
   ],
   "temas": [
     {
       "id": "resistencia-equivalente",
       "nombre": "Resistencia Equivalente",
-      "descripcion": "Cálculo de resistencia equivalente para simplificar redes complejas de resistores en configuraciones serie, paralelo y mixtas.",
+      "descripcion": "Cálculo de resistencia equivalente para simplificar redes complejas de resistores en configuraciones serie y paralelo.",
       "icono": "🔌",
       "ruta": "/clase/4/tema/resistencia-equivalente",
       "archivo": "resistencia-equivalente.json"
@@ -29,31 +28,38 @@
     {
       "id": "nodos-mallas",
       "nombre": "Análisis de Nodos y Mallas",
-      "descripcion": "Métodos sistemáticos para resolver circuitos complejos mediante sistemas de ecuaciones lineales usando LCK y LVK.",
+      "descripcion": "Métodos fundamentales para resolver circuitos complejos mediante sistemas de ecuaciones.",
       "icono": "🔢",
       "ruta": "/clase/4/tema/nodos-mallas",
       "archivo": "nodos-mallas.json"
     },
     {
       "id": "thevenin-norton",
-      "nombre": "Teoremas de Thevenin y Norton",
-      "descripcion": "Reducción de cualquier red lineal a un equivalente simple: fuente + resistencia. Fundamental para análisis de carga variable.",
-      "icono": "🔁",
+      "nombre": "Equivalentes de Thevenin y Norton",
+      "descripcion": "Reducción de redes lineales complejas a circuitos equivalentes simples desde dos terminales.",
+      "icono": "⚡",
       "ruta": "/clase/4/tema/thevenin-norton",
       "archivo": "thevenin-norton.json"
     },
     {
       "id": "maximum-power-transfer",
-      "nombre": "Máxima Transferencia de Potencia",
-      "descripcion": "Condición óptima para transferir la máxima potencia de una fuente a una carga (R_L = R_th). Esencial en diseño de amplificadores.",
-      "icono": "⚡",
+      "nombre": "Teorema de Máxima Transferencia de Potencia",
+      "descripcion": "Condición óptima para máxima transferencia de potencia entre fuente y carga (R_L = R_th).",
+      "icono": "🔋",
       "ruta": "/clase/4/tema/maximum-power-transfer",
       "archivo": "maximum-power-transfer.json"
+    },
+    {
+      "id": "seleccion-metodo",
+      "nombre": "Selección del Método Más Eficiente",
+      "descripcion": "Estrategia para elegir el método de análisis según la topología del circuito.",
+      "icono": "🎯",
+      "ruta": "/clase/4/tema/seleccion-metodo",
+      "archivo": "seleccion-metodo.json"
     }
   ],
   "rutas_relacionadas": {
-    "clase_anterior": "/clase/3",
     "unidad_completa": "/modulo/1/unidad/2",
-    "siguiente_clase": "/clase/5"
+    "siguiente_clase": "/clase/ac"
   }
 }

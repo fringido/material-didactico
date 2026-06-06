@@ -1,0 +1,559 @@
+{
+  "metadata": {
+    "unidad": 2,
+    "titulo": "Ejercicios Prácticos - Análisis de Circuitos DC",
+    "descripcion": "Colección completa de ejercicios resueltos paso a paso",
+    "total_ejercicios": 23,
+    "niveles": ["básico", "intermedio", "avanzado"]
+  },
+  "ejercicios_nodos": [
+    {
+      "numero": 1,
+      "nivel": "basico",
+      "titulo": "Divisor de Corriente Simple",
+      "tiempo_estimado": "10 min",
+      "circuito": {
+        "descripcion": "Fuente de corriente 5A conectada a nodo V1. Dos resistencias en paralelo: R1=10Ω y R2=40Ω a tierra",
+        "componentes": [
+          {"tipo": "fuente_corriente", "valor": "5A", "nodo_entrada": "V1"},
+          {"tipo": "resistencia", "id": "R1", "valor": "10Ω", "nodos": ["V1", "GND"]},
+          {"tipo": "resistencia", "id": "R2", "valor": "40Ω", "nodos": ["V1", "GND"]}
+        ]
+      },
+      "objetivos": [
+        "Aplicar LCK en un solo nodo",
+        "Calcular voltaje de nodo",
+        "Verificar corrientes por cada rama"
+      ],
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Identificar nodos",
+          "descripcion": "Tenemos 1 nodo no referencial (V1) y tierra (GND)",
+          "ecuacion": null
+        },
+        {
+          "paso": 2,
+          "titulo": "Aplicar LCK en V1",
+          "descripcion": "La corriente que entra debe igual la suma de corrientes que salen",
+          "ecuacion": "5 = \\frac{V_1}{10} + \\frac{V_1}{40}"
+        },
+        {
+          "paso": 3,
+          "titulo": "Simplificar ecuación",
+          "descripcion": "Encontrar denominador común",
+          "ecuacion": "5 = \\frac{4V_1 + V_1}{40} = \\frac{5V_1}{40}"
+        },
+        {
+          "paso": 4,
+          "titulo": "Resolver para V1",
+          "descripcion": "Despejar V1",
+          "ecuacion": "V_1 = \\frac{5 \\times 40}{5} = 40V",
+          "resultado_destacado": true
+        },
+        {
+          "paso": 5,
+          "titulo": "Verificar corrientes",
+          "descripcion": "Calcular corriente por cada resistencia",
+          "calculos": [
+            {"rama": "R1", "ecuacion": "I_{R1} = \\frac{40}{10} = 4A"},
+            {"rama": "R2", "ecuacion": "I_{R2} = \\frac{40}{40} = 1A"},
+            {"verificacion": "I_{total} = 4 + 1 = 5A ✓"}
+          ]
+        }
+      ],
+      "resultado_final": {
+        "V1": "40V",
+        "I_R1": "4A",
+        "I_R2": "1A"
+      },
+      "simulacion": {
+        "tipo": "interactive_circuit",
+        "permite_modificar": ["fuente", "R1", "R2"],
+        "calcula_automatico": true
+      }
+    },
+    {
+      "numero": 2,
+      "nivel": "intermedio",
+      "titulo": "Sistema de 2 Nodos con Fuentes de Corriente",
+      "tiempo_estimado": "15 min",
+      "circuito": {
+        "descripcion": "Dos nodos V1 y V2. Fuente 3A entra a V1. R1=2Ω de V1 a GND. R2=4Ω entre V1 y V2. R3=4Ω de V2 a GND. Fuente 2A sale de V2",
+        "componentes": [
+          {"tipo": "fuente_corriente", "valor": "3A", "nodo": "V1"},
+          {"tipo": "resistencia", "id": "R1", "valor": "2Ω", "nodos": ["V1", "GND"]},
+          {"tipo": "resistencia", "id": "R2", "valor": "4Ω", "nodos": ["V1", "V2"]},
+          {"tipo": "resistencia", "id": "R3", "valor": "4Ω", "nodos": ["V2", "GND"]},
+          {"tipo": "fuente_corriente", "valor": "-2A", "nodo": "V2"}
+        ]
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Escribir LCK para nodo V1",
+          "ecuacion": "3 = \\frac{V_1}{2} + \\frac{V_1 - V_2}{4}"
+        },
+        {
+          "paso": 2,
+          "titulo": "Escribir LCK para nodo V2",
+          "ecuacion": "-2 = \\frac{V_2 - V_1}{4} + \\frac{V_2}{4}"
+        },
+        {
+          "paso": 3,
+          "titulo": "Multiplicar ecuaciones por denominadores",
+          "ecuaciones": [
+            "12 = 2V_1 + V_1 - V_2 \\Rightarrow 3V_1 - V_2 = 12",
+            "-8 = V_2 - V_1 + V_2 \\Rightarrow -V_1 + 2V_2 = -8"
+          ]
+        },
+        {
+          "paso": 4,
+          "titulo": "Sistema de ecuaciones",
+          "matriz": {
+            "A": [[3, -1], [-1, 2]],
+            "b": [12, -8],
+            "variables": ["V1", "V2"]
+          }
+        },
+        {
+          "paso": 5,
+          "titulo": "Resolver por sustitución",
+          "procedimiento": [
+            "De ec.2: V_1 = 2V_2 + 8",
+            "Sustituir en ec.1: 3(2V_2 + 8) - V_2 = 12",
+            "6V_2 + 24 - V_2 = 12",
+            "5V_2 = -12",
+            "V_2 = -2.4V"
+          ]
+        },
+        {
+          "paso": 6,
+          "titulo": "Calcular V1",
+          "ecuacion": "V_1 = 2(-2.4) + 8 = 3.2V",
+          "resultado_destacado": true
+        }
+      ],
+      "resultado_final": {
+        "V1": "3.2V",
+        "V2": "-2.4V"
+      }
+    },
+    {
+      "numero": 3,
+      "nivel": "intermedio",
+      "titulo": "Nodo con Fuente de Voltaje (Supernodo)",
+      "tiempo_estimado": "15 min",
+      "circuito": {
+        "descripcion": "Fuente 5A a V1. R1=2Ω de V1 a GND. Fuente voltaje 10V entre V1 y V2. R2=4Ω de V2 a GND",
+        "nota_pedagogica": "Introduce concepto de supernodo cuando fuente de voltaje conecta dos nodos"
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Ecuación de restricción (fuente de voltaje)",
+          "descripcion": "La fuente de voltaje impone una relación fija entre V1 y V2",
+          "ecuacion": "V_1 - V_2 = 10",
+          "nota": "Esta es la ecuación de restricción del supernodo"
+        },
+        {
+          "paso": 2,
+          "titulo": "LCK en el supernodo",
+          "descripcion": "Aplicar LCK al conjunto de nodos V1 y V2",
+          "ecuacion": "5 = \\frac{V_1}{2} + \\frac{V_2}{4}"
+        },
+        {
+          "paso": 3,
+          "titulo": "Sustituir restricción",
+          "ecuacion": "5 = \\frac{V_2 + 10}{2} + \\frac{V_2}{4}"
+        },
+        {
+          "paso": 4,
+          "titulo": "Resolver para V2",
+          "procedimiento": [
+            "20 = 2(V_2 + 10) + V_2",
+            "20 = 2V_2 + 20 + V_2",
+            "0 = 3V_2",
+            "V_2 = 0V"
+          ],
+          "resultado_destacado": true
+        },
+        {
+          "paso": 5,
+          "titulo": "Calcular V1",
+          "ecuacion": "V_1 = V_2 + 10 = 0 + 10 = 10V"
+        }
+      ],
+      "resultado_final": {
+        "V1": "10V",
+        "V2": "0V"
+      },
+      "concepto_clave": {
+        "titulo": "Supernodo",
+        "explicacion": "Cuando una fuente de voltaje conecta dos nodos sin resistencia en serie, formamos un supernodo que engloba ambos nodos. Se aplica LCK al conjunto considerando todas las corrientes externas."
+      }
+    }
+  ],
+  "ejercicios_mallas": [
+    {
+      "numero": 6,
+      "nivel": "basico",
+      "titulo": "Dos Mallas Básicas",
+      "tiempo_estimado": "12 min",
+      "circuito": {
+        "descripcion": "Dos mallas rectangulares adyacentes. Malla 1: Fuente 10V, R1=2Ω arriba, R_compartida=3Ω. Malla 2: R_compartida=3Ω, R2=5Ω arriba, Fuente 5V derecha",
+        "diagrama_ascii": [
+          "   +10V-   R1(2Ω)    R2(5Ω)   -5V+",
+          "   |       ------    ------      |",
+          "   |  i1     ||   i2   ||        |",
+          "   +---------++--------++---------+",
+          "           R_comp(3Ω)"
+        ]
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "LVK en malla 1 (sentido horario)",
+          "descripcion": "Sumar caídas y subidas de voltaje = 0",
+          "ecuacion": "-10 + 2i_1 + 3(i_1 - i_2) = 0"
+        },
+        {
+          "paso": 2,
+          "titulo": "Simplificar ecuación malla 1",
+          "ecuacion": "5i_1 - 3i_2 = 10"
+        },
+        {
+          "paso": 3,
+          "titulo": "LVK en malla 2",
+          "ecuacion": "3(i_2 - i_1) + 5i_2 + 5 = 0"
+        },
+        {
+          "paso": 4,
+          "titulo": "Simplificar ecuación malla 2",
+          "ecuacion": "-3i_1 + 8i_2 = -5"
+        },
+        {
+          "paso": 5,
+          "titulo": "Sistema matricial",
+          "matriz": {
+            "forma": "\\begin{bmatrix} 5 & -3 \\\\ -3 & 8 \\end{bmatrix} \\begin{bmatrix} i_1 \\\\ i_2 \\end{bmatrix} = \\begin{bmatrix} 10 \\\\ -5 \\end{bmatrix}"
+          }
+        },
+        {
+          "paso": 6,
+          "titulo": "Resolver sistema",
+          "metodo": "Eliminación o Cramer",
+          "resultados": [
+            "i_1 = 2.09A",
+            "i_2 = 0.16A"
+          ],
+          "resultado_destacado": true
+        }
+      ],
+      "resultado_final": {
+        "i1": "2.09A",
+        "i2": "0.16A",
+        "I_compartida": "i1 - i2 = 1.93A (de izquierda a derecha)"
+      },
+      "verificacion": {
+        "metodo": "Calcular voltajes y verificar LVK",
+        "pasos": [
+          "V_R1 = 2 × 2.09 = 4.18V",
+          "V_comp = 3 × 1.93 = 5.79V",
+          "LVK malla 1: -10 + 4.18 + 5.79 ≈ 0 ✓"
+        ]
+      }
+    },
+    {
+      "numero": 7,
+      "nivel": "avanzado",
+      "titulo": "Sistema de 3 Mallas",
+      "tiempo_estimado": "20 min",
+      "circuito": {
+        "descripcion": "Tres mallas cuadradas horizontales. Fuente 24V izquierda, resistencias compartidas, fuente 12V derecha"
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Identificar resistencias de cada malla",
+          "mallas": [
+            {"malla": 1, "resistencias": "R1=2Ω, R2=4Ω (compartida)"},
+            {"malla": 2, "resistencias": "R2=4Ω, R3=6Ω, R4=8Ω (compartida)"},
+            {"malla": 3, "resistencias": "R4=8Ω, R5=2Ω"}
+          ]
+        },
+        {
+          "paso": 2,
+          "titulo": "Formar matriz de resistencias",
+          "descripcion": "Diagonal: suma de R en cada malla. Fuera diagonal: -R compartidas",
+          "matriz_R": [
+            [6, -4, 0],
+            [-4, 18, -8],
+            [0, -8, 10]
+          ]
+        },
+        {
+          "paso": 3,
+          "titulo": "Vector de fuentes",
+          "descripcion": "Fuentes de voltaje en cada malla (positivo si ayuda a la corriente)",
+          "vector_V": [24, 0, -12]
+        },
+        {
+          "paso": 4,
+          "titulo": "Sistema completo",
+          "ecuacion": "\\begin{bmatrix} 6 & -4 & 0 \\\\ -4 & 18 & -8 \\\\ 0 & -8 & 10 \\end{bmatrix} \\begin{bmatrix} i_1 \\\\ i_2 \\\\ i_3 \\end{bmatrix} = \\begin{bmatrix} 24 \\\\ 0 \\\\ -12 \\end{bmatrix}"
+        },
+        {
+          "paso": 5,
+          "titulo": "Solución (usando calculadora o software)",
+          "resultados": {
+            "i1": "5.33A",
+            "i2": "1.78A",
+            "i3": "-0.58A"
+          },
+          "nota": "i3 negativa indica que circula en sentido contrario al asumido"
+        }
+      ],
+      "resultado_final": {
+        "i1": "5.33A",
+        "i2": "1.78A",
+        "i3": "-0.58A"
+      },
+      "analisis_corrientes_reales": [
+        {"rama": "R2", "corriente": "i1 - i2 = 3.55A"},
+        {"rama": "R4", "corriente": "i2 - i3 = 2.36A"}
+      ]
+    },
+    {
+      "numero": 9,
+      "nivel": "avanzado",
+      "titulo": "Supermalla (Fuente de Corriente Compartida)",
+      "tiempo_estimado": "18 min",
+      "concepto_nuevo": "Cuando fuente de corriente está en rama compartida, formar supermalla",
+      "circuito": {
+        "descripcion": "Dos mallas. Fuente 20V en malla 1, R1=5Ω. Fuente corriente 3A en rama compartida. R2=10Ω y R3=5Ω en malla 2"
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Ecuación de restricción",
+          "descripcion": "La fuente de corriente impone relación entre corrientes",
+          "ecuacion": "i_2 - i_1 = 3",
+          "nota": "Corriente va de malla 1 a malla 2"
+        },
+        {
+          "paso": 2,
+          "titulo": "LVK en supermalla (perímetro externo)",
+          "descripcion": "Aplicar LVK excluyendo rama con fuente de corriente",
+          "ecuacion": "-20 + 5i_1 + 10i_2 + 5i_2 = 0"
+        },
+        {
+          "paso": 3,
+          "titulo": "Simplificar",
+          "ecuacion": "5i_1 + 15i_2 = 20"
+        },
+        {
+          "paso": 4,
+          "titulo": "Sustituir restricción",
+          "procedimiento": [
+            "De restricción: i_1 = i_2 - 3",
+            "Sustituir: 5(i_2 - 3) + 15i_2 = 20",
+            "5i_2 - 15 + 15i_2 = 20",
+            "20i_2 = 35",
+            "i_2 = 1.75A"
+          ]
+        },
+        {
+          "paso": 5,
+          "titulo": "Calcular i1",
+          "ecuacion": "i_1 = 1.75 - 3 = -1.25A"
+        }
+      ],
+      "resultado_final": {
+        "i1": "-1.25A",
+        "i2": "1.75A"
+      },
+      "concepto_clave": {
+        "titulo": "Supermalla",
+        "explicacion": "Cuando una fuente de corriente está en una rama compartida, se crea una supermalla que excluye esa rama. La ecuación de restricción relaciona las corrientes de malla basándose en la fuente de corriente."
+      }
+    }
+  ],
+  "ejercicios_thevenin_norton": [
+    {
+      "numero": 11,
+      "nivel": "intermedio",
+      "titulo": "Thevenin Básico - Red Resistiva",
+      "tiempo_estimado": "15 min",
+      "circuito": {
+        "descripcion": "Fuente 12V en serie con R1=4Ω, en paralelo con R2=8Ω. Terminales a-b después de R1",
+        "objetivo": "Encontrar V_TH y R_TH vistos desde terminales a-b"
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Calcular V_TH (V_OC)",
+          "descripcion": "Voltaje en circuito abierto entre terminales a-b",
+          "metodo": "Divisor de voltaje",
+          "ecuacion": "V_{TH} = 12 \\times \\frac{8}{4 + 8} = 12 \\times \\frac{8}{12} = 8V"
+        },
+        {
+          "paso": 2,
+          "titulo": "Calcular R_TH",
+          "descripcion": "Apagar fuentes independientes (fuentes V → corto, fuentes I → abierto)",
+          "procedimiento": [
+            "Fuente 12V se reemplaza por cortocircuito",
+            "R1 y R2 quedan en paralelo",
+            "R_{TH} = \\frac{R_1 \\times R_2}{R_1 + R_2} = \\frac{4 \\times 8}{12} = 2.67Ω"
+          ]
+        },
+        {
+          "paso": 3,
+          "titulo": "Equivalente de Thevenin",
+          "resultado": {
+            "V_TH": "8V",
+            "R_TH": "2.67Ω"
+          },
+          "diagrama": "Fuente 8V en serie con resistencia 2.67Ω"
+        },
+        {
+          "paso": 4,
+          "titulo": "Verificar con I_SC",
+          "metodo_alternativo": "Calcular corriente de cortocircuito",
+          "calculo": [
+            "I_{SC} = \\frac{12}{4} = 3A (R2 queda cortocircuitada)",
+            "R_{TH} = \\frac{V_{TH}}{I_{SC}} = \\frac{8}{3} = 2.67Ω ✓"
+          ]
+        }
+      ],
+      "resultado_final": {
+        "V_TH": "8V",
+        "R_TH": "2.67Ω",
+        "I_SC": "3A"
+      },
+      "aplicacion_practica": {
+        "titulo": "Cálculo de corriente en carga",
+        "ejemplo": "Si conectamos R_L = 10Ω",
+        "calculo": "I_L = \\frac{8}{2.67 + 10} = 0.632A"
+      }
+    },
+    {
+      "numero": 12,
+      "nivel": "avanzado",
+      "titulo": "Norton desde Thevenin",
+      "tiempo_estimado": "10 min",
+      "datos_iniciales": {
+        "V_TH": "15V",
+        "R_TH": "5Ω"
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Calcular I_N",
+          "ecuacion": "I_N = \\frac{V_{TH}}{R_{TH}} = \\frac{15}{5} = 3A"
+        },
+        {
+          "paso": 2,
+          "titulo": "R_N es igual a R_TH",
+          "ecuacion": "R_N = R_{TH} = 5Ω"
+        },
+        {
+          "paso": 3,
+          "titulo": "Equivalente de Norton",
+          "resultado": {
+            "I_N": "3A",
+            "R_N": "5Ω"
+          },
+          "diagrama": "Fuente corriente 3A en paralelo con resistencia 5Ω"
+        }
+      ],
+      "verificacion": {
+        "titulo": "Ambos equivalentes producen mismo resultado",
+        "prueba": "Con R_L = 10Ω conectada",
+        "thevenin": "I_L = 15/(5+10) = 1A",
+        "norton": "I_L = 3 × (5/(5+10)) = 1A ✓"
+      }
+    },
+    {
+      "numero": 13,
+      "nivel": "avanzado",
+      "titulo": "Thevenin con Fuentes Dependientes",
+      "tiempo_estimado": "25 min",
+      "circuito": {
+        "descripcion": "Fuente 20V, R1=4Ω, R2=6Ω, fuente dependiente 2V_x (donde V_x es voltaje en R1)",
+        "nota": "Con fuentes dependientes, R_TH no se puede calcular apagando fuentes"
+      },
+      "solucion_paso_a_paso": [
+        {
+          "paso": 1,
+          "titulo": "Calcular V_TH (V_OC)",
+          "metodo": "Análisis con circuito abierto",
+          "descripcion": "Resolver circuito normalmente con fuente dependiente activa"
+        },
+        {
+          "paso": 2,
+          "titulo": "Calcular I_SC",
+          "metodo": "Cortocircuitar terminales y resolver",
+          "descripcion": "Calcular corriente con fuente dependiente activa"
+        },
+        {
+          "paso": 3,
+          "titulo": "Calcular R_TH",
+          "ecuacion": "R_{TH} = \\frac{V_{OC}}{I_{SC}}",
+          "nota": "Este es el único método válido con fuentes dependientes"
+        }
+      ],
+      "concepto_clave": {
+        "titulo": "Fuentes Dependientes",
+        "explicacion": "NO se apagan al calcular R_TH. Se debe usar R_TH = V_OC / I_SC obligatoriamente."
+      }
+    }
+  ],
+  "laboratorio_virtual": {
+    "titulo": "Laboratorio Virtual - Análisis DC",
+    "experimentos": [
+      {
+        "id": "lab1",
+        "nombre": "Verificación de LCK",
+        "objetivo": "Comprobar que suma de corrientes en un nodo es cero",
+        "materiales": ["Fuente DC", "3 resistencias", "Multímetro"],
+        "procedimiento": [
+          "Construir circuito con nodo central",
+          "Medir corrientes entrantes y salientes",
+          "Verificar ΣI = 0"
+        ]
+      },
+      {
+        "id": "lab2",
+        "nombre": "Equivalente de Thevenin Experimental",
+        "objetivo": "Medir V_OC e I_SC para calcular equivalente",
+        "materiales": ["Circuito complejo", "Voltímetro", "Amperímetro"],
+        "procedimiento": [
+          "Medir V_OC con terminales abiertas",
+          "Medir I_SC con terminales en corto",
+          "Calcular R_TH = V_OC / I_SC",
+          "Construir equivalente y verificar"
+        ]
+      }
+    ]
+  },
+  "simulaciones_interactivas": {
+    "disponibles": [
+      {
+        "id": "sim_nodos",
+        "titulo": "Simulador de Análisis de Nodos",
+        "permite": ["Crear circuito", "Aplicar LCK automático", "Ver ecuaciones", "Resolver sistema"]
+      },
+      {
+        "id": "sim_mallas",
+        "titulo": "Simulador de Análisis de Mallas",
+        "permite": ["Crear circuito", "Identificar mallas", "Aplicar LVK", "Matriz automática"]
+      },
+      {
+        "id": "sim_thevenin",
+        "titulo": "Calculadora de Thevenin/Norton",
+        "permite": ["Ingresar circuito", "Calcular V_TH automático", "Mostrar equivalentes", "Probar cargas"]
+      }
+    ]
+  }
+}

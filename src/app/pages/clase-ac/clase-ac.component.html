@@ -1,0 +1,271 @@
+<div class="page-shell clase-ac-page">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando Contenido AC…</p>
+    </div>
+  } @else if (error()) {
+    <app-page-back-bar backLink="/" backLabel="Volver al inicio" />
+    <div class="content-panel mt-4">
+      <p class="text-body">{{ error() }}</p>
+    </div>
+  } @else if (data() || temaDetallado()) {
+    @if (temaDetallado()) {
+      <app-page-back-bar backLink="/clase/ac" backLabel="Volver a Clase AC" [breadcrumb]="[
+          { label: 'Inicio', link: '/' },
+          { label: 'Clase AC', link: '/clase/ac' },
+          { label: temaDetallado()?.nombre }
+        ]" />
+    } @else {
+      <app-page-back-bar backLink="/" backLabel="Volver al inicio" [breadcrumb]="[
+          { label: 'Inicio', link: '/' },
+          { label: 'Clase AC', link: '/clase/ac' }
+        ]" />
+    }
+
+    @if (data()) {
+      <header class="page-hero">
+        <div class="flex items-center gap-2 mb-3">
+           <span class="badge badge--primary">Clase {{ data().metadata.clase }}</span>
+           <span class="badge badge--info">Unidad {{ data().metadata.unidad }}</span>
+        </div>
+        <h1 class="page-hero__title">{{ data().metadata.titulo }}</h1>
+        <p class="page-hero__lead">{{ data().metadata.descripcion }}</p>
+        <div class="flex gap-3 mt-4">
+          <a [routerLink]="data().rutas_relacionadas?.unidad_completa || '/modulo/1/unidad/3'"
+             class="btn btn--ghost btn--sm">
+            Ver unidad completa (Módulo 1) →
+          </a>
+          @if (data().rutas_relacionadas?.anterior) {
+             <a [routerLink]="data().rutas_relacionadas.anterior" class="btn btn--outline btn--sm">
+               ← Anterior: DC (Nodos y Mallas)
+             </a>
+          }
+        </div>
+      </header>
+
+      @if (data().objetivos?.length) {
+        <section class="section">
+          <h2 class="section__title">Objetivos de aprendizaje</h2>
+          <div class="content-panel">
+            <ul class="text-body bullet-list">
+              <li *ngFor="let o of data().objetivos">{{ o }}</li>
+            </ul>
+          </div>
+        </section>
+      }
+
+      <section class="section">
+        <h2 class="section__title">Temas de la sesión AC</h2>
+        <div class="content-grid">
+          @for (tema of data().temas; track tema.id) {
+            <a [routerLink]="['/clase/ac/tema', tema.id]" class="card card--bordered theme-card">
+              <span class="theme-card__icon">{{ tema.icono }}</span>
+              <h3 class="theme-card__title">{{ tema.nombre }}</h3>
+              <p class="theme-card__desc">{{ tema.descripcion }}</p>
+            </a>
+          }
+        </div>
+      </section>
+    }
+
+    @if (temaDetallado()) {
+      <section class="section tema-section">
+        <div class="tema-header">
+          <div>
+            <h2 class="section__title">{{ temaDetallado().nombre }}</h2>
+            <p class="text-secondary">{{ temaDetallado().descripcion }}</p>
+          </div>
+        </div>
+
+        @if (temaDetallado().detalle?.introduccion) {
+          <div class="content-panel mb-5">
+            <p class="text-body">{{ temaDetallado().detalle.introduccion }}</p>
+          </div>
+        }
+
+        <!-- Ecuaciones AC -->
+        @if (temaDetallado().detalle?.ecuaciones?.length) {
+          <section class="section">
+            <h3 class="section__title">Ecuaciones Fundamentales</h3>
+            <div class="content-grid content-grid--3">
+              @for (eq of temaDetallado().detalle.ecuaciones; track eq.nombre) {
+                <div class="formula-card card card--bordered">
+                  <p class="formula-card__label">{{ eq.nombre }}</p>
+                  <div class="equation-display equation-display--sm" [appKatex]="eq.formula" appFormulaTooltip></div>
+                  @if (eq.descripcion) {
+                    <p class="text-secondary font-sm mt-2"><em>{{ eq.descripcion }}</em></p>
+                  }
+                </div>
+              }
+            </div>
+          </section>
+        }
+
+        <!-- Conceptos / Tipos -->
+        @if (temaDetallado().detalle?.conceptos_clave?.length) {
+          <section class="section">
+            <h3 class="section__title">Conceptos Clave</h3>
+            <div class="content-grid">
+              @for (c of temaDetallado().detalle.conceptos_clave; track c.nombre) {
+                <div class="formula-card card card--bordered">
+                  <p class="formula-card__label">{{ c.nombre }}</p>
+                  <p class="text-body mt-2">{{ c.descripcion }}</p>
+                  @if (c.formula) {
+                     <div class="mt-3">
+                       <span [appKatex]="c.formula" appFormulaTooltip></span>
+                     </div>
+                  }
+                  @if (c.imagen) {
+                     <div class="mt-4" style="text-align: center;">
+                        <img [src]="c.imagen" alt="Ilustración" class="rounded border border-primary/20 max-w-full h-auto" style="max-height: 250px;">
+                     </div>
+                  }
+                  @if (c.comportamiento_dc) {
+                     <div class="mt-3 font-sm">
+                       <strong>DC:</strong> {{ c.comportamiento_dc }}<br>
+                       <strong>Alta Freq:</strong> {{ c.comportamiento_ac_alto }}
+                     </div>
+                  }
+                  @if (c.tabla?.length) {
+                     <table class="table mt-3 text-sm w-full">
+                       @for(r of c.tabla; track r.dB) {
+                          <tr><td>{{r.dB}} dB</td><td>{{r.ganancia}}</td></tr>
+                       }
+                     </table>
+                  }
+                </div>
+              }
+            </div>
+          </section>
+        }
+
+        @if (temaDetallado().detalle?.tipos_filtros?.length) {
+           <section class="section">
+             <h3 class="section__title">Tipos de Filtros</h3>
+             <div class="content-grid">
+               @for (f of temaDetallado().detalle.tipos_filtros; track f.tipo) {
+                 <div class="card card--bordered">
+                   <h4 class="font-bold text-lg text-primary mb-2">{{ f.tipo }}</h4>
+                   <p class="text-body mb-3">{{ f.descripcion }}</p>
+                   @if (f.funcion_transferencia) {
+                     <div class="mb-3 text-center bg-dark rounded p-2">
+                       <span [appKatex]="f.funcion_transferencia" appFormulaTooltip></span>
+                     </div>
+                   }
+                   <ul class="bullet-list text-sm">
+                      @if (f.configuracion_rc) { <li><strong>RC:</strong> {{ f.configuracion_rc }}</li> }
+                      @if (f.configuracion_rl) { <li><strong>RL:</strong> {{ f.configuracion_rl }}</li> }
+                      @if (f.ganancia_fc) { <li><strong>@fc:</strong> {{ f.ganancia_fc }}</li> }
+                   </ul>
+                 </div>
+               }
+             </div>
+           </section>
+        }
+
+        @if (temaDetallado().detalle?.ejemplos?.length) {
+           <section class="section">
+             <h3 class="section__title">Ejemplos Resueltos</h3>
+             <div class="flex flex-col gap-3">
+               @for (ex of temaDetallado().detalle.ejemplos; track ex.titulo) {
+                  <div class="card card--bordered bg-secondary/30">
+                     <h4 class="font-bold mb-2">{{ ex.titulo }}</h4>
+                     <p class="text-body mb-2" [appKatex]="ex.enunciado" appFormulaTooltip></p>
+                     <div class="mt-2 text-primary font-mono text-sm" [appKatex]="ex.resultado" appFormulaTooltip></div>
+                  </div>
+               }
+             </div>
+           </section>
+        }
+
+        <!-- Simulación Dinámica -->
+        @if (temaDetallado().detalle?.simulacion_dinamica) {
+          <section class="section">
+            <h3 class="section__title">🔌 Simulación Interactiva: {{ temaDetallado().detalle.simulacion_dinamica.titulo }}</h3>
+            <p class="text-secondary mb-4">{{ temaDetallado().detalle.simulacion_dinamica.descripcion }}</p>
+
+            <div class="content-panel">
+               @if (temaDetallado().detalle.simulacion_dinamica.tipo === 'bode_interactive' || temaDetallado().detalle.graficas_bode) {
+                  <app-bode-chart />
+               } @else {
+                  <app-dynamic-circuit-simulator [simulacion]="temaDetallado().detalle.simulacion_dinamica" />
+               }
+            </div>
+          </section>
+        } @else if (temaDetallado().detalle?.graficas_interactivas) {
+          <section class="section">
+             <h3 class="section__title">🔌 Analizador de Bode</h3>
+             <div class="content-panel">
+                <app-bode-chart />
+             </div>
+          </section>
+        }
+
+        <!-- Ejercicios Prácticos / Laboratorio -->
+        @if (temaDetallado().detalle?.ejercicios?.length) {
+          <section class="section">
+            <h3 class="section__title">Ejercicios Prácticos</h3>
+            <div class="exercises-list">
+              @for (ej of temaDetallado().detalle.ejercicios; track ej.id) {
+                <div class="exercise-card card card--bordered">
+                  <div class="exercise-card__header">
+                    <h4 class="exercise-card__title">{{ ej.titulo }}</h4>
+                    <span class="badge badge--info">{{ ej.tiempo_minutos }} min</span>
+                  </div>
+                  <div class="exercise-card__content">
+                    <p class="text-body" [appKatex]="ej.descripcion" appFormulaTooltip></p>
+
+                    @if (activeExercise() === ej.id) {
+                      <div class="exercise-timer mt-3">
+                        <div class="timer-display">
+                          <span class="timer-icon">⏱️</span>
+                          <span class="timer-value">{{ formatTime(timerRemaining()) }}</span>
+                        </div>
+                      </div>
+                    }
+
+                    @if (showSolution()[ej.id]) {
+                      <div class="exercise-solution mt-3">
+                        <h5 class="solution-title">✅ Solución:</h5>
+                        <p class="text-body" [appKatex]="ej.solucion" appFormulaTooltip></p>
+                        @if(ej.explicacion) {
+                           <div class="solution-explanation mt-2">
+                             <p class="text-secondary text-sm"><strong>Explicación:</strong> {{ ej.explicacion }}</p>
+                           </div>
+                        }
+                      </div>
+                    } @else if (activeExercise() !== ej.id) {
+                      <button class="btn btn--primary btn--sm mt-3" (click)="startExerciseTimer(ej.id, ej.tiempo_minutos)">
+                        Iniciar ejercicio ({{ ej.tiempo_minutos }} min)
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        }
+
+        <!-- Procedimiento Laboratorio -->
+        @if (temaDetallado().detalle?.procedimiento?.length) {
+          <section class="section">
+             <h3 class="section__title">Procedimiento Experimental</h3>
+             <div class="flex flex-col gap-4">
+                @for (paso of temaDetallado().detalle.procedimiento; track paso.paso) {
+                   <div class="card card--bordered border-l-4 border-l-primary">
+                      <h4 class="font-bold text-lg mb-2">Paso {{paso.paso}}: {{paso.titulo}}</h4>
+                      <p class="text-body">{{paso.descripcion}}</p>
+                   </div>
+                }
+             </div>
+          </section>
+        }
+
+        <footer class="page-footer-nav mt-8">
+          <app-page-back-bar backLink="/clase/ac" backLabel="Volver a Clase AC" />
+        </footer>
+      </section>
+    }
+  }
+</div>

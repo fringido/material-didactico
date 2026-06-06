@@ -69,18 +69,251 @@
       ]
     }
   ],
-  "ejercicios": [
+  "laboratorios": [
+    {
+      "numero": 1,
+      "titulo": "Laboratorio Virtual - Ley de Ohm",
+      "descripcion": "Experimento interactivo para verificar la relación V=IR",
+      "objetivo": "Comprobar experimentalmente la ley de Ohm variando voltaje y resistencia",
+      "componente_angular": "ohm-law-lab",
+      "tiempo_estimado": "30 minutos"
+    },
+    {
+      "numero": 2,
+      "titulo": "Laboratorio Virtual - Leyes de Kirchhoff",
+      "descripcion": "Verificación práctica de LCK y LVK en circuitos",
+      "objetivo": "Demostrar la conservación de corriente (LCK) y voltaje (LVK)",
+      "componente_angular": "kirchhoff-lab",
+      "tiempo_estimado": "45 minutos"
+    },
+    {
+      "numero": 3,
+      "titulo": "Simulador de Circuitos DC",
+      "descripcion": "Constructor de circuitos con análisis automático",
+      "objetivo": "Analizar circuitos serie, paralelo y mixtos",
+      "componente_angular": "dc-circuit-builder",
+      "tiempo_estimado": "60 minutos"
+    },
     {
       "numero": 4,
-      "titulo": "Análisis de nodos",
-      "descripcion": "Resolver 5 circuitos usando análisis de nodos.",
-      "dificultad": "intermedio"
+      "titulo": "Calculadora de Thevenin/Norton",
+      "descripcion": "Herramienta para calcular equivalentes paso a paso",
+      "objetivo": "Simplificar circuitos complejos a equivalentes simples",
+      "componente_angular": "thevenin-calculator",
+      "tiempo_estimado": "45 minutos"
+    }
+  ],
+  "ejercicios_practicos": [
+    {
+      "numero": 4,
+      "titulo": "Análisis de nodos - 5 circuitos",
+      "descripcion": "Resolver 5 circuitos usando análisis de nodos con diferentes configuraciones.",
+      "dificultad": "intermedio",
+      "tiempo_estimado": "90 minutos",
+      "simulador_url": "/simuladores/nodos-mallas",
+      "circuitos": [
+        {
+          "id": "nodo_1",
+          "descripcion": "Divisor de corriente básico con 2 resistencias",
+          "componentes": "Fuente 5A, R1=10Ω, R2=40Ω",
+          "objetivo": "Calcular V1",
+          "resultado_esperado": "V1 = 40V"
+        },
+        {
+          "id": "nodo_2",
+          "descripcion": "Sistema 2 nodos con fuentes de corriente",
+          "componentes": "Fuente1=3A, Fuente2=-2A, R1=2Ω, R2=4Ω, R3=4Ω",
+          "objetivo": "Encontrar V1 y V2",
+          "resultado_esperado": "V1=3.2V, V2=-2.4V"
+        },
+        {
+          "id": "nodo_3",
+          "descripcion": "Supernodo con fuente de voltaje",
+          "componentes": "Fuente corriente 5A, Fuente voltaje 10V, R1=2Ω, R2=4Ω",
+          "objetivo": "Aplicar concepto de supernodo",
+          "resultado_esperado": "V1=10V, V2=0V"
+        },
+        {
+          "id": "nodo_4",
+          "descripcion": "Fuente dependiente de corriente",
+          "componentes": "Fuente 10A, Fuente dep. 2Ix, resistencias múltiples",
+          "objetivo": "Manejar fuentes dependientes",
+          "resultado_esperado": "V1=13.33V, V2=0V"
+        },
+        {
+          "id": "nodo_5",
+          "descripcion": "Red compleja con 3 nodos",
+          "componentes": "Múltiples fuentes y resistencias",
+          "objetivo": "Sistema 3x3",
+          "resultado_esperado": "Matriz y solución numérica"
+        }
+      ],
+      "herramientas_recomendadas": ["Calculadora matricial", "LTSpice", "Simulador web"],
+      "simulacion_interactiva": true,
+      "componente_angular": "nodal-analysis-solver"
     },
     {
       "numero": 5,
-      "titulo": "Análisis de mallas",
-      "descripcion": "Resolver 5 circuitos usando análisis de mallas.",
-      "dificultad": "intermedio"
+      "titulo": "Análisis de mallas - 5 circuitos",
+      "descripcion": "Resolver 5 circuitos usando análisis de mallas con casos especiales.",
+      "dificultad": "intermedio",
+      "tiempo_estimado": "90 minutos",
+      "circuitos": [
+        {
+          "id": "malla_1",
+          "descripcion": "Dos mallas básicas con fuentes de voltaje",
+          "componentes": "Fuente1=10V, Fuente2=5V, R1=2Ω, R2=3Ω, R3=5Ω",
+          "objetivo": "Sistema 2x2 básico",
+          "resultado_esperado": "i1=2.09A, i2=0.16A"
+        },
+        {
+          "id": "malla_2",
+          "descripcion": "Sistema de 3 mallas",
+          "componentes": "Fuente 24V, Fuente 12V, resistencias múltiples",
+          "objetivo": "Matriz 3x3",
+          "resultado_esperado": "Sistema matricial completo"
+        },
+        {
+          "id": "malla_3",
+          "descripcion": "Fuente de corriente periférica",
+          "componentes": "Fuente corriente 5A externa, resistencias varias",
+          "objetivo": "Corriente de malla conocida",
+          "resultado_esperado": "i1=5A (dado), i2 calculado"
+        },
+        {
+          "id": "malla_4",
+          "descripcion": "Supermalla con fuente de corriente compartida",
+          "componentes": "Fuente voltaje 20V, Fuente corriente 3A compartida",
+          "objetivo": "Aplicar concepto de supermalla",
+          "resultado_esperado": "i1=-1.25A, i2=1.75A"
+        },
+        {
+          "id": "malla_5",
+          "descripcion": "Fuente de voltaje dependiente",
+          "componentes": "Fuente 15V, Fuente dependiente 4Vx",
+          "objetivo": "Manejar dependencias",
+          "resultado_esperado": "i1=i2=5A"
+        }
+      ],
+      "herramientas_recomendadas": ["Calculadora matricial", "Proteus", "Multisim"],
+      "simulacion_interactiva": true,
+      "componente_angular": "mesh-analysis-solver"
+    },
+    {
+      "numero": 6,
+      "titulo": "Equivalentes de Thevenin - 3 circuitos",
+      "descripcion": "Encontrar equivalentes de Thevenin y Norton en circuitos complejos.",
+      "dificultad": "avanzado",
+      "tiempo_estimado": "75 minutos",
+      "circuitos": [
+        {
+          "id": "thevenin_1",
+          "descripcion": "Red resistiva básica",
+          "objetivo": "Calcular VTH y RTH por método clásico",
+          "procedimiento": ["Calcular VOC", "Apagar fuentes", "Calcular RTH"],
+          "resultado_esperado": "VTH=8V, RTH=2.67Ω"
+        },
+        {
+          "id": "thevenin_2",
+          "descripcion": "Red con múltiples fuentes",
+          "objetivo": "Usar método VOC/ISC",
+          "procedimiento": ["Medir VOC", "Calcular ISC", "RTH=VOC/ISC"],
+          "transformacion": "Convertir a equivalente Norton"
+        },
+        {
+          "id": "thevenin_3",
+          "descripcion": "Circuito con fuente dependiente",
+          "objetivo": "Método obligatorio VOC/ISC",
+          "nota_especial": "Fuentes dependientes NO se apagan",
+          "resultado": "Equivalente con análisis completo"
+        }
+      ],
+      "aplicaciones_practicas": [
+        "Análisis de carga variable",
+        "Acoplamiento de impedancia",
+        "Máxima transferencia de potencia"
+      ],
+      "simulacion_interactiva": true,
+      "componente_angular": "thevenin-norton-lab"
+    },
+    {
+      "numero": 7,
+      "titulo": "Simulación en software (LTSpice/Proteus)",
+      "descripcion": "Simular y verificar los circuitos analizados teóricamente.",
+      "dificultad": "practico",
+      "tiempo_estimado": "120 minutos",
+      "software_opciones": [
+        {
+          "nombre": "LTSpice",
+          "ventajas": ["Gratuito", "Potente", "Industria estándar"],
+          "uso": "Análisis DC, AC y transitorio"
+        },
+        {
+          "nombre": "Proteus",
+          "ventajas": ["Interfaz amigable", "Microcontroladores"],
+          "uso": "Simulación y PCB"
+        },
+        {
+          "nombre": "Multisim",
+          "ventajas": ["Educativo", "Instrumentos virtuales"],
+          "uso": "Aprendizaje y laboratorio virtual"
+        }
+      ],
+      "tareas_simulacion": [
+        {
+          "tarea": "Simular ejercicio de nodos",
+          "procedimiento": [
+            "Dibujar circuito en software",
+            "Configurar análisis DC Operating Point",
+            "Verificar voltajes de nodo calculados",
+            "Comparar con resultados teóricos"
+          ]
+        },
+        {
+          "tarea": "Simular análisis de mallas",
+          "procedimiento": [
+            "Construir circuito",
+            "Insertar medidores de corriente",
+            "Ejecutar simulación DC",
+            "Verificar corrientes de malla"
+          ]
+        },
+        {
+          "tarea": "Verificar Thevenin experimentalmente",
+          "procedimiento": [
+            "Medir VOC con terminales abiertas",
+            "Medir ISC con cortocircuito",
+            "Construir equivalente de Thevenin",
+            "Conectar diferentes cargas y comparar"
+          ]
+        }
+      ]
+    }
+  ],
+  "ejercicios_adicionales": [
+    {
+      "categoria": "Básicos",
+      "ejercicios": [
+        "Aplicar Ley de Ohm en 10 circuitos simples",
+        "Calcular resistencias equivalentes serie/paralelo",
+        "Verificar LCK y LVK en circuitos dados"
+      ]
+    },
+    {
+      "categoria": "Intermedios", 
+      "ejercicios": [
+        "Divisores de voltaje y corriente",
+        "Transformación Y-Δ (estrella-delta)",
+        "Análisis con múltiples fuentes (superposición)"
+      ]
+    },
+    {
+      "categoria": "Avanzados",
+      "ejercicios": [
+        "Circuitos con fuentes dependientes",
+        "Máxima transferencia de potencia",
+        "Redes no planares (análisis general)"
+      ]
     }
   ],
   "recursos_adicionales": [

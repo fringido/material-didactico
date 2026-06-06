@@ -128,9 +128,17 @@
     "alto": 500,
     "diagrama": [
       { "tipo": "fuente", "id": "V1", "x": 100, "y": 250, "valor": "V_s" },
-      { "tipo": "resistor", "id": "R1", "x": 300, "y": 150, "valor": "R_1" },
-      { "tipo": "resistor", "id": "R2", "x": 500, "y": 150, "valor": "R_2" },
-      { "tipo": "tierra", "id": "GND", "x": 100, "y": 400 }
+      { "tipo": "linea", "id": "W1", "x1": 100, "y1": 235, "x2": 100, "y2": 130 },
+      { "tipo": "linea", "id": "W2", "x1": 100, "y1": 130, "x2": 300, "y2": 130 },
+      { "tipo": "resistor", "id": "R1", "x": 300, "y": 130, "valor": "R_1" },
+      { "tipo": "linea", "id": "W3", "x1": 350, "y1": 130, "x2": 500, "y2": 130 },
+      { "tipo": "resistor", "id": "R2", "x": 500, "y": 130, "valor": "R_2" },
+      { "tipo": "nodo", "id": "N1", "x": 350, "y": 130, "valor": "Nodo" },
+      { "tipo": "linea", "id": "W4", "x1": 550, "y1": 130, "x2": 700, "y2": 130 },
+      { "tipo": "linea", "id": "W5", "x1": 700, "y1": 130, "x2": 700, "y2": 380 },
+      { "tipo": "linea", "id": "W6", "x1": 100, "y1": 380, "x2": 700, "y2": 380 },
+      { "tipo": "linea", "id": "W7", "x1": 100, "y1": 265, "x2": 100, "y2": 380 },
+      { "tipo": "tierra", "id": "GND", "x": 380, "y": 380 }
     ],
     "controles": [
       {
@@ -189,10 +197,10 @@
     ],
     "graficas": [
       {
-        "id": "potencia_vs_r",
-        "label": "Potencia Disipada vs R1",
+        "id": "corriente_vs_r",
+        "label": "Corriente (A) vs Resistencia (Ω)",
         "color": "#ff5722",
-        "calculo_y": "(v_source * v_source) / r1_val"
+        "calculo_y": "v_source / (10 + (x * 9990))"
       }
     ]
   },

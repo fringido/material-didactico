@@ -1,0 +1,84 @@
+{
+  "id": "filtros-activos",
+  "nombre": "Filtros Activos",
+  "descripcion": "Filtros pasa-bajas, pasa-altas, pasa-banda y rechaza-banda usando amplificadores operacionales.",
+  "conceptos_clave": [
+    {
+      "nombre": "Filtro Activo Pasa-Bajas",
+      "descripcion": "Permite frecuencias bajas y atenúa frecuencias altas. Usa op-amp para ganancia y aislamiento.",
+      "variable_principal": "Frecuencia de corte",
+      "principio_fisico": "La impedancia del capacitor disminuye con frecuencia, atenuando altas frecuencias.",
+      "cuando_usitar": "Para eliminar ruido de alta frecuencia y suavizar señales."
+    },
+    {
+      "nombre": "Filtro Activo Pasa-Altas",
+      "descripcion": "Permite frecuencias altas y atenúa frecuencias bajas. Opuesto del pasa-bajas.",
+      "variable_principal": "Frecuencia de corte",
+      "principio_fisico": "El capacitor bloquea DC, permitiendo solo señales AC de alta frecuencia.",
+      "cuando_usitar": "Para eliminar componente DC y ruido de baja frecuencia."
+    },
+    {
+      "nombre": "Filtro Pasa-Banda",
+      "descripcion": "Permite un rango de frecuencias y atenúa frecuencias fuera de ese rango.",
+      "variable_principal": "Frecuencia central y ancho de banda",
+      "principio_fisico": "Combinación de pasa-altas y pasa-bajas crea una ventana de frecuencias.",
+      "cuando_usitar": "Para seleccionar una banda específica en comunicaciones y audio."
+    },
+    {
+      "nombre": "Filtro Sallen-Key",
+      "descripcion": "Topología popular para filtros de segundo orden. Buena estabilidad y fácil diseño.",
+      "variable_principal": "Frecuencia de corte y factor Q",
+      "principio_fisico": "Usa realimentación positiva parcial para crear polos complejos.",
+      "cuando_usitar": "Para filtros Butterworth, Chebyshev y Bessel de segundo orden."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Frecuencia de Corte Pasa-Bajas",
+      "katex": "f_c = \\frac{1}{2\\pi RC}",
+      "variables_tooltip": "variablesFrecuenciaCorte"
+    },
+    {
+      "titulo": "Ganancia Pasa-Bajas",
+      "katex": "A_v = 1 + \\frac{R_f}{R_1}",
+      "variables_tooltip": "variablesGanancia"
+    },
+    {
+      "titulo": "Frecuencia Sallen-Key",
+      "katex": "f_c = \\frac{1}{2\\pi\\sqrt{R_1 R_2 C_1 C_2}}",
+      "variables_tooltip": "variablesFrecuenciaSallen"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesFrecuenciaCorte": [
+      { "simbolo": "f_c", "nombre": "Frecuencia de corte", "unidad": "Hertz (Hz)", "descripcion": "Frecuencia a -3dB", "category": "frequency" },
+      { "simbolo": "R", "nombre": "Resistencia", "unidad": "Ohmios (Ω)", "descripcion": "Componente pasivo", "category": "resistance" },
+      { "simbolo": "C", "nombre": "Capacitancia", "unidad": "Faradios (F)", "descripcion": "Componente reactivo", "category": "capacitance" }
+    ],
+    "variablesGanancia": [
+      { "simbolo": "A_v", "nombre": "Ganancia de voltaje", "unidad": "Adimensional", "descripcion": "Relación Vout/Vin", "category": "gain" },
+      { "simbolo": "R_f", "nombre": "Resistencia de realimentación", "unidad": "Ohmios (Ω)", "descripcion": "Determina ganancia", "category": "resistance" },
+      { "simbolo": "R_1", "nombre": "Resistencia de entrada", "unidad": "Ohmios (Ω)", "descripcion": "Resistencia de entrada", "category": "resistance" }
+    ],
+    "variablesFrecuenciaSallen": [
+      { "simbolo": "R_1, R_2", "nombre": "Resistencias", "unidad": "Ohmios (Ω)", "descripcion": "Resistencias del filtro", "category": "resistance" },
+      { "simbolo": "C_1, C_2", "nombre": "Capacitores", "unidad": "Faradios (F)", "descripcion": "Capacitores del filtro", "category": "capacitance" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Audio", "descripcion": "Ecualizadores y crossover de altavoces." },
+    { "titulo": "Instrumentación", "descripcion": "Acondicionamiento de señales de sensores." },
+    { "titulo": "Comunicaciones", "descripcion": "Selección de canales y eliminación de interferencia." }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-active-filter-simulator",
+    "justificacion": "Permite simular diferentes tipos de filtros activos y observar la respuesta en frecuencia.",
+    "utilidad": "Los estudiantes pueden diseñar filtros y ver el diagrama de Bode resultante.",
+    "interfaz_requerida": "Simulador con selector de tipo, valores de componentes y diagrama de Bode.",
+    "inputs": [
+      "Tipo de filtro (pasa-bajas, pasa-altas, pasa-banda)",
+      "Valores de componentes",
+      "Visualización de respuesta en frecuencia (Bode)"
+    ]
+  }
+}

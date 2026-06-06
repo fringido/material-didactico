@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "clase": "ac",
+    "modulo": 1,
+    "unidad": 3,
+    "titulo": "Análisis de Circuitos en AC",
+    "semanas": "5-6",
+    "version": "1.0.0",
+    "fecha_actualizacion": "2026-06-05",
+    "descripcion": "Señales senoidales, fasores, impedancia compleja, filtros pasivos (RC, RL, RLC), respuesta en frecuencia y diagramas de Bode.",
+    "ruta": "/clase/ac"
+  },
+  "objetivos": [
+    "Identificar y calcular los parámetros de señales senoidales: amplitud, frecuencia, periodo y fase.",
+    "Representar señales AC usando notación fasorial y números complejos.",
+    "Calcular la impedancia compleja de resistores, inductores y capacitores.",
+    "Diseñar y analizar filtros pasa-bajas, pasa-altas y pasa-banda (RC, RL, RLC).",
+    "Calcular frecuencias de corte y factor de calidad Q.",
+    "Trazar e interpretar diagramas de Bode de magnitud y fase.",
+    "Comprender la respuesta transitoria vs. estado estable en circuitos RC y RL."
+  ],
+  "temas": [
+    {
+      "id": "senales-ac",
+      "nombre": "Señales Senoidales y Fasores",
+      "descripcion": "Parámetros de señales AC y representación en el dominio fasorial.",
+      "icono": "🌊",
+      "ruta": "/clase/ac/tema/senales-ac",
+      "archivo": "senales-ac.json"
+    },
+    {
+      "id": "impedancia-compleja",
+      "nombre": "Impedancia Compleja",
+      "descripcion": "Impedancia de R, L y C en el dominio de la frecuencia.",
+      "icono": "⚡",
+      "ruta": "/clase/ac/tema/impedancia-compleja",
+      "archivo": "impedancia-compleja.json"
+    },
+    {
+      "id": "filtros-pasivos",
+      "nombre": "Filtros Pasivos: RC, RL y RLC",
+      "descripcion": "Diseño y análisis de filtros pasa-bajas, pasa-altas y pasa-banda.",
+      "icono": "🔊",
+      "ruta": "/clase/ac/tema/filtros-pasivos",
+      "archivo": "filtros-pasivos.json"
+    },
+    {
+      "id": "diagramas-bode",
+      "nombre": "Diagramas de Bode",
+      "descripcion": "Respuesta en frecuencia: magnitud (dB) y fase en escala logarítmica.",
+      "icono": "📊",
+      "ruta": "/clase/ac/tema/diagramas-bode",
+      "archivo": "diagramas-bode.json"
+    },
+    {
+      "id": "respuesta-transitoria",
+      "nombre": "Respuesta Transitoria",
+      "descripcion": "Comportamiento temporal de circuitos RC y RL ante cambios abruptos.",
+      "icono": "📈",
+      "ruta": "/clase/ac/tema/respuesta-transitoria",
+      "archivo": "respuesta-transitoria.json"
+    },
+    {
+      "id": "laboratorio-filtros",
+      "nombre": "Laboratorio: Construir y Medir Filtros RC",
+      "descripcion": "Laboratorio virtual de construcción y medición de filtros RC.",
+      "icono": "🔬",
+      "ruta": "/clase/ac/tema/laboratorio-filtros",
+      "archivo": "laboratorio-filtros-rc.json"
+    }
+  ],
+  "rutas_relacionadas": {
+    "unidad_completa": "/modulo/1/unidad/3",
+    "anterior": "/clase/4",
+    "siguiente": "/clase/5"
+  }
+}

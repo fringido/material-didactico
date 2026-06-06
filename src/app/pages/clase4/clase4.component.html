@@ -113,7 +113,74 @@
     </section>
     }
 
-    <!-- Gráfica interactiva -->
+    <!-- Gráficas interactivas -->
+    @if (temaDetallado().detalle?.graficas_interactivas?.length) {
+    <section class="section">
+      <h3 class="section__title">📊 Gráficas Interactivas</h3>
+      <div class="content-grid content-grid--2">
+        <ng-container *ngFor="let grafica of temaDetallado().detalle.graficas_interactivas">
+          <div class="content-panel">
+            <h4 class="section__title" [innerHTML]="formatSubscripts(grafica.titulo)"></h4>
+            <p class="text-secondary" [innerHTML]="formatSubscripts(grafica.descripcion)"></p>
+            <app-equation-chart [chartType]="grafica.tipo"
+              [title]="grafica.titulo"
+              [equation]="grafica.ecuacion || ''">
+            </app-equation-chart>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+    }
+
+    <!-- Visualizaciones SVG -->
+    @if (temaDetallado().detalle?.visualizaciones_svg?.length) {
+    <section class="section">
+      <h3 class="section__title">🎨 Visualizaciones SVG</h3>
+      <div class="content-grid content-grid--2">
+        <ng-container *ngFor="let svg of temaDetallado().detalle.visualizaciones_svg">
+          <div class="content-panel">
+            <h4 class="section__title" [innerHTML]="formatSubscripts(svg.titulo)"></h4>
+            <p class="text-secondary" [innerHTML]="formatSubscripts(svg.descripcion)"></p>
+            @if (svg.interactivo) {
+              <span class="badge badge--info">Interactivo</span>
+            }
+            <div class="svg-container">
+              <img [src]="svg.archivo" [alt]="svg.titulo" class="svg-image" />
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+    }
+
+    <!-- Simuladores interactivos -->
+    @if (temaDetallado().detalle?.interactivos?.length) {
+    <section class="section section--fullwidth-simulators">
+      <h3 class="section__title">🔧 Simuladores Interactivos</h3>
+      <div class="content-grid content-grid--1 simulators-fullwidth">
+        <ng-container *ngFor="let simulador of temaDetallado().detalle.interactivos">
+          @if (simulador.componente === 'app-thevenin-calculator') {
+            <app-thevenin-calculator />
+          } @else if (simulador.componente === 'app-norton-transformer') {
+            <app-norton-transformer />
+          } @else if (simulador.componente === 'app-black-box-simulator') {
+            <app-black-box-simulator />
+          } @else {
+            <div class="content-panel">
+              <h4 class="section__title">{{ simulador.titulo }}</h4>
+              <p class="text-secondary">{{ simulador.descripcion }}</p>
+              <span class="badge badge--accent">{{ simulador.tipo }}</span>
+              <div class="simulator-placeholder">
+                <p class="text-body text-secondary" style="font-style:italic">Simulador en desarrollo: {{ simulador.componente }}</p>
+              </div>
+            </div>
+          }
+        </ng-container>
+      </div>
+    </section>
+    }
+
+    <!-- Gráfica interactiva (legacy) -->
     @if (temaDetallado().detalle?.grafica_interactiva) {
     <section class="section">
       <h3 class="section__title">🔌 Visualización Interactiva</h3>
@@ -126,7 +193,7 @@
     </section>
     }
 
-    <!-- Diagrama SVG Interactivo: Nodos y Mallas -->
+    <!-- Diagrama SVG Interactivo: Nodos y Mallas (legacy) -->
     <section class="section">
       <h3 class="section__title">⚡ Simulador Visual: Nodos y Mallas</h3>
       <p class="text-secondary" style="margin-bottom: 1.5rem;">
@@ -194,7 +261,7 @@
     @if (temaDetallado().detalle?.ejercicios?.length) {
     <section class="section">
       <h3 class="section__title">Ejercicios Prácticos</h3>
-      
+
       <!-- Ejercicios de Nodos -->
       @if (getNodosExercises().length) {
       <div class="exercises-section">
@@ -208,7 +275,7 @@
               </div>
               <div class="exercise-card__content">
                 <p class="text-body exercise-card__description">{{ ejercicio.descripcion }}</p>
-                
+
                 @if (activeExercise() === ejercicio.id) {
                   <div class="exercise-timer">
                     <div class="timer-display">
@@ -218,7 +285,7 @@
                     <p class="text-secondary timer-message">Tiempo restante para ver la solución</p>
                   </div>
                 }
-                
+
                 @if (showSolution()[ejercicio.id]) {
                   <div class="exercise-solution">
                     <h6 class="solution-title">✅ Solución:</h6>
@@ -228,7 +295,7 @@
                     </div>
                   </div>
                 }
-                
+
                 @if (!showSolution()[ejercicio.id] && activeExercise() !== ejercicio.id) {
                   <button class="btn btn--primary btn--sm exercise-start-btn"
                     (click)="startExerciseTimer(ejercicio.id, ejercicio.tiempo_minutos)">
@@ -241,7 +308,7 @@
         </div>
       </div>
       }
-      
+
       <!-- Ejercicios de Mallas -->
       @if (getMallasExercises().length) {
       <div class="exercises-section">
@@ -255,7 +322,7 @@
               </div>
               <div class="exercise-card__content">
                 <p class="text-body exercise-card__description">{{ ejercicio.descripcion }}</p>
-                
+
                 @if (activeExercise() === ejercicio.id) {
                   <div class="exercise-timer">
                     <div class="timer-display">
@@ -265,7 +332,7 @@
                     <p class="text-secondary timer-message">Tiempo restante para ver la solución</p>
                   </div>
                 }
-                
+
                 @if (showSolution()[ejercicio.id]) {
                   <div class="exercise-solution">
                     <h6 class="solution-title">✅ Solución:</h6>
@@ -275,7 +342,7 @@
                     </div>
                   </div>
                 }
-                
+
                 @if (!showSolution()[ejercicio.id] && activeExercise() !== ejercicio.id) {
                   <button class="btn btn--primary btn--sm exercise-start-btn"
                     (click)="startExerciseTimer(ejercicio.id, ejercicio.tiempo_minutos)">

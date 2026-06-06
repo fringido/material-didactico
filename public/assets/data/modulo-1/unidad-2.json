@@ -4,15 +4,17 @@
     "unidad": 2,
     "titulo": "Análisis de Circuitos en DC",
     "semanas": "3-4",
-    "version": "1.2.0",
-    "fecha_actualizacion": "2026-06-04",
-    "descripcion": "Estudio de las leyes fundamentales y métodos sistemáticos para resolver redes de corriente continua."
+    "version": "2.0.0",
+    "fecha_actualizacion": "2026-06-05",
+    "descripcion": "Leyes fundamentales y métodos sistemáticos para resolver redes de corriente continua: Ohm, Kirchhoff, Nodos, Mallas, Thevenin y Norton.",
+    "ruta": "/clase/4"
   },
   "objetivos": [
     "Aplicar la Ley de Ohm para calcular V, I y R en componentes individuales.",
     "Utilizar las Leyes de Kirchhoff (LVK y LCK) para analizar redes interconectadas.",
-    "Dominar los métodos de Nodos y Mallas para la resolución de circuitos complejos.",
-    "Comprender y aplicar los Teoremas de Thevenin y Norton para simplificación de redes.",
+    "Dominar el método de Nodos (LCK) para resolver circuitos con múltiples fuentes.",
+    "Dominar el método de Mallas (LVK) para resolver circuitos con múltiples lazos.",
+    "Comprender y aplicar los Teoremas de Thevenin y Norton.",
     "Calcular la máxima transferencia de potencia en una carga."
   ],
   "temas": [
@@ -21,16 +23,18 @@
       "nombre": "La Ley de Ohm",
       "descripcion": "Relación fundamental entre voltaje, corriente y resistencia.",
       "contenido": {
-        "introduccion": "Establece que la corriente es directamente proporcional al voltaje e inversamente proporcional a la resistencia.",
+        "introduccion": "La Ley de Ohm establece que la corriente que fluye por un conductor es directamente proporcional al voltaje aplicado e inversamente proporcional a la resistencia. Es la base de todo análisis de circuitos en DC.",
         "ecuaciones": [
-          { "nombre": "Ley de Ohm", "formula": "V = I \\cdot R", "descripcion": "Voltaje es el producto de corriente por resistencia." },
+          { "nombre": "Ley de Ohm — Voltaje", "formula": "V = I \\cdot R", "descripcion": "El voltaje es el producto de corriente por resistencia." },
           { "nombre": "Corriente", "formula": "I = \\frac{V}{R}", "descripcion": "La corriente es la razón entre voltaje y resistencia." },
-          { "nombre": "Resistencia", "formula": "R = \\frac{V}{I}", "descripcion": "La resistencia es la razón entre voltaje y corriente." }
+          { "nombre": "Resistencia", "formula": "R = \\frac{V}{I}", "descripcion": "La resistencia es la razón entre voltaje y corriente." },
+          { "nombre": "Potencia disipada", "formula": "P = V \\cdot I = I^2 R = \\frac{V^2}{R}", "descripcion": "Energía convertida en calor por la resistencia." }
         ],
         "variables": [
-          { "simbolo": "V", "nombre": "Voltaje", "unidad": "V", "descripcion": "Presión eléctrica o diferencia de potencial." },
-          { "simbolo": "I", "nombre": "Corriente", "unidad": "A", "descripcion": "Flujo de carga eléctrica." },
-          { "simbolo": "R", "nombre": "Resistencia", "unidad": "\\Omega", "descripcion": "Oposición al paso de la corriente." }
+          { "simbolo": "V", "nombre": "Voltaje", "unidad": "V (Volt)", "descripcion": "Diferencia de potencial eléctrico entre dos puntos." },
+          { "simbolo": "I", "nombre": "Corriente", "unidad": "A (Ampere)", "descripcion": "Flujo de cargas eléctricas por unidad de tiempo." },
+          { "simbolo": "R", "nombre": "Resistencia", "unidad": "\\Omega (Ohm)", "descripcion": "Oposición al paso de la corriente eléctrica." },
+          { "simbolo": "P", "nombre": "Potencia", "unidad": "W (Watt)", "descripcion": "Energía disipada o transferida por unidad de tiempo." }
         ],
         "interactivos": [
           { "id": "ohm-lab", "titulo": "Laboratorio de Ley de Ohm", "tipo": "ohm-law-lab" },
@@ -40,12 +44,18 @@
           "tipo": "resistencia_v_i",
           "titulo": "Calculadora Interactiva de Ohm",
           "controles": [
-            { "id": "vin", "label": "Voltaje", "min": 0, "max": 24, "default": 10, "unidad": "V" },
-            { "id": "r", "label": "Resistencia", "min": 10, "max": 2000, "default": 100, "unidad": "\\Omega" }
+            { "id": "vin", "label": "Voltaje (V)", "min": 0, "max": 24, "default": 10, "unidad": "V" },
+            { "id": "r", "label": "Resistencia (R)", "min": 10, "max": 2000, "default": 100, "unidad": "\\Omega" }
           ],
           "metricas": [
-            { "label": "Corriente", "calculo": "vin / r", "unidad": "A", "formula_katex": "I = V/R" }
+            { "label": "Corriente", "calculo": "vin / r", "unidad": "A", "formula_katex": "I = V/R" },
+            { "label": "Potencia", "calculo": "(vin * vin) / r", "unidad": "W", "formula_katex": "P = V^2/R" }
           ]
+        },
+        "grafica_interactiva": {
+          "chartType": "ohm",
+          "title": "Ley de Ohm: Voltaje vs Corriente",
+          "equation": "V = I \\cdot R"
         }
       }
     },
@@ -54,27 +64,29 @@
       "nombre": "Tipos de Circuitos — Topologías",
       "descripcion": "Circuitos en serie, paralelo y mixtos. Reducción de redes.",
       "contenido": {
-        "introduccion": "Las topologías fundamentales determinan cómo se distribuyen el voltaje y la corriente.",
+        "introduccion": "Las topologías fundamentales determinan cómo se distribuyen el voltaje y la corriente. Comprender serie y paralelo es esencial para calcular resistencias equivalentes.",
         "topologias": [
           {
             "id": "serie",
             "nombre": "Circuito en Serie",
             "descripcion": "Componentes conectados en una sola trayectoria. La corriente es idéntica en todos.",
             "reglas": [
-              { "magnitud": "Resistencia Total", "formula": "R_T = R_1 + R_2 + \\dots", "descripcion": "Se suman aritméticamente." },
-              { "magnitud": "Corriente", "formula": "I_T = I_1 = I_2", "descripcion": "La misma en todo el lazo." }
+              { "magnitud": "Resistencia Total", "formula": "R_T = R_1 + R_2 + \\dots + R_n", "descripcion": "Se suman aritméticamente." },
+              { "magnitud": "Corriente", "formula": "I_T = I_1 = I_2 = \\dots = I_n", "descripcion": "La misma en todo el lazo." },
+              { "magnitud": "Voltaje Total", "formula": "V_T = V_1 + V_2 + \\dots + V_n", "descripcion": "Se distribuye entre los elementos." }
             ],
-            "comportamiento_clave": "Si un componente falla, se abre todo el circuito."
+            "comportamiento_clave": "Si un componente falla (abierto), interrumpe todo el circuito. Ejemplo: luces en serie de un árbol navideño."
           },
           {
             "id": "paralelo",
             "nombre": "Circuito en Paralelo",
-            "descripcion": "Componentes conectados entre los mismos dos nodos. El voltaje es idéntico.",
+            "descripcion": "Componentes conectados entre los mismos dos nodos. El voltaje es idéntico en todos.",
             "reglas": [
-              { "magnitud": "Resistencia Total", "formula": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2}", "descripcion": "El recíproco de la suma de recíprocos." },
-              { "magnitud": "Voltaje", "formula": "V_T = V_1 = V_2", "descripcion": "Igual en todas las ramas." }
+              { "magnitud": "Resistencia Total", "formula": "\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\dots", "descripcion": "El recíproco de la suma de recíprocos." },
+              { "magnitud": "Voltaje", "formula": "V_T = V_1 = V_2 = \\dots = V_n", "descripcion": "Igual en todas las ramas." },
+              { "magnitud": "Corriente Total", "formula": "I_T = I_1 + I_2 + \\dots + I_n", "descripcion": "La suma de corrientes en cada rama." }
             ],
-            "comportamiento_clave": "R_T siempre es menor que la resistencia más pequeña."
+            "comportamiento_clave": "R_T siempre es menor que la resistencia más pequeña. Ejemplo: instalación eléctrica de un edificio."
           }
         ],
         "interactivos": [
@@ -85,22 +97,24 @@
     {
       "id": "leyes-kirchhoff",
       "nombre": "Leyes de Kirchhoff",
-      "descripcion": "Conservación de carga y energía en circuitos.",
+      "descripcion": "Conservación de carga y energía en nodos y mallas.",
       "contenido": {
         "leyes": [
           {
             "id": "lck",
-            "nombre": "Ley de Corrientes (LCK)",
-            "principio": "Conservación de la carga",
-            "definicion": "La suma de corrientes que entran a un nodo es igual a la suma de las que salen.",
-            "ecuacion": "\\sum I_{in} = \\sum I_{out}"
+            "nombre": "LCK — Ley de Corrientes de Kirchhoff",
+            "principio": "Conservación de la carga eléctrica",
+            "definicion": "La suma algebraica de todas las corrientes que llegan a un nodo es igual a la suma de las que salen. Equivalente: la suma de todas las corrientes en un nodo es cero.",
+            "ecuacion": "\\sum_{k} I_k = 0 \\quad \\text{(en un nodo)}",
+            "analogia": "Como el agua en una tubería: lo que entra debe salir. Si 3A y 2A entran, 5A deben salir."
           },
           {
             "id": "lvk",
-            "nombre": "Ley de Voltajes (LVK)",
+            "nombre": "LVK — Ley de Voltajes de Kirchhoff",
             "principio": "Conservación de la energía",
-            "definicion": "La suma algebraica de las caídas de voltaje en una malla es cero.",
-            "ecuacion": "\\sum V_{subidas} = \\sum V_{caídas}"
+            "definicion": "La suma algebraica de todas las caídas de voltaje a lo largo de una malla cerrada es igual a cero.",
+            "ecuacion": "\\sum_{k} V_k = 0 \\quad \\text{(en una malla)}",
+            "analogia": "Como una carrera circular: subes y bajas colinas, pero al regresar al punto de partida la altura neta es cero."
           }
         ],
         "interactivos": [
@@ -109,24 +123,51 @@
         "simulacion_dinamica": {
           "tipo": "kirchhoff-lab",
           "titulo": "Práctica de Kirchhoff",
-          "descripcion": "Mide voltajes y corrientes para verificar las leyes."
+          "descripcion": "Mide voltajes y corrientes para verificar LCK y LVK en tiempo real."
         }
       }
     },
     {
       "id": "nodos-mallas",
       "nombre": "Métodos de Nodos y Mallas",
-      "descripcion": "Resolución sistemática de circuitos complejos.",
+      "descripcion": "Resolución sistemática de circuitos complejos con sistemas de ecuaciones.",
       "contenido": {
-        "introduccion": "Métodos algebraicos para encontrar todas las variables de un circuito.",
+        "introduccion": "Cuando un circuito tiene múltiples fuentes y resistencias, los métodos de nodos (LCK) y mallas (LVK) permiten plantear un sistema de ecuaciones lineales que se resuelve matricialmente.",
+        "metodos": [
+          {
+            "nombre": "Análisis de Nodos",
+            "base": "Ley de Corrientes de Kirchhoff (LCK)",
+            "pasos": [
+              "1. Seleccionar un nodo de referencia (tierra)",
+              "2. Asignar voltajes de nodo (V₁, V₂...) a los nodos restantes",
+              "3. Aplicar LCK en cada nodo: ΣI_entrantes = ΣI_salientes",
+              "4. Expresar corrientes en términos de voltajes de nodo (I = V/R)",
+              "5. Resolver el sistema de ecuaciones"
+            ],
+            "cuando_usarlo": "Cuando el circuito tiene muchas ramas en paralelo o fuentes de corriente"
+          },
+          {
+            "nombre": "Análisis de Mallas",
+            "base": "Ley de Voltajes de Kirchhoff (LVK)",
+            "pasos": [
+              "1. Identificar mallas independientes del circuito",
+              "2. Asignar corrientes de malla (i₁, i₂...) en cada malla",
+              "3. Aplicar LVK en cada malla: ΣV = 0",
+              "4. Expresar caídas de voltaje en términos de corrientes de malla",
+              "5. Resolver el sistema de ecuaciones"
+            ],
+            "cuando_usarlo": "Cuando el circuito tiene muchas fuentes de voltaje en serie o pocas mallas"
+          }
+        ],
         "formulas": [
-          { "titulo": "Análisis de Mallas", "katex": "[R][I] = [V]" },
-          { "titulo": "Análisis de Nodos", "katex": "[G][V] = [I]" }
+          { "titulo": "Sistema de Análisis de Mallas", "katex": "[R][I] = [V]" },
+          { "titulo": "Sistema de Análisis de Nodos", "katex": "[G][V] = [I]" },
+          { "titulo": "Regla de Cramer", "katex": "x_i = \\frac{\\det(A_i)}{\\det(A)}" }
         ],
         "simulacion_dinamica": {
           "tipo": "matrix_visualizer",
           "titulo": "Visualizador de Matrices",
-          "descripcion": "Observa cómo se construye la matriz del sistema.",
+          "descripcion": "Observa cómo se construye la matriz del sistema para análisis de mallas.",
           "matriz_dinamica": {
             "tipo": "mallas",
             "variables": ["I1", "I2"],
@@ -139,20 +180,296 @@
              { "id": "R1", "label": "R1", "min": 10, "max": 1000, "default": 100, "step": 10 },
              { "id": "R2", "label": "R2", "min": 10, "max": 1000, "default": 200, "step": 10 },
              { "id": "R3", "label": "R3", "min": 10, "max": 1000, "default": 300, "step": 10 },
-             { "id": "V1", "label": "V1", "min": 1, "max": 50, "default": 12, "step": 1 }
+             { "id": "V1", "label": "V1 (V)", "min": 1, "max": 50, "default": 12, "step": 1 }
           ],
           "metricas": []
+        }
+      }
+    },
+    {
+      "id": "thevenin-norton",
+      "nombre": "Equivalentes de Thevenin y Norton",
+      "descripcion": "Simplificación de redes lineales complejas a un modelo de dos terminales.",
+      "contenido": {
+        "introduccion": "Cualquier red lineal vista desde dos terminales puede reemplazarse por: (a) una fuente de voltaje V_TH en serie con una resistencia R_TH [Thevenin], o (b) una fuente de corriente I_N en paralelo con R_N [Norton].",
+        "ecuaciones": [
+          { "nombre": "Voltaje de Thevenin", "formula": "V_{TH} = V_{OC}", "descripcion": "Voltaje en circuito abierto entre terminales a-b" },
+          { "nombre": "Resistencia de Thevenin", "formula": "R_{TH} = \\frac{V_{OC}}{I_{SC}}", "descripcion": "Apagar fuentes independientes y medir resistencia" },
+          { "nombre": "Corriente de Norton", "formula": "I_N = I_{SC} = \\frac{V_{TH}}{R_{TH}}", "descripcion": "Corriente en cortocircuito entre terminales a-b" },
+          { "nombre": "Máxima potencia transferida", "formula": "P_{max} = \\frac{V_{TH}^2}{4 R_{TH}}", "descripcion": "Cuando R_L = R_TH" }
+        ],
+        "pasos_thevenin": [
+          "1. Retirar la carga (abrir terminales a-b)",
+          "2. Calcular V_TH = V_OC con el circuito abierto",
+          "3. Apagar fuentes independientes (fuentes V → cortocircuito, fuentes I → circuito abierto)",
+          "4. Calcular R_TH vista desde terminales a-b",
+          "5. Construir equivalente: V_TH en serie con R_TH"
+        ],
+        "nota_dependientes": "⚠️ Con fuentes DEPENDIENTES: NO se apagan. Se debe usar obligatoriamente R_TH = V_OC / I_SC.",
+        "simulacion_dinamica": {
+          "tipo": "thevenin_calculator",
+          "titulo": "Calculadora Thevenin Interactiva",
+          "controles": [
+            { "id": "vs", "label": "V_S (V)", "min": 1, "max": 50, "default": 12, "step": 1 },
+            { "id": "r1", "label": "R1 (Ω)", "min": 1, "max": 1000, "default": 4, "step": 1 },
+            { "id": "r2", "label": "R2 (Ω)", "min": 1, "max": 1000, "default": 8, "step": 1 }
+          ],
+          "metricas": [
+            { "label": "V_TH", "calculo": "vs * r2 / (r1 + r2)", "unidad": "V", "formula_katex": "V_{TH} = V_S \\cdot \\frac{R_2}{R_1+R_2}" },
+            { "label": "R_TH", "calculo": "(r1 * r2) / (r1 + r2)", "unidad": "\\Omega", "formula_katex": "R_{TH} = \\frac{R_1 R_2}{R_1 + R_2}" },
+            { "label": "I_N (Norton)", "calculo": "vs / r1", "unidad": "A", "formula_katex": "I_N = V_S / R_1" }
+          ]
         }
       }
     }
   ],
   "ejercicios": [
     {
-      "id": "ej-dc-1",
-      "titulo": "Divisor de Voltaje",
-      "descripcion": "Calcula el voltaje en R2 si Vin=12V, R1=1k\\Omega y R2=2k\\Omega.",
-      "solucion": "V_{out} = V_{in} \\cdot \\frac{R_2}{R_1 + R_2} = 12 \\cdot \\frac{2k}{3k} = 8V",
-      "tiempo_minutos": 10
+      "id": "ej-nodos-1",
+      "numero": 4,
+      "categoria": "nodos",
+      "titulo": "Nodo 1 — Divisor de Corriente Simple",
+      "descripcion": "Fuente de corriente 5\\text{A}. \\; R_1 = 10\\,\\Omega, \\; R_2 = 40\\,\\Omega \\text{ a tierra. Calcular } V_1.",
+      "dificultad": "basico",
+      "tiempo_minutos": 10,
+      "solucion": "V_1 = 40\\,\\text{V}",
+      "pasos": [
+        "LCK en V_1: \\quad 5 = \\frac{V_1}{10} + \\frac{V_1}{40}",
+        "5 = \\frac{4V_1 + V_1}{40} = \\frac{5V_1}{40}",
+        "V_1 = \\frac{5 \\times 40}{5} = 40\\,\\text{V}"
+      ],
+      "explicacion": "Se aplica LCK: la corriente de la fuente se divide entre ambas resistencias. La corriente de cada rama es I = V₁/R."
+    },
+    {
+      "id": "ej-nodos-2",
+      "numero": 4,
+      "categoria": "nodos",
+      "titulo": "Nodo 2 — Sistema de 2 Nodos",
+      "descripcion": "Fuente I_1=3\\text{A} a V_1, \\; I_2=-2\\text{A} a V_2. \\; R_1=2\\,\\Omega,\\; R_2=4\\,\\Omega,\\; R_3=4\\,\\Omega. \\text{ Encontrar } V_1 \\text{ y } V_2.",
+      "dificultad": "intermedio",
+      "tiempo_minutos": 15,
+      "solucion": "V_1 = 3.2\\,\\text{V},\\quad V_2 = -2.4\\,\\text{V}",
+      "pasos": [
+        "LCK en V_1: \\quad 3 = \\frac{V_1}{2} + \\frac{V_1 - V_2}{4} \\implies 3V_1 - V_2 = 12",
+        "LCK en V_2: \\quad -2 = \\frac{V_2-V_1}{4} + \\frac{V_2}{4} \\implies -V_1 + 2V_2 = -8",
+        "\\text{Sistema: } V_2 = -2.4\\,\\text{V}, \\quad V_1 = 3.2\\,\\text{V}"
+      ],
+      "explicacion": "Se escriben dos ecuaciones LCK y se resuelve el sistema 2×2. Los valores negativos de voltaje son válidos: indican polaridad opuesta a la referencia."
+    },
+    {
+      "id": "ej-nodos-3",
+      "numero": 4,
+      "categoria": "nodos",
+      "titulo": "Nodo 3 — Supernodo",
+      "descripcion": "Fuente 5\\text{A}, \\; fuente de voltaje 10\\text{V} entre V_1 y V_2, \\; R_1=2\\,\\Omega,\\; R_2=4\\,\\Omega. \\text{Calcular } V_1 \\text{ y } V_2.",
+      "dificultad": "intermedio",
+      "tiempo_minutos": 15,
+      "solucion": "V_1 = 10\\,\\text{V},\\quad V_2 = 0\\,\\text{V}",
+      "pasos": [
+        "\\text{Restricción del supernodo: } V_1 - V_2 = 10",
+        "LCK\\text{ en supernodo: }5 = \\frac{V_1}{2} + \\frac{V_2}{4}",
+        "\\text{Sustituyendo: }5 = \\frac{V_2+10}{2} + \\frac{V_2}{4} \\implies V_2 = 0\\,\\text{V}",
+        "V_1 = 0 + 10 = 10\\,\\text{V}"
+      ],
+      "explicacion": "Cuando una fuente de voltaje conecta dos nodos sin resistencia en serie, se forma un SUPERNODO. La restricción es la diferencia de voltaje impuesta por la fuente."
+    },
+    {
+      "id": "ej-nodos-4",
+      "numero": 4,
+      "categoria": "nodos",
+      "titulo": "Nodo 4 — Fuente Dependiente",
+      "descripcion": "Fuente 10\\text{A}, \\; fuente dependiente 2I_x. \\; R_1=4\\,\\Omega,\\; R_2=2\\,\\Omega. \\text{Calcular } V_1.",
+      "dificultad": "avanzado",
+      "tiempo_minutos": 20,
+      "solucion": "V_1 = 13.33\\,\\text{V}",
+      "pasos": [
+        "I_x = \\frac{V_1}{4}",
+        "LCK: \\quad 10 = \\frac{V_1}{4} + \\frac{V_1}{2} - 2I_x = \\frac{V_1}{4} + \\frac{V_1}{2} - 2\\cdot\\frac{V_1}{4}",
+        "10 = \\frac{V_1}{4} + \\frac{2V_1}{4} - \\frac{2V_1}{4} = \\frac{V_1}{4} \\cdot 3",
+        "V_1 = 13.33\\,\\text{V}"
+      ],
+      "explicacion": "Las fuentes dependientes se expresan en términos de una variable del circuito (aquí I_x). NO se apagan al calcular R_TH."
+    },
+    {
+      "id": "ej-nodos-5",
+      "numero": 4,
+      "categoria": "nodos",
+      "titulo": "Nodo 5 — Red con 3 Nodos",
+      "descripcion": "Tres nodos independientes con múltiples fuentes. Sistema matricial 3\\times 3.",
+      "dificultad": "avanzado",
+      "tiempo_minutos": 25,
+      "solucion": "\\text{Solución numérica con calculadora matricial o software}",
+      "pasos": [
+        "\\text{Formar la matriz de conductancias } [G]",
+        "\\text{Vector de fuentes de corriente } [I]",
+        "[G][V] = [I] \\implies [V] = [G]^{-1}[I]"
+      ],
+      "explicacion": "Para n nodos, se obtiene un sistema n×n. La matriz G es simétrica con conductancias propias en la diagonal y conductancias mutuas (negativas) fuera."
+    },
+    {
+      "id": "ej-mallas-1",
+      "numero": 5,
+      "categoria": "mallas",
+      "titulo": "Malla 1 — Dos Mallas Básicas",
+      "descripcion": "Fuente 10\\text{V} (malla 1), fuente 5\\text{V} (malla 2). \\; R_1=2\\,\\Omega,\\; R_{comp}=3\\,\\Omega,\\; R_2=5\\,\\Omega. \\text{Calcular } i_1,\\; i_2.",
+      "dificultad": "basico",
+      "tiempo_minutos": 12,
+      "solucion": "i_1 = 2.09\\,\\text{A},\\quad i_2 = 0.16\\,\\text{A}",
+      "pasos": [
+        "LVK\\text{ malla 1: } -10 + 2i_1 + 3(i_1 - i_2) = 0 \\implies 5i_1 - 3i_2 = 10",
+        "LVK\\text{ malla 2: } 3(i_2-i_1) + 5i_2 + 5 = 0 \\implies -3i_1 + 8i_2 = -5",
+        "\\begin{bmatrix}5&-3\\\\-3&8\\end{bmatrix}\\begin{bmatrix}i_1\\\\i_2\\end{bmatrix}=\\begin{bmatrix}10\\\\-5\\end{bmatrix}",
+        "i_1 = 2.09\\,\\text{A},\\quad i_2 = 0.16\\,\\text{A}"
+      ],
+      "explicacion": "En mallas adyacentes, la resistencia compartida tiene una caída de voltaje = R × (diferencia de corrientes). El signo depende del sentido horario convencional."
+    },
+    {
+      "id": "ej-mallas-2",
+      "numero": 5,
+      "categoria": "mallas",
+      "titulo": "Malla 2 — Sistema de 3 Mallas",
+      "descripcion": "Tres mallas con fuente 24\\text{V} (izquierda) y 12\\text{V} (derecha). Matriz 3\\times 3.",
+      "dificultad": "intermedio",
+      "tiempo_minutos": 20,
+      "solucion": "i_1=5.33\\,\\text{A},\\quad i_2=1.78\\,\\text{A},\\quad i_3=-0.58\\,\\text{A}",
+      "pasos": [
+        "\\text{Matriz de resistencias: diagonal = suma R en malla; fuera = -R compartida}",
+        "\\begin{bmatrix}6&-4&0\\\\-4&18&-8\\\\0&-8&10\\end{bmatrix}\\begin{bmatrix}i_1\\\\i_2\\\\i_3\\end{bmatrix}=\\begin{bmatrix}24\\\\0\\\\-12\\end{bmatrix}",
+        "\\text{Resolver con eliminación gaussiana o software}"
+      ],
+      "explicacion": "La matriz de mallas es siempre simétrica. i₃ negativa indica sentido antihorario real."
+    },
+    {
+      "id": "ej-mallas-3",
+      "numero": 5,
+      "categoria": "mallas",
+      "titulo": "Malla 3 — Fuente de Corriente Periférica",
+      "descripcion": "Fuente de corriente 5\\text{A} en el exterior. La corriente de esa malla queda determinada.",
+      "dificultad": "basico",
+      "tiempo_minutos": 10,
+      "solucion": "i_1 = 5\\,\\text{A (dado)}, \\quad i_2 \\text{ calculado por LVK}",
+      "pasos": [
+        "i_1 = 5\\,\\text{A} \\quad \\text{(impuesto por fuente de corriente)}",
+        "LVK\\text{ malla 2 normal con }i_1\\text{ sustituido}"
+      ],
+      "explicacion": "Cuando una fuente de corriente está en una rama exterior (pertenece solo a una malla), esa corriente de malla se conoce directamente."
+    },
+    {
+      "id": "ej-mallas-4",
+      "numero": 5,
+      "categoria": "mallas",
+      "titulo": "Malla 4 — Supermalla",
+      "descripcion": "Fuente de voltaje 20\\text{V}, fuente de corriente 3\\text{A} compartida entre mallas. Calcular i_1,\\; i_2.",
+      "dificultad": "intermedio",
+      "tiempo_minutos": 18,
+      "solucion": "i_1 = -1.25\\,\\text{A},\\quad i_2 = 1.75\\,\\text{A}",
+      "pasos": [
+        "\\text{Restricción: } i_2 - i_1 = 3\\,\\text{A}",
+        "LVK\\text{ supermalla (perímetro externo): } -20 + 5i_1 + 10i_2 + 5i_2 = 0",
+        "5i_1 + 15i_2 = 20",
+        "\\text{Sustituyendo restricción: } 5(i_2-3) + 15i_2 = 20 \\implies i_2 = 1.75\\,\\text{A}",
+        "i_1 = 1.75 - 3 = -1.25\\,\\text{A}"
+      ],
+      "explicacion": "SUPERMALLA: cuando una fuente de corriente está en una rama compartida, se crea la supermalla excluyendo esa rama, pero se incluye la ecuación de restricción que la fuente impone."
+    },
+    {
+      "id": "ej-mallas-5",
+      "numero": 5,
+      "categoria": "mallas",
+      "titulo": "Malla 5 — Fuente de Voltaje Dependiente",
+      "descripcion": "Fuente 15\\text{V}, fuente dependiente 4V_x. \\text{ Calcular } i_1,\\; i_2.",
+      "dificultad": "avanzado",
+      "tiempo_minutos": 20,
+      "solucion": "i_1 = i_2 = 5\\,\\text{A}",
+      "pasos": [
+        "V_x = R \\cdot i \\quad \\text{(expresar en función de corrientes de malla)}",
+        "LVK\\text{ incluyendo fuente dependiente en términos de corrientes}",
+        "\\text{Resolver sistema resultante}"
+      ],
+      "explicacion": "Las fuentes dependientes deben expresarse en términos de las variables de malla antes de resolver el sistema."
+    },
+    {
+      "id": "ej-thevenin-1",
+      "numero": 6,
+      "categoria": "thevenin",
+      "titulo": "Thevenin 1 — Red Resistiva Básica",
+      "descripcion": "Fuente 12\\text{V}, R_1=4\\,\\Omega \\text{ (serie)}, R_2=8\\,\\Omega \\text{ (paralelo a terminales)}. \\text{Encontrar } V_{TH} \\text{ y } R_{TH}.",
+      "dificultad": "intermedio",
+      "tiempo_minutos": 15,
+      "solucion": "V_{TH} = 8\\,\\text{V},\\quad R_{TH} = 2.67\\,\\Omega",
+      "pasos": [
+        "V_{TH} = V_{OC} = 12 \\cdot \\frac{8}{4+8} = 8\\,\\text{V}",
+        "\\text{Apagar fuente: }R_{TH} = R_1 \\parallel R_2 = \\frac{4 \\times 8}{12} = 2.67\\,\\Omega",
+        "\\text{Verificar: }I_{SC} = \\frac{12}{4}=3\\text{A}, \\; R_{TH}=8/3=2.67\\,\\Omega \\checkmark"
+      ],
+      "explicacion": "El divisor de voltaje da V_TH directamente. Con la fuente apagada (cortocircuito), R1 y R2 quedan en paralelo."
+    },
+    {
+      "id": "ej-thevenin-2",
+      "numero": 6,
+      "categoria": "thevenin",
+      "titulo": "Thevenin 2 — Conversión Thevenin↔Norton",
+      "descripcion": "Dado V_{TH}=15\\,\\text{V}, R_{TH}=5\\,\\Omega. \\text{ Convertir a equivalente de Norton.}",
+      "dificultad": "basico",
+      "tiempo_minutos": 10,
+      "solucion": "I_N = 3\\,\\text{A},\\quad R_N = 5\\,\\Omega",
+      "pasos": [
+        "I_N = \\frac{V_{TH}}{R_{TH}} = \\frac{15}{5} = 3\\,\\text{A}",
+        "R_N = R_{TH} = 5\\,\\Omega",
+        "\\text{Verificación con }R_L=10\\,\\Omega:\\; I_L=15/(5+10)=1\\text{A}=3\\times\\frac{5}{5+10}=1\\text{A} \\checkmark"
+      ],
+      "explicacion": "La conversión Thevenin↔Norton es inmediata: I_N = V_TH/R_TH y R_N = R_TH. Ambos modelos son equivalentes y producen los mismos resultados para cualquier carga."
+    },
+    {
+      "id": "ej-thevenin-3",
+      "numero": 6,
+      "categoria": "thevenin",
+      "titulo": "Thevenin 3 — Con Fuente Dependiente",
+      "descripcion": "Circuito con fuente independiente y fuente dependiente 2V_x. \\text{Calcular }V_{TH}\\text{ y }R_{TH}.",
+      "dificultad": "avanzado",
+      "tiempo_minutos": 25,
+      "solucion": "R_{TH} = \\frac{V_{OC}}{I_{SC}} \\quad \\text{(método obligatorio)}",
+      "pasos": [
+        "\\text{Paso 1: Calcular }V_{OC}\\text{ con circuito abierto (fuente dependiente ACTIVA)}",
+        "\\text{Paso 2: Cortocircuitar terminales, calcular }I_{SC}\\text{ (fuente dependiente ACTIVA)}",
+        "R_{TH} = \\frac{V_{OC}}{I_{SC}} \\quad \\text{(NO apagar fuente dependiente)}"
+      ],
+      "explicacion": "⚠️ REGLA CRÍTICA: Con fuentes dependientes no se puede calcular R_TH apagando fuentes. El único método válido es R_TH = V_OC / I_SC."
     }
-  ]
+  ],
+  "laboratorio": {
+    "titulo": "Laboratorio Virtual — Análisis DC Completo",
+    "descripcion": "Experimentos interactivos para verificar leyes y teoremas de circuitos DC",
+    "experimentos": [
+      {
+        "id": "lab-ohm",
+        "nombre": "Lab 1: Verificación de Ley de Ohm",
+        "objetivo": "Comprobar experimentalmente V = I·R variando resistencia y voltaje",
+        "tipo": "ohm-law-lab",
+        "tiempo": "20 min"
+      },
+      {
+        "id": "lab-kirchhoff",
+        "nombre": "Lab 2: Verificación de LCK y LVK",
+        "objetivo": "Medir corrientes y voltajes para comprobar conservación en nodo y malla",
+        "tipo": "kirchhoff-lab",
+        "tiempo": "30 min"
+      },
+      {
+        "id": "lab-thevenin",
+        "nombre": "Lab 3: Equivalente de Thevenin",
+        "objetivo": "Medir V_OC e I_SC, calcular R_TH y verificar equivalencia",
+        "tipo": "thevenin_calculator",
+        "tiempo": "30 min",
+        "procedimiento": [
+          "Construir el circuito original",
+          "Medir V_OC con terminales abiertas",
+          "Medir I_SC con terminales en corto",
+          "Calcular R_TH = V_OC / I_SC",
+          "Construir equivalente y conectar diferentes cargas",
+          "Verificar que la corriente en la carga es igual en ambos circuitos"
+        ]
+      }
+    ]
+  }
 }

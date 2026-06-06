@@ -1,0 +1,187 @@
+<div class="transformer-shell">
+  <div class="transformer-header">
+    <h4 class="transformer-title">🔄 Transformador Thévenin ↔ Norton</h4>
+    <p class="transformer-subtitle">Ingresa los parámetros de un equivalente y obtén el otro en tiempo real</p>
+  </div>
+
+  <div class="transformer-body">
+    <!-- Mode tabs -->
+    <div class="mode-tabs">
+      <button class="mode-tab"
+        [class.mode-tab--active]="inputMode() === 'thevenin'"
+        (click)="setMode('thevenin')">
+        Ingresar Thévenin
+      </button>
+      <button class="mode-tab"
+        [class.mode-tab--active]="inputMode() === 'norton'"
+        (click)="setMode('norton')">
+        Ingresar Norton
+      </button>
+    </div>
+
+    <div class="conversion-layout">
+      <!-- INPUT PANEL -->
+      <div class="panel panel--input">
+        @if (inputMode() === 'thevenin') {
+          <div class="panel-header">
+            <span class="panel-badge panel-badge--thevenin">Thévenin</span>
+            <h5 class="panel-title">Parámetros de entrada</h5>
+          </div>
+          <form [formGroup]="theveninForm" (ngSubmit)="applyThevenin()" class="param-form">
+            <label class="param-field">
+              <span class="param-label">V<sub>TH</sub> (V)</span>
+              <input class="param-input" type="number" formControlName="vth" step="0.1" />
+            </label>
+            <label class="param-field">
+              <span class="param-label">R<sub>TH</sub> (Ω)</span>
+              <input class="param-input" type="number" formControlName="rth" step="0.1" />
+            </label>
+            <button type="submit" class="btn btn--primary btn--sm" [disabled]="theveninForm.invalid">Convertir →</button>
+          </form>
+          <!-- SVG: Thevenin circuit -->
+          <svg viewBox="0 0 220 160" class="mini-circuit" aria-label="Circuito Thévenin">
+            <line x1="20" y1="30" x2="200" y2="30" stroke="#a78bfa" stroke-width="2"/>
+            <line x1="20" y1="130" x2="200" y2="130" stroke="#475569" stroke-width="2"/>
+            <line x1="35" y1="30" x2="35" y2="60" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="35" cy="80" r="18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+            <text x="35" y="77" font-size="9" fill="#38bdf8" text-anchor="middle">+</text>
+            <text x="35" y="88" font-size="8" fill="#38bdf8" text-anchor="middle">V_TH</text>
+            <line x1="35" y1="98" x2="35" y2="130" stroke="#38bdf8" stroke-width="2"/>
+            <text x="10" y="84" font-size="9" fill="#38bdf8" text-anchor="end">{{fmt(vth())}}V</text>
+            <line x1="55" y1="30" x2="80" y2="30" stroke="#a78bfa" stroke-width="2"/>
+            <polyline points="80,30 85,20 91,40 97,20 103,40 109,20 115,40 120,30" stroke="#a78bfa" stroke-width="2" fill="none"/>
+            <line x1="120" y1="30" x2="160" y2="30" stroke="#a78bfa" stroke-width="2"/>
+            <text x="98" y="16" font-size="9" fill="#a78bfa" text-anchor="middle">R_TH={{fmt(rth())}}Ω</text>
+            <circle cx="175" cy="30" r="4" fill="#38bdf8"/>
+            <circle cx="175" cy="130" r="4" fill="#38bdf8"/>
+            <text x="185" y="34" font-size="9" fill="#38bdf8">A</text>
+            <text x="185" y="134" font-size="9" fill="#38bdf8">B</text>
+            <line x1="175" y1="30" x2="175" y2="130" stroke="#334155" stroke-width="1" stroke-dasharray="4,3"/>
+          </svg>
+        }
+
+        @if (inputMode() === 'norton') {
+          <div class="panel-header">
+            <span class="panel-badge panel-badge--norton">Norton</span>
+            <h5 class="panel-title">Parámetros de entrada</h5>
+          </div>
+          <form [formGroup]="nortonForm" (ngSubmit)="applyNorton()" class="param-form">
+            <label class="param-field">
+              <span class="param-label">I<sub>N</sub> (A)</span>
+              <input class="param-input" type="number" formControlName="iN" step="0.01" />
+            </label>
+            <label class="param-field">
+              <span class="param-label">R<sub>N</sub> (Ω)</span>
+              <input class="param-input" type="number" formControlName="rN" step="0.1" />
+            </label>
+            <button type="submit" class="btn btn--primary btn--sm" [disabled]="nortonForm.invalid">Convertir →</button>
+          </form>
+          <!-- SVG: Norton circuit -->
+          <svg viewBox="0 0 220 160" class="mini-circuit" aria-label="Circuito Norton">
+            <line x1="20" y1="30" x2="200" y2="30" stroke="#4ade80" stroke-width="2"/>
+            <line x1="20" y1="130" x2="200" y2="130" stroke="#475569" stroke-width="2"/>
+            <line x1="35" y1="30" x2="35" y2="130" stroke="#4ade80" stroke-width="2"/>
+            <line x1="35" y1="30" x2="35" y2="60" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="35" cy="80" r="18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+            <line x1="35" y1="92" x2="35" y2="78" stroke="#38bdf8" stroke-width="2"/>
+            <polygon points="35,70 30,80 40,80" fill="#38bdf8"/>
+            <line x1="35" y1="98" x2="35" y2="130" stroke="#38bdf8" stroke-width="2"/>
+            <text x="10" y="84" font-size="9" fill="#38bdf8" text-anchor="end">{{fmt(iN())}}A</text>
+            <line x1="120" y1="30" x2="120" y2="52" stroke="#4ade80" stroke-width="2"/>
+            <polyline points="120,52 112,58 130,65 112,72 130,79 112,86 130,93 120,100" stroke="#4ade80" stroke-width="2" fill="none"/>
+            <line x1="120" y1="100" x2="120" y2="130" stroke="#4ade80" stroke-width="2"/>
+            <text x="137" y="80" font-size="9" fill="#4ade80">R_N={{fmt(rN())}}Ω</text>
+            <circle cx="175" cy="30" r="4" fill="#38bdf8"/>
+            <circle cx="175" cy="130" r="4" fill="#38bdf8"/>
+            <text x="185" y="34" font-size="9" fill="#38bdf8">A</text>
+            <text x="185" y="134" font-size="9" fill="#38bdf8">B</text>
+          </svg>
+        }
+      </div>
+
+      <!-- Arrow -->
+      <div class="arrow-center">
+        <span class="conversion-arrow">⇄</span>
+        <div class="relation-box">
+          @if (inputMode() === 'thevenin') {
+            <code>I_N = V_TH / R_TH</code>
+            <code>R_N = R_TH</code>
+          } @else {
+            <code>V_TH = I_N × R_N</code>
+            <code>R_TH = R_N</code>
+          }
+        </div>
+      </div>
+
+      <!-- OUTPUT PANEL -->
+      <div class="panel panel--output">
+        @if (inputMode() === 'thevenin') {
+          <div class="panel-header">
+            <span class="panel-badge panel-badge--norton">Norton</span>
+            <h5 class="panel-title">Equivalente calculado</h5>
+          </div>
+          <div class="result-list">
+            <div class="result-row">
+              <span class="result-key">I<sub>N</sub></span>
+              <span class="result-val">{{ fmt(nortonFromThevenin().iN) }} A</span>
+            </div>
+            <div class="result-row">
+              <span class="result-key">R<sub>N</sub></span>
+              <span class="result-val">{{ fmt(nortonFromThevenin().rN) }} Ω</span>
+            </div>
+          </div>
+          <svg viewBox="0 0 220 160" class="mini-circuit" aria-label="Norton calculado">
+            <line x1="20" y1="30" x2="200" y2="30" stroke="#4ade80" stroke-width="2"/>
+            <line x1="20" y1="130" x2="200" y2="130" stroke="#475569" stroke-width="2"/>
+            <line x1="35" y1="30" x2="35" y2="130" stroke="#4ade80" stroke-width="2"/>
+            <line x1="35" y1="30" x2="35" y2="60" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="35" cy="80" r="18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+            <line x1="35" y1="92" x2="35" y2="78" stroke="#38bdf8" stroke-width="2"/>
+            <polygon points="35,70 30,80 40,80" fill="#38bdf8"/>
+            <line x1="35" y1="98" x2="35" y2="130" stroke="#38bdf8" stroke-width="2"/>
+            <text x="10" y="84" font-size="9" fill="#38bdf8" text-anchor="end">{{fmt(nortonFromThevenin().iN)}}A</text>
+            <line x1="120" y1="30" x2="120" y2="52" stroke="#4ade80" stroke-width="2"/>
+            <polyline points="120,52 112,58 130,65 112,72 130,79 112,86 130,93 120,100" stroke="#4ade80" stroke-width="2" fill="none"/>
+            <line x1="120" y1="100" x2="120" y2="130" stroke="#4ade80" stroke-width="2"/>
+            <text x="137" y="80" font-size="9" fill="#4ade80">R_N={{fmt(nortonFromThevenin().rN)}}Ω</text>
+            <circle cx="175" cy="30" r="4" fill="#38bdf8"/>
+            <circle cx="175" cy="130" r="4" fill="#38bdf8"/>
+          </svg>
+        }
+
+        @if (inputMode() === 'norton') {
+          <div class="panel-header">
+            <span class="panel-badge panel-badge--thevenin">Thévenin</span>
+            <h5 class="panel-title">Equivalente calculado</h5>
+          </div>
+          <div class="result-list">
+            <div class="result-row">
+              <span class="result-key">V<sub>TH</sub></span>
+              <span class="result-val">{{ fmt(theveninFromNorton().vth) }} V</span>
+            </div>
+            <div class="result-row">
+              <span class="result-key">R<sub>TH</sub></span>
+              <span class="result-val">{{ fmt(theveninFromNorton().rth) }} Ω</span>
+            </div>
+          </div>
+          <svg viewBox="0 0 220 160" class="mini-circuit" aria-label="Thévenin calculado">
+            <line x1="20" y1="30" x2="200" y2="30" stroke="#a78bfa" stroke-width="2"/>
+            <line x1="20" y1="130" x2="200" y2="130" stroke="#475569" stroke-width="2"/>
+            <line x1="35" y1="30" x2="35" y2="60" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="35" cy="80" r="18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+            <text x="35" y="77" font-size="9" fill="#38bdf8" text-anchor="middle">+</text>
+            <text x="35" y="88" font-size="8" fill="#38bdf8" text-anchor="middle">V_TH</text>
+            <line x1="35" y1="98" x2="35" y2="130" stroke="#38bdf8" stroke-width="2"/>
+            <text x="10" y="84" font-size="9" fill="#38bdf8" text-anchor="end">{{fmt(theveninFromNorton().vth)}}V</text>
+            <line x1="55" y1="30" x2="80" y2="30" stroke="#a78bfa" stroke-width="2"/>
+            <polyline points="80,30 85,20 91,40 97,20 103,40 109,20 115,40 120,30" stroke="#a78bfa" stroke-width="2" fill="none"/>
+            <line x1="120" y1="30" x2="160" y2="30" stroke="#a78bfa" stroke-width="2"/>
+            <text x="98" y="16" font-size="9" fill="#a78bfa" text-anchor="middle">R_TH={{fmt(theveninFromNorton().rth)}}Ω</text>
+            <circle cx="175" cy="30" r="4" fill="#38bdf8"/>
+            <circle cx="175" cy="130" r="4" fill="#38bdf8"/>
+          </svg>
+        }
+      </div>
+    </div>
+  </div>
+</div>

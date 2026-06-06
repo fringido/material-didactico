@@ -1,0 +1,187 @@
+{
+  "id": "seleccion-metodo",
+  "nombre": "Selección del Método Más Eficiente",
+  "descripcion": "Habilidad de nivel superior para elegir el método de análisis más eficiente según la topología del circuito.",
+  "conceptos_clave": [
+    {
+      "nombre": "Regla de Oro",
+      "descripcion": "¿Qué requiere menos matemáticas? El objetivo es minimizar el número de ecuaciones a resolver.",
+      "variable_principal": "Número de ecuaciones",
+      "principio_fisico": "Menos ecuaciones = menos tiempo de cálculo = menor probabilidad de error.",
+      "cuando_usitar": "Antes de comenzar cualquier análisis de circuito complejo."
+    },
+    {
+      "nombre": "Comparación Nodos vs Mallas",
+      "descripcion": "Análisis comparativo para decidir cuál método es más eficiente según la topología.",
+      "variable_principal": "Topología del circuito",
+      "principio_fisico": "La estructura del circuito determina qué método requiere menos ecuaciones.",
+      "cuando_usitar": "Al enfrentarse a circuitos complejos con múltiples nodos y mallas."
+    }
+  ],
+  "criterios_seleccion": [
+    {
+      "condicion": "Si el circuito tiene menos nodos de no referencia que mallas independientes",
+      "metodo_recomendado": "Análisis de Nodos",
+      "razon": "Requerirá un sistema de ecuaciones más pequeño.",
+      "ejemplo": "Circuito con 2 nodos y 3 mallas → Nodos es mejor."
+    },
+    {
+      "condicion": "Si el circuito tiene menos mallas que nodos",
+      "metodo_recomendado": "Análisis de Mallas",
+      "razon": "Es el ganador en eficiencia.",
+      "ejemplo": "Circuito con 4 nodos y 2 mallas → Mallas es mejor."
+    },
+    {
+      "condicion": "Presencia de supernodos (fuentes de voltaje entre dos nodos)",
+      "metodo_recomendado": "Análisis de Nodos",
+      "razon": "Los supernodos se manejan naturalmente en análisis de nodos.",
+      "ejemplo": "Fuente de voltaje conectada directamente entre dos nodos."
+    },
+    {
+      "condicion": "Presencia de supermallas (fuentes de corriente compartidas entre mallas)",
+      "metodo_recomendado": "Análisis de Mallas",
+      "razon": "Las supermallas se manejan naturalmente en análisis de mallas.",
+      "ejemplo": "Fuente de corriente compartida por dos mallas adyacentes."
+    },
+    {
+      "condicion": "Circuito plano (sin cruces de ramas)",
+      "metodo_recomendado": "Análisis de Mallas",
+      "razon": "Las mallas solo funcionan en circuitos planos.",
+      "ejemplo": "Circuito que se puede dibujar sin que las ramas se crucen."
+    },
+    {
+      "condicion": "Interés principal en voltajes de nodo",
+      "metodo_recomendado": "Análisis de Nodos",
+      "razon": "Calcula directamente los voltajes de nodo.",
+      "ejemplo": "Necesitas saber el voltaje en cada nodo específico."
+    },
+    {
+      "condicion": "Interés principal en corrientes de rama",
+      "metodo_recomendado": "Análisis de Mallas",
+      "razon": "Calcula directamente las corrientes de malla.",
+      "ejemplo": "Necesitas saber la corriente en cada rama específica."
+    }
+  ],
+  "formulas": [
+    {
+      "titulo": "Número de Ecuaciones Nodos",
+      "katex": "N_{ecuaciones} = N_{nodos} - 1",
+      "variables_tooltip": "variablesNodos"
+    },
+    {
+      "titulo": "Número de Ecuaciones Mallas",
+      "katex": "N_{ecuaciones} = N_{mallas}",
+      "variables_tooltip": "variablesMallas"
+    }
+  ],
+  "variables_tooltips": {
+    "variablesNodos": [
+      { "simbolo": "N_{nodos}", "nombre": "Número de nodos", "unidad": "Adimensional", "descripcion": "Total de nodos en el circuito", "category": "count" },
+      { "simbolo": "N_{ecuaciones}", "nombre": "Ecuaciones requeridas", "unidad": "Adimensional", "descripcion": "Ecuaciones a resolver", "category": "count" }
+    ],
+    "variablesMallas": [
+      { "simbolo": "N_{mallas}", "nombre": "Número de mallas", "unidad": "Adimensional", "descripcion": "Mallas independientes", "category": "count" }
+    ]
+  },
+  "aplicaciones_reales": [
+    { "titulo": "Análisis de Circuitos Complejos", "descripcion": "Optimización del tiempo de análisis en circuitos grandes." },
+    { "titulo": "Diseño de Circuitos", "descripcion": "Selección de topologías que facilitan el análisis." },
+    { "titulo": "Solución de Problemas", "descripcion": "Estrategia para resolver problemas de examen eficientemente." }
+  ],
+  "interactivos": [
+    {
+      "id": "circuit-analyzer",
+      "tipo": "circuit-simulator",
+      "titulo": "Analizador de Circuitos",
+      "descripcion": "Analiza automáticamente la topología del circuito y recomienda el método más eficiente.",
+      "componente": "app-circuit-analyzer",
+      "parametros": {
+        "circuitos_configurables": true,
+        "analiza_topologia": true,
+        "cuenta_nodos_mallas": true,
+        "recomienda_metodo": true,
+        "visualizacion": ["circuito", "analisis", "recomendacion"]
+      }
+    },
+    {
+      "id": "method-comparator",
+      "tipo": "visualization",
+      "titulo": "Comparador de Métodos",
+      "descripcion": "Compara visualmente el número de ecuaciones requerido por cada método.",
+      "componente": "app-method-comparator",
+      "parametros": {
+        "metodos": ["nodos", "mallas"],
+        "visualizacion": ["comparacion", "grafica_barras"]
+      }
+    }
+  ],
+  "visualizaciones_svg": [
+    {
+      "id": "circuito-nodos-svg",
+      "titulo": "Circuito con Nodos Marcados",
+      "archivo": "/assets/illustrations/clase-4/circuito_nodos.svg",
+      "descripcion": "Diagrama SVG mostrando todos los nodos del circuito.",
+      "interactivo": true,
+      "elementos_clickeables": ["nodos", "referencia"],
+      "accion_clic": "Muestra información del nodo"
+    },
+    {
+      "id": "circuito-mallas-svg",
+      "titulo": "Circuito con Mallas Marcadas",
+      "archivo": "/assets/illustrations/clase-4/circuito_mallas.svg",
+      "descripcion": "Diagrama SVG mostrando todas las mallas del circuito.",
+      "interactivo": true,
+      "elementos_clickeables": ["mallas", "corrientes_malla"],
+      "accion_clic": "Muestra información de la malla"
+    },
+    {
+      "id": "flujo-decision-svg",
+      "titulo": "Diagrama de Flujo de Decisión",
+      "archivo": "/assets/illustrations/clase-4/flujo_decision.svg",
+      "descripcion": "Diagrama de flujo para seleccionar el método de análisis.",
+      "interactivo": true,
+      "elementos_clickeables": ["decisiones", "resultados"]
+    }
+  ],
+  "graficas_interactivas": [
+    {
+      "id": "comparacion-ecuaciones",
+      "titulo": "Comparación de Ecuaciones Requeridas",
+      "tipo": "bar-chart",
+      "descripcion": "Gráfica comparando número de ecuaciones para análisis de nodos vs mallas.",
+      "eje_x": "Método",
+      "eje_y": "Número de Ecuaciones",
+      "parametros": {
+        "circuitos_ejemplo": [
+          { "nombre": "Circuito A", "nodos": 3, "mallas": 2 },
+          { "nombre": "Circuito B", "nodos": 4, "mallas": 3 },
+          { "nombre": "Circuito C", "nodos": 5, "mallas": 2 }
+        ]
+      }
+    },
+    {
+      "id": "eficiencia-vs-complejidad",
+      "titulo": "Eficiencia vs Complejidad",
+      "tipo": "scatter-chart",
+      "descripcion": "Gráfica mostrando eficiencia de cada método según complejidad del circuito.",
+      "eje_x": "Complejidad (nodos + mallas)",
+      "eje_y": "Eficiencia (tiempo relativo)",
+      "parametros": {
+        "metodos": ["nodos", "mallas"],
+        "rango_complejidad": [2, 10]
+      }
+    }
+  ],
+  "observaciones_pedagogicas": {
+    "sugerencia_componente": "app-method-selector",
+    "justificacion": "Permite a los estudiantes practicar la habilidad de 'leer' un circuito antes de analizarlo.",
+    "utilidad": "Los estudiantes pueden ver cómo la topología del circuito afecta la elección del método más eficiente.",
+    "interfaz_requerida": "Simulador con circuito configurable, análisis automático de topología y recomendación de método.",
+    "inputs": [
+      "Circuito configurable con nodos y mallas",
+      "Análisis automático de topología",
+      "Recomendación de método más eficiente",
+      "Comparación de número de ecuaciones"
+    ]
+  }
+}

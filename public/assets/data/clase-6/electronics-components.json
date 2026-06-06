@@ -1,0 +1,667 @@
+{
+    "electronicComponents": {
+        "metadata": {
+            "title": "Componentes Electrónicos",
+            "description": "Clasificación completa de componentes activos y pasivos en electrónica analógica",
+            "version": "1.0.0"
+        },
+        "comparison": {
+            "title": "Componentes Activos vs Pasivos",
+            "headers": [
+                "Característica",
+                "Componentes Activos",
+                "Componentes Pasivos"
+            ],
+            "rows": [
+                {
+                    "caracteristica": "Función Principal",
+                    "activos": "Entregan potencia o ganancia al circuito.",
+                    "pasivos": "Consumen, disipan o almacenan energía."
+                },
+                {
+                    "caracteristica": "Control",
+                    "activos": "Pueden controlar el flujo de corriente.",
+                    "pasivos": "No pueden controlar la corriente por sí mismos."
+                },
+                {
+                    "caracteristica": "Ejemplos",
+                    "activos": "Transistores, Op-Amps, Diodos.",
+                    "pasivos": "Resistencias, Bobinas, Capacitores."
+                }
+            ]
+        },
+        "categories": [
+            {
+                "id": "activos",
+                "nombre": "Componentes Activos",
+                "descripcion": "Un componente activo es aquel capaz de controlar el flujo de electricidad (generalmente introduciendo ganancia o dirección) y requiere una fuente externa de energía para operar.",
+                "concepto_clave": "A diferencia de los componentes pasivos, los activos pueden usar una señal pequeña para controlar una más grande. Es la base de la amplificación y la conmutación.",
+                "componentes": [
+                    {
+                        "id": "diodo",
+                        "nombre": "Diodo",
+                        "subtitulo": "La Puerta de un Solo Sentido",
+                        "descripcion": "Dispositivo electrónico de dos terminales que permite el flujo de corriente eléctrica en una dirección mientras bloquea el flujo en la dirección opuesta.",
+                        "clasificacion": "Activo (por su comportamiento no lineal y capacidad de rectificación)",
+                        "terminales": [
+                            "Ánodo (positivo)",
+                            "Cátodo (negativo)"
+                        ],
+                        "principio_operacion": {
+                            "polarizacion_directa": "Permite el flujo de corriente desde el ánodo hacia el cátodo.",
+                            "polarizacion_inversa": "Bloquea el paso de los electrones, actúa como aislante.",
+                            "composicion": "Unión PN (material semiconductor N unido a material P)"
+                        },
+                        "funcion": "Rectificación: cambia corriente alterna (CA) a corriente continua (CC) pulsante.",
+                        "subtipos": [
+                            {
+                                "id": "diodo_rectificador",
+                                "nombre": "Diodo Rectificador",
+                                "descripcion": "Diseñado específicamente para convertir corriente alterna (CA) en corriente continua (CC).",
+                                "funcion": "Convierte AC a DC.",
+                                "operacion": "Cuando se aplica diferencia de potencial positiva en el ánodo y negativa en el cátodo, permite el flujo de corriente. Si se invierte la polaridad, actúa como interruptor unidireccional."
+                            },
+                            {
+                                "id": "diodo_zener",
+                                "nombre": "Diodo Zener",
+                                "descripcion": "Componente diseñado específicamente para conducir electricidad en sentido inverso cuando se alcanza un voltaje específico llamado tensión zener.",
+                                "funcion": "Regulación de voltaje.",
+                                "caracteristicas": {
+                                    "voltaje_ruptura_vz": "El voltaje al cual el diodo comienza a conducir en inversa.",
+                                    "corriente_fuga_inversa_ir": "Pequeña corriente que fluye antes de alcanzar el voltaje de ruptura.",
+                                    "resistencia_dinamica": "Resistencia que presenta el diodo en la región de ruptura.",
+                                    "capacidad_potencia": "Máxima potencia que el diodo puede disipar sin dañarse."
+                                },
+                                "aplicaciones": [
+                                    "Regulación de voltaje en fuentes de alimentación",
+                                    "Protección contra sobretensiones",
+                                    "Limitación de corriente (en combinación con resistencias)",
+                                    "Referencia de voltaje para comparadores"
+                                ],
+                                "ventajas": [
+                                    "Estabilidad de voltaje en condiciones variables de carga",
+                                    "Facilidad de implementación en circuitos",
+                                    "Bajo costo y amplia disponibilidad"
+                                ],
+                                "desventajas": [
+                                    "Limitaciones en la corriente que pueden manejar",
+                                    "Posible generación de ruido en la región de ruptura",
+                                    "Dependencia de la temperatura en el voltaje de ruptura"
+                                ],
+                                "criterios_seleccion": [
+                                    "Voltaje de ruptura (VZ): debe coincidir con el voltaje de regulación deseado",
+                                    "Corriente máxima (IZ): corriente máxima que el diodo puede manejar",
+                                    "Potencia de disipación: suficiente para la aplicación",
+                                    "Tolerancia y estabilidad térmica"
+                                ]
+                            },
+                            {
+                                "id": "led",
+                                "nombre": "LED (Diodo Emisor de Luz)",
+                                "nombre_completo": "Light Emitting Diode",
+                                "descripcion": "Dispositivo semiconductor que emite luz cuando una corriente eléctrica fluye a través de él. Los electrones se recombinan con los agujeros emitiendo luz en el proceso.",
+                                "funcion": "Convierte energía eléctrica en fotones (luz).",
+                                "parametros_operacion": {
+                                    "voltaje_directo": "1.2 a 3.6 voltios",
+                                    "corriente_directa": "10 a 30 mA (rango común: 12 a 20 mA)"
+                                },
+                                "tipos_por_material": [
+                                    {
+                                        "material": "Arseniuro de Galio (GaAs)",
+                                        "color": "Infrarrojo"
+                                    },
+                                    {
+                                        "material": "Fosfuro de Arseniuro de Galio (GaAsP)",
+                                        "color": "Rojo a infrarrojo, naranja"
+                                    },
+                                    {
+                                        "material": "AlGaAsP",
+                                        "color": "Rojo, rojo anaranjado, naranja y amarillo de alto brillo"
+                                    },
+                                    {
+                                        "material": "Fosfuro de Galio (GaP)",
+                                        "color": "Rojo, amarillo y verde"
+                                    },
+                                    {
+                                        "material": "Fosfuro de Aluminio y Galio (AlGaP)",
+                                        "color": "Verde"
+                                    },
+                                    {
+                                        "material": "Nitruro de Galio (GaN)",
+                                        "color": "Verde, verde esmeralda"
+                                    },
+                                    {
+                                        "material": "Nitruro de Galio e Indio (GaInN)",
+                                        "color": "Casi ultravioleta, verde azulado y azul"
+                                    },
+                                    {
+                                        "material": "Carburo de Silicio (SiC)",
+                                        "color": "Azul (como sustrato)"
+                                    },
+                                    {
+                                        "material": "Seleniuro de Zinc (ZnSe)",
+                                        "color": "Azul"
+                                    },
+                                    {
+                                        "material": "Nitruro de Aluminio y Galio (AlGaN)",
+                                        "color": "Ultravioleta"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "transistor",
+                        "nombre": "Transistores",
+                        "subtitulo": "El Corazón de la Electrónica",
+                        "descripcion": "El componente más importante de la electrónica. Existen dos familias principales.",
+                        "familias": [
+                            {
+                                "id": "bjt",
+                                "nombre": "Transistor de Unión Bipolar (BJT)",
+                                "principio": "Control de corriente",
+                                "descripcion": "Una pequeña corriente en la Base controla una corriente mayor entre Colector y Emisor.",
+                                "terminales": [
+                                    "Base (B)",
+                                    "Colector (C)",
+                                    "Emisor (E)"
+                                ],
+                                "ecuacion_fundamental": "I_C = \\beta \\cdot I_B",
+                                "variables": {
+                                    "I_C": "Corriente de Colector",
+                                    "I_B": "Corriente de Base",
+                                    "beta": "Ganancia de corriente"
+                                },
+                                "tipos": [
+                                    "NPN",
+                                    "PNP"
+                                ],
+                                "ejemplo_datasheet": {
+                                    "modelo": "2N2222",
+                                    "descripcion": "Estándar de la industria para aplicaciones de conmutación y amplificación de baja potencia.",
+                                    "parametros_maximos": [
+                                        {
+                                            "parametro": "Collector-Emitter Voltage",
+                                            "simbolo": "V_CEO",
+                                            "valor": "30V - 40V",
+                                            "importancia": "Voltaje máximo que soporta el transistor cuando está abierto."
+                                        },
+                                        {
+                                            "parametro": "Collector Current",
+                                            "simbolo": "I_C",
+                                            "valor": "600 mA - 800 mA",
+                                            "importancia": "Corriente máxima que puede fluir por el colector."
+                                        },
+                                        {
+                                            "parametro": "Total Device Dissipation",
+                                            "simbolo": "P_D",
+                                            "valor": "625 mW",
+                                            "importancia": "La energía que puede disipar en calor antes de fallar."
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "fet_mosfet",
+                                "nombre": "Transistor de Efecto de Campo (FET / MOSFET)",
+                                "principio": "Control de voltaje",
+                                "descripcion": "Un voltaje en la Compuerta (Gate) crea un campo eléctrico que permite el flujo entre Drenaje y Fuente.",
+                                "terminales": [
+                                    "Compuerta / Gate (G)",
+                                    "Drenaje / Drain (D)",
+                                    "Fuente / Source (S)"
+                                ],
+                                "ventaja_clave": "Tienen una impedancia de entrada altísima, lo que significa que casi no consumen corriente de la señal de control."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "opamp",
+                        "nombre": "Amplificadores Operacionales (Op-Amps)",
+                        "descripcion": "Circuitos integrados que contienen docenas de transistores, diseñados para realizar operaciones matemáticas y amplificación de señales.",
+                        "caracteristicas_ideales": [
+                            "Ganancia de voltaje infinita",
+                            "Impedancia de entrada infinita",
+                            "Impedancia de salida cero"
+                        ],
+                        "aplicaciones": [
+                            "Comparadores",
+                            "Sumadores",
+                            "Filtros activos",
+                            "Integradores"
+                        ],
+                        "formula_ganancia_inversor": {
+                            "formula": "Av = -(Rf / Rin)",
+                            "variables": {
+                                "Av": "Ganancia de voltaje",
+                                "Rf": "Resistencia de retroalimentación",
+                                "Rin": "Resistencia de entrada"
+                            }
+                        }
+                    },
+                    {
+                        "id": "tiristores",
+                        "nombre": "Tiristores",
+                        "categoria": "Electrónica de Potencia",
+                        "descripcion": "Interruptores de estado sólido diseñados para manejar corrientes muy altas.",
+                        "tipos": [
+                            {
+                                "id": "scr",
+                                "nombre": "SCR (Silicon Controlled Rectifier)",
+                                "descripcion": "Un diodo controlado que se enciende mediante un pulso en su compuerta."
+                            },
+                            {
+                                "id": "triac",
+                                "nombre": "TRIAC",
+                                "descripcion": "Permite el control de corriente alterna en ambos ciclos. Común en dimmers de luz."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "pasivos",
+                "nombre": "Componentes Pasivos",
+                "descripcion": "Componentes que consumen, disipan o almacenan energía. No pueden controlar el flujo de corriente por sí mismos.",
+                "componentes": [
+                    {
+                        "id": "resistencia",
+                        "nombre": "Resistencia (R)",
+                        "descripcion": "El componente más básico. Se opone al flujo de corriente eléctrica, disipando energía en forma de calor.",
+                        "unidad": "Ohm (Ω)",
+                        "ley_fundamental": "Ley de Ohm: V = I \\cdot R",
+                        "comportamiento": "Lineal. Su resistencia no varía idealmente con la frecuencia.",
+                        "funciones": [
+                            "Divisores de tensión: reducir niveles de amplitud de señal",
+                            "Limitación de corriente: proteger componentes sensibles",
+                            "Polarización: establecer puntos de operación para componentes activos"
+                        ],
+                        "codigo_colores": {
+                            "descripcion": "Sistema de bandas para identificar el valor de la resistencia.",
+                            "numero_bandas": 4,
+                            "interpretacion_4_bandas": {
+                                "banda_1": "Primera cifra significativa (decenas)",
+                                "banda_2": "Segunda cifra significativa (unidades)",
+                                "banda_3": "Multiplicador (potencia de 10)",
+                                "banda_4": "Tolerancia"
+                            },
+                            "tabla": [
+                                {
+                                    "color": "Negro",
+                                    "cifra_1": 0,
+                                    "cifra_2": 0,
+                                    "multiplicador": 1,
+                                    "tolerancia": null,
+                                    "coef_temperatura": null
+                                },
+                                {
+                                    "color": "Marrón",
+                                    "cifra_1": 1,
+                                    "cifra_2": 1,
+                                    "multiplicador": 10,
+                                    "tolerancia": "±1%",
+                                    "coef_temperatura": "100 ppm/°C"
+                                },
+                                {
+                                    "color": "Rojo",
+                                    "cifra_1": 2,
+                                    "cifra_2": 2,
+                                    "multiplicador": 100,
+                                    "tolerancia": "±2%",
+                                    "coef_temperatura": "50 ppm/°C"
+                                },
+                                {
+                                    "color": "Naranja",
+                                    "cifra_1": 3,
+                                    "cifra_2": 3,
+                                    "multiplicador": 1000,
+                                    "tolerancia": null,
+                                    "coef_temperatura": "15 ppm/°C"
+                                },
+                                {
+                                    "color": "Amarillo",
+                                    "cifra_1": 4,
+                                    "cifra_2": 4,
+                                    "multiplicador": 10000,
+                                    "tolerancia": "±4%",
+                                    "coef_temperatura": "25 ppm/°C"
+                                },
+                                {
+                                    "color": "Verde",
+                                    "cifra_1": 5,
+                                    "cifra_2": 5,
+                                    "multiplicador": 100000,
+                                    "tolerancia": "±0.5%",
+                                    "coef_temperatura": "20 ppm/°C"
+                                },
+                                {
+                                    "color": "Azul",
+                                    "cifra_1": 6,
+                                    "cifra_2": 6,
+                                    "multiplicador": 1000000,
+                                    "tolerancia": "±0.25%",
+                                    "coef_temperatura": "10 ppm/°C"
+                                },
+                                {
+                                    "color": "Morado",
+                                    "cifra_1": 7,
+                                    "cifra_2": 7,
+                                    "multiplicador": 10000000,
+                                    "tolerancia": "±0.1%",
+                                    "coef_temperatura": "5 ppm/°C"
+                                },
+                                {
+                                    "color": "Gris",
+                                    "cifra_1": 8,
+                                    "cifra_2": 8,
+                                    "multiplicador": 100000000,
+                                    "tolerancia": "±0.05%",
+                                    "coef_temperatura": "1 ppm/°C"
+                                },
+                                {
+                                    "color": "Blanco",
+                                    "cifra_1": 9,
+                                    "cifra_2": 9,
+                                    "multiplicador": 1000000000,
+                                    "tolerancia": null,
+                                    "coef_temperatura": null
+                                },
+                                {
+                                    "color": "Dorado",
+                                    "cifra_1": null,
+                                    "cifra_2": null,
+                                    "multiplicador": 0.1,
+                                    "tolerancia": "±5%",
+                                    "coef_temperatura": null
+                                },
+                                {
+                                    "color": "Plateado",
+                                    "cifra_1": null,
+                                    "cifra_2": null,
+                                    "multiplicador": 0.01,
+                                    "tolerancia": "±10%",
+                                    "coef_temperatura": null
+                                },
+                                {
+                                    "color": "Rosado",
+                                    "cifra_1": null,
+                                    "cifra_2": null,
+                                    "multiplicador": 0.001,
+                                    "tolerancia": null,
+                                    "coef_temperatura": null
+                                },
+                                {
+                                    "color": "Ninguno",
+                                    "cifra_1": null,
+                                    "cifra_2": null,
+                                    "multiplicador": null,
+                                    "tolerancia": "±20%",
+                                    "coef_temperatura": null
+                                }
+                            ],
+                            "ejemplo": {
+                                "bandas": [
+                                    "Verde (5)",
+                                    "Amarillo (4)",
+                                    "Rojo (×100)"
+                                ],
+                                "calculo": "54 × 100 = 5400 Ω (5.4 kΩ)"
+                            }
+                        }
+                    },
+                    {
+                        "id": "capacitor",
+                        "nombre": "Capacitor (C)",
+                        "descripcion": "Dispositivo que almacena energía en un campo eléctrico mediante la acumulación de carga en dos placas conductoras separadas por un dieléctrico.",
+                        "unidad": "Faradio (F)",
+                        "ecuacion_caracteristica": "i(t) = C \\frac{dv(t)}{dt}",
+                        "reactancia_capacitiva": {
+                            "formula": "X_C = \\frac{1}{2\\pi f C}",
+                            "descripcion": "Su oposición al paso de la corriente varía inversamente con la frecuencia."
+                        },
+                        "comportamiento": {
+                            "en_dc": "Bloquea la corriente (funciona como circuito abierto tras cargarse).",
+                            "en_ac": "Permite el paso de señales, presentando menor impedancia a frecuencias más altas."
+                        },
+                        "funciones": [
+                            "Filtrado de ruido",
+                            "Acoplamiento y desacoplamiento de etapas",
+                            "Temporización"
+                        ],
+                        "tipos": [
+                            {
+                                "id": "electrolitico",
+                                "nombre": "Electrolíticos",
+                                "subtipos": [
+                                    {
+                                        "nombre": "Aluminio",
+                                        "descripcion": "Alta capacidad. Comúnmente utilizados en fuentes de alimentación y amplificadores."
+                                    },
+                                    {
+                                        "nombre": "Tántalo",
+                                        "descripcion": "Tamaño más pequeño que los de aluminio. Ideales en dispositivos compactos y aplicaciones de alta frecuencia."
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ceramico",
+                                "nombre": "Cerámicos",
+                                "subtipos": [
+                                    {
+                                        "nombre": "Multicapa",
+                                        "descripcion": "Ofrecen estabilidad. Se utilizan en alta frecuencia, circuitos integrados y microcontroladores."
+                                    },
+                                    {
+                                        "nombre": "Monocapa",
+                                        "descripcion": "Más simples y económicos. Se emplean en aplicaciones de baja frecuencia."
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "variables",
+                                "nombre": "Variables",
+                                "subtipos": [
+                                    {
+                                        "nombre": "Capacitores de Ajuste",
+                                        "descripcion": "Utilizados para sintonizar circuitos y ajustar frecuencias en radios y transmisores."
+                                    },
+                                    {
+                                        "nombre": "Capacitores de Trimmer",
+                                        "descripcion": "Ajustables con herramientas. Útiles en prototipos y ajustes finos de circuitos."
+                                    }
+                                ]
+                            }
+                        ],
+                        "caracteristicas_electricas": [
+                            {
+                                "nombre": "Capacitancia",
+                                "descripcion": "Cantidad de carga eléctrica que puede almacenar. Medida en Faradios (F), μF o pF."
+                            },
+                            {
+                                "nombre": "Tolerancia",
+                                "descripcion": "Variación permitida en la capacitancia respecto al valor nominal. Valores típicos: ±5%, ±10%, ±20%."
+                            },
+                            {
+                                "nombre": "Tensión Nominal",
+                                "descripcion": "Máxima tensión aplicable al capacitor sin causar fallas."
+                            },
+                            {
+                                "nombre": "Factor de Pérdida (DF)",
+                                "descripcion": "Indica la eficiencia del capacitor al almacenar y liberar energía."
+                            },
+                            {
+                                "nombre": "Resistencia en Serie Equivalente (ESR)",
+                                "descripcion": "Resistencia total del capacitor al paso de corriente alterna. Un ESR bajo es importante en alta frecuencia."
+                            },
+                            {
+                                "nombre": "Temperatura de Operación",
+                                "descripcion": "Rango de temperaturas en el cual el capacitor puede funcionar eficientemente."
+                            },
+                            {
+                                "nombre": "Autodescarga",
+                                "descripcion": "Pérdida gradual de carga almacenada cuando no está conectado a un circuito."
+                            }
+                        ],
+                        "lectura_valor": {
+                            "impreso": "Algunos capacitores tienen el valor impreso en su carcasa en μF o pF. Ejemplo: '10uF 450V'.",
+                            "codigo_ceramico": {
+                                "descripcion": "Para capacitores cerámicos se usa un código de 3 dígitos.",
+                                "interpretacion": {
+                                    "digitos_1_2": "Primera parte del valor en pF",
+                                    "digito_3": "Multiplicador (número de ceros a agregar)"
+                                },
+                                "ejemplo": {
+                                    "codigo": "104",
+                                    "calculo": "10 × 10^4 = 100,000 pF = 0.1 μF"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "inductor",
+                        "nombre": "Inductor / Bobina (L)",
+                        "descripcion": "Almacena energía en un campo magnético generado por el paso de la corriente a través de un conductor enrollado.",
+                        "unidad": "Henrio (H)",
+                        "ecuacion_caracteristica": "v(t) = L \\frac{di(t)}{dt}",
+                        "reactancia_inductiva": {
+                            "formula": "X_L = 2\\pi f L",
+                            "descripcion": "Su oposición aumenta proporcionalmente con la frecuencia."
+                        },
+                        "comportamiento": {
+                            "en_dc": "Se comporta como un cortocircuito (idealmente).",
+                            "en_ac": "Presenta alta oposición a frecuencias altas y cambios bruscos de corriente."
+                        },
+                        "funciones": [
+                            "Filtros de audio y radiofrecuencia",
+                            "Almacenamiento de energía en fuentes conmutadas",
+                            "Supresión de picos de corriente"
+                        ],
+                        "partes": [
+                            {
+                                "nombre": "Devanado (Inducido)",
+                                "descripcion": "Hilo conductor enrollado en espiras.",
+                                "funcion": "Almacenamiento de energía magnética."
+                            },
+                            {
+                                "nombre": "Espiras",
+                                "descripcion": "Vueltas individuales del hilo conductor.",
+                                "funcion": "Define el valor de inductancia (L)."
+                            },
+                            {
+                                "nombre": "Núcleo",
+                                "descripcion": "Soporte central (ferromagnético o aire).",
+                                "funcion": "Concentra y canaliza el flujo magnético. Multiplica la inductancia."
+                            },
+                            {
+                                "nombre": "Terminales",
+                                "descripcion": "Extremos de conexión del hilo conductor.",
+                                "funcion": "Contacto con el circuito eléctrico."
+                            }
+                        ],
+                        "tipos_por_nucleo": [
+                            {
+                                "id": "nucleo_aire",
+                                "nombre": "Núcleo de Aire",
+                                "permeabilidad": "μ ≈ 1",
+                                "caracteristicas": "Baja inductancia. Sin saturación. Mínimas pérdidas en altas frecuencias.",
+                                "aplicaciones": [
+                                    "Circuitos de radiofrecuencia (HF, VHF, UHF)",
+                                    "Sintonizadores",
+                                    "Filtros RF"
+                                ]
+                            },
+                            {
+                                "id": "nucleo_hierro",
+                                "nombre": "Núcleo de Hierro",
+                                "permeabilidad": "μ = 1,000 a 10,000",
+                                "caracteristicas": "Muy alta inductancia. Sufre saturación. Limitado a bajas frecuencias.",
+                                "aplicaciones": [
+                                    "Transformadores de red (50/60 Hz)",
+                                    "Inductores de potencia",
+                                    "Balastos"
+                                ]
+                            },
+                            {
+                                "id": "nucleo_ferrita",
+                                "nombre": "Núcleo de Ferrita",
+                                "permeabilidad": "μ = 100 a 5,000",
+                                "caracteristicas": "Permeabilidad media/alta. Aislante eléctrico con bajas pérdidas en MHz.",
+                                "aplicaciones": [
+                                    "Fuentes conmutadas (SMPS)",
+                                    "Filtros EMI/RFI",
+                                    "Cargadores"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "otros_componentes": [
+            {
+                "id": "transformador",
+                "nombre": "Transformadores",
+                "tipo": "Pasivo",
+                "descripcion": "Dispositivos basados en la inducción mutua entre dos bobinas. Vitales en señales analógicas para el acoplamiento de impedancias y la elevación o reducción de niveles de voltaje AC."
+            },
+            {
+                "id": "potenciometro",
+                "nombre": "Potenciómetros",
+                "tipo": "Pasivo",
+                "descripcion": "Resistores variables. Se utilizan para controlar parámetros como el volumen (ganancia), el tono o el umbral de disparo de un circuito."
+            }
+        ],
+        "tabla_comparativa_frecuencia": {
+            "titulo": "Comportamiento en Frecuencia",
+            "headers": [
+                "Componente",
+                "Símbolo",
+                "Impedancia (Z)",
+                "Respuesta a Alta Frecuencia"
+            ],
+            "filas": [
+                {
+                    "componente": "Resistor",
+                    "simbolo": "R",
+                    "impedancia": "Z = R",
+                    "respuesta_alta_frecuencia": "Constante"
+                },
+                {
+                    "componente": "Capacitor",
+                    "simbolo": "C",
+                    "impedancia": "Z = 1 / (jwC)",
+                    "respuesta_alta_frecuencia": "Disminuye (Pasa-altas)"
+                },
+                {
+                    "componente": "Inductor",
+                    "simbolo": "L",
+                    "impedancia": "Z = jwL",
+                    "respuesta_alta_frecuencia": "Aumenta (Pasa-bajas)"
+                }
+            ]
+        },
+        "aplicaciones_sistemas_analogicos": {
+            "titulo": "Aplicaciones en Sistemas Analógicos (Combinaciones)",
+            "items": [
+                {
+                    "nombre": "Filtros Pasivos",
+                    "descripcion": "Combinaciones RC, RL o RLC que permiten seleccionar o rechazar rangos específicos de frecuencia.",
+                    "tipos": [
+                        "Pasa-bajas",
+                        "Pasa-altas",
+                        "Pasa-banda"
+                    ]
+                },
+                {
+                    "nombre": "Circuitos Resonantes",
+                    "descripcion": "Inductor y capacitor en paralelo o serie que pueden sintonizar una frecuencia específica. Principio básico de las radiocomunicaciones."
+                },
+                {
+                    "nombre": "Redes de Retraso de Fase",
+                    "descripcion": "Utilizadas para ajustar la relación temporal entre dos señales analógicas."
+                }
+            ],
+            "nota": "En el mundo real los componentes no son puros. Un inductor real tiene una resistencia interna (R_series) y un capacitor real tiene pequeñas pérdidas de fuga. Estos efectos no ideales definen el comportamiento de una señal analógica de alta precisión."
+        }
+    }
+}
