@@ -29,7 +29,12 @@
         "archivo": "/assets/illustrations/clase-3/kcl-nodo.svg"
       },
       "analogia": "Imagina un nodo como una cruceta de tuberías: el caudal que llega debe igualar el caudal que sale. Si entran 5 A, deben salir 5 A en total.",
-      "convencion_signos": "Corriente que entra al nodo: signo positivo. Corriente que sale: signo negativo (o viceversa, siempre que sea consistente en todo el circuito)."
+      "convencion_signos": [
+        {
+          "caso": "Nodo (LCK)",
+          "regla": "Corriente que entra al nodo: signo positivo. Corriente que sale: signo negativo (o viceversa, siempre que sea consistente)."
+        }
+      ]
     },
     {
       "id": "lvk",

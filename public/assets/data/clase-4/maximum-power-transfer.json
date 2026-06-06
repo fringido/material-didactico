@@ -133,9 +133,9 @@
     "ancho": 800,
     "alto": 500,
     "diagrama": [
-      { "tipo": "fuente", "id": "V_th", "valor": "12V", "x": 100, "y": 200, "rotacion": 90 },
-      { "tipo": "resistor", "id": "R_th", "valor": "4Ω", "x": 200, "y": 100, "rotacion": 0 },
-      { "tipo": "resistor", "id": "R_L", "valor": "4Ω", "x": 400, "y": 100, "rotacion": 0 },
+      { "tipo": "fuente", "id": "Vth", "valor": "12V", "x": 100, "y": 200, "rotacion": 90 },
+      { "tipo": "resistor", "id": "Rth", "valor": "4Ω", "x": 200, "y": 100, "rotacion": 0 },
+      { "tipo": "resistor", "id": "RL", "valor": "4Ω", "x": 400, "y": 100, "rotacion": 0 },
       { "tipo": "tierra", "id": "GND", "x": 300, "y": 300 },
       { "tipo": "linea", "x1": 100, "y1": 100, "x2": 200, "y2": 100 },
       { "tipo": "linea", "x1": 200, "y1": 100, "x2": 400, "y2": 100 },

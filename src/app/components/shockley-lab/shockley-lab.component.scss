@@ -6,418 +6,165 @@
   flex-direction: column;
   gap: $spacing-8;
   color: $text-primary;
-  padding: $spacing-6 0;
 }
 
-// Intro
-.lab-intro {
-  position: relative;
+// ─── Container Principal ────────────────────────────────────────────────────
+.nm-container {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-xl;
   overflow: hidden;
-
-  &__title {
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin-bottom: $spacing-4;
-  }
-
-  &__desc {
-    font-size: $font-size-base;
-    color: $text-secondary;
-    line-height: $line-height-relaxed;
-  }
-}
-
-// Formula Section
-.formula-section {
-  position: relative;
-  overflow: hidden;
-  padding: $spacing-8;
-
-  &__bg-icon {
-    position: absolute;
-    top: -3rem;
-    right: -3rem;
-    opacity: 0.06;
-    pointer-events: none;
-    color: $color-primary;
-
-    svg {
-      width: 300px;
-      height: 300px;
-    }
-  }
-
-  &__title {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-semibold;
-    color: $text-primary;
-    display: flex;
-    align-items: center;
-    gap: $spacing-2;
-    margin-bottom: $spacing-8;
-
-    .icon-info {
-      color: $color-info;
-    }
-  }
-
-  .icon-info {
-    color: $color-info;
-  }
-}
-
-.formula-container {
   display: flex;
   flex-direction: column;
-  gap: $spacing-8;
-  align-items: center;
-
-  @media (min-width: $breakpoint-lg) {
-    flex-direction: row;
-    align-items: flex-start;
-  }
+  gap: 0;
+  margin: $spacing-2 0;
 }
 
-.formula-visual {
-  width: 100%;
+// ─── Tabs / Header ───────────────────────────────────────────────────────────
+.nm-tabs {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-4 0;
+  border-bottom: 1px solid $border-primary;
+  background: $bg-primary;
+  flex-wrap: wrap;
+}
+
+.nm-tab {
+  display: flex;
   align-items: center;
   gap: $spacing-2;
-  padding: $spacing-6;
-  border-radius: $radius-lg;
-  border: 1px solid $border-secondary;
+  padding: $spacing-3 $spacing-5;
   background: $bg-secondary;
-  color: $text-primary;
-  min-height: 12rem;
-  font-family: $font-mono;
-  overflow-x: auto;
+  border: 1px solid $border-primary;
+  border-bottom: none;
+  border-radius: $radius-md $radius-md 0 0;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-family: $font-primary;
+  cursor: pointer;
+  transition: all $transition-base $ease-in-out;
+  margin-bottom: -1px;
 
-  .term {
-    min-width: 32px;
-    min-height: 32px;
-    padding: $spacing-1 $spacing-2;
-    border-radius: $radius-md;
-    border: 1px solid transparent;
-    font-size: 1.1rem;
-    color: $text-primary;
-    transition: all $transition-fast $ease-in-out;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .term:hover {
-    background: rgba($color-primary, 0.05);
-    border-color: rgba($color-primary, 0.2);
-  }
-
-  .term.active {
-    background: rgba($color-primary, 0.1);
-    border-color: $color-primary;
-    box-shadow: 0 0 10px rgba($color-primary, 0.1);
-  }
-
-  .term-i.active,
-  .term-i:hover { color: $color-info; border-color: $color-info; background: rgba($color-info, 0.1); }
-  
-  .term-is.active,
-  .term-is:hover { color: $color-primary; border-color: $color-primary; background: rgba($color-primary, 0.1); }
-  
-  .term-e.active,
-  .term-e:hover { color: $text-primary; border-color: $border-secondary; background: $bg-tertiary; }
-  
-  .term-vd.active,
-  .term-vd:hover { color: $color-success; border-color: $color-success; background: rgba($color-success, 0.1); }
-  
-  .term-n.active,
-  .term-n:hover { color: $color-warning; border-color: $color-warning; background: rgba($color-warning, 0.1); }
-  
-  .term-vt.active,
-  .term-vt:hover { color: $color-error; border-color: $color-error; background: rgba($color-error, 0.1); }
-
-  .operator,
-  .number,
-  .bracket {
-    color: $text-secondary;
-    font-size: 1.2rem;
-  }
-
-  .bracket {
-    font-weight: 200;
-    font-size: 2.5rem;
-  }
-
-  .exponent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(-1.4rem);
-    margin: 0 2px;
-    
-    .term {
-      min-width: 26px;
-      min-height: 26px;
-      font-size: 0.85rem;
-      padding: 2px 4px;
-    }
-
-    &-top {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      border-bottom: 1px solid $border-secondary;
-      padding-bottom: 2px;
-    }
-
-    &-bottom {
-      display: flex;
-      justify-content: center;
-      gap: 2px;
-      padding-top: 2px;
-      width: 100%;
-    }
-  }
-}
-
-.formula-desc-box {
-  width: 100%;
-  min-height: 160px;
-  padding: $spacing-6;
-  border-radius: $radius-lg;
-  border: 1px solid $border-secondary;
-  background: rgba($bg-secondary, 0.85);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-
-  .formula-desc-title {
-    margin: 0 0 $spacing-3 0;
-    display: flex;
-    align-items: center;
-    gap: $spacing-2;
-    font-size: $font-size-lg;
+  &--active {
+    background: $bg-secondary;
+    color: $color-primary-light;
+    border-color: $border-secondary;
+    border-bottom-color: $bg-secondary;
     font-weight: $font-weight-semibold;
-    color: $text-primary;
   }
-
-  .formula-desc-text {
-    margin: 0;
-    color: $text-secondary;
-    line-height: $line-height-relaxed;
-    font-size: $font-size-base;
-  }
-
-  .color-blue { color: $color-info; }
-  .color-purple { color: $color-primary; }
-  .color-gray { color: $text-secondary; }
-  .color-emerald { color: $color-success; }
-  .color-orange { color: $color-warning; }
-  .color-red { color: $color-error; }
 }
 
-// Grid Layout
-.grid-layout {
+// ─── Layout Principal ─────────────────────────────────────────────────────────
+.nm-layout {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: $spacing-8;
-  @media (min-width: 1024px) {
-    grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  min-height: 520px;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
   }
 }
 
-// Controls
-.controls-panel {
+// ─── Panel de Visualización (Izquierdo) ──────────────────────────────────────
+.nm-viz-panel {
   padding: $spacing-6;
+  border-right: 1px solid $border-primary;
   display: flex;
   flex-direction: column;
   gap: $spacing-6;
-}
+  background: $bg-secondary;
 
-.controls-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.controls-title {
-  margin: 0;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  color: $text-primary;
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-}
-
-.icon-settings {
-  color: $text-secondary;
-}
-
-.control-group {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-3;
-}
-
-.control-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: $spacing-4;
-}
-
-.control-label {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  color: $text-secondary;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-}
-
-.icon-temp {
-  color: $color-error;
-}
-
-.control-value {
-  font-size: $font-size-xs;
-  font-family: $font-mono;
-}
-
-.slider {
-  width: 100%;
-  height: 4px;
-  background: $border-secondary;
-  border-radius: $radius-full;
-  appearance: none;
-  outline: none;
-
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid $bg-secondary;
-    cursor: pointer;
-    background: $text-primary;
+  @media (max-width: $breakpoint-lg) {
+    border-right: none;
+    border-bottom: 1px solid $border-primary;
   }
-
-  &.slider-red::-webkit-slider-thumb { background: $color-error; }
-  &.slider-orange::-webkit-slider-thumb { background: $color-warning; }
-  &.slider-purple::-webkit-slider-thumb { background: $color-primary; }
 }
 
-.control-help {
-  margin: 0;
-  color: $text-secondary;
+.viz-title {
   font-size: $font-size-xs;
-  line-height: $line-height-relaxed;
-}
-
-.live-stats {
-  margin-top: auto;
-  padding-top: $spacing-6;
-  border-top: 1px solid $border-secondary;
-}
-
-.stats-title {
-  margin: 0 0 $spacing-3 0;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $text-secondary;
+  font-weight: $font-weight-bold;
+  color: $text-tertiary;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
-.stats-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: $text-secondary;
-  font-size: $font-size-sm;
+// ─── Visualización de Gráfica ────────────────────────────────────────────────
+.graph-card {
+  background: #0D1117;
+  border-radius: $radius-lg;
+  border: 1px solid $border-primary;
+  padding: $spacing-4;
+  height: 300px;
+  position: relative;
+  
+  .svg-container { width: 100%; height: 100%; }
 }
 
-.stats-val {
-  color: $text-primary;
-  font-family: $font-mono;
-  font-weight: $font-weight-medium;
+.axis-label { font-size: 9px; fill: #475569; font-family: $font-mono; }
+.axis-title { position: absolute; font-size: 10px; color: #64748B; font-weight: bold; }
+
+// ─── Fórmula Interactiva ────────────────────────────────────────────────────
+.formula-card {
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  
+  .formula-visual {
+    display: flex; justify-content: center; align-items: center; gap: 8px;
+    font-family: $font-mono; font-size: 1.2rem; margin-bottom: $spacing-4;
+    
+    .term {
+      padding: 2px 6px; border-radius: 4px; cursor: pointer; border: 1px solid transparent;
+      &.active { background: rgba($color-primary, 0.1); border-color: $color-primary; color: $color-primary-light; }
+    }
+  }
+  
+  .formula-desc { font-size: $font-size-sm; color: $text-secondary; border-top: 1px dashed $border-primary; padding-top: $spacing-3; }
 }
 
-// Graph Panel
-.graph-panel {
+// ─── Panel Lateral (Derecho) ────────────────────────────────────────────────
+.nm-side-panel {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  gap: 0;
+  background: $bg-primary;
 }
 
-.graph-header {
-  padding: $spacing-6;
-  border-bottom: 1px solid $border-secondary;
+.nm-controls {
+  padding: $spacing-5;
+  border-bottom: 1px solid $border-primary;
 }
 
-.graph-header h3 {
-  margin: 0 0 $spacing-2 0;
-  font-size: $font-size-xl;
-  font-weight: $font-weight-semibold;
-  color: $text-primary;
+.nm-ctrl-row {
+  display: flex; flex-direction: column; gap: $spacing-2; margin-bottom: $spacing-4;
+  label { font-size: $font-size-xs; color: $text-secondary; }
 }
 
-.graph-header p {
-  margin: 0;
-  font-size: $font-size-sm;
-  color: $text-secondary;
+.nm-slider-wrap { display: flex; align-items: center; gap: $spacing-3; }
+.nm-slider { flex: 1; height: 4px; accent-color: $color-primary; }
+.nm-val { font-size: $font-size-xs; font-family: $font-mono; color: $color-primary-light; min-width: 60px; text-align: right; }
+
+// ─── Métricas ──────────────────────────────────────────────────────────────────
+.nm-metrics {
+  padding: $spacing-5; display: flex; flex-direction: column; gap: $spacing-4;
 }
 
-.graph-content {
-  padding: $spacing-6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: $bg-secondary;
+.nm-metric-card {
+  background: $bg-card; border: 1px solid $border-primary; border-left: 4px solid $color-primary; border-radius: $radius-md; padding: $spacing-4;
+  &:nth-child(2) { border-left-color: $color-accent-blue; }
 }
 
-.svg-container {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  aspect-ratio: 3 / 2;
-  border: 1px solid $border-secondary;
-  background: $bg-secondary;
-  border-radius: $radius-lg;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
+.nm-metric-label { font-size: $font-size-xs; color: $text-secondary; margin-bottom: 2px; }
+.nm-metric-value { font-size: $font-size-base; font-weight: $font-weight-bold; color: $text-primary; font-family: $font-mono; }
 
-.axis-label {
-  font-size: $font-size-xs;
-  fill: $text-secondary;
-  font-family: $font-primary;
-}
+.nm-footer { padding: $spacing-3 $spacing-6; background: $bg-tertiary; border-top: 1px solid $border-primary; display: flex; justify-content: space-between; align-items: center; }
 
-.axis-label-right {
-  text-anchor: end;
-}
-
-.axis-title {
-  position: absolute;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $text-secondary;
-  background: rgba($bg-secondary, 0.9);
-  padding: 0 $spacing-2;
-  border-radius: $radius-sm;
-}
-
-.axis-title-x {
-  right: $spacing-4;
-  bottom: 4rem;
-}
-
-.axis-title-y {
-  left: 25%;
-  top: $spacing-4;
+// Intro
+.lab-header {
+  padding: $spacing-8; background: $bg-card; border-radius: $radius-xl; border: 1px solid $border-primary;
+  .lab-title { font-size: $font-size-2xl; font-weight: $font-weight-bold; margin-bottom: $spacing-2; }
+  .lab-definition { color: $text-secondary; line-height: 1.6; }
 }

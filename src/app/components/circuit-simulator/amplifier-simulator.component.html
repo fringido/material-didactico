@@ -1,124 +1,143 @@
-<div class="simulator-container">
-  <div class="simulator-header">
-    <h3 class="simulator-title">🔊 Simulador de Amplificador</h3>
-    <p class="simulator-desc">Experimenta con diferentes configuraciones de amplificadores BJT</p>
+<div class="nm-container">
+
+  <!-- ══════════════════════════ TAB SWITCHER / HEADER ══════════════════════════ -->
+  <div class="nm-tabs">
+    <div class="nm-tab nm-tab--active">
+      <span class="nm-tab__icon">🔊</span>
+      <span>Simulador de Amplificadores BJT</span>
+    </div>
+    <button class="nm-tab nm-tab--anim" (click)="togglePlay()">
+      {{ isPlaying() ? '⏸' : '▶' }} {{ isPlaying() ? 'Pausar' : 'Animar' }}
+    </button>
   </div>
 
-  <div class="simulator-body">
+  <div class="nm-layout">
     
-    <!-- Controles -->
-    <div class="controls-panel">
-      <div class="control-group">
-        <label class="control-label">Configuración</label>
-        <select [(ngModel)]="configuration" class="control-select">
-          <option value="emisor_comun">Emisor Común</option>
-          <option value="colector_comun">Colector Común</option>
-          <option value="base_comun">Base Común</option>
-        </select>
-      </div>
+    <!-- ══════════════════════════ PANEL IZQUIERDO: VISUALIZACIÓN ══════════════════════════ -->
+    <div class="nm-viz-panel">
+      
+      <!-- Procesamiento de Señales -->
+      <div class="viz-section">
+        <h5 class="viz-title">Comportamiento Dinámico de la Señal</h5>
+        <div class="signals-flow">
+          <!-- Entrada -->
+          <div class="signal-card">
+            <p class="signal-label">Señal V<sub>in</sub></p>
+            <svg class="signal-svg" viewBox="0 0 300 80">
+              <line x1="0" y1="40" x2="300" y2="40" stroke="#1e293b" stroke-width="1" stroke-dasharray="2,2"/>
+              <path [attr.d]="generateWavePath(true)" fill="none" stroke="#60A5FA" stroke-width="2"/>
+            </svg>
+            <span class="text-center text-[10px] text-primary-light" [appKatex]="'V_{in} = ' + inputVoltage() + 'V'"></span>
+          </div>
 
-      <div class="control-group">
-        <label class="control-label">
-          Voltaje Entrada: <span class="control-value">{{ inputVoltage() }} V</span>
-        </label>
-        <input type="range" [(ngModel)]="inputVoltage" min="0.1" max="5" step="0.1" class="control-slider">
-      </div>
+          <!-- Nodo Amplificador -->
+          <div class="amp-node">
+            <span>{{ (outputVoltage() / inputVoltage()).toFixed(1) }}x</span>
+            @if (phaseShift() === 180) {
+              <span class="amp-node__phase">Inversión 180°</span>
+            }
+          </div>
 
-      <div class="control-group">
-        <label class="control-label">
-          Ganancia (β): <span class="control-value">{{ gain() }}</span>
-        </label>
-        <input type="range" [(ngModel)]="gain" min="1" max="200" step="1" class="control-slider">
-      </div>
-
-      <div class="control-group">
-        <label class="control-label">
-          Frecuencia: <span class="control-value">{{ frequency() }} Hz</span>
-        </label>
-        <input type="range" [(ngModel)]="frequency" min="0.5" max="5" step="0.5" class="control-slider">
-      </div>
-
-      <button (click)="togglePlay()" class="btn-play">
-        {{ isPlaying() ? '⏸ Pausar' : '▶ Reproducir' }}
-      </button>
-    </div>
-
-    <!-- Visualización de ondas -->
-    <div class="waves-panel">
-      <div class="wave-container">
-        <p class="wave-label">Señal de Entrada</p>
-        <svg class="wave-svg" viewBox="0 0 300 80">
-          <line x1="0" y1="40" x2="300" y2="40" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
-          <path [attr.d]="generateWavePath(true)" fill="none" stroke="#3b82f6" stroke-width="2"/>
-        </svg>
-        <div class="wave-info">
-          <span [appKatex]="'V_{in} = ' + inputVoltage() + ' V'" [inline]="true"></span>
+          <!-- Salida -->
+          <div class="signal-card">
+            <p class="signal-label">Señal V<sub>out</sub></p>
+            <svg class="signal-svg" viewBox="0 0 300 80">
+              <line x1="0" y1="40" x2="300" y2="40" stroke="#1e293b" stroke-width="1" stroke-dasharray="2,2"/>
+              <path [attr.d]="generateWavePath(false)" fill="none" stroke="#34D399" stroke-width="2.5"/>
+            </svg>
+            <span class="text-center text-[10px] text-success" [appKatex]="'V_{out} = ' + outputVoltage().toFixed(1) + 'V'"></span>
+          </div>
         </div>
       </div>
 
-      <div class="amplifier-icon">
-        <div class="amp-triangle">
-          <span class="amp-label">A = {{ (outputVoltage() / inputVoltage()).toFixed(1) }}</span>
-        </div>
-        <div class="phase-indicator" *ngIf="phaseShift() === 180">
-          <span class="badge badge--warning badge--sm">Fase: 180°</span>
-        </div>
-      </div>
-
-      <div class="wave-container">
-        <p class="wave-label">Señal de Salida</p>
-        <svg class="wave-svg" viewBox="0 0 300 80">
-          <line x1="0" y1="40" x2="300" y2="40" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
-          <path [attr.d]="generateWavePath(false)" fill="none" stroke="#10b981" stroke-width="2"/>
-        </svg>
-        <div class="wave-info">
-          <span [appKatex]="'V_{out} = ' + outputVoltage().toFixed(2) + ' V'" [inline]="true"></span>
+      <!-- Detalles de la Configuración -->
+      <div class="viz-section">
+        <h5 class="viz-title">Características de {{ getConfigInfo().nombre }}</h5>
+        <div class="content-grid content-grid--2 gap-3">
+          <div class="nm-metric-card p-3">
+            <p class="nm-metric-label">Ganancia Típica</p>
+            <p class="text-sm font-medium">V: {{ getConfigInfo().ganancia_v }} | I: {{ getConfigInfo().ganancia_i }}</p>
+          </div>
+          <div class="nm-metric-card p-3">
+            <p class="nm-metric-label">Impedancias</p>
+            <p class="text-sm font-medium">In: {{ getConfigInfo().impedancia_in }} | Out: {{ getConfigInfo().impedancia_out }}</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Información de configuración -->
-    <div class="config-info">
-      <h4 class="config-info__title">{{ getConfigInfo().nombre }}</h4>
-      <div class="config-specs">
-        <div class="spec-item">
-          <span class="spec-label">Ganancia Voltaje:</span>
-          <span class="spec-value">{{ getConfigInfo().ganancia_v }}</span>
+    <!-- ══════════════════════════ PANEL DERECHO: CONTROLES + RESULTADOS ══════════════════════════ -->
+    <div class="nm-side-panel">
+      
+      <!-- Controles -->
+      <div class="nm-controls">
+        <h5 class="nm-ctrl-title">⚙️ Parámetros</h5>
+        
+        <div class="nm-ctrl-row">
+          <label>Configuración BJT</label>
+          <select [(ngModel)]="configuration" class="control-select">
+            <option value="emisor_comun">Emisor Común</option>
+            <option value="colector_comun">Colector Común</option>
+            <option value="base_comun">Base Común</option>
+          </select>
         </div>
-        <div class="spec-item">
-          <span class="spec-label">Ganancia Corriente:</span>
-          <span class="spec-value">{{ getConfigInfo().ganancia_i }}</span>
-        </div>
-        <div class="spec-item">
-          <span class="spec-label">Z entrada:</span>
-          <span class="spec-value">{{ getConfigInfo().impedancia_in }}</span>
-        </div>
-        <div class="spec-item">
-          <span class="spec-label">Z salida:</span>
-          <span class="spec-value">{{ getConfigInfo().impedancia_out }}</span>
-        </div>
-        <div class="spec-item">
-          <span class="spec-label">Desfase:</span>
-          <span class="spec-value">{{ getConfigInfo().fase }}</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Métricas -->
-    <div class="metrics-panel">
-      <div class="metric-card">
-        <p class="metric-label">Ganancia de Voltaje</p>
-        <p class="metric-value">{{ (outputVoltage() / inputVoltage()).toFixed(2) }}</p>
-      </div>
-      <div class="metric-card">
-        <p class="metric-label">Ganancia de Potencia (dB)</p>
-        <p class="metric-value">{{ powerGain().toFixed(2) }} dB</p>
-      </div>
-      <div class="metric-card">
-        <p class="metric-label">Desfase</p>
-        <p class="metric-value">{{ phaseShift() }}°</p>
-      </div>
-    </div>
+        <div class="nm-ctrl-row">
+          <label>Voltaje de Entrada (V<sub>in</sub>)</label>
+          <div class="nm-slider-wrap">
+            <input type="range" [(ngModel)]="inputVoltage" min="0.1" max="5" step="0.1" class="nm-slider">
+            <span class="nm-val">{{ inputVoltage() }} V</span>
+          </div>
+        </div>
 
+        <div class="nm-ctrl-row">
+          <label>Ganancia del BJT (β)</label>
+          <div class="nm-slider-wrap">
+            <input type="range" [(ngModel)]="gain" min="10" max="300" step="10" class="nm-slider">
+            <span class="nm-val">{{ gain() }}</span>
+          </div>
+        </div>
+
+        <div class="nm-ctrl-row">
+          <label>Frecuencia de Operación</label>
+          <div class="nm-slider-wrap">
+            <input type="range" [(ngModel)]="frequency" min="0.5" max="5" step="0.5" class="nm-slider">
+            <span class="nm-val">{{ frequency() }} Hz</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métricas / Resultados -->
+      <div class="nm-metrics">
+        <h5 class="nm-ctrl-title">📊 Resultados</h5>
+        
+        <div class="nm-metric-card">
+          <p class="nm-metric-label">Ganancia de Voltaje (A<sub>v</sub>)</p>
+          <p class="nm-metric-value">{{ (outputVoltage() / inputVoltage()).toFixed(2) }}</p>
+          <div class="nm-metric-formula" [appKatex]="'A_v = V_{out} / V_{in}'"></div>
+        </div>
+
+        <div class="nm-metric-card">
+          <p class="nm-metric-label">Potencia Relativa</p>
+          <p class="nm-metric-value">{{ powerGain().toFixed(1) }} <span class="nm-unit">dB</span></p>
+          <div class="nm-metric-formula" [appKatex]="'G_{dB} = 20 \\log(A_v)'"></div>
+        </div>
+
+        <div class="nm-metric-card">
+          <p class="nm-metric-label">Desfase de Señal</p>
+          <p class="nm-metric-value">{{ phaseShift() }}°</p>
+          <p class="text-[10px] text-secondary mt-1">{{ phaseShift() === 180 ? 'Señal Invertida' : 'En Fase' }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nm-footer">
+    <div class="flex items-center gap-2">
+      <div class="spinner" [style.visibility]="isPlaying() ? 'visible' : 'hidden'"></div>
+      <span class="text-xs text-secondary">{{ isPlaying() ? 'Amplificando...' : 'Pausado' }}</span>
+    </div>
+    <span class="text-xs text-tertiary">Análisis de Pequeña Señal</span>
   </div>
 </div>

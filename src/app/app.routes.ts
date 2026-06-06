@@ -32,9 +32,14 @@ export const routes: Routes = [
   { path: 'modulo/:modulo/unidad/:unidad', component: SemanaIndexComponent },
   { path: 'modulo/:modulo/unidad/:unidad/tema/:id', component: TemaDetalleComponent },
   
-  // Rutas específicas de temas AC
+  // Rutas específicas de temas por Clase
   { path: 'clase/ac/tema/:id', component: ClaseAcComponent },
-  { path: 'clase/:clase/tema/:id', component: Clase4Component },
+  { path: 'clase/1/tema/:id', component: Clase1Component },
+  { path: 'clase/2/tema/:id', component: Clase2Component },
+  { path: 'clase/4/tema/:id', component: Clase4Component },
+  { path: 'clase/5/tema/:id', component: Clase5Component },
+  { path: 'clase/6/tema/:id', component: Clase6Component },
+  { path: 'clase/:clase/tema/:id', component: TemaDetalleComponent }, // Atrapa Clase 3 y cualquier otra
 
   // Rutas antiguas /clase/* que muestran las páginas de clase completas
   { path: 'clase/ac', component: ClaseAcComponent, pathMatch: 'full' },

@@ -1,261 +1,324 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-.simulator-container {
-  background: $bg-card;
-  border: 1px solid $border-primary;
+// ─── Container Principal (Mismo estilo que Nodos/Mallas) ──────────────────────
+.nm-container {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
   border-radius: $radius-xl;
-  padding: $spacing-6;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   margin: $spacing-6 0;
 }
 
-.simulator-card {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.simulator-card__content {
-  display: grid;
-  grid-template-columns: 1.6fr 0.9fr;
-  gap: $spacing-6;
-  align-items: stretch;
-}
-
-@media (max-width: $breakpoint-lg) {
-  .simulator-card__content {
-    grid-template-columns: 1fr;
-  }
-}
-
-.simulator-header {
-  margin-bottom: $spacing-6;
-  text-align: center;
-}
-
-.simulator-title {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
-  margin-bottom: $spacing-2;
-}
-
-.simulator-desc {
-  font-size: $font-size-sm;
-  color: $text-secondary;
-}
-
-.simulator-body {
+// ─── Tabs / Header ────────────────────────────────────────────────────────────
+.nm-tabs {
   display: flex;
-  flex-direction: column;
-  gap: $spacing-6;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-4 0;
+  border-bottom: 1px solid $border-primary;
+  background: $bg-primary;
+  flex-wrap: wrap;
 }
 
-/* Grid workspace */
-.workspace-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: $spacing-6;
-
-  @media (max-width: $breakpoint-md) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.diagram-panel {
-  background: $bg-secondary;
-  border-radius: $radius-lg;
-  padding: $spacing-5;
-  border: 1px solid $border-primary;
+.nm-tab {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-bottom: none;
+  border-radius: $radius-md $radius-md 0 0;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-family: $font-primary;
+  cursor: pointer;
+  transition: all $transition-base $ease-in-out;
+  margin-bottom: -1px;
+
+  &--active {
+    background: $bg-secondary;
+    color: $color-primary-light;
+    border-color: $border-secondary;
+    border-bottom-color: $bg-secondary;
+    font-weight: $font-weight-semibold;
+  }
+
+  &--anim {
+    margin-left: auto;
+    background: rgba($color-accent-green, 0.1);
+    border-color: rgba($color-accent-green, 0.3);
+    color: $color-accent-green;
+    font-weight: $font-weight-semibold;
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    font-size: $font-size-xs;
+
+    &:hover {
+      background: rgba($color-accent-green, 0.2);
+    }
+  }
 }
 
-.diagram-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
+// ─── Layout Principal ──────────────────────────────────────────────────────────
+.nm-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 0;
+  min-height: 520px;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.diagram-label {
-  font-size: 12px;
-  font-family: system-ui, sans-serif;
-  fill: var(--text-secondary);
+// ─── Panel Diagrama / Visualización ───────────────────────────────────────────
+.nm-diagram-panel {
+  padding: $spacing-6;
+  border-right: 1px solid $border-primary;
+  display: flex;
+  flex-direction: column;
+  background: $bg-secondary;
+
+  @media (max-width: $breakpoint-lg) {
+    border-right: none;
+    border-bottom: 1px solid $border-primary;
+  }
 }
 
-.diagram-label--important {
-  font-size: 14px;
-  font-weight: 700;
-  fill: var(--text-primary);
-}
-
-.panel-subtitle {
+.nm-panel-title {
   font-size: $font-size-base;
   font-weight: $font-weight-semibold;
   color: $text-primary;
-  margin-bottom: $spacing-4;
-  width: 100%;
+  margin: 0 0 $spacing-1;
 }
 
-.svg-diagram-wrapper {
-  width: 100%;
-  max-width: 320px;
-  background: $bg-primary;
-  border-radius: $radius-md;
-  padding: $spacing-4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid $border-secondary;
-}
-
-.circuit-svg {
-  width: 100%;
-  height: auto;
-  color: $text-secondary;
-
-  rect, circle, polygon {
-    transition: all $transition-base;
-  }
-}
-
-/* Controls panel */
-.controls-panel {
-  background: $bg-secondary;
-  border: 1px solid $border-primary;
-  border-radius: $radius-lg;
-  padding: $spacing-5;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-4;
-  justify-content: center;
-}
-
-.control-group {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2;
-}
-
-.control-label {
+.nm-panel-subtitle {
   font-size: $font-size-sm;
   color: $text-secondary;
-  display: flex;
-  justify-content: space-between;
+  margin: 0 0 $spacing-6;
+  font-family: $font-mono;
 }
 
-.control-value {
-  color: $color-primary-light;
-  font-weight: $font-weight-bold;
-}
-
-.control-slider {
+.nm-svg {
   width: 100%;
-  accent-color: $color-primary;
-  cursor: pointer;
-}
-
-.btn-play {
-  padding: $spacing-2 $spacing-4;
-  background: $bg-tertiary;
-  color: $text-primary;
-  border: 1px solid $border-primary;
-  border-radius: $radius-md;
-  cursor: pointer;
-  font-weight: $font-weight-medium;
-  transition: all $transition-base;
-
-  &:hover {
-    background: $bg-hover-solid;
-    border-color: $border-secondary;
-  }
-}
-
-/* Waves Panel */
-.waves-panel {
-  background: $bg-secondary;
-  border: 1px solid $border-primary;
+  height: auto;
+  min-height: 280px;
   border-radius: $radius-lg;
-  padding: $spacing-5;
-}
+  background: #0D1117;
+  border: 1px solid $border-primary;
+  margin-bottom: $spacing-6;
 
-.waves-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-4;
-
-  @media (max-width: $breakpoint-sm) {
-    grid-template-columns: 1fr;
+  text {
+    transition: all 0.2s ease;
   }
 }
 
-.wave-box {
-  background: $bg-primary;
-  border: 1px solid $border-secondary;
-  border-radius: $radius-md;
-  padding: $spacing-3;
+.diagram-label {
+  font-size: 11px;
+  font-family: $font-mono;
+  fill: #94A3B8;
+}
+
+.diagram-label--important {
+  font-size: 13px;
+  font-weight: 700;
+  fill: #F1F5F9;
+}
+
+// ─── Visualización de Ondas / Gráficas ─────────────────────────────────────────
+.wave-viewer {
+  background: #0D1117;
+  border-radius: $radius-lg;
+  border: 1px solid $border-primary;
+  padding: $spacing-4;
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
-
-  &__tag {
-    font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
-    padding: $spacing-1 $spacing-2;
-    border-radius: $radius-sm;
-    align-self: flex-start;
-  }
+  height: 180px;
 }
 
 .wave-svg {
   width: 100%;
-  height: 100px;
-  background: $bg-primary;
+  height: 100%;
+  
+  path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 }
 
-/* Metrics panel */
-.metrics-panel {
-  background: $bg-secondary;
-  border: 1px solid $border-primary;
-  border-radius: $radius-lg;
-  padding: $spacing-5;
-}
-
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+.wave-legend {
+  display: flex;
   gap: $spacing-4;
+  margin-top: $spacing-2;
+  justify-content: center;
 }
 
-.metric-card {
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-label {
+  font-size: $font-size-xs;
+  color: $text-tertiary;
+}
+
+// ─── Panel Lateral (Controles + Métricas) ──────────────────────────────────────
+.nm-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   background: $bg-primary;
-  border: 1px solid $border-secondary;
-  border-radius: $radius-md;
-  padding: $spacing-4;
-  text-align: center;
+}
+
+.nm-controls {
+  padding: $spacing-5;
+  border-bottom: 1px solid $border-primary;
+}
+
+.nm-ctrl-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-tertiary;
+  margin: 0 0 $spacing-4;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nm-ctrl-row {
   display: flex;
   flex-direction: column;
   gap: $spacing-2;
+  margin-bottom: $spacing-4;
+
+  label {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    font-weight: $font-weight-medium;
+  }
 }
 
-.metric-label {
+.nm-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.nm-slider {
+  flex: 1;
+  height: 4px;
+  border-radius: $radius-full;
+  background: $bg-tertiary;
+  accent-color: $color-primary;
+  cursor: pointer;
+}
+
+.nm-val-input {
+  width: 54px;
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-sm;
+  color: $color-primary-light;
+  font-family: $font-mono;
   font-size: $font-size-xs;
-  color: $text-tertiary;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-align: center;
+  padding: 2px;
+  
+  &:focus {
+    border-color: $color-primary;
+    outline: none;
+  }
 }
 
-.metric-value {
+// ─── Métricas ──────────────────────────────────────────────────────────────────
+.nm-metrics {
+  padding: $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  flex: 1;
+}
+
+.nm-metric-card {
+  background: $bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  border-left: 4px solid $color-primary;
+  transition: transform $transition-fast $ease-in-out;
+  border: 1px solid $border-primary;
+  border-left-width: 4px;
+
+  &:hover {
+    transform: translateX(4px);
+    border-color: $border-secondary;
+  }
+
+  &:nth-child(2) { border-left-color: $color-accent-blue; }
+  &:nth-child(3) { border-left-color: $color-accent-green; }
+  &:nth-child(4) { border-left-color: $color-accent-yellow; }
+}
+
+.nm-metric-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  margin: 0 0 $spacing-1;
+  font-weight: $font-weight-medium;
+}
+
+.nm-metric-value {
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;
-  color: $color-success;
+  color: $text-primary;
+  font-family: $font-mono;
+  margin: 0 0 $spacing-3;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
 }
 
-.metric-formula {
+.nm-unit {
+  font-size: $font-size-sm;
+  color: $text-tertiary;
+  font-weight: $font-weight-normal;
+}
+
+.nm-metric-formula {
   font-size: $font-size-xs;
-  color: $color-accent-yellow;
-  padding: $spacing-1 0;
+  opacity: 0.8;
+  padding-top: $spacing-2;
   border-top: 1px dashed $border-primary;
+}
+
+// ─── Footer / Misc ────────────────────────────────────────────────────────────
+.simulator-card__footer {
+  padding: $spacing-3 $spacing-6;
+  background: $bg-tertiary;
+  border-top: 1px solid $border-primary;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid $border-primary;
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(3600deg); }
 }

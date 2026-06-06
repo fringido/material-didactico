@@ -126,6 +126,30 @@
               <p class="text-body"><strong>Nota:</strong> {{ ley.nota_dificultad }}</p>
             }
           </div>
+
+          <!-- Análisis de Nodos / Mallas (Específico de Kirchhoff) -->
+          @if (ley.analisis_nodos) {
+            <div class="content-panel mt-3">
+              <h3 class="section__title section__title--sm">Análisis de Nodos (LCK)</h3>
+              <p class="text-body"><strong>Objetivo:</strong> {{ ley.analisis_nodos.objetivo }}</p>
+              <p class="text-secondary"><strong>Enfoque práctico:</strong> {{ ley.analisis_nodos.enfoque_practico }}</p>
+              @if (ley.analisis_nodos.ecuacion_nodal) {
+                <div class="equation-display equation-display--sm" [appKatex]="ley.analisis_nodos.ecuacion_nodal"></div>
+              }
+            </div>
+          }
+
+          @if (ley.analisis_mallas) {
+            <div class="content-panel mt-3">
+              <h3 class="section__title section__title--sm">Análisis de Mallas (LVK)</h3>
+              <p class="text-body"><strong>Objetivo:</strong> {{ ley.analisis_mallas.objective || ley.analisis_mallas.objetivo }}</p>
+              <p class="text-secondary"><strong>Enfoque práctico:</strong> {{ ley.analisis_mallas.enfoque_practico }}</p>
+              @if (ley.analisis_mallas.ecuacion_malla) {
+                <div class="equation-display equation-display--sm" [appKatex]="ley.analisis_mallas.ecuacion_malla"></div>
+              }
+            </div>
+          }
+
           @if (ley.ilustracion?.archivo) {
             <figure class="figure-card">
               <img [src]="ley.ilustracion.archivo" [alt]="ley.nombre" title="{{ ley.nombre }}" loading="lazy" (error)="onImageError($event, ley.ilustracion.archivo)" />
@@ -143,6 +167,51 @@
           }
         </section>
       }
+    }
+
+    <!-- ── CLASE 3: Selección de Método ── -->
+    @if (tema().seleccion_metodo) {
+      <section class="section">
+        <h2 class="section__title">{{ tema().seleccion_metodo.titulo }}</h2>
+        <div class="content-panel">
+          <p class="text-body">{{ tema().seleccion_metodo.descripcion }}</p>
+          @if (tema().seleccion_metodo.regla_oro) {
+            <div class="content-panel content-panel--highlight mt-3">
+              <p class="text-body"><strong>💡 Regla de oro:</strong> {{ tema().seleccion_metodo.regla_oro }}</p>
+            </div>
+          }
+          <div class="content-grid mt-4">
+            @for (criterio of tema().seleccion_metodo.criterios; track criterio.condicion) {
+              <div class="card card--bordered">
+                <p class="text-body"><strong>Escenario:</strong> {{ criterio.condicion }}</p>
+                <p class="text-primary mt-2"><strong>👉 {{ criterio.metodo_recommended || criterio.metodo_recomendado }}</strong></p>
+                <p class="text-secondary font-sm">{{ criterio.razon }}</p>
+              </div>
+            }
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- ── Visualizaciones SVG (Genérico) ── -->
+    @if (tema().visualizaciones_svg?.length) {
+      <section class="section">
+        <h2 class="section__title">Visualizaciones</h2>
+        <div class="content-grid content-grid--2">
+          @for (svg of tema().visualizaciones_svg; track svg.id) {
+            <div class="content-panel">
+              <h3 class="section__title section__title--sm">{{ svg.titulo }}</h3>
+              <p class="text-secondary">{{ svg.descripcion }}</p>
+              @if (svg.interactivo) {
+                <span class="badge badge--info badge--sm">Interactivo</span>
+              }
+              <div class="figure-card mt-3">
+                <img [src]="svg.archivo" [alt]="svg.titulo" loading="lazy" (error)="onImageError($event, svg.archivo)" />
+              </div>
+            </div>
+          }
+        </div>
+      </section>
     }
 
     <!-- ── CLASE 3: Secciones genéricas ── -->
@@ -249,7 +318,8 @@
         <app-equation-chart
           [chartType]="chartType(tema().grafica_interactiva)"
           [title]="tema().grafica_interactiva.title"
-          [equation]="tema().grafica_interactiva.equation">
+          [equation]="tema().grafica_interactiva.equation"
+          [parameters]="tema().grafica_interactiva.params || {}">
         </app-equation-chart>
       </section>
     }

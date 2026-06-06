@@ -17,70 +17,80 @@ interface Clase {
   standalone: true,
   imports: [CommonModule, RouterLink, PageBackBarComponent],
   template: `
-    <app-page-back-bar
-      [backLink]="backLink()"
-      [backLabel]="'Módulo ' + moduloNum()"
-      [breadcrumb]="breadcrumb()"
-    />
+    <div class="page-shell">
+      <app-page-back-bar
+        [backLink]="backLink()"
+        [backLabel]="'Módulo ' + moduloNum()"
+        [breadcrumb]="breadcrumb()"
+      />
 
-    <div class="container">
       @if (loading()) {
-        <div class="loading-state">Cargando unidad...</div>
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando unidad...</p>
+        </div>
       } @else if (error()) {
-        <div class="error-state">{{ error() }}</div>
+        <div class="content-panel">
+          <p class="text-error">{{ error() }}</p>
+        </div>
       } @else if (unidad()) {
-        <header class="unit-header">
-          <div class="unit-meta">
-            <span class="meta-badge">Módulo {{ moduloNum() }}</span>
-            <span class="meta-badge">Unidad {{ unidad()!.numero }}</span>
-            <span class="meta-badge">Semanas {{ unidad()!.semanas }}</span>
+        <header class="page-hero">
+          <div class="flex gap-2 mb-3">
+            <span class="badge badge--primary">Módulo {{ moduloNum() }}</span>
+            <span class="badge badge--info">Unidad {{ unidad()!.numero }}</span>
+            <span class="badge badge--neutral">Semanas {{ unidad()!.semanas }}</span>
           </div>
-          <h1 class="unit-title">{{ unidad()!.titulo }}</h1>
+          <h1 class="page-hero__title">{{ unidad()!.titulo }}</h1>
+          <p class="page-hero__lead">Explora el contenido detallado de esta unidad organizado por semanas y clases.</p>
         </header>
 
-        <section class="weeks-section">
-          <h2 class="section-title">Clases por Semana</h2>
-          <div class="weeks-grid">
+        <section class="section">
+          <h2 class="section__title">Planificación Semanal</h2>
+          <div class="content-grid content-grid--1">
             @for (semana of semanasAgrupadas(); track semana.numero) {
-              <article class="week-card">
-                <div class="week-header">
-                  <h3 class="week-title">Semana {{ semana.numero }}</h3>
-                  <span class="week-badge">{{ semana.clases.length }} clase(s)</span>
+              <article class="card card--bordered">
+                <div class="card__header flex justify-between items-center">
+                  <h3 class="card__title">Semana {{ semana.numero }}</h3>
+                  <span class="badge badge--primary badge--sm">{{ semana.clases.length }} clase(s)</span>
                 </div>
 
-                @for (clase of semana.clases; track clase.semana + '-' + clase.clase) {
-                  <div class="clase-item">
-                    <h4 class="clase-topic">{{ clase.tema }}</h4>
-                    <p class="clase-activity">{{ clase.actividad }}</p>
+                <div class="card__body flex flex-col gap-4">
+                  @for (clase of semana.clases; track clase.semana + '-' + clase.clase) {
+                    <div class="content-panel content-panel--bordered">
+                      <h4 class="text-lg font-bold mb-1">{{ clase.tema }}</h4>
+                      <p class="text-secondary text-sm mb-4">{{ clase.actividad }}</p>
 
-                    @if (clase.temas && clase.temas.length > 0) {
-                      <div class="topics-list">
-                        @for (tema of clase.temas; track tema.id) {
-                          <a [routerLink]="tema.ruta" class="topic-link">
-                            @if (tema.icono) {
-                              <span class="topic-icon">{{ tema.icono }}</span>
-                            }
-                            <span class="topic-name">{{ tema.nombre }}</span>
-                            <span class="topic-arrow">→</span>
-                          </a>
-                        }
-                      </div>
-                    }
-                  </div>
-                }
+                      @if (clase.temas && clase.temas.length > 0) {
+                        <div class="flex flex-col gap-2">
+                          @for (tema of clase.temas; track tema.id) {
+                            <a [routerLink]="tema.ruta" class="page-back flex items-center justify-between w-full hover:bg-secondary">
+                              <div class="flex items-center gap-3">
+                                @if (tema.icono) {
+                                  <span class="text-xl">{{ tema.icono }}</span>
+                                }
+                                <span class="font-medium">{{ tema.nombre }}</span>
+                              </div>
+                              <span class="text-primary-light">→</span>
+                            </a>
+                          }
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
               </article>
             }
           </div>
         </section>
 
         @if (unidad()!.ejercicios && unidad()!.ejercicios.length > 0) {
-          <section class="exercises-section">
-            <h2 class="section-title">Ejercicios Propuestos</h2>
-            <div class="exercises-list">
+          <section class="section">
+            <h2 class="section__title">Ejercicios Propuestos</h2>
+            <div class="content-grid">
               @for (ejercicio of unidad()!.ejercicios; track ejercicio.numero) {
-                <div class="exercise-item">
-                  <span class="exercise-number">Ejercicio {{ ejercicio.numero }}</span>
-                  <p class="exercise-description">{{ ejercicio.descripcion }}</p>
+                <div class="formula-card card card--bordered">
+                  <p class="formula-card__label">Ejercicio {{ ejercicio.numero }}</p>
+                  <p class="text-body">{{ ejercicio.descripcion }}</p>
                 </div>
               }
             </div>
@@ -89,214 +99,7 @@ interface Clase {
       }
     </div>
   `,
-  styles: [`
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
-    .unit-header {
-      margin-bottom: 3rem;
-      padding: 2rem;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      border-radius: 12px;
-      color: white;
-    }
-
-    .unit-meta {
-      display: flex;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .meta-badge {
-      display: inline-block;
-      padding: 0.375rem 0.875rem;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
-      font-size: 0.8125rem;
-      font-weight: 600;
-    }
-
-    .unit-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 0;
-      line-height: 1.3;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: #1a202c;
-    }
-
-    .weeks-grid {
-      display: grid;
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .week-card {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .week-card:hover {
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    }
-
-    .week-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid #e2e8f0;
-    }
-
-    .week-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0;
-      color: #2d3748;
-    }
-
-    .week-badge {
-      padding: 0.375rem 0.875rem;
-      background: #edf2f7;
-      border-radius: 16px;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: #4a5568;
-    }
-
-    .clase-item {
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: #f7fafc;
-      border-radius: 8px;
-    }
-
-    .clase-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .clase-topic {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin: 0 0 0.5rem 0;
-      color: #2d3748;
-    }
-
-    .clase-activity {
-      font-size: 0.9375rem;
-      color: #4a5568;
-      margin: 0 0 1rem 0;
-      line-height: 1.6;
-    }
-
-    .topics-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    .topic-link {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.875rem 1rem;
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      text-decoration: none;
-      color: #2d3748;
-      transition: all 0.2s ease;
-    }
-
-    .topic-link:hover {
-      background: #4facfe;
-      color: white;
-      border-color: #4facfe;
-      transform: translateX(4px);
-    }
-
-    .topic-icon {
-      font-size: 1.25rem;
-      flex-shrink: 0;
-    }
-
-    .topic-name {
-      flex: 1;
-      font-weight: 500;
-      font-size: 0.9375rem;
-    }
-
-    .topic-arrow {
-      font-weight: 600;
-      opacity: 0.5;
-      transition: opacity 0.2s ease;
-    }
-
-    .topic-link:hover .topic-arrow {
-      opacity: 1;
-    }
-
-    .exercises-section {
-      margin-top: 3rem;
-      padding: 2rem;
-      background: #faf5ff;
-      border-radius: 12px;
-      border: 1px solid #e9d8fd;
-    }
-
-    .exercises-list {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .exercise-item {
-      padding: 1rem;
-      background: white;
-      border-radius: 8px;
-      border-left: 4px solid #9f7aea;
-    }
-
-    .exercise-number {
-      display: inline-block;
-      font-weight: 700;
-      color: #553c9a;
-      margin-bottom: 0.5rem;
-      font-size: 0.875rem;
-    }
-
-    .exercise-description {
-      margin: 0;
-      color: #4a5568;
-      font-size: 0.9375rem;
-      line-height: 1.6;
-    }
-
-    .loading-state,
-    .error-state {
-      text-align: center;
-      padding: 3rem;
-      font-size: 1.125rem;
-      color: #718096;
-    }
-
-    .error-state {
-      color: #e53e3e;
-    }
-  `]
+  styles: []
 })
 export class SemanaIndexComponent implements OnInit {
   private readonly http = inject(HttpClient);

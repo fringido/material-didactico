@@ -1,6 +1,6 @@
 <div class="amplifier-lab">
   <!-- Intro Info Section -->
-  <section class="lab-header card card--elevated" *ngIf="showHeader">
+  <section class="lab-header" *ngIf="showHeader">
     <div class="header-content">
       <h2 class="lab-title">🔬 Laboratorio de Amplificadores</h2>
       <p class="lab-definition">{{ data?.descripcion || info.definicion }}</p>
@@ -18,223 +18,197 @@
     </div>
   </section>
 
-  <!-- Simulation Control Center -->
-  <div class="simulation-container">
-    <div class="controls-panel card card--bordered">
-      <div class="controls-header">
-        <h3 class="panel-title">Configuración del Circuito</h3>
-      </div>
-      
-      <div class="mode-selector">
-        <button [class.active]="mode() === 'inverter'" (click)="setMode('inverter')">Inversor</button>
-        <button [class.active]="mode() === 'non-inverter'" (click)="setMode('non-inverter')">No Inversor</button>
-        <button [class.active]="mode() === 'summing'" (click)="setMode('summing')">Sumador</button>
-      </div>
-
-      <!-- Feedback Resistor (Common to all) -->
-      <div class="control-group">
-        <div class="control-header">
-          <label class="control-label">Resistencia R<sub>f</sub> (Feedback)</label>
-          <span class="control-value badge badge--primary">{{ rf() }} kΩ</span>
-        </div>
-        <input type="range" min="1" max="100" step="1" [ngModel]="rf()" (ngModelChange)="rf.set($event)" class="slider slider-purple">
-      </div>
-
-      <!-- Input Controls (V1 / R1) -->
-      <div class="control-group">
-        <div class="control-header">
-          <label class="control-label">{{ mode() === 'summing' ? 'Voltaje V₁' : 'Voltaje Vin' }}</label>
-          <span class="control-value badge badge--info">{{ v1() }} V</span>
-        </div>
-        <input type="range" min="0.1" max="5" step="0.1" [ngModel]="v1()" (ngModelChange)="v1.set($event)" class="slider slider-red">
-      </div>
-
-      <div class="control-group">
-        <div class="control-header">
-          <label class="control-label">{{ mode() === 'summing' ? 'Resistencia R₁' : 'Resistencia Rin' }}</label>
-          <span class="control-value badge badge--warning">{{ r1() }} kΩ</span>
-        </div>
-        <input type="range" min="0.5" max="50" step="0.5" [ngModel]="r1()" (ngModelChange)="r1.set($event)" class="slider slider-orange">
-      </div>
-
-      <!-- Additional Summing Controls -->
-      <ng-container *ngIf="mode() === 'summing'">
-        <div class="control-group">
-          <div class="control-header">
-            <label class="control-label">Voltaje V₂</label>
-            <span class="control-value badge badge--info">{{ v2() }} V</span>
-          </div>
-          <input type="range" min="0" max="5" step="0.1" [ngModel]="v2()" (ngModelChange)="v2.set($event)" class="slider slider-red">
-        </div>
-        <div class="control-group">
-          <div class="control-header">
-            <label class="control-label">Voltaje V₃</label>
-            <span class="control-value badge badge--info">{{ v3() }} V</span>
-          </div>
-          <input type="range" min="0" max="5" step="0.1" [ngModel]="v3()" (ngModelChange)="v3.set($event)" class="slider slider-red">
-        </div>
-      </ng-container>
-
-      <div class="results-panel card card--bordered">
-        <h4 class="stats-title">Resultados Calculados</h4>
-        <div class="result-item" *ngIf="mode() !== 'summing'">
-          <span class="label">Ganancia (A):</span>
-          <span class="value" [class.negative]="gain() < 0">{{ gain() | number:'1.1-2' }}</span>
-        </div>
-        <div class="result-item">
-          <span class="label">V<sub>out</sub> (Pico):</span>
-          <span class="value" [class.negative]="vout() < 0">{{ vout() | number:'1.1-2' }} V</span>
-        </div>
-      </div>
+  <!-- ─── Container del Simulador (Unificado) ─── -->
+  <div class="nm-container">
+    
+    <!-- Header / Selector de Modo -->
+    <div class="nm-tabs">
+      <button class="nm-tab" [class.nm-tab--active]="mode() === 'inverter'" (click)="setMode('inverter')">
+        Inversor
+      </button>
+      <button class="nm-tab" [class.nm-tab--active]="mode() === 'non-inverter'" (click)="setMode('non-inverter')">
+        No Inversor
+      </button>
+      <button class="nm-tab" [class.nm-tab--active]="mode() === 'summing'" (click)="setMode('summing')">
+        Sumador
+      </button>
     </div>
 
-    <div class="visualizer-panel">
-      <!-- Circuit Diagram SVG -->
-      <div class="circuit-diagram card card--bordered">
-        <h4 class="diagram-title">
-          OP-AMP {{ mode() === 'inverter' ? 'INVERTING' : (mode() === 'non-inverter' ? 'NON-INVERTING' : 'SUMMING') }}
-        </h4>
-        <svg viewBox="0 0 500 350" class="opamp-svg">
-          <defs>
-            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
-              <feOffset dx="1" dy="1" />
-              <feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer>
-              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
+    <div class="nm-layout">
+      
+      <!-- Panel de Visualización (Diagrama + Osciloscopio) -->
+      <div class="nm-viz-panel">
+        <h5 class="viz-title">Esquemático del Circuito</h5>
+        <div class="circuit-svg-wrapper">
+          <svg viewBox="0 0 500 350" class="opamp-svg">
+            <defs>
+              <filter id="glow-op" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
 
-          <!-- Main Circuit Bus Lines -->
-          <g stroke="#2d3436" stroke-width="4" fill="none">
-            <!-- OP-AMP Symbol -->
-            <path d="M 220 100 L 320 175 L 220 250 Z" fill="#f8fafc" stroke-width="4" />
-            <text x="230" y="145" font-size="24" font-weight="bold" fill="#2d3436">-</text>
-            <text x="230" y="215" font-size="24" font-weight="bold" fill="#2d3436">+</text>
+            <!-- Main Circuit Bus Lines -->
+            <g stroke="#475569" stroke-width="3" fill="none">
+              <!-- OP-AMP Symbol -->
+              <path d="M 220 100 L 320 175 L 220 250 Z" fill="#1e293b" stroke="#8B5CF6" stroke-width="3" />
+              <text x="230" y="145" font-size="24" font-weight="bold" fill="#8B5CF6">-</text>
+              <text x="230" y="215" font-size="24" font-weight="bold" fill="#8B5CF6">+</text>
 
-            <!-- Output Line -->
-            <line x1="320" y1="175" x2="450" y2="175" />
-            <line x1="270" y1="137" x2="270" y2="80" /> <!-- V+ -->
-            <line x1="270" y1="212" x2="270" y2="280" /> <!-- V- -->
-            
-            <!-- Ground Line Bottom -->
-            <line x1="50" y1="310" x2="450" y2="310" />
-            
-            <!-- Wiring logic based on mode -->
-            <ng-container [ngSwitch]="mode()">
-              <!-- Inverter -->
-              <g *ngSwitchCase="'inverter'">
-                <path d="M 220 140 L 200 140 L 200 60 L 350 60 L 350 175" />
-                <line x1="200" y1="140" x2="100" y2="140" />
-                <path d="M 220 212 L 180 212 L 180 310" />
-              </g>
-
-              <!-- Non-Inverter -->
-              <g *ngSwitchCase="'non-inverter'">
-                <path d="M 220 140 L 200 140 L 200 60 L 350 60 L 350 175" />
-                <line x1="200" y1="140" x2="200" y2="310" />
-                <line x1="220" y1="212" x2="100" y2="212" />
-              </g>
-
-              <!-- Summing -->
-              <g *ngSwitchCase="'summing'">
-                <path d="M 220 140 L 200 140 L 200 60 L 350 60 L 350 175" />
-                <!-- Multiple inputs path -->
-                <line x1="200" y1="140" x2="150" y2="140" />
-                <line x1="150" y1="100" x2="150" y2="180" />
-                <line x1="150" y1="100" x2="100" y2="100" />
-                <line x1="150" y1="140" x2="100" y2="140" />
-                <line x1="150" y1="180" x2="100" y2="180" />
-                <path d="M 220 212 L 180 212 L 180 310" />
-              </g>
-            </ng-container>
-          </g>
-
-          <!-- Resistor Symbols -->
-          <g fill="none" stroke="#2d3436" stroke-width="3">
-            <!-- Rf -->
-            <path d="M 250 60 L 260 50 L 275 70 L 290 50 L 305 70 L 315 60" />
-            <text x="270" y="45" font-size="12" font-weight="bold" fill="#8b5cf6">R<tspan baseline-shift="sub" font-size="8">f</tspan></text>
-
-            <ng-container [ngSwitch]="mode()">
-              <g *ngSwitchCase="'inverter'">
-                <path d="M 130 140 L 140 130 L 155 150 L 170 130 L 185 150 L 195 140" />
-                <text x="150" y="125" font-size="12" font-weight="bold" fill="#3b82f6">R<tspan baseline-shift="sub" font-size="8">in</tspan></text>
-              </g>
-              <g *ngSwitchCase="'non-inverter'">
-                <path d="M 200 240 L 190 250 L 210 265 L 190 280 L 210 295 L 200 305" />
-                <text x="170" y="275" font-size="12" font-weight="bold" fill="#3b82f6">R<tspan baseline-shift="sub" font-size="8">1</tspan></text>
-              </g>
-              <g *ngSwitchCase="'summing'">
-                <path d="M 110 100 L 115 90 L 125 110 L 135 90 L 145 110 L 150 100" />
-                <path d="M 110 140 L 115 130 L 125 150 L 135 130 L 145 150 L 150 140" />
-                <path d="M 110 180 L 115 170 L 125 190 L 135 170 L 145 190 L 150 180" />
-                <text x="110" y="85" font-size="10" font-weight="bold" fill="#3b82f6">R1</text>
-                <text x="110" y="130" font-size="10" font-weight="bold" fill="#3b82f6">R2</text>
-                <text x="110" y="170" font-size="10" font-weight="bold" fill="#3b82f6">R3</text>
-              </g>
-            </ng-container>
-          </g>
-
-          <!-- Nodes and Labels -->
-          <g>
-            <!-- Ground -->
-            <g transform="translate(250, 310)">
-              <line x1="-15" y1="10" x2="15" y2="10" stroke="#2d3436" stroke-width="4"/>
-              <line x1="-10" y1="15" x2="10" y2="15" stroke="#2d3436" stroke-width="3"/>
-              <line x1="-5" y1="20" x2="5" y2="20" stroke="#2d3436" stroke-width="2"/>
+              <!-- Output Line -->
+              <line x1="320" y1="175" x2="450" y2="175" />
+              
+              <!-- Ground Line Bottom -->
+              <line x1="50" y1="310" x2="450" y2="310" stroke="#334155" />
+              
+              <!-- Wiring logic -->
+              <ng-container [ngSwitch]="mode()">
+                <g *ngSwitchCase="'inverter'">
+                  <path d="M 220 140 L 200 140 L 200 60 L 350 60 L 350 175" />
+                  <line x1="200" y1="140" x2="100" y2="140" />
+                  <path d="M 220 212 L 180 212 L 180 310" />
+                </g>
+                <g *ngSwitchCase="'non-inverter'">
+                  <path d="M 220 140 L 200 140 L 200 60 L 350 60 L 350 175" />
+                  <line x1="200" y1="140" x2="200" y2="310" />
+                  <line x1="220" y1="212" x2="100" y2="212" />
+                </g>
+                <g *ngSwitchCase="'summing'">
+                  <path d="M 220 140 L 200 140 L 200 60 L 350 60 L 350 175" />
+                  <line x1="200" y1="140" x2="150" y2="140" />
+                  <line x1="150" y1="100" x2="150" y2="180" />
+                  <line x1="150" y1="100" x2="100" y2="100" />
+                  <line x1="150" y1="140" x2="100" y2="140" />
+                  <line x1="150" y1="180" x2="100" y2="180" />
+                  <path d="M 220 212 L 180 212 L 180 310" />
+                </g>
+              </ng-container>
             </g>
 
-            <!-- Output Node -->
-            <circle cx="450" cy="175" r="12" fill="#ef4444" stroke="#2d3436" stroke-width="2" filter="url(#shadow)"/>
-            <text x="430" y="155" font-size="12" font-weight="bold" fill="#2d3436">OUTPUT</text>
-            <circle cx="450" cy="310" r="8" fill="#ecf0f1" stroke="#2d3436" stroke-width="2"/>
+            <!-- Resistor Symbols -->
+            <g fill="none" stroke="#FBBF24" stroke-width="2.5">
+              <!-- Rf -->
+              <path d="M 250 60 L 260 50 L 275 70 L 290 50 L 305 70 L 315 60" />
+              <text x="270" y="45" font-size="11" font-weight="bold" fill="#FBBF24" font-family="monospace">Rf</text>
 
-            <!-- Input Nodes -->
-            <ng-container [ngSwitch]="mode()">
-              <g *ngSwitchCase="'inverter'">
-                <circle cx="100" cy="140" r="10" fill="#3b82f6" stroke="#2d3436" stroke-width="2" filter="url(#shadow)"/>
-                <text x="70" y="170" font-size="12" font-weight="bold" fill="#2d3436">INPUT</text>
-                <circle cx="100" cy="310" r="8" fill="#ecf0f1" stroke="#2d3436" stroke-width="2"/>
+              <ng-container [ngSwitch]="mode()">
+                <g *ngSwitchCase="'inverter'">
+                  <path d="M 130 140 L 140 130 L 155 150 L 170 130 L 185 150 L 195 140" />
+                  <text x="150" y="125" font-size="11" font-weight="bold" fill="#60A5FA" font-family="monospace">Rin</text>
+                </g>
+                <g *ngSwitchCase="'non-inverter'">
+                  <path d="M 200 240 L 190 250 L 210 265 L 190 280 L 210 295 L 200 305" />
+                  <text x="170" y="275" font-size="11" font-weight="bold" fill="#60A5FA" font-family="monospace">R1</text>
+                </g>
+                <g *ngSwitchCase="'summing'">
+                  <path d="M 110 100 L 115 90 L 125 110 L 135 90 L 145 110 L 150 100" />
+                  <path d="M 110 140 L 115 130 L 125 150 L 135 130 L 145 150 L 150 140" />
+                  <path d="M 110 180 L 115 170 L 125 190 L 135 170 L 145 190 L 150 180" />
+                </g>
+              </ng-container>
+            </g>
+
+            <!-- Nodes and Labels -->
+            <g>
+              <!-- Ground -->
+              <g transform="translate(250, 310)">
+                <line x1="-12" y1="10" x2="12" y2="10" stroke="#64748B" stroke-width="3"/>
+                <line x1="-8" y1="15" x2="8" y2="15" stroke="#64748B" stroke-width="2"/>
+                <line x1="-4" y1="20" x2="4" y2="20" stroke="#64748B" stroke-width="1.5"/>
               </g>
-              <g *ngSwitchCase="'non-inverter'">
-                <circle cx="100" cy="212" r="10" fill="#3b82f6" stroke="#2d3436" stroke-width="2" filter="url(#shadow)"/>
-                <text x="70" y="240" font-size="12" font-weight="bold" fill="#2d3436">INPUT</text>
-                <circle cx="100" cy="310" r="8" fill="#ecf0f1" stroke="#2d3436" stroke-width="2"/>
-              </g>
-              <g *ngSwitchCase="'summing'">
-                <circle cx="100" cy="100" r="8" fill="#3b82f6" stroke="#2d3436" stroke-width="2" />
-                <circle cx="100" cy="140" r="8" fill="#3b82f6" stroke="#2d3436" stroke-width="2" />
-                <circle cx="100" cy="180" r="8" fill="#3b82f6" stroke="#2d3436" stroke-width="2" />
-                <text x="60" y="105" font-size="10" font-weight="bold" fill="#2d3436">V1</text>
-                <text x="60" y="145" font-size="10" font-weight="bold" fill="#2d3436">V2</text>
-                <text x="60" y="185" font-size="10" font-weight="bold" fill="#2d3436">V3</text>
-              </g>
-            </ng-container>
-          </g>
-        </svg>
+              <!-- Output Node -->
+              <circle cx="450" cy="175" r="8" fill="#EF4444" stroke="#475569" stroke-width="2" filter="url(#glow-op)"/>
+              <text x="430" y="155" font-size="10" font-weight="bold" fill="#94A3B8" font-family="monospace">OUT</text>
+            </g>
+          </svg>
+        </div>
+
+        <h5 class="viz-title">Respuesta de Señales (Osciloscopio)</h5>
+        <div class="wave-viewer">
+          <svg viewBox="0 0 400 150" class="waves-svg">
+            <g stroke="#1e293b" stroke-width="1" stroke-dasharray="4">
+              <line x1="0" y1="75" x2="400" y2="75" />
+              <line x1="100" y1="0" x2="100" y2="150" />
+              <line x1="200" y1="0" x2="200" y2="150" />
+              <line x1="300" y1="0" x2="300" y2="150" />
+            </g>
+            <path [attr.d]="getWavePath(false)" fill="none" stroke="#3b82f6" stroke-width="2" />
+            <path [attr.d]="getWavePath(true)" fill="none" stroke="#f43f5e" stroke-width="2.5" />
+          </svg>
+          <div class="wave-legend">
+            <div class="legend-item"><span class="legend-color" style="background:#3b82f6"></span><span class="legend-label">Entrada</span></div>
+            <div class="legend-item"><span class="legend-color" style="background:#f43f5e"></span><span class="legend-label">Salida</span></div>
+          </div>
+        </div>
       </div>
 
-      <!-- Wave Visualizer -->
-      <div class="waves-container card card--bordered">
-        <h4 class="waves-title">Osciloscopio (Señales)</h4>
-        <svg viewBox="0 0 400 150" class="waves-svg">
-          <g stroke="#334155" stroke-width="1" stroke-dasharray="2">
-            <line x1="0" y1="75" x2="400" y2="75" />
-            <line x1="100" y1="0" x2="100" y2="150" />
-            <line x1="200" y1="0" x2="200" y2="150" />
-            <line x1="300" y1="0" x2="300" y2="150" />
-          </g>
+      <!-- Panel Lateral: Controles + Métricas -->
+      <div class="nm-side-panel">
+        
+        <!-- Controles -->
+        <div class="nm-controls">
+          <h5 class="nm-ctrl-title">⚙️ Parámetros</h5>
           
-          <path [attr.d]="getWavePath(false)" fill="none" stroke="#3b82f6" stroke-width="2" class="wave-in"/>
-          <path [attr.d]="getWavePath(true)" fill="none" stroke="#f43f5e" stroke-width="3" class="wave-out"/>
+          <div class="nm-ctrl-row">
+            <label>R<sub>f</sub> (Realimentación)</label>
+            <div class="nm-slider-wrap">
+              <input type="range" min="1" max="100" step="1" [ngModel]="rf()" (ngModelChange)="rf.set($event)" class="nm-slider">
+              <span class="nm-val">{{ rf() }} kΩ</span>
+            </div>
+          </div>
+
+          <div class="nm-ctrl-row">
+            <label>{{ mode() === 'summing' ? 'Voltaje V₁' : 'Voltaje Vin' }}</label>
+            <div class="nm-slider-wrap">
+              <input type="range" min="0.1" max="5" step="0.1" [ngModel]="v1()" (ngModelChange)="v1.set($event)" class="nm-slider">
+              <span class="nm-val">{{ v1() }} V</span>
+            </div>
+          </div>
+
+          <div class="nm-ctrl-row">
+            <label>{{ mode() === 'summing' ? 'Resistencia R₁' : 'Resistencia Rin' }}</label>
+            <div class="nm-slider-wrap">
+              <input type="range" min="0.5" max="50" step="0.5" [ngModel]="r1()" (ngModelChange)="r1.set($event)" class="nm-slider">
+              <span class="nm-val">{{ r1() }} kΩ</span>
+            </div>
+          </div>
+
+          <ng-container *ngIf="mode() === 'summing'">
+            <div class="nm-ctrl-row">
+              <label>Voltaje V₂</label>
+              <div class="nm-slider-wrap">
+                <input type="range" min="0" max="5" step="0.1" [ngModel]="v2()" (ngModelChange)="v2.set($event)" class="nm-slider">
+                <span class="nm-val">{{ v2() }} V</span>
+              </div>
+            </div>
+            <div class="nm-ctrl-row">
+              <label>Voltaje V₃</label>
+              <div class="nm-slider-wrap">
+                <input type="range" min="0" max="5" step="0.1" [ngModel]="v3()" (ngModelChange)="v3.set($event)" class="nm-slider">
+                <span class="nm-val">{{ v3() }} V</span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Métricas -->
+        <div class="nm-metrics">
+          <h5 class="nm-ctrl-title">📊 Análisis</h5>
           
-          <g transform="translate(10, 140)">
-            <rect x="0" y="0" width="10" height="10" fill="#3b82f6"/>
-            <text x="15" y="10" font-size="10" fill="#94a3b8">Input V₁ ({{ v1() }}V)</text>
-            <rect x="110" y="0" width="10" height="10" fill="#f43f5e"/>
-            <text x="125" y="10" font-size="10" fill="#94a3b8">Output ({{ vout() | number:'1.1-1' }}V)</text>
-          </g>
-        </svg>
+          <div class="nm-metric-card" *ngIf="mode() !== 'summing'">
+            <p class="nm-metric-label">Ganancia Teórica (A<sub>v</sub>)</p>
+            <p class="nm-metric-value" [class.negative]="gain() < 0">{{ gain() | number:'1.1-2' }}</p>
+            <div class="nm-metric-formula" [appKatex]="mode() === 'inverter' ? 'A_v = -\\frac{R_f}{R_{in}}' : 'A_v = 1 + \\frac{R_f}{R_1}'"></div>
+          </div>
+
+          <div class="nm-metric-card">
+            <p class="nm-metric-label">V<sub>out</sub> Calculado (Pico)</p>
+            <p class="nm-metric-value" [class.negative]="vout() < 0">
+              {{ vout() | number:'1.1-2' }} <span class="nm-unit">V</span>
+            </p>
+            <div class="nm-metric-formula" *ngIf="mode() === 'summing'" [appKatex]="'V_{out} = -R_f(\\frac{V_1}{R_1} + \\frac{V_2}{R_2} + \\frac{V_3}{R_3})'"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -243,10 +217,10 @@
   <section class="lab-footer">
     <h3 class="footer-title">Clasificación por Clase</h3>
     <div class="classes-grid">
-      <div class="class-card card card--bordered" *ngFor="let c of (data?.clasificacion_clase || info.clasificacion_por_clase)">
-        <div class="class-badge badge badge--neutral">Clase {{ c.clase }}</div>
-        <div class="class-efficiency">Eficiencia: {{ c.eficiencia || c.eficiencia_max }}</div>
-        <p class="class-desc">{{ c.desc || c.uso }}</p>
+      <div class="class-card" *ngFor="let c of (data?.clasificacion_clase || info.clasificacion_por_clase)">
+        <div class="class-badge badge badge--neutral mb-3">Clase {{ c.clase }}</div>
+        <div class="font-bold text-success text-sm mb-2">Eficiencia: {{ c.eficiencia || c.eficiencia_max }}</div>
+        <p class="text-secondary text-sm leading-relaxed">{{ c.desc || c.uso }}</p>
       </div>
     </div>
   </section>

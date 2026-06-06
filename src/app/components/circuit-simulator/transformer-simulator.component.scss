@@ -1,445 +1,249 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-.simulator-container {
-  background: $bg-card;
-  border: 1px solid $border-primary;
+// ─── Container Principal ────────────────────────────────────────────────────
+.nm-container {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
   border-radius: $radius-xl;
-  padding: $spacing-6;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   margin: $spacing-6 0;
 }
 
-.simulator-header {
-  margin-bottom: $spacing-6;
-  text-align: center;
-}
-
-.simulator-title {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
-  margin-bottom: $spacing-2;
-}
-
-.simulator-desc {
-  font-size: $font-size-sm;
-  color: $text-secondary;
-}
-
-.simulator-body {
+// ─── Tabs / Header ───────────────────────────────────────────────────────────
+.nm-tabs {
   display: flex;
-  flex-direction: column;
-  gap: $spacing-6;
-}
-
-.controls-panel {
-  background: $bg-secondary;
-  border-radius: $radius-lg;
-  padding: $spacing-5;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-4;
-}
-
-.control-group {
-  display: flex;
-  flex-direction: column;
   gap: $spacing-2;
+  padding: $spacing-4 $spacing-4 0;
+  border-bottom: 1px solid $border-primary;
+  background: $bg-primary;
+  flex-wrap: wrap;
 }
 
-.control-label {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  color: $text-primary;
+.nm-tab {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.control-value {
-  color: $color-primary;
-  font-weight: $font-weight-bold;
-}
-
-.control-slider {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: $bg-tertiary;
-  outline: none;
-  -webkit-appearance: none;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: $color-primary;
-    cursor: pointer;
-    transition: transform $transition-base;
-
-    &:hover {
-      transform: scale(1.2);
-    }
-  }
-
-  &::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: $color-primary;
-    cursor: pointer;
-    border: none;
-  }
-}
-
-.btn-play {
-  padding: $spacing-3 $spacing-4;
-  background: $color-primary;
-  color: white;
-  border: none;
-  border-radius: $radius-md;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  cursor: pointer;
-  transition: all $transition-base;
-  grid-column: 1 / -1;
-
-  &:hover {
-    background: $color-primary-dark;
-    transform: translateY(-1px);
-  }
-}
-
-.transformer-visual {
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
   background: $bg-secondary;
-  border-radius: $radius-lg;
-  padding: $spacing-6;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: $spacing-6;
-  align-items: center;
+  border: 1px solid $border-primary;
+  border-bottom: none;
+  border-radius: $radius-md $radius-md 0 0;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-family: $font-primary;
+  cursor: pointer;
+  transition: all $transition-base $ease-in-out;
+  margin-bottom: -1px;
 
-  @media (max-width: $breakpoint-md) {
+  &--active {
+    background: $bg-secondary;
+    color: $color-primary-light;
+    border-color: $border-secondary;
+    border-bottom-color: $bg-secondary;
+    font-weight: $font-weight-semibold;
+  }
+  
+  &--anim {
+    margin-left: auto;
+    background: rgba($color-accent-green, 0.1);
+    border-color: rgba($color-accent-green, 0.3);
+    color: $color-accent-green;
+    font-weight: $font-weight-semibold;
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    font-size: $font-size-xs;
+  }
+}
+
+// ─── Layout Principal ─────────────────────────────────────────────────────────
+.nm-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  min-height: 600px;
+
+  @media (max-width: $breakpoint-lg) {
     grid-template-columns: 1fr;
   }
 }
 
-.coil-section {
+// ─── Panel de Visualización (Izquierdo) ──────────────────────────────────────
+.nm-viz-panel {
+  padding: $spacing-6;
+  border-right: 1px solid $border-primary;
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
-}
+  gap: $spacing-6;
+  background: $bg-secondary;
 
-.coil-label {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.coil-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $spacing-2;
-}
-
-.coil {
-  width: 80px;
-  height: 120px;
-  background: linear-gradient(90deg, transparent 35%, rgba($color-primary, 0.1) 35%, rgba($color-primary, 0.1) 65%, transparent 65%);
-  border-radius: $radius-md;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: $spacing-2 0;
-}
-
-.primary-coil {
-  border: 2px solid $color-primary;
-}
-
-.secondary-coil {
-  border: 2px solid $color-success;
-}
-
-.coil-wire {
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    currentColor 20%, 
-    currentColor 80%, 
-    transparent 100%);
-  opacity: 0.6;
-  animation: pulse 1s ease-in-out infinite;
-}
-
-.primary-coil .coil-wire {
-  color: $color-primary;
-}
-
-.secondary-coil .coil-wire {
-  color: $color-success;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
-}
-
-.coil-info {
-  background: $bg-primary;
-  padding: $spacing-2 $spacing-3;
-  border-radius: $radius-sm;
-  text-align: center;
-  
-  p {
-    font-size: $font-size-xs;
-    color: $text-secondary;
-    margin: 2px 0;
+  @media (max-width: $breakpoint-lg) {
+    border-right: none;
+    border-bottom: 1px solid $border-primary;
   }
 }
 
-.wave-display {
-  width: 100%;
-  height: 60px;
-  background: $bg-primary;
-  border-radius: $radius-md;
+.viz-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
 }
 
-.core-section {
+.viz-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-tertiary;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+// ─── Visualización del Transformador ─────────────────────────────────────────
+.transformer-card {
+  background: #0D1117;
+  border-radius: $radius-lg;
+  border: 1px solid $border-primary;
+  padding: $spacing-6;
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: $spacing-4;
+  align-items: center;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.coil-viz {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $spacing-3;
+  gap: $spacing-4;
+}
+
+.coil-box {
+  width: 70px; height: 120px;
+  background: #1e293b;
+  border-radius: $radius-md;
+  border-width: 2px;
+  border-style: solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: $spacing-1 0;
+  
+  &--primary { border-color: $color-primary; }
+  &--secondary { border-color: $color-success; }
+  
+  .wire {
+    width: 100%; height: 2px;
+    background: currentColor;
+    opacity: 0.4;
+  }
 }
 
 .magnetic-core {
-  width: 60px;
   height: 140px;
-  background: linear-gradient(180deg, #666, #888, #666);
-  border-radius: $radius-md;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
-  transition: opacity 0.3s ease;
-}
-
-.flux-lines {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  background: linear-gradient(180deg, #334155, #475569, #334155);
+  border-radius: $radius-sm;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: $spacing-2 0;
+  position: relative;
+  
+  &::before {
+    content: 'Φ';
+    position: absolute;
+    top: -25px; left: 50%;
+    transform: translateX(-50%);
+    color: $color-accent-yellow;
+    font-weight: bold;
+  }
+  
+  .flux-line {
+    width: 100%; height: 2px;
+    background: $color-accent-yellow;
+    box-shadow: 0 0 8px $color-accent-yellow;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+  }
 }
 
-.flux-line {
-  width: 100%;
-  height: 2px;
-  background: rgba($color-warning, 0.6);
-  box-shadow: 0 0 8px rgba($color-warning, 0.8);
-  animation: flux-flow 1.5s ease-in-out infinite;
+.mini-wave {
+  width: 100%; height: 40px;
+  background: rgba(0,0,0,0.2);
+  border-radius: $radius-sm;
 }
 
-@keyframes flux-flow {
-  0%, 100% { transform: translateY(-2px); opacity: 0.4; }
-  50% { transform: translateY(2px); opacity: 1; }
+// ─── Panel Lateral (Derecho) ────────────────────────────────────────────────
+.nm-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: $bg-primary;
 }
 
-.core-label {
-  font-size: $font-size-xs;
-  color: white;
-  text-align: center;
-  font-weight: $font-weight-bold;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  line-height: 1.2;
-}
-
-.flux-indicator {
-  text-align: center;
-}
-
-.flux-text {
-  font-size: $font-size-xs;
-  color: $text-secondary;
-  margin-top: $spacing-1;
-}
-
-.section-subtitle {
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  color: $text-primary;
-  margin-bottom: $spacing-3;
-  text-align: center;
-}
-
-.equation-section {
-  background: rgba($color-primary, 0.05);
-  border: 1px solid rgba($color-primary, 0.2);
-  border-radius: $radius-lg;
+.nm-controls {
   padding: $spacing-5;
+  border-bottom: 1px solid $border-primary;
 }
 
-.equation-display {
-  background: $bg-primary;
-  padding: $spacing-4;
-  border-radius: $radius-md;
-  text-align: center;
+.nm-ctrl-row {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
   margin-bottom: $spacing-4;
+
+  label {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+  }
 }
 
-.equation-values {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: $spacing-3;
+.nm-slider-wrap {
+  display: flex;
+  align-items: center; gap: $spacing-3;
 }
 
-.value-card {
-  background: $bg-primary;
-  padding: $spacing-3;
-  border-radius: $radius-md;
-  text-align: center;
+.nm-slider { flex: 1; height: 4px; accent-color: $color-primary; }
+
+.nm-val {
+  font-size: $font-size-xs; font-family: $font-mono;
+  color: $color-primary-light; min-width: 50px; text-align: right;
 }
 
-.value-label {
-  font-size: $font-size-xs;
-  color: $text-tertiary;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: $spacing-1;
-}
-
-.value-number {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: $color-primary;
-}
-
-.characteristics-panel {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+// ─── Métricas ──────────────────────────────────────────────────────────────────
+.nm-metrics {
+  padding: $spacing-5;
+  display: flex;
+  flex-direction: column;
   gap: $spacing-4;
 }
 
-.char-card {
-  background: $bg-secondary;
+.nm-metric-card {
+  background: $bg-card;
   border: 1px solid $border-primary;
-  border-radius: $radius-lg;
-  padding: $spacing-4;
-  text-align: center;
-
-  &--type {
-    grid-column: 1 / -1;
-    background: rgba($color-primary, 0.05);
-    border-color: rgba($color-primary, 0.3);
-  }
-}
-
-.char-label {
-  font-size: $font-size-xs;
-  color: $text-tertiary;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: $spacing-2;
-}
-
-.char-value {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
-
-  &--large {
-    font-size: $font-size-2xl;
-    color: $color-primary;
-  }
-}
-
-.char-desc {
-  font-size: $font-size-xs;
-  color: $text-secondary;
-  margin-top: $spacing-2;
-}
-
-.efficiency-bar {
-  width: 100%;
-  height: 8px;
-  background: $bg-tertiary;
-  border-radius: 4px;
-  margin-top: $spacing-2;
-  overflow: hidden;
-}
-
-.efficiency-fill {
-  height: 100%;
-  background: linear-gradient(90deg, $color-success, $color-primary);
-  transition: width 0.3s ease;
-}
-
-.info-panel {
-  background: $bg-secondary;
-  border-radius: $radius-lg;
-  padding: $spacing-5;
-}
-
-.info-title {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
-  margin-bottom: $spacing-4;
-  text-align: center;
-}
-
-.info-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-4;
-}
-
-.info-step {
-  background: $bg-primary;
+  border-left: 4px solid $color-primary;
   border-radius: $radius-md;
   padding: $spacing-4;
-  display: flex;
-  gap: $spacing-3;
+
+  &--type { border-left-color: $color-accent-yellow; }
+  &:nth-child(2) { border-left-color: $color-accent-blue; }
+  &:nth-child(3) { border-left-color: $color-accent-green; }
 }
 
-.step-number {
-  width: 32px;
-  height: 32px;
-  background: $color-primary;
-  color: white;
-  border-radius: 50%;
+.nm-metric-label { font-size: $font-size-xs; color: $text-secondary; margin-bottom: 2px; }
+.nm-metric-value { font-size: $font-size-base; font-weight: $font-weight-bold; color: $text-primary; }
+.nm-metric-formula { font-size: $font-size-xs; opacity: 0.7; margin-top: 4px; border-top: 1px dashed $border-primary; padding-top: 4px; }
+
+.nm-footer {
+  padding: $spacing-3 $spacing-6;
+  background: $bg-tertiary;
+  border-top: 1px solid $border-primary;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-sm;
-  flex-shrink: 0;
-}
-
-.step-content {
-  flex: 1;
-}
-
-.step-title {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  color: $text-primary;
-  margin-bottom: $spacing-1;
-}
-
-.step-desc {
-  font-size: $font-size-xs;
-  color: $text-secondary;
-  line-height: $line-height-relaxed;
 }

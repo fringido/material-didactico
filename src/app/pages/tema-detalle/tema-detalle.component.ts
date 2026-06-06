@@ -81,24 +81,56 @@ export class TemaDetalleComponent implements OnInit {
 
       const m = this.modulo();
       const u = this.unidad();
+      
+      console.log('TemaDetalle: Loading theme', id, 'for Class', claseNum, '(Module', m, 'Unit', u, ')');
 
-      this.http.get<any>(`/assets/data/modulo-${m}/unidad-${u}.json`).subscribe({
-        next: (data) => {
-          const found = data.temas.find((t: any) => t.id === id);
-          if (found) {
-            // Normalizar contenido para el template
-            const normalizedTema = found.contenido ? { ...found, ...found.contenido } : { ...found };
-            this.tema.set(normalizedTema);
-          } else {
-            this.error.set(`Tema "${id}" no encontrado.`);
+      // Prioridad: Intentar cargar desde el archivo específico de la clase si existe
+      if (claseNum) {
+        const classUrl = `/assets/data/clase-${claseNum}/${id}.json`;
+        console.log('TemaDetalle: Attempting to load from', classUrl);
+        this.http.get<any>(classUrl).subscribe({
+          next: (detalle) => {
+            console.log('TemaDetalle: Successfully loaded from class file', detalle);
+            // Normalizar metadatos si vienen del archivo de clase
+            const metadata = detalle.metadata || { clase: claseNum, id: id, titulo: detalle.nombre || detalle.titulo };
+            this.tema.set({ ...detalle, metadata });
+            this.loading.set(false);
+          },
+          error: (err) => {
+            console.warn('TemaDetalle: Failed to load from class file, falling back to unit', err);
+            // Fallback: Cargar desde la unidad modular
+            this.cargarDesdeUnidad(m, u, id);
           }
-          this.loading.set(false);
-        },
-        error: () => {
-          this.error.set(`No se pudo cargar la información de la Unidad ${u}.`);
-          this.loading.set(false);
+        });
+      } else {
+        this.cargarDesdeUnidad(m, u, id);
+      }
+    });
+  }
+
+  private cargarDesdeUnidad(m: number, u: number, id: string | null) {
+    const unitUrl = `/assets/data/modulo-${m}/unidad-${u}.json`;
+    console.log('TemaDetalle: Attempting to load from unit file', unitUrl);
+    this.http.get<any>(unitUrl).subscribe({
+      next: (data) => {
+        console.log('TemaDetalle: Successfully loaded unit file', data);
+        const found = data.temas.find((t: any) => t.id === id);
+        if (found) {
+          console.log('TemaDetalle: Found theme in unit', found);
+          // Normalizar contenido para el template
+          const normalizedTema = found.contenido ? { ...found, ...found.contenido } : { ...found };
+          this.tema.set(normalizedTema);
+        } else {
+          console.error('TemaDetalle: Theme not found in unit', id);
+          this.error.set(`Tema "${id}" no encontrado.`);
         }
-      });
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('TemaDetalle: Failed to load unit file', err);
+        this.error.set(`No se pudo cargar la información de la Unidad ${u}.`);
+        this.loading.set(false);
+      }
     });
   }
 

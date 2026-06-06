@@ -1,165 +1,182 @@
-<div class="simulator-card card">
-  <div class="simulator-card__header">
-    <h3 class="simulator-card__title">{{ simulacion.titulo }}</h3>
-    <p class="simulator-card__desc">{{ simulacion.descripcion }}</p>
+<div class="nm-container">
+
+  <!-- ══════════════════════════ TAB SWITCHER / HEADER ══════════════════════════ -->
+  <div class="nm-tabs">
+    <div class="nm-tab nm-tab--active">
+      <span class="nm-tab__icon">⚡</span>
+      <span>{{ simulacion.titulo || 'Simulador Dinámico' }}</span>
+    </div>
+    <button class="nm-tab nm-tab--anim" (click)="togglePlay()">
+      {{ isPlaying() ? '⏸' : '▶' }} {{ isPlaying() ? 'Pausar' : 'Animar' }}
+    </button>
   </div>
 
-  <div class="simulator-card__content">
+  <div class="nm-layout">
+    
+    <!-- ══════════════════════════ PANEL IZQUIERDO: DIAGRAMA + GRÁFICAS ══════════════════════════ -->
+    <div class="nm-diagram-panel">
+      <h4 class="nm-panel-title">Visualización Interactiva</h4>
+      <p class="nm-panel-subtitle">{{ simulacion.descripcion }}</p>
 
-    <!-- LABORATORIOS ESPECIALIZADOS (CASOS ESPECÍFICOS) -->
-    @if (simulacion.tipo === 'kirchhoff-lab') {
-      <app-kirchhoff-lab />
-    } @else if (simulacion.tipo === 'ohm-law-lab') {
-      <app-ohm-law-lab />
-    } @else if (simulacion.tipo === 'topology-lab') {
-      <app-topology-lab />
-    } @else if (simulacion.tipo === 'matrix_visualizer' && simulacion.matriz_dinamica) {
-      <app-matrix-visualizer [matriz]="simulacion.matriz_dinamica" [controlValues]="controlValues()" />
-    } @else {
-      <!-- SIMULADOR GENÉRICO BASADO EN DATOS -->
-      <div class="simulator-layout">
-        <!-- Diagrama / Visualización -->
-        <div class="simulator-viz">
-          @if (simulacion.diagrama?.length) {
-          <div class="diagram-wrapper" [style.width.px]="simulacion.ancho" [style.height.px]="simulacion.alto">
-            <svg [attr.viewBox]="'0 0 ' + (simulacion.ancho || 300) + ' ' + (simulacion.alto || 200)"
-                 preserveAspectRatio="xMidYMid meet"
-                 class="diagram-svg">
-              <!-- Grid Background -->
-              <defs>
-                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--border-color)" stroke-width="0.5" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" opacity="0.2" />
+      <!-- Diagrama SVG -->
+      @if (simulacion.diagrama?.length) {
+        <svg class="nm-svg" [attr.viewBox]="'0 0 ' + (simulacion.ancho || 500) + ' ' + (simulacion.alto || 300)" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill="#334155" opacity="0.5" />
+            </pattern>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
 
-              <g class="diagram-elements">
-                @for (el of simulacion.diagrama; track $index) {
-                  <ng-container [ngSwitch]="el.tipo">
-                    <!-- Resistencia -->
-                    <g *ngSwitchCase="'resistencia'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <path d="M0,10 L10,10 L12,0 L16,20 L20,0 L24,20 L28,0 L32,20 L36,0 L40,10 L50,10" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
-                    </g>
-                    <!-- Resistor alias -->
-                    <g *ngSwitchCase="'resistor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <path d="M0,10 L10,10 L12,0 L16,20 L20,0 L24,20 L28,0 L32,20 L36,0 L40,10 L50,10" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
-                    </g>
-                    <!-- Capacitor -->
-                    <g *ngSwitchCase="'capacitor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <path d="M0,10 L22,10 M28,10 L50,10 M22,0 L22,20 M28,0 L28,20" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
-                    </g>
-                    <!-- Inductor -->
-                    <g *ngSwitchCase="'inductor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <path d="M0,10 L10,10 C10,10 10,0 15,0 C20,0 20,10 20,10 C20,10 20,0 25,0 C30,0 30,10 30,10 C30,10 30,0 35,0 C40,0 40,10 40,10 L50,10" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                      <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ el.valor }}</text>
-                    </g>
-                    <!-- Fuente DC -->
-                    <g *ngSwitchCase="'fuente_dc'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <circle cx="0" cy="0" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                      <path d="M-5,0 L5,0 M0,-5 L0,5" stroke="var(--color-primary)" stroke-width="2" />
-                      <text x="20" y="5" class="diagram-label">{{ el.valor }}</text>
-                    </g>
-                    <!-- Fuente alias -->
-                    <g *ngSwitchCase="'fuente'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <circle cx="0" cy="0" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                      <path d="M-5,0 L5,0 M0,-5 L0,5" stroke="var(--color-primary)" stroke-width="2" />
-                      <text x="20" y="5" class="diagram-label">{{ el.valor }}</text>
-                    </g>
-                    <!-- Fuente AC -->
-                    <g *ngSwitchCase="'fuente_ac'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <circle cx="0" cy="0" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                      <path d="M-8,0 Q-4,-8 0,0 T8,0" stroke="var(--color-primary)" stroke-width="2" fill="none" />
-                      <text x="20" y="5" class="diagram-label">{{ el.valor }}</text>
-                    </g>
-                    <!-- Tierra -->
-                    <g *ngSwitchCase="'tierra'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
-                      <path d="M0,0 L0,15 M-10,15 L10,15 M-7,20 L7,20 M-4,25 L4,25" fill="none" stroke="var(--text-secondary)" stroke-width="2" />
-                    </g>
-                    <!-- Línea -->
-                    <line *ngSwitchCase="'linea'" [attr.x1]="el.x1" [attr.y1]="el.y1" [attr.x2]="el.x2" [attr.y2]="el.y2" stroke="var(--text-secondary)" stroke-width="1.5" />
-                    <!-- Nodo -->
-                    <g *ngSwitchCase="'nodo'">
-                      <circle [attr.cx]="el.x || 0" [attr.cy]="el.y || 0" r="4" fill="var(--color-primary)" />
-                      <text [attr.x]="(el.x || 0) + 8" [attr.y]="(el.y || 0) - 8" class="diagram-label diagram-label--important">{{ el.valor }}</text>
-                    </g>
-                  </ng-container>
-                }
-              </g>
-            </svg>
-          </div>
-          }
+          <!-- Grid dots -->
+          <rect width="100%" height="100%" fill="url(#grid-dots)" />
 
-          <!-- Muestras de Ondas si existen -->
-          @if (simulacion.graficas?.length) {
-            <div class="wave-viewer" style="flex: 1; min-height: 200px;">
-              <svg viewBox="0 0 300 100" preserveAspectRatio="none" class="wave-svg" style="width: 100%; height: 100%;">
-                <line x1="0" y1="50" x2="300" y2="50" stroke="var(--border-color)" stroke-dasharray="4" />
-                @for (g of simulacion.graficas; track g.id) {
-                  <path [attr.d]="generateWavePath(g)" fill="none" [attr.stroke]="g.color" stroke-width="2" vector-effect="non-scaling-stroke" />
-                }
-              </svg>
-              <div class="wave-legend">
-                @for (g of simulacion.graficas; track g.id) {
-                  <div class="legend-item">
-                    <span class="legend-color" [style.background]="g.color"></span>
-                    <span class="legend-label">{{ g.label }}</span>
-                  </div>
-                }
-              </div>
-            </div>
-          }
-        </div>
+          <!-- Elementos del diagrama -->
+          <g class="diagram-elements">
+            @for (el of simulacion.diagrama; track $index) {
+              <ng-container [ngSwitch]="el.tipo">
+                <!-- Resistencia -->
+                <g *ngSwitchCase="'resistencia'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <path d="M0,10 L10,10 L12,0 L16,20 L20,0 L24,20 L28,0 L32,20 L36,0 L40,10 L50,10" fill="none" stroke="#FBBF24" stroke-width="2" />
+                  <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ getLiveValue(el) }}</text>
+                </g>
+                <g *ngSwitchCase="'resistor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <path d="M0,10 L10,10 L12,0 L16,20 L20,0 L24,20 L28,0 L32,20 L36,0 L40,10 L50,10" fill="none" stroke="#FBBF24" stroke-width="2" />
+                  <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ getLiveValue(el) }}</text>
+                </g>
+                <!-- Capacitor -->
+                <g *ngSwitchCase="'capacitor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <path d="M0,10 L22,10 M28,10 L50,10 M22,0 L22,20 M28,0 L28,20" fill="none" stroke="#60A5FA" stroke-width="2" />
+                  <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ getLiveValue(el) }}</text>
+                </g>
+                <!-- Inductor -->
+                <g *ngSwitchCase="'inductor'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <path d="M0,10 L10,10 C10,10 10,0 15,0 C20,0 20,10 20,10 C20,10 20,0 25,0 C30,0 30,10 30,10 C30,10 30,0 35,0 C40,0 40,10 40,10 L50,10" fill="none" stroke="#34D399" stroke-width="2" />
+                  <text x="25" y="35" text-anchor="middle" class="diagram-label">{{ getLiveValue(el) }}</text>
+                </g>
+                <!-- Fuente DC -->
+                <g *ngSwitchCase="'fuente_dc'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <circle cx="0" cy="0" r="18" fill="#1F1F1F" stroke="#8B5CF6" stroke-width="2" />
+                  <path d="M-6,0 L6,0 M0,-6 L0,6" stroke="#8B5CF6" stroke-width="2" />
+                  <text x="24" y="5" class="diagram-label--important">{{ getLiveValue(el) }}</text>
+                </g>
+                <g *ngSwitchCase="'fuente'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <circle cx="0" cy="0" r="18" fill="#1F1F1F" stroke="#8B5CF6" stroke-width="2" />
+                  <path d="M-6,0 L6,0 M0,-6 L0,6" stroke="#8B5CF6" stroke-width="2" />
+                  <text x="24" y="5" class="diagram-label--important">{{ getLiveValue(el) }}</text>
+                </g>
+                <!-- Fuente AC -->
+                <g *ngSwitchCase="'fuente_ac'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <circle cx="0" cy="0" r="18" fill="#1F1F1F" stroke="#8B5CF6" stroke-width="2" />
+                  <path d="M-10,0 Q-5,-10 0,0 T10,0" stroke="#8B5CF6" stroke-width="2" fill="none" />
+                  <text x="24" y="5" class="diagram-label--important">{{ getLiveValue(el) }}</text>
+                </g>
+                <!-- Tierra -->
+                <g *ngSwitchCase="'tierra'" [attr.transform]="'translate('+(el.x || 0)+','+(el.y || 0)+')'">
+                  <path d="M0,0 L0,15 M-10,15 L10,15 M-7,20 L7,20 M-4,25 L4,25" fill="none" stroke="#64748B" stroke-width="2" />
+                </g>
+                <!-- Línea -->
+                <line *ngSwitchCase="'linea'" [attr.x1]="el.x1" [attr.y1]="el.y1" [attr.x2]="el.x2" [attr.y2]="el.y2" stroke="#475569" stroke-width="2" />
+                <!-- Nodo -->
+                <g *ngSwitchCase="'nodo'">
+                  <circle [attr.cx]="el.x || 0" [attr.cy]="el.y || 0" r="5" fill="#8B5CF6" filter="url(#glow)" />
+                  <text [attr.x]="(el.x || 0) + 10" [attr.y]="(el.y || 0) - 10" class="diagram-label--important">{{ el.valor }}</text>
+                </g>
+              </ng-container>
+            }
+          </g>
+        </svg>
+      }
 
-        <!-- Controles y Métricas -->
-        <div class="simulator-sidebar">
-          <div class="controls-section">
-            <h4 class="sidebar-title">Parámetros</h4>
-            @for (ctrl of simulacion.controles; track ctrl.id) {
-              <div class="control-group">
-                <div class="control-label">
-                  <span>{{ ctrl.label }}</span>
-                  <span class="control-value">{{ controlValues()[ctrl.id] }}{{ ctrl.unidad }}</span>
-                </div>
-                <input type="range"
-                       [min]="ctrl.min"
-                       [max]="ctrl.max"
-                       [step]="ctrl.step || 1"
-                       [value]="controlValues()[ctrl.id]"
-                       (input)="updateControl(ctrl.id, $any($event.target).value)"
-                       class="slider">
+      <!-- Muestras de Ondas / Gráficas -->
+      @if (simulacion.graficas?.length) {
+        <div class="wave-viewer">
+          <svg viewBox="0 0 300 100" preserveAspectRatio="none" class="wave-svg">
+            <!-- Línea base zero -->
+            <line x1="0" y1="50" x2="300" y2="50" stroke="#1E293B" stroke-dasharray="4" />
+            
+            @for (g of simulacion.graficas; track g.id) {
+              <!-- Trazo de la curva -->
+              <path [attr.d]="generateWavePath(g)" fill="none" [attr.stroke]="g.color" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+              
+              <!-- Indicador vertical de valor actual -->
+              @if (getCurrentPointX(g) >= 0) {
+                <line [attr.x1]="getCurrentPointX(g)" y1="0" [attr.x2]="getCurrentPointX(g)" y2="100" 
+                      stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.8" />
+                <circle [attr.cx]="getCurrentPointX(g)" cy="50" r="4" fill="#8B5CF6" filter="url(#glow)" />
+              }
+            }
+          </svg>
+          <div class="wave-legend">
+            @for (g of simulacion.graficas; track g.id) {
+              <div class="legend-item">
+                <span class="legend-color" [style.background]="g.color"></span>
+                <span class="legend-label">{{ g.label }}</span>
               </div>
             }
           </div>
+        </div>
+      }
+    </div>
 
-          <div class="metrics-section">
-            <h4 class="sidebar-title">Resultados</h4>
-            <div class="metrics-grid">
-              @for (m of metricasEvaluadas(); track m.label) {
-                <div class="metric-card">
-                  <p class="metric-label">{{ m.label }}</p>
-                  <p class="metric-value">{{ m.valorCalculado | number:'1.1-2' }}<small>{{ m.unidad }}</small></p>
-                  @if (m.formula_katex) {
-                    <div class="metric-formula" [appKatex]="m.formula_katex"></div>
-                  }
-                </div>
-              }
+    <!-- ══════════════════════════ PANEL DERECHO: CONTROLES + MÉTRICAS ══════════════════════════ -->
+    <div class="nm-side-panel">
+      
+      <!-- Controles deslizantes -->
+      <div class="nm-controls">
+        <h5 class="nm-ctrl-title">⚙️ Parámetros</h5>
+        @for (ctrl of simulacion.controles; track ctrl.id) {
+          <div class="nm-ctrl-row">
+            <label>{{ ctrl.label }}</label>
+            <div class="nm-slider-wrap">
+              <input type="range"
+                     [min]="ctrl.min"
+                     [max]="ctrl.max"
+                     [step]="ctrl.step || 1"
+                     [value]="controlValues()[ctrl.id]"
+                     (input)="updateControl(ctrl.id, $any($event.target).value)"
+                     class="nm-slider">
+              <input type="number"
+                     [min]="ctrl.min"
+                     [max]="ctrl.max"
+                     [step]="ctrl.step || 1"
+                     [value]="controlValues()[ctrl.id]"
+                     (input)="updateControl(ctrl.id, $any($event.target).value)"
+                     class="nm-val-input">
+              <span class="nm-unit">{{ ctrl.unidad }}</span>
             </div>
           </div>
-        </div>
+        }
       </div>
-    }
 
+      <!-- Métricas calculadas -->
+      <div class="nm-metrics">
+        <h5 class="nm-ctrl-title">📊 Resultados</h5>
+        @for (m of metricasEvaluadas(); track m.label) {
+          <div class="nm-metric-card">
+            <p class="nm-metric-label">{{ m.label }}</p>
+            <p class="nm-metric-value">
+              {{ m.valorCalculado | number:'1.1-2' }}
+              <span class="nm-unit">{{ m.unidad }}</span>
+            </p>
+            @if (m.formula_katex) {
+              <div class="nm-metric-formula" [appKatex]="m.formula_katex"></div>
+            }
+          </div>
+        }
+      </div>
+
+    </div>
   </div>
 
   <div class="simulator-card__footer">
     <div class="flex items-center gap-2">
-      <button class="btn btn--ghost btn--sm" (click)="togglePlay()">
-        {{ isPlaying() ? '⏸ Pausar' : '▶️ Reanudar' }}
-      </button>
-      <span class="text-xs text-secondary">Animación de tiempo real</span>
+      <div class="spinner" [style.visibility]="isPlaying() ? 'visible' : 'hidden'"></div>
+      <span class="text-xs text-secondary">{{ isPlaying() ? 'Simulación en curso...' : 'Simulación pausada' }}</span>
     </div>
+    <span class="text-xs text-tertiary">Frecuencia de muestreo: 60Hz</span>
   </div>
 </div>

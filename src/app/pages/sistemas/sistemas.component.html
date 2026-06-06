@@ -1,201 +1,245 @@
-<div class="loading-state" *ngIf="loading()">
-  <div class="spinner"></div>
-</div>
-
-<div class="sistemas-wrapper" *ngIf="!loading() && sistemas()">
-
-  <header class="sistemas-header">
-    <a routerLink="/" class="page-back">
-      <span class="page-back__icon" aria-hidden="true">←</span>
-      <span class="page-back__label">Volver al inicio</span>
-    </a>
-    <div class="sistemas-header__text">
-      <h1 class="sistemas-header__title">Sistemas Analógicos</h1>
-      <p class="sistemas-header__sub">Amplificadores, Filtros y Osciladores — Los pilares de comunicación y
-        procesamiento de señales</p>
+<div class="page-shell">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
     </div>
-  </header>
+  } @else if (sistemas()) {
+    <app-page-back-bar
+      backLink="/"
+      backLabel="Volver al inicio"
+      [breadcrumb]="[
+        { label: 'Inicio', link: '/' },
+        { label: 'Sistemas Analógicos' }
+      ]"
+    />
 
-  <div class="sistemas-grid">
-
-    <!-- AMPLIFICADORES -->
-    <div class="sistema-card">
-      <div class="sistema-card__header">
-        <span class="sistema-card__icon">{{ sistemas().amplificadores.icono }}</span>
-        <div>
-          <h2 class="sistema-card__title">{{ sistemas().amplificadores.nombre }}</h2>
-          <p class="sistema-card__desc">{{ sistemas().amplificadores.descripcion }}</p>
-        </div>
+    <header class="page-hero">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="badge badge--primary">Procesamiento de Señales</span>
+        <span class="badge badge--info">Sistemas</span>
       </div>
+      <h1 class="page-hero__title">Sistemas Analógicos</h1>
+      <p class="page-hero__lead">Amplificadores, Filtros y Osciladores — Los pilares de comunicación y procesamiento de señales analógicas en mecatrónica.</p>
+    </header>
 
-      <div class="sistema-card__equation" [appKatex]="sistemas().amplificadores.ecuacion_principal"></div>
+    <div class="flex flex-col gap-16 mt-8">
 
-      <!-- SIMULADOR DE AMPLIFICADOR -->
-      <app-amplifier-lab [data]="sistemas().amplificadores" [showHeader]="false"></app-amplifier-lab>
-
-      <div class="sistema-card__section">
-        <h3>Conceptos Clave</h3>
-        <div class="conceptos-list">
-          <div class="concepto-item" *ngFor="let c of sistemas().amplificadores.conceptos">
-            <div class="concepto-item__header">
-              <span class="badge badge--primary badge--lg">{{ c.simbolo }}</span>
-              <strong>{{ c.nombre }}</strong>
-            </div>
-            <p>{{ c.descripcion }}</p>
-            <div class="concepto-formula" *ngIf="c.formula" [appKatex]="c.formula"></div>
+      <!-- AMPLIFICADORES -->
+      <section class="section">
+        <div class="flex items-center gap-4 mb-6">
+          <span class="text-4xl">{{ sistemas().amplificadores.icono }}</span>
+          <div>
+            <h2 class="section__title border-none pb-0">{{ sistemas().amplificadores.nombre }}</h2>
+            <p class="text-secondary">{{ sistemas().amplificadores.descripcion }}</p>
           </div>
         </div>
-      </div>
 
-      <div class="sistema-card__section">
-        <h3>Configuraciones BJT</h3>
-        <div class="config-grid">
-          <a class="config-card" *ngFor="let cfg of sistemas().amplificadores.configuraciones"
-            [routerLink]="['/sistemas/amplificadores', cfg.id]">
-            <p class="config-card__name">{{ cfg.nombre }}</p>
-            <p class="config-card__desc">{{ cfg.descripcion }}</p>
-            <div class="config-card__specs">
-              <span class="spec-badge">Av: {{ cfg.ganancia_voltaje }}</span>
-              <span class="spec-badge">Ai: {{ cfg.ganancia_corriente }}</span>
-              <span class="spec-badge">{{ cfg.fase }}</span>
+        <div class="equation-display mb-8" [appKatex]="sistemas().amplificadores.ecuacion_principal"></div>
+
+        <!-- SIMULADOR DE AMPLIFICADOR -->
+        <div class="content-panel mb-8">
+          <app-amplifier-lab [data]="sistemas().amplificadores" [showHeader]="false"></app-amplifier-lab>
+        </div>
+
+        <div class="content-grid">
+          <div>
+            <h3 class="text-lg font-bold mb-4">Conceptos Clave</h3>
+            <div class="flex flex-col gap-4">
+              @for (c of sistemas().amplificadores.conceptos; track c.nombre) {
+                <div class="content-panel content-panel--bordered">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="badge badge--primary">{{ c.simbolo }}</span>
+                    <strong class="text-primary">{{ c.nombre }}</strong>
+                  </div>
+                  <p class="text-sm text-secondary">{{ c.descripcion }}</p>
+                  @if (c.formula) {
+                    <div class="equation-display equation-display--sm mt-3" [appKatex]="c.formula"></div>
+                  }
+                </div>
+              }
             </div>
-            <span class="config-card__arrow">→</span>
-          </a>
-        </div>
-      </div>
+          </div>
 
-      <div class="sistema-card__section">
-        <h3>{{ sistemas().amplificadores.opamps.nombre }}</h3>
-        <p class="text-secondary mb-3">{{ sistemas().amplificadores.opamps.descripcion }}</p>
-        <div class="opamp-grid">
-          <a class="opamp-card" *ngFor="let op of sistemas().amplificadores.opamps.tipos"
-            [routerLink]="['/sistemas/amplificadores/opamp', op.id]">
-            <p class="opamp-card__name">{{ op.nombre }}</p>
-            <div class="opamp-card__formula" [appKatex]="op.formula"></div>
-            <p class="opamp-card__desc">{{ op.descripcion }}</p>
-            <span class="badge badge--info badge--sm">Fase: {{ op.fase }}</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- FILTROS -->
-    <div class="sistema-card">
-      <div class="sistema-card__header">
-        <span class="sistema-card__icon">{{ sistemas().filtros.icono }}</span>
-        <div>
-          <h2 class="sistema-card__title">{{ sistemas().filtros.nombre }}</h2>
-          <p class="sistema-card__desc">{{ sistemas().filtros.descripcion }}</p>
-        </div>
-      </div>
-
-      <div class="sistema-card__equation" [appKatex]="sistemas().filtros.ecuacion_principal"></div>
-
-      <!-- SIMULADOR DE FILTROS -->
-      <app-filter-simulator></app-filter-simulator>
-
-      <!-- DIAGRAMA DE BODE DE FILTROS -->
-      <app-bode-chart></app-bode-chart>
-
-      <div class="sistema-card__section">
-        <h3>Por Rango de Frecuencia</h3>
-        <div class="filtros-grid">
-          <a class="filtro-card" *ngFor="let f of sistemas().filtros.por_frecuencia"
-            [routerLink]="['/sistemas/filtros', f.id]">
-            <p class="filtro-card__name">{{ f.nombre }}</p>
-            <p class="filtro-card__desc">{{ f.descripcion }}</p>
-            <div class="filtro-card__formula" *ngIf="f.formula_rc" [appKatex]="f.formula_rc"></div>
-            <div class="filtro-card__apps">
-              <span class="badge badge--neutral badge--sm" *ngFor="let app of f.aplicaciones">{{ app }}</span>
+          <div>
+            <h3 class="text-lg font-bold mb-4">Configuraciones BJT</h3>
+            <div class="flex flex-col gap-3">
+              @for (cfg of sistemas().amplificadores.configuraciones; track cfg.id) {
+                <a class="card card--bordered card--hover p-4" [routerLink]="['/sistemas/amplificadores', cfg.id]">
+                  <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-primary">{{ cfg.nombre }}</h4>
+                    <span class="text-primary-light">→</span>
+                  </div>
+                  <p class="text-sm text-secondary mb-3">{{ cfg.descripcion }}</p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="badge badge--neutral badge--sm">Av: {{ cfg.ganancia_voltaje }}</span>
+                    <span class="badge badge--neutral badge--sm">Ai: {{ cfg.ganancia_corriente }}</span>
+                    <span class="badge badge--info badge--sm">{{ cfg.fase }}</span>
+                  </div>
+                </a>
+              }
             </div>
-            <span class="filtro-card__arrow">→</span>
-          </a>
+          </div>
         </div>
-      </div>
 
-      <div class="sistema-card__section">
-        <h3>Por Componentes</h3>
-        <div class="tipo-grid">
-          <div class="tipo-card" *ngFor="let t of sistemas().filtros.por_componentes">
-            <p class="tipo-card__name">{{ t.tipo }}</p>
-            <p class="tipo-card__desc">{{ t.descripcion }}</p>
-            <div class="pros-cons-mini">
-              <div>
-                <p class="label-success">✅ Ventajas</p>
-                <ul>
-                  <li *ngFor="let v of t.ventajas">{{ v }}</li>
-                </ul>
+        <div class="mt-8">
+          <h3 class="text-lg font-bold mb-4">{{ sistemas().amplificadores.opamps.nombre }}</h3>
+          <p class="text-secondary mb-6">{{ sistemas().amplificadores.opamps.descripcion }}</p>
+          <div class="content-grid content-grid--3">
+            @for (op of sistemas().amplificadores.opamps.tipos; track op.id) {
+              <a class="card card--bordered card--hover p-4" [routerLink]="['/sistemas/amplificadores/opamp', op.id]">
+                <h4 class="font-bold text-center mb-3">{{ op.nombre }}</h4>
+                <div class="equation-display equation-display--sm mb-3" [appKatex]="op.formula"></div>
+                <p class="text-xs text-secondary mb-3">{{ op.descripcion }}</p>
+                <span class="badge badge--info badge--sm btn--full flex justify-center">Fase: {{ op.fase }}</span>
+              </a>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- FILTROS -->
+      <section class="section">
+        <div class="flex items-center gap-4 mb-6">
+          <span class="text-4xl">{{ sistemas().filtros.icono }}</span>
+          <div>
+            <h2 class="section__title border-none pb-0">{{ sistemas().filtros.nombre }}</h2>
+            <p class="text-secondary">{{ sistemas().filtros.descripcion }}</p>
+          </div>
+        </div>
+
+        <div class="equation-display mb-8" [appKatex]="sistemas().filtros.ecuacion_principal"></div>
+
+        <div class="content-panel mb-8">
+          <app-filter-simulator></app-filter-simulator>
+        </div>
+
+        <div class="content-panel mb-8">
+          <h3 class="text-lg font-bold mb-4">Respuesta en Frecuencia</h3>
+          <app-bode-chart></app-bode-chart>
+        </div>
+
+        <div class="content-grid">
+          <div>
+            <h3 class="text-lg font-bold mb-4">Por Rango de Frecuencia</h3>
+            <div class="flex flex-col gap-3">
+              @for (f of sistemas().filtros.por_frecuencia; track f.id) {
+                <a class="card card--bordered card--hover p-5" [routerLink]="['/sistemas/filtros', f.id]">
+                  <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-primary">{{ f.nombre }}</h4>
+                    <span class="text-primary-light">→</span>
+                  </div>
+                  <p class="text-sm text-secondary mb-3">{{ f.descripcion }}</p>
+                  @if (f.formula_rc) {
+                    <div class="equation-display equation-display--sm mb-3" [appKatex]="f.formula_rc"></div>
+                  }
+                  <div class="flex flex-wrap gap-2">
+                    @for (app of f.aplicaciones; track app) {
+                      <span class="badge badge--neutral badge--sm">{{ app }}</span>
+                    }
+                  </div>
+                </a>
+              }
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold mb-4">Por Componentes</h3>
+            <div class="flex flex-col gap-4">
+              @for (t of sistemas().filtros.por_componentes; track t.tipo) {
+                <div class="content-panel content-panel--bordered">
+                  <h4 class="font-bold text-primary mb-2">{{ t.tipo }}</h4>
+                  <p class="text-sm text-secondary mb-4">{{ t.descripcion }}</p>
+                  <div class="content-grid content-grid--1 gap-3">
+                    <div>
+                      <p class="text-xs font-bold text-success mb-2">✅ Ventajas</p>
+                      <ul class="text-xs text-secondary flex flex-col gap-1">
+                        @for (v of t.ventajas; track v) { <li>• {{ v }}</li> }
+                      </ul>
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold text-error mb-2">⚠️ Desventajas</p>
+                      <ul class="text-xs text-secondary flex flex-col gap-1">
+                        @for (d of t.desventajas; track d) { <li>• {{ d }}</li> }
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OSCILADORES -->
+      <section class="section">
+        <div class="flex items-center gap-4 mb-6">
+          <span class="text-4xl">{{ sistemas().osciladores.icono }}</span>
+          <div>
+            <h2 class="section__title border-none pb-0">{{ sistemas().osciladores.nombre }}</h2>
+            <p class="text-secondary">{{ sistemas().osciladores.descripcion }}</p>
+          </div>
+        </div>
+
+        <div class="equation-display mb-8" [appKatex]="sistemas().osciladores.ecuacion_principal"></div>
+
+        <div class="content-panel mb-8">
+          <app-oscillator-simulator></app-oscillator-simulator>
+        </div>
+
+        <div class="content-panel content-panel--highlight mb-8">
+          <h3 class="text-lg font-bold mb-2">{{ sistemas().osciladores.criterio_barkhausen.nombre }}</h3>
+          <p class="text-sm text-secondary mb-6">{{ sistemas().osciladores.criterio_barkhausen.descripcion }}</p>
+          <div class="content-grid content-grid--2">
+            @for (cond of sistemas().osciladores.criterio_barkhausen.conditions || sistemas().osciladores.criterio_barkhausen.condiciones; track cond.descripcion) {
+              <div class="content-panel bg-primary/5 flex flex-col gap-2">
+                <span class="badge badge--primary w-8 h-8 flex items-center justify-center rounded-full">{{ cond.numero }}</span>
+                <p class="text-sm text-secondary">{{ cond.descripcion }}</p>
+                <div class="equation-display equation-display--sm mt-auto" [appKatex]="cond.formula"></div>
               </div>
-              <div>
-                <p class="label-error">⚠️ Desventajas</p>
-                <ul>
-                  <li *ngFor="let d of t.desventajas">{{ d }}</li>
-                </ul>
-              </div>
+            }
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div>
+            <h3 class="text-lg font-bold mb-4">Tipos de Osciladores</h3>
+            <div class="flex flex-col gap-3">
+              @for (osc of sistemas().osciladores.tipos; track osc.id) {
+                <a class="card card--bordered card--hover p-5" [routerLink]="['/sistemas/osciladores', osc.id]">
+                  <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-primary">{{ osc.nombre }}</h4>
+                    <span class="text-primary-light">→</span>
+                  </div>
+                  <p class="text-sm text-secondary mb-3">{{ osc.descripcion }}</p>
+                  <div class="equation-display equation-display--sm mb-3" [appKatex]="osc.formula_frecuencia"></div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="badge badge--warning badge--sm">{{ osc.rango_frecuencia }}</span>
+                    @if (osc.estabilidad) { <span class="badge badge--info badge--sm">{{ osc.estabilidad }}</span> }
+                  </div>
+                </a>
+              }
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold mb-4">Formas de Onda</h3>
+            <div class="flex flex-col gap-4">
+              @for (onda of sistemas().osciladores.formas_onda; track onda.tipo) {
+                <div class="content-panel content-panel--bordered">
+                  <h4 class="font-bold text-primary mb-2">{{ onda.tipo }}</h4>
+                  <p class="text-sm text-secondary mb-4">{{ onda.descripcion }}</p>
+                  <div class="flex flex-wrap gap-2">
+                    @for (o of onda.osciladores; track o) {
+                      <span class="badge badge--neutral badge--sm">{{ o }}</span>
+                    }
+                  </div>
+                </div>
+              }
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
     </div>
-
-    <!-- OSCILADORES -->
-    <div class="sistema-card">
-      <div class="sistema-card__header">
-        <span class="sistema-card__icon">{{ sistemas().osciladores.icono }}</span>
-        <div>
-          <h2 class="sistema-card__title">{{ sistemas().osciladores.nombre }}</h2>
-          <p class="sistema-card__desc">{{ sistemas().osciladores.descripcion }}</p>
-        </div>
-      </div>
-
-      <div class="sistema-card__equation" [appKatex]="sistemas().osciladores.ecuacion_principal"></div>
-
-      <!-- SIMULADOR DE OSCILADORES -->
-      <app-oscillator-simulator></app-oscillator-simulator>
-
-      <div class="sistema-card__section barkhausen-section">
-        <h3>{{ sistemas().osciladores.criterio_barkhausen.nombre }}</h3>
-        <p class="text-secondary mb-3">{{ sistemas().osciladores.criterio_barkhausen.descripcion }}</p>
-        <div class="criterio-grid">
-          <div class="criterio-card" *ngFor="let cond of sistemas().osciladores.criterio_barkhausen.condiciones">
-            <span class="criterio-card__num">{{ cond.numero }}</span>
-            <p class="criterio-card__desc">{{ cond.descripcion }}</p>
-            <div class="criterio-card__formula" [appKatex]="cond.formula"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sistema-card__section">
-        <h3>Tipos de Osciladores</h3>
-        <div class="osc-grid">
-          <a class="osc-card" *ngFor="let osc of sistemas().osciladores.tipos"
-            [routerLink]="['/sistemas/osciladores', osc.id]">
-            <p class="osc-card__name">{{ osc.nombre }}</p>
-            <p class="osc-card__desc">{{ osc.descripcion }}</p>
-            <div class="osc-card__formula" [appKatex]="osc.formula_frecuencia"></div>
-            <div class="osc-card__meta">
-              <span class="badge badge--warning badge--sm">{{ osc.rango_frecuencia }}</span>
-              <span class="badge badge--info badge--sm" *ngIf="osc.estabilidad">{{ osc.estabilidad }}</span>
-            </div>
-            <span class="osc-card__arrow">→</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="sistema-card__section">
-        <h3>Formas de Onda</h3>
-        <div class="onda-grid">
-          <div class="onda-card" *ngFor="let onda of sistemas().osciladores.formas_onda">
-            <p class="onda-card__tipo">{{ onda.tipo }}</p>
-            <p class="onda-card__desc">{{ onda.descripcion }}</p>
-            <div class="onda-card__oscs">
-              <span class="badge badge--neutral badge--sm" *ngFor="let o of onda.osciladores">{{ o }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
+  }
 </div>

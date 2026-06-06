@@ -1,132 +1,152 @@
-<div class="simulator-container">
-  <div class="simulator-header">
-    <h3 class="simulator-title">🎚️ Simulador de Filtros Analógicos</h3>
-    <p class="simulator-desc">Visualiza cómo los filtros procesan diferentes frecuencias</p>
+<div class="nm-container">
+
+  <!-- ══════════════════════════ TAB SWITCHER / HEADER ══════════════════════════ -->
+  <div class="nm-tabs">
+    <div class="nm-tab nm-tab--active">
+      <span class="nm-tab__icon">🎚️</span>
+      <span>Simulador de Filtros Analógicos</span>
+    </div>
+    <button class="nm-tab nm-tab--anim" (click)="togglePlay()">
+      {{ isPlaying() ? '⏸' : '▶' }} {{ isPlaying() ? 'Pausar' : 'Animar' }}
+    </button>
   </div>
 
-  <div class="simulator-body">
+  <div class="nm-layout">
     
-    <!-- Controles -->
-    <div class="controls-panel">
-      <div class="control-group">
-        <label class="control-label">Tipo de Filtro</label>
-        <select [(ngModel)]="filterType" class="control-select">
-          <option value="lowpass">Pasa-Bajas (LPF)</option>
-          <option value="highpass">Pasa-Altas (HPF)</option>
-          <option value="bandpass">Pasa-Banda (BPF)</option>
-          <option value="notch">Rechaza-Banda (Notch)</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label class="control-label">
-          Frecuencia de Corte: <span class="control-value">{{ cutoffFrequency() }} Hz</span>
-        </label>
-        <input type="range" [(ngModel)]="cutoffFrequency" min="100" max="5000" step="100" class="control-slider">
-      </div>
-
-      <div class="control-group">
-        <label class="control-label">
-          Resistencia: <span class="control-value">{{ resistance() }} Ω</span>
-        </label>
-        <input type="range" [(ngModel)]="resistance" min="100" max="10000" step="100" class="control-slider">
-      </div>
-
-      <div class="control-group">
-        <label class="control-label">
-          Capacitancia: <span class="control-value">{{ capacitance() }} µF</span>
-        </label>
-        <input type="range" [(ngModel)]="capacitance" min="0.01" max="1" step="0.01" class="control-slider">
-      </div>
-
-      <button (click)="togglePlay()" class="btn-play">
-        {{ isPlaying() ? '⏸ Pausar' : '▶ Reproducir' }}
-      </button>
-    </div>
-
-    <!-- Respuesta en frecuencia -->
-    <div class="frequency-response">
-      <h4 class="section-subtitle">Respuesta en Frecuencia</h4>
-      <svg class="response-svg" viewBox="0 0 400 150">
-        <!-- Ejes -->
-        <line x1="0" y1="140" x2="400" y2="140" stroke="#444" stroke-width="1"/>
-        <line x1="0" y1="10" x2="0" y2="140" stroke="#444" stroke-width="1"/>
-        
-        <!-- Línea de frecuencia de corte -->
-        <line x1="200" y1="10" x2="200" y2="140" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,4"/>
-        <text x="205" y="25" fill="#f59e0b" font-size="10">fc</text>
-        
-        <!-- Curva de respuesta -->
-        <path [attr.d]="generateFrequencyResponsePath()" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
-        
-        <!-- Labels -->
-        <text x="5" y="15" fill="#888" font-size="10">1.0</text>
-        <text x="5" y="145" fill="#888" font-size="10">0.0</text>
-        <text x="5" y="155" fill="#888" font-size="10">10Hz</text>
-        <text x="380" y="155" fill="#888" font-size="10">10kHz</text>
-      </svg>
-    </div>
-
-    <!-- Señales -->
-    <div class="signals-panel">
-      <div class="signal-container">
-        <p class="signal-label">Señal de Entrada (Compuesta)</p>
-        <svg class="signal-svg" viewBox="0 0 300 80">
-          <line x1="0" y1="40" x2="300" y2="40" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
-          <path [attr.d]="generateInputSignal()" fill="none" stroke="#3b82f6" stroke-width="2"/>
-        </svg>
-        <p class="signal-desc">Baja + Media + Alta frecuencia</p>
-      </div>
-
-      <div class="filter-icon">
-        <div class="filter-box">
-          <span class="filter-label">{{ filterType() === 'lowpass' ? 'LPF' : filterType() === 'highpass' ? 'HPF' : filterType() === 'bandpass' ? 'BPF' : 'NOTCH' }}</span>
+    <!-- ══════════════════════════ PANEL IZQUIERDO: VISUALIZACIÓN ══════════════════════════ -->
+    <div class="nm-viz-panel">
+      
+      <!-- Respuesta en Frecuencia -->
+      <div class="viz-section">
+        <h5 class="viz-title">Respuesta en Frecuencia (Magnitud)</h5>
+        <div class="frequency-svg-wrapper">
+          <svg class="response-svg" viewBox="0 0 400 150">
+            <!-- Grid Lines -->
+            <line x1="0" y1="140" x2="400" y2="140" stroke="#1e293b" stroke-width="1"/>
+            <line x1="0" y1="10" x2="400" y2="10" stroke="#1e293b" stroke-width="1" opacity="0.3"/>
+            
+            <!-- Línea de frecuencia de corte -->
+            <line x1="200" y1="10" x2="200" y2="140" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <text x="205" y="25" fill="#f59e0b" font-size="10" font-family="monospace">fc</text>
+            
+            <!-- Curva de respuesta -->
+            <path [attr.d]="generateFrequencyResponsePath()" fill="none" stroke="#8b5cf6" stroke-width="3"/>
+            
+            <!-- Labels -->
+            <text x="5" y="15" fill="#475569" font-size="9">1.0</text>
+            <text x="5" y="135" fill="#475569" font-size="9">0.0</text>
+            <text x="5" y="148" fill="#475569" font-size="9">10Hz</text>
+            <text x="365" y="148" fill="#475569" font-size="9">10kHz</text>
+          </svg>
         </div>
       </div>
 
-      <div class="signal-container">
-        <p class="signal-label">Señal de Salida (Filtrada)</p>
-        <svg class="signal-svg" viewBox="0 0 300 80">
-          <line x1="0" y1="40" x2="300" y2="40" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>
-          <path [attr.d]="generateOutputSignal()" fill="none" stroke="#10b981" stroke-width="2"/>
-        </svg>
-        <p class="signal-desc">{{ getFilterInfo().aplicacion }}</p>
+      <!-- Flujo de Señales -->
+      <div class="viz-section">
+        <h5 class="viz-title">Procesamiento de Señales en Tiempo Real</h5>
+        <div class="signals-flow">
+          <!-- Entrada -->
+          <div class="signal-card">
+            <p class="signal-label">Entrada (Σ f)</p>
+            <svg class="signal-svg" viewBox="0 0 300 80">
+              <line x1="0" y1="40" x2="300" y2="40" stroke="#1e293b" stroke-width="1" stroke-dasharray="2,2"/>
+              <path [attr.d]="generateInputSignal()" fill="none" stroke="#60A5FA" stroke-width="2"/>
+            </svg>
+          </div>
+
+          <!-- Nodo Filtro -->
+          <div class="filter-node">
+            <span>{{ filterType() === 'lowpass' ? 'LPF' : filterType() === 'highpass' ? 'HPF' : filterType() === 'bandpass' ? 'BPF' : 'NOTCH' }}</span>
+          </div>
+
+          <!-- Salida -->
+          <div class="signal-card">
+            <p class="signal-label">Salida Filtrada</p>
+            <svg class="signal-svg" viewBox="0 0 300 80">
+              <line x1="0" y1="40" x2="300" y2="40" stroke="#1e293b" stroke-width="1" stroke-dasharray="2,2"/>
+              <path [attr.d]="generateOutputSignal()" fill="none" stroke="#34D399" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Información del filtro -->
-    <div class="filter-info">
-      <h4 class="filter-info__title">{{ getFilterInfo().nombre }}</h4>
-      <p class="filter-info__desc">{{ getFilterInfo().descripcion }}</p>
-      <div class="filter-info__formula">
-        <p class="formula-label">Función de Transferencia:</p>
-        <div [appKatex]="getFilterInfo().formula"></div>
-      </div>
-      <div class="filter-info__cutoff">
-        <p class="formula-label">Frecuencia de Corte:</p>
-        <div [appKatex]="'f_c = \\frac{1}{2\\pi RC} = ' + calculatedCutoff().toFixed(0) + ' Hz'"></div>
-      </div>
-    </div>
+    <!-- ══════════════════════════ PANEL DERECHO: CONTROLES + INFO ══════════════════════════ -->
+    <div class="nm-side-panel">
+      
+      <!-- Controles -->
+      <div class="nm-controls">
+        <h5 class="nm-ctrl-title">⚙️ Parámetros</h5>
+        
+        <div class="nm-ctrl-row">
+          <label>Configuración de Filtro</label>
+          <select [(ngModel)]="filterType" class="control-select">
+            <option value="lowpass">Pasa-Bajas (LPF)</option>
+            <option value="highpass">Pasa-Altas (HPF)</option>
+            <option value="bandpass">Pasa-Banda (BPF)</option>
+            <option value="notch">Rechaza-Banda (Notch)</option>
+          </select>
+        </div>
 
-    <!-- Características -->
-    <div class="characteristics">
-      <div class="char-card">
-        <p class="char-label">Tipo</p>
-        <p class="char-value">{{ filterType() === 'lowpass' ? 'Pasivo RC' : filterType() === 'highpass' ? 'Pasivo RC' : 'Activo' }}</p>
-      </div>
-      <div class="char-card">
-        <p class="char-label">Orden</p>
-        <p class="char-value">1er Orden</p>
-      </div>
-      <div class="char-card">
-        <p class="char-label">Atenuación</p>
-        <p class="char-value">-20 dB/década</p>
-      </div>
-      <div class="char-card">
-        <p class="char-label">Aplicación</p>
-        <p class="char-value">{{ getFilterInfo().aplicacion }}</p>
-      </div>
-    </div>
+        <div class="nm-ctrl-row">
+          <label>Frecuencia de Corte (f<sub>c</sub>)</label>
+          <div class="nm-slider-wrap">
+            <input type="range" [(ngModel)]="cutoffFrequency" min="100" max="5000" step="100" class="nm-slider">
+            <span class="nm-val">{{ cutoffFrequency() }} Hz</span>
+          </div>
+        </div>
 
+        <div class="nm-ctrl-row">
+          <label>Resistencia (R)</label>
+          <div class="nm-slider-wrap">
+            <input type="range" [(ngModel)]="resistance" min="100" max="10000" step="100" class="nm-slider">
+            <span class="nm-val">{{ resistance() }} Ω</span>
+          </div>
+        </div>
+
+        <div class="nm-ctrl-row">
+          <label>Capacitancia (C)</label>
+          <div class="nm-slider-wrap">
+            <input type="range" [(ngModel)]="capacitance" min="0.01" max="1" step="0.01" class="nm-slider">
+            <span class="nm-val">{{ capacitance() }} µF</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métricas / Análisis -->
+      <div class="nm-metrics">
+        <h5 class="nm-ctrl-title">📊 Análisis de Respuesta</h5>
+        
+        <div class="nm-metric-card">
+          <p class="nm-metric-label">Nombre del Sistema</p>
+          <p class="nm-metric-value">{{ getFilterInfo().nombre }}</p>
+        </div>
+
+        <div class="nm-metric-card">
+          <p class="nm-metric-label">Frecuencia f<sub>c</sub> calculada</p>
+          <p class="nm-metric-value">{{ calculatedCutoff().toFixed(1) }} <span class="nm-unit">Hz</span></p>
+          <div class="nm-metric-formula" [appKatex]="'f_c = \\frac{1}{2\\pi RC}'"></div>
+        </div>
+
+        <div class="nm-metric-card">
+          <p class="nm-metric-label">Función de Transferencia H(s)</p>
+          <div class="nm-metric-formula" [appKatex]="getFilterInfo().formula"></div>
+        </div>
+
+        <div class="nm-metric-card">
+          <p class="nm-metric-label">Aplicación Típica</p>
+          <p class="text-xs text-secondary">{{ getFilterInfo().aplicacion }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nm-footer">
+    <div class="flex items-center gap-2">
+      <div class="spinner" [style.visibility]="isPlaying() ? 'visible' : 'hidden'"></div>
+      <span class="text-xs text-secondary">{{ isPlaying() ? 'Procesando señal...' : 'Señal pausada' }}</span>
+    </div>
+    <span class="text-xs text-tertiary">Atenuación: -20 dB/década</span>
   </div>
 </div>

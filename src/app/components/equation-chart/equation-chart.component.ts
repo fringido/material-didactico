@@ -3,7 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 import { KatexDirective } from '../../directives/katex.directive';
 
-export type ChartType = 'ohm' | 'capacitor_diff' | 'inductor_diff' | 'capacitor_reactance' | 'inductor_reactance' | 'bjt_gain' | 'opamp_diff' | 'opamp_gain' | 'diode_iv' | 'zener_iv' | 'varactor_cv' | 'photodiode_iv' | 'line-chart' | 'bar-chart' | 'visualization';
+export type ChartType = 'ohm' | 'capacitor_diff' | 'inductor_diff' | 'capacitor_reactance' | 'inductor_reactance' | 'bjt_gain' | 'opamp_diff' | 'opamp_gain' | 'diode_iv' | 'zener_iv' | 'varactor_cv' | 'photodiode_iv' | 'line-chart' | 'bar-chart' | 'visualization' | 'power_transfer';
 
 @Component({
   selector: 'app-equation-chart',
@@ -608,6 +608,18 @@ export class EquationChartComponent implements AfterViewInit, OnChanges, OnDestr
         draw(() => ({
           xs, ys: xs.map(v => Math.min(IS * (Math.exp(v / VT) - 1), 200)),
           xLabel: 'Voltaje V (V)', yLabel: 'Corriente I (mA)', color: '#f05a7e'
+        }));
+        break;
+      }
+      case 'power_transfer': {
+        const p = this.parameters || {};
+        const vth = this.parseNumber(p['V_th']?.value, 12);
+        const rth = this.parseNumber(p['R_th']?.value, 4);
+        const rlMax = this.parseNumber(p['R_L']?.max, 20);
+        const xs = Array.from({ length: N }, (_, i) => (i / (N - 1)) * rlMax);
+        draw(() => ({
+          xs, ys: xs.map(rl => Math.pow(vth / (rth + rl), 2) * rl),
+          xLabel: 'Resistencia de Carga RL (Ω)', yLabel: 'Potencia PL (W)', color: '#7c6af7'
         }));
         break;
       }

@@ -1,279 +1,285 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-.simulator-container {
-  background: $bg-card;
-  border: 1px solid $border-primary;
+// ─── Container Principal ────────────────────────────────────────────────────
+.nm-container {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
   border-radius: $radius-xl;
-  padding: $spacing-6;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   margin: $spacing-6 0;
 }
 
-.simulator-header {
-  margin-bottom: $spacing-6;
-  text-align: center;
+// ─── Header / Tabs ───────────────────────────────────────────────────────────
+.nm-tabs {
+  display: flex;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-4 0;
+  border-bottom: 1px solid $border-primary;
+  background: $bg-primary;
+  flex-wrap: wrap;
 }
 
-.simulator-title {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
-  margin-bottom: $spacing-2;
-}
-
-.simulator-desc {
-  font-size: $font-size-sm;
+.nm-tab {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-bottom: none;
+  border-radius: $radius-md $radius-md 0 0;
   color: $text-secondary;
+  font-size: $font-size-sm;
+  font-family: $font-primary;
+  cursor: pointer;
+  transition: all $transition-base $ease-in-out;
+  margin-bottom: -1px;
+
+  &--active {
+    background: $bg-secondary;
+    color: $color-primary-light;
+    border-color: $border-secondary;
+    border-bottom-color: $bg-secondary;
+    font-weight: $font-weight-semibold;
+  }
+
+  &--anim {
+    margin-left: auto;
+    background: rgba($color-accent-green, 0.1);
+    border-color: rgba($color-accent-green, 0.3);
+    color: $color-accent-green;
+    font-weight: $font-weight-semibold;
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    font-size: $font-size-xs;
+
+    &:hover {
+      background: rgba($color-accent-green, 0.2);
+    }
+  }
 }
 
-.simulator-body {
+// ─── Layout Principal ─────────────────────────────────────────────────────────
+.nm-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  min-height: 580px;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Panel de Visualización (Izquierdo) ──────────────────────────────────────
+.nm-viz-panel {
+  padding: $spacing-6;
+  border-right: 1px solid $border-primary;
   display: flex;
   flex-direction: column;
   gap: $spacing-6;
-}
-
-.controls-panel {
   background: $bg-secondary;
-  border-radius: $radius-lg;
-  padding: $spacing-5;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-4;
+
+  @media (max-width: $breakpoint-lg) {
+    border-right: none;
+    border-bottom: 1px solid $border-primary;
+  }
 }
 
-.control-group {
+.viz-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+}
+
+.viz-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-tertiary;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+// ─── Respuesta en Frecuencia (SVG) ──────────────────────────────────────────
+.frequency-svg-wrapper {
+  background: #0D1117;
+  border-radius: $radius-lg;
+  border: 1px solid $border-primary;
+  padding: $spacing-4;
+  height: 200px;
+}
+
+.response-svg {
+  width: 100%;
+  height: 100%;
+}
+
+// ─── Procesamiento de Señales ───────────────────────────────────────────────
+.signals-flow {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: $spacing-4;
+  align-items: center;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.signal-card {
+  background: #0D1117;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-3;
   display: flex;
   flex-direction: column;
   gap: $spacing-2;
 }
 
-.control-label {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  color: $text-primary;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.signal-svg {
+  width: 100%;
+  height: 80px;
 }
 
-.control-value {
-  color: $color-primary;
-  font-weight: $font-weight-bold;
+.signal-label {
+  font-size: 10px;
+  color: $text-tertiary;
+  text-align: center;
+  font-family: $font-mono;
+}
+
+.filter-node {
+  width: 50px;
+  height: 50px;
+  background: #1e293b;
+  border: 2px solid $color-primary;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba($color-primary, 0.2);
+  margin: 0 auto;
+
+  span {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    color: $color-primary-light;
+  }
+}
+
+// ─── Panel Lateral (Derecho) ────────────────────────────────────────────────
+.nm-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: $bg-primary;
+}
+
+.nm-controls {
+  padding: $spacing-5;
+  border-bottom: 1px solid $border-primary;
+}
+
+.nm-ctrl-row {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-bottom: $spacing-4;
+
+  label {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    font-weight: $font-weight-medium;
+  }
 }
 
 .control-select {
-  padding: $spacing-2 $spacing-3;
+  width: 100%;
+  background: $bg-secondary;
   border: 1px solid $border-primary;
   border-radius: $radius-md;
-  background: $bg-primary;
   color: $text-primary;
+  padding: $spacing-2;
   font-size: $font-size-sm;
-  cursor: pointer;
-  transition: border-color $transition-base;
+  outline: none;
 
   &:focus {
-    outline: none;
     border-color: $color-primary;
   }
 }
 
-.control-slider {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
+.nm-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.nm-slider {
+  flex: 1;
+  height: 4px;
+  border-radius: $radius-full;
   background: $bg-tertiary;
-  outline: none;
-  -webkit-appearance: none;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: $color-primary;
-    cursor: pointer;
-    transition: transform $transition-base;
-
-    &:hover {
-      transform: scale(1.2);
-    }
-  }
-
-  &::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: $color-primary;
-    cursor: pointer;
-    border: none;
-  }
+  accent-color: $color-primary;
 }
 
-.btn-play {
-  padding: $spacing-3 $spacing-4;
-  background: $color-primary;
-  color: white;
-  border: none;
-  border-radius: $radius-md;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  cursor: pointer;
-  transition: all $transition-base;
-  grid-column: 1 / -1;
-
-  &:hover {
-    background: $color-primary-dark;
-    transform: translateY(-1px);
-  }
-}
-
-.section-subtitle {
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  color: $text-primary;
-  margin-bottom: $spacing-3;
-  text-align: center;
-}
-
-.frequency-response {
-  background: $bg-secondary;
-  border-radius: $radius-lg;
-  padding: $spacing-5;
-}
-
-.response-svg {
-  width: 100%;
-  height: 150px;
-  background: $bg-primary;
-  border-radius: $radius-md;
-}
-
-.signals-panel {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: $spacing-4;
-  align-items: center;
-
-  @media (max-width: $breakpoint-md) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.signal-container {
-  background: $bg-secondary;
-  border-radius: $radius-lg;
-  padding: $spacing-4;
-}
-
-.signal-label {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  color: $text-secondary;
-  margin-bottom: $spacing-2;
-  text-align: center;
-}
-
-.signal-svg {
-  width: 100%;
-  height: 80px;
-  background: $bg-primary;
-  border-radius: $radius-md;
-}
-
-.signal-desc {
-  margin-top: $spacing-2;
-  text-align: center;
+.nm-val {
   font-size: $font-size-xs;
-  color: $text-tertiary;
+  font-family: $font-mono;
+  color: $color-primary-light;
+  min-width: 60px;
+  text-align: right;
 }
 
-.filter-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.filter-box {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, $color-primary, $color-primary-dark);
-  border-radius: $radius-md;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba($color-primary, 0.3);
-}
-
-.filter-label {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-bold;
-  color: white;
-}
-
-.filter-info {
-  background: rgba($color-primary, 0.05);
-  border: 1px solid rgba($color-primary, 0.2);
-  border-radius: $radius-lg;
+// ─── Métricas / Info ─────────────────────────────────────────────────────────
+.nm-metrics {
   padding: $spacing-5;
-
-  &__title {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin-bottom: $spacing-2;
-  }
-
-  &__desc {
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    margin-bottom: $spacing-4;
-  }
-
-  &__formula,
-  &__cutoff {
-    background: $bg-primary;
-    padding: $spacing-4;
-    border-radius: $radius-md;
-    margin-bottom: $spacing-3;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-.formula-label {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $text-secondary;
-  margin-bottom: $spacing-2;
-}
-
-.characteristics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: $spacing-4;
+  overflow-y: auto;
 }
 
-.char-card {
-  background: $bg-secondary;
+.nm-metric-card {
+  background: $bg-card;
   border: 1px solid $border-primary;
-  border-radius: $radius-lg;
+  border-left: 4px solid $color-primary;
+  border-radius: $radius-md;
   padding: $spacing-4;
-  text-align: center;
+
+  &:nth-child(2) { border-left-color: $color-accent-blue; }
+  &:nth-child(3) { border-left-color: $color-accent-green; }
+  &:nth-child(4) { border-left-color: $color-accent-yellow; }
 }
 
-.char-label {
+.nm-metric-label {
   font-size: $font-size-xs;
   color: $text-tertiary;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  margin-bottom: $spacing-1;
+}
+
+.nm-metric-value {
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
   margin-bottom: $spacing-2;
 }
 
-.char-value {
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  color: $text-primary;
+.nm-metric-formula {
+  font-size: $font-size-xs;
+  opacity: 0.8;
+  padding-top: $spacing-2;
+  border-top: 1px dashed $border-primary;
+}
+
+.nm-footer {
+  padding: $spacing-3 $spacing-6;
+  background: $bg-tertiary;
+  border-top: 1px solid $border-primary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

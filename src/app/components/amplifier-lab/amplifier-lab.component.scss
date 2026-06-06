@@ -6,29 +6,237 @@
   flex-direction: column;
   gap: $spacing-8;
   color: $text-primary;
-  padding: $spacing-6 0;
 }
 
-// Header
-.lab-header {
-  position: relative;
+// ─── Container Principal ────────────────────────────────────────────────────
+.nm-container {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-xl;
   overflow: hidden;
-  padding: $spacing-8;
-  
-  .lab-title {
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: $spacing-2 0;
+}
+
+// ─── Tabs / Selector de Modo ──────────────────────────────────────────────────
+.nm-tabs {
+  display: flex;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-4 0;
+  border-bottom: 1px solid $border-primary;
+  background: $bg-primary;
+  flex-wrap: wrap;
+}
+
+.nm-tab {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
+  background: $bg-secondary;
+  border: 1px solid $border-primary;
+  border-bottom: none;
+  border-radius: $radius-md $radius-md 0 0;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-family: $font-primary;
+  cursor: pointer;
+  transition: all $transition-base $ease-in-out;
+  margin-bottom: -1px;
+
+  &:hover {
     color: $text-primary;
-    margin-bottom: $spacing-4;
+    background: $bg-tertiary;
   }
+
+  &--active {
+    background: $bg-secondary;
+    color: $color-primary-light;
+    border-color: $border-secondary;
+    border-bottom-color: $bg-secondary;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+// ─── Layout Principal ──────────────────────────────────────────────────────────
+.nm-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  min-height: 520px;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Panel de Visualización (Izquierdo) ──────────────────────────────────────
+.nm-viz-panel {
+  padding: $spacing-6;
+  border-right: 1px solid $border-primary;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+  background: $bg-secondary;
+
+  @media (max-width: $breakpoint-lg) {
+    border-right: none;
+    border-bottom: 1px solid $border-primary;
+  }
+}
+
+.viz-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-tertiary;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: $spacing-3;
+}
+
+// ─── Diagrama de Circuito (SVG) ──────────────────────────────────────────────
+.circuit-svg-wrapper {
+  background: #0D1117;
+  border-radius: $radius-lg;
+  border: 1px solid $border-primary;
+  padding: $spacing-6;
+  margin-bottom: $spacing-6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
-  .lab-definition {
-    font-size: $font-size-base;
-    color: $text-secondary;
-    line-height: $line-height-relaxed;
-    margin-bottom: $spacing-8;
-    max-width: 900px;
+  .opamp-svg {
+    width: 100%;
+    max-height: 300px;
   }
+}
+
+// ─── Osciloscopio (Señales) ──────────────────────────────────────────────────
+.wave-viewer {
+  background: #0D1117;
+  border-radius: $radius-lg;
+  border: 1px solid $border-primary;
+  padding: $spacing-4;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+
+  .waves-svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// ─── Panel Lateral (Controles + Métricas) ──────────────────────────────────────
+.nm-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: $bg-primary;
+}
+
+.nm-controls {
+  padding: $spacing-5;
+  border-bottom: 1px solid $border-primary;
+}
+
+.nm-ctrl-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-tertiary;
+  margin: 0 0 $spacing-4;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nm-ctrl-row {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-bottom: $spacing-4;
+
+  label {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.nm-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.nm-slider {
+  flex: 1;
+  height: 4px;
+  border-radius: $radius-full;
+  background: $bg-tertiary;
+  accent-color: $color-primary;
+}
+
+.nm-val {
+  font-size: $font-size-xs;
+  font-family: $font-mono;
+  color: $color-primary-light;
+  min-width: 60px;
+  text-align: right;
+}
+
+// ─── Métricas ──────────────────────────────────────────────────────────────────
+.nm-metrics {
+  padding: $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  flex: 1;
+}
+
+.nm-metric-card {
+  background: $bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-4;
+  border-left: 4px solid $color-primary;
+  border: 1px solid $border-primary;
+  border-left-width: 4px;
+
+  &:nth-child(2) { border-left-color: $color-accent-blue; }
+  &:nth-child(3) { border-left-color: $color-accent-green; }
+}
+
+.nm-metric-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  margin-bottom: $spacing-1;
+}
+
+.nm-metric-value {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  font-family: $font-mono;
+
+  &.negative { color: $color-error-light; }
+}
+
+.nm-unit {
+  font-size: $font-size-sm;
+  color: $text-tertiary;
+  font-weight: $font-weight-normal;
+}
+
+// ─── Footer y Secciones de Información ───────────────────────────────────────
+.lab-header {
+  padding: $spacing-8;
+  background: $bg-card;
+  border-radius: $radius-xl;
+  border: 1px solid $border-primary;
+  
+  .lab-title { font-size: $font-size-2xl; font-weight: $font-weight-bold; margin-bottom: $spacing-2; }
+  .lab-definition { color: $text-secondary; margin-bottom: $spacing-6; }
 }
 
 .concepts-grid {
@@ -38,254 +246,38 @@
 }
 
 .concept-card {
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+  padding: $spacing-5;
+  border: 1px solid $border-primary;
   display: flex;
   gap: $spacing-4;
-  padding: $spacing-5;
-  background: $bg-secondary;
-  border-radius: $radius-lg;
-  border: 1px solid $border-secondary;
-  transition: all $transition-fast;
-
-  &:hover { border-color: $color-primary; transform: translateY(-2px); }
 
   .concept-icon {
-    flex-shrink: 0;
-    width: 54px;
-    height: 54px;
-    background: $gradient-primary;
+    width: 48px; height: 48px;
+    background: $color-primary;
     color: white;
     @include flex-center;
-    border-radius: $radius-lg;
-    font-weight: $font-weight-bold;
-    font-size: $font-size-xl;
-    box-shadow: 0 4px 12px rgba($color-primary, 0.2);
-  }
-
-  .concept-info {
-    h4 { margin: 0 0 4px 0; font-size: $font-size-lg; color: $text-primary; }
-    p { margin: 0 0 12px 0; font-size: $font-size-sm; color: $text-secondary; }
-    .concept-formula { font-size: $font-size-lg; color: $color-primary; }
-  }
-}
-
-// Simulation Grid
-.simulation-container {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: $spacing-8;
-  
-  @media (max-width: $breakpoint-lg) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.controls-panel {
-  padding: $spacing-6;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-6;
-  height: fit-content;
-
-  .panel-title { 
-    margin: 0;
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-    color: $text-primary;
-  }
-}
-
-.mode-selector {
-  display: flex;
-  background: $bg-tertiary;
-  padding: 4px;
-  border-radius: $radius-lg;
-  gap: 4px;
-  
-  button {
-    flex: 1;
-    border: 1px solid transparent;
-    padding: $spacing-2;
     border-radius: $radius-md;
-    background: transparent;
-    cursor: pointer;
-    transition: all $transition-base;
-    font-weight: $font-weight-semibold;
-    color: $text-secondary;
-    font-size: $font-size-sm;
-
-    &.active {
-      background: $bg-primary;
-      color: $color-primary;
-      border-color: $border-secondary;
-      box-shadow: $shadow-sm;
-    }
-    
-    &:hover:not(.active) { background: $bg-hover; color: $text-primary; }
-  }
-}
-
-.control-group {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2;
-
-  .control-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .control-label {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    color: $text-secondary;
-  }
-  
-  .control-value {
-    font-family: $font-mono;
-    font-size: $font-size-xs;
-  }
-  
-  .slider {
-    width: 100%;
-    height: 6px;
-    background: $border-secondary;
-    border-radius: $radius-full;
-    appearance: none;
-    outline: none;
-    cursor: pointer;
-
-    &::-webkit-slider-thumb {
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: $text-primary;
-      border: 2px solid $bg-primary;
-      box-shadow: $shadow-sm;
-    }
-    
-    &.slider-purple::-webkit-slider-thumb { background: $color-primary; }
-    &.slider-red::-webkit-slider-thumb { background: $color-error; }
-    &.slider-orange::-webkit-slider-thumb { background: $color-warning; }
-  }
-}
-
-.results-panel {
-  padding: $spacing-6;
-  background: $bg-secondary;
-  
-  .stats-title {
-    margin: 0 0 $spacing-4 0;
-    font-size: $font-size-xs;
     font-weight: $font-weight-bold;
-    color: $text-secondary;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-  
-  .result-item {
-    display: flex;
-    justify-content: space-between;
-    padding: $spacing-2 0;
-    &:not(:last-child) { border-bottom: 1px solid $border-secondary; }
-    
-    .label { font-size: $font-size-sm; color: $text-secondary; }
-    .value { 
-      font-weight: $font-weight-bold; 
-      font-size: $font-size-base;
-      font-family: $font-mono;
-      color: $text-primary;
-      &.negative { color: $color-error; }
-    }
-  }
-}
-
-// Visualizer
-.visualizer-panel {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-6;
-}
-
-.circuit-diagram {
-  padding: $spacing-8;
-  background: #f1f5f9;
-  position: relative;
-  min-height: 400px;
-  @include flex-center;
-
-  .diagram-title {
-    position: absolute;
-    top: $spacing-6;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    margin: 0;
-    font-size: $font-size-lg;
-    font-weight: $font-weight-bold;
-    color: #475569;
-    letter-spacing: 0.1em;
-    opacity: 0.7;
-  }
-  
-  .opamp-svg {
-    width: 100%;
-    max-height: 450px;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.05));
-  }
-}
-
-.waves-container {
-  padding: $spacing-6;
-  background: #0f172a;
-  
-  .waves-title {
-    color: #94a3b8;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: $spacing-6;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    &::before { content: ''; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
-  }
-  
-  .waves-svg {
-    width: 100%;
-    height: 180px;
-  }
-}
-
-// Footer
-.lab-footer {
-  .footer-title {
     font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    margin-bottom: $spacing-8;
   }
+}
+
+.lab-footer {
+  margin-top: $spacing-8;
+  .footer-title { font-size: $font-size-xl; font-weight: $font-weight-bold; margin-bottom: $spacing-6; }
 }
 
 .classes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: $spacing-6;
+  gap: $spacing-4;
 }
 
 .class-card {
-  padding: $spacing-6;
-  transition: all $transition-base;
-  
-  &:hover { transform: translateY(-4px); border-color: $color-primary; }
-  
-  .class-badge { margin-bottom: $spacing-4; }
-  .class-efficiency {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-bold;
-    color: $color-success;
-    margin-bottom: $spacing-2;
-  }
-  .class-desc { font-size: $font-size-sm; color: $text-secondary; line-height: $line-height-relaxed; margin: 0; }
+  padding: $spacing-5;
+  background: $bg-card;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
 }

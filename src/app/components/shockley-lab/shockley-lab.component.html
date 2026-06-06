@@ -1,151 +1,128 @@
 <div class="shockley-lab">
   <!-- Intro Section -->
-  <section class="lab-intro card card--elevated">
-    <h2 class="lab-intro__title">Laboratorio Virtual: Ecuación de Shockley</h2>
-    <p class="lab-intro__desc">
-      En electrónica, la ecuación del diodo de Shockley modela matemáticamente el comportamiento de la corriente eléctrica que fluye a través de un diodo en función del voltaje que se le aplica. Nos permite entender por qué un diodo actúa como una "válvula de un solo sentido": bloquea la corriente en reversa y permite un flujo masivo en directa.
+  <section class="lab-header">
+    <h2 class="lab-title">🔬 Laboratorio Virtual: Ecuación de Shockley</h2>
+    <p class="lab-definition">
+      Modelado matemático de la corriente eléctrica en un diodo en función del voltaje aplicado. Entiende la física de la unión P-N y su comportamiento como válvula electrónica.
     </p>
   </section>
 
-  <!-- Interactive Formula Section -->
-  <section class="formula-section card card--elevated">
-    <div class="formula-section__bg-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+  <!-- ─── Container del Simulador ─── -->
+  <div class="nm-container">
+    
+    <!-- Header -->
+    <div class="nm-tabs">
+      <div class="nm-tab nm-tab--active">
+        <span class="nm-tab__icon">⚡</span>
+        <span>Simulador de Curva I-V</span>
+      </div>
     </div>
-    <h3 class="formula-section__title">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-      Explora la Fórmula Matemática
-    </h3>
 
-    <div class="formula-container">
-      <!-- Formula Visual -->
-      <div class="formula-visual">
-        <button type="button" (mouseenter)="setActiveTerm('I')" [class.active]="activeTerm() === 'I'" class="term term-i">I</button>
-        <span class="operator">=</span>
-        <button type="button" (mouseenter)="setActiveTerm('Is')" [class.active]="activeTerm() === 'Is'" class="term term-is">I<sub>s</sub></button>
-        <span class="bracket">(</span>
-        <button type="button" (mouseenter)="setActiveTerm('e')" [class.active]="activeTerm() === 'e'" class="term term-e">e</button>
-        <div class="exponent">
-          <div class="exponent-top">
-            <button type="button" (mouseenter)="setActiveTerm('Vd')" [class.active]="activeTerm() === 'Vd'" class="term term-vd">V<sub>D</sub></button>
+    <div class="nm-layout">
+      
+      <!-- Panel de Visualización (Gráfica + Fórmula) -->
+      <div class="nm-viz-panel">
+        
+        <!-- Fórmula Interactiva -->
+        <div class="viz-section">
+          <h5 class="viz-title">Exploración de Parámetros Matemáticos</h5>
+          <div class="formula-card">
+            <div class="formula-visual">
+              <span class="term" (mouseenter)="setActiveTerm('I')" [class.active]="activeTerm() === 'I'">I</span>
+              <span>=</span>
+              <span class="term" (mouseenter)="setActiveTerm('Is')" [class.active]="activeTerm() === 'Is'">I<sub>s</sub></span>
+              <span>(</span>
+              <span class="term" (mouseenter)="setActiveTerm('e')" [class.active]="activeTerm() === 'e'">e</span>
+              <sup class="text-xs">
+                <span class="term" (mouseenter)="setActiveTerm('Vd')" [class.active]="activeTerm() === 'Vd'">V<sub>D</sub></span> / 
+                (<span class="term" (mouseenter)="setActiveTerm('n')" [class.active]="activeTerm() === 'n'">n</span>
+                <span class="term" (mouseenter)="setActiveTerm('Vt')" [class.active]="activeTerm() === 'Vt'">V<sub>T</sub></span>)
+              </sup>
+              <span>- 1 )</span>
+            </div>
+            <div class="formula-desc">
+              <strong class="text-primary">{{ formulaDetails[activeTerm()].title }}:</strong>
+              {{ formulaDetails[activeTerm()].desc }}
+            </div>
           </div>
-          <div class="exponent-bottom">
-            <button type="button" (mouseenter)="setActiveTerm('n')" [class.active]="activeTerm() === 'n'" class="term term-n">n</button>
-            <button type="button" (mouseenter)="setActiveTerm('Vt')" [class.active]="activeTerm() === 'Vt'" class="term term-vt">V<sub>T</sub></button>
+        </div>
+
+        <!-- Gráfica -->
+        <div class="viz-section">
+          <h5 class="viz-title">Curva Característica (Forward & Reverse)</h5>
+          <div class="graph-card">
+            <div class="svg-container">
+              <svg width="100%" height="100%" viewBox="0 0 600 400" preserveAspectRatio="none">
+                <!-- Grid -->
+                <ng-container *ngFor="let item of [0,1,2,3,4,5,6,7,8,9,10]; let i = index">
+                  <line [attr.x1]="(600 / 10) * i" y1="0" [attr.x2]="(600 / 10) * i" y2="400" stroke="#1e293b" stroke-width="1" />
+                  <line x1="0" [attr.y1]="(400 / 10) * i" x2="600" [attr.y2]="(400 / 10) * i" stroke="#1e293b" stroke-width="1" />
+                </ng-container>
+
+                <!-- Ejes -->
+                <line [attr.x1]="mapX(0)" y1="0" [attr.x2]="mapX(0)" y2="400" stroke="#475569" stroke-width="2" />
+                <line x1="0" [attr.y1]="mapY(0)" x2="600" [attr.y2]="mapY(0)" stroke="#475569" stroke-width="2" />
+
+                <!-- Curve -->
+                <path [attr.d]="pathData()" fill="none" stroke="#3b82f6" stroke-width="3" />
+                
+                <!-- Labels -->
+                <text [attr.x]="mapX(0.7)" [attr.y]="mapY(-2)" class="axis-label">0.7V</text>
+                <text [attr.x]="mapX(-0.1)" [attr.y]="mapY(40)" class="axis-label" text-anchor="end">40mA</text>
+              </svg>
+            </div>
+            <div class="axis-title" style="bottom: 10px; right: 20px;">Voltaje V<sub>D</sub> (V)</div>
+            <div class="axis-title" style="top: 20px; left: 10px; transform: rotate(-90deg)">Corriente I (mA)</div>
           </div>
         </div>
-        <span class="operator">-</span>
-        <span class="number">1</span>
-        <span class="bracket">)</span>
       </div>
 
-      <!-- Formula Explanation Box -->
-      <div class="formula-desc-box">
-        <h4 class="formula-desc-title" [ngClass]="formulaDetails[activeTerm()].colorClass">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          {{ formulaDetails[activeTerm()].title }}
-        </h4>
-        <p class="formula-desc-text">
-          {{ formulaDetails[activeTerm()].desc }}
-        </p>
-      </div>
-    </div>
-  </section>
+      <!-- Panel Lateral: Controles + Métricas -->
+      <div class="nm-side-panel">
+        
+        <!-- Controles -->
+        <div class="nm-controls">
+          <h5 class="nm-ctrl-title">⚙️ Parámetros Físicos</h5>
+          
+          <div class="nm-ctrl-row">
+            <label>Temperatura de la Unión (T)</label>
+            <div class="nm-slider-wrap">
+              <input type="range" min="200" max="400" step="5" [value]="temperature()" (input)="onTempChange($event)" class="nm-slider">
+              <span class="nm-val">{{ temperature() }} K</span>
+            </div>
+          </div>
 
-  <!-- Graph and Controls Section -->
-  <div class="grid-layout">
+          <div class="nm-ctrl-row">
+            <label>Factor de Idealidad (n)</label>
+            <div class="nm-slider-wrap">
+              <input type="range" min="1" max="2" step="0.05" [value]="ideality()" (input)="onIdealityChange($event)" class="nm-slider">
+              <span class="nm-val">{{ ideality() | number:'1.2-2' }}</span>
+            </div>
+          </div>
 
-    <!-- Controls -->
-    <div class="controls-panel card card--bordered">
-      <div class="controls-header">
-      <h3 class="controls-title">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        Parámetros del Diodo
-      </h3>
-
-      <!-- Slider: Temperatura -->
-      <div class="control-group">
-        <div class="control-header">
-          <label class="control-label">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-temp"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>
-            Temperatura (T)
-          </label>
-          <span class="control-value badge badge--info">{{ temperature() }} K</span>
+          <div class="nm-ctrl-row">
+            <label>Corriente de Saturación (I<sub>s</sub>)</label>
+            <div class="nm-slider-wrap">
+              <input type="range" min="0.1" max="10" step="0.1" [value]="is_pA()" (input)="onIsChange($event)" class="nm-slider">
+              <span class="nm-val">{{ is_pA() }} pA</span>
+            </div>
+          </div>
         </div>
-        <input type="range" min="200" max="400" step="5" [value]="temperature()" (input)="onTempChange($event)" class="slider slider-red"/>
-        <p class="control-help">A mayor temperatura, los electrones tienen más energía. Observa cómo la curva se desplaza a la derecha.</p>
-      </div>
 
-      <!-- Slider: Factor de idealidad -->
-      <div class="control-group">
-        <div class="control-header">
-          <label class="control-label">Factor de Idealidad (n)</label>
-          <span class="control-value badge badge--warning">{{ ideality() | number:'1.2-2' }}</span>
-        </div>
-        <input type="range" min="1" max="2" step="0.05" [value]="ideality()" (input)="onIdealityChange($event)" class="slider slider-orange"/>
-        <p class="control-help">n=1 es un diodo ideal. Valores mayores representan imperfecciones en el material real.</p>
-      </div>
+        <!-- Métricas -->
+        <div class="nm-metrics">
+          <h5 class="nm-ctrl-title">📊 Valores Dinámicos</h5>
+          
+          <div class="nm-metric-card">
+            <p class="nm-metric-label">Voltaje Térmico (V<sub>T</sub>)</p>
+            <p class="nm-metric-value">{{ thermalVoltage() | number:'1.2-2' }} <span class="nm-unit">mV</span></p>
+          </div>
 
-      <!-- Slider: Corriente de Saturación -->
-      <div class="control-group">
-        <div class="control-header">
-          <label class="control-label">C. Saturación (Iₛ)</label>
-          <span class="control-value badge badge--primary">{{ is_pA() }} pA</span>
-        </div>
-        <input type="range" min="0.1" max="10" step="0.1" [value]="is_pA()" (input)="onIsChange($event)" class="slider slider-purple"/>
-        <p class="control-help">Magnitud de la fuga de corriente cuando el voltaje es negativo.</p>
-      </div>
-
-      <!-- Live Stats -->
-      <div class="live-stats">
-        <h4 class="stats-title">Valores Calculados</h4>
-        <div class="stats-row">
-          <span>Voltaje Térmico (V<sub>T</sub>):</span>
-          <span class="stats-val">{{ thermalVoltage() | number:'1.2-2' }} mV</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Graph -->
-    <div class="graph-panel card card--bordered">
-      <div class="graph-header">
-        <h3>Curva Característica I-V</h3>
-        <p>Representación gráfica de Corriente (mA) vs Voltaje (V)</p>
-      </div>
-      <div class="graph-content">
-        <div class="svg-container">
-          <svg width="100%" height="100%" viewBox="0 0 600 400" preserveAspectRatio="none">
-            <!-- Grid Lines -->
-            <ng-container *ngFor="let item of [0,1,2,3,4,5,6,7,8,9,10]; let i = index">
-              <line [attr.x1]="(600 / 10) * i" y1="0" [attr.x2]="(600 / 10) * i" y2="400" stroke="#f1f5f9" stroke-width="1" />
-              <line x1="0" [attr.y1]="(400 / 10) * i" x2="600" [attr.y2]="(400 / 10) * i" stroke="#f1f5f9" stroke-width="1" />
-            </ng-container>
-
-            <!-- Ejes principales (X e Y en 0) -->
-            <line [attr.x1]="mapX(0)" y1="0" [attr.x2]="mapX(0)" y2="400" stroke="#94a3b8" stroke-width="2" />
-            <line x1="0" [attr.y1]="mapY(0)" x2="600" [attr.y2]="mapY(0)" stroke="#94a3b8" stroke-width="2" />
-
-            <!-- Etiquetas de ejes -->
-            <text [attr.x]="mapX(0.7)" [attr.y]="mapY(-2)" class="axis-label">0.7V</text>
-            <text [attr.x]="mapX(0.3)" [attr.y]="mapY(-2)" class="axis-label">0.3V</text>
-            <text [attr.x]="mapX(-0.4)" [attr.y]="mapY(-2)" class="axis-label">-0.4V</text>
-            <text [attr.x]="mapX(-0.05)" [attr.y]="mapY(40)" class="axis-label axis-label-right">40mA</text>
-            <text [attr.x]="mapX(-0.05)" [attr.y]="mapY(20)" class="axis-label axis-label-right">20mA</text>
-
-            <!-- Curva de Shockley -->
-            <path
-              [attr.d]="pathData()"
-              fill="none"
-              stroke="#3b82f6"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-
-          <!-- Títulos absolutos -->
-          <div class="axis-title axis-title-x">Voltaje (V_D)</div>
-          <div class="axis-title axis-title-y">Corriente (I) mA</div>
+          <div class="nm-metric-card">
+            <p class="nm-metric-label">Estado de la Unión</p>
+            <p class="text-sm font-bold text-success">Conducción Directa</p>
+            <p class="text-[10px] text-secondary mt-1">Simulación basada en material de Silicio (Si)</p>
+          </div>
         </div>
       </div>
     </div>

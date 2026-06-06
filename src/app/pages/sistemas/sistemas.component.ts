@@ -7,6 +7,8 @@ import { AmplifierLabComponent } from '../../components/amplifier-lab/amplifier-
 import { FilterSimulatorComponent } from '../../components/circuit-simulator/filter-simulator.component';
 import { OscillatorSimulatorComponent } from '../../components/circuit-simulator/oscillator-simulator.component';
 import { BodeChartComponent } from '../../components/bode-chart/bode-chart.component';
+import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
+import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
 
 @Component({
   selector: 'app-sistemas',
@@ -18,10 +20,12 @@ import { BodeChartComponent } from '../../components/bode-chart/bode-chart.compo
     AmplifierLabComponent,
     FilterSimulatorComponent,
     OscillatorSimulatorComponent,
-    BodeChartComponent
+    BodeChartComponent,
+    PageBackBarComponent,
+    DynamicCircuitSimulatorComponent
   ],
   templateUrl: './sistemas.component.html',
-  styleUrls: ['./sistemas.component.scss']
+  styles: []
 })
 export class SistemasComponent implements OnInit {
   private http = inject(HttpClient);
