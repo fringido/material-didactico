@@ -11,6 +11,7 @@ import { TopologyLabComponent } from '../../components/clase3-labs/topology-lab.
 import { KirchhoffLabComponent } from '../../components/clase3-labs/kirchhoff-lab.component';
 import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
 import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
+import { ProtoboardTheveninNorton } from '../../../app/protoboard-thevenin-norton/protoboard-thevenin-norton';
 
 const CLASS_TO_MODULE_UNIT: Record<number, { modulo: number; unidad: number }> = {
   1: { modulo: 1, unidad: 1 },
@@ -41,6 +42,7 @@ const TEMA_IDS_BY_CLASS: Record<number, string[]> = {
     KirchhoffLabComponent,
     PageBackBarComponent,
     DynamicCircuitSimulatorComponent,
+    ProtoboardTheveninNorton,
   ],
   templateUrl: './tema-detalle.component.html',
   styleUrls: ['./tema-detalle.component.scss']

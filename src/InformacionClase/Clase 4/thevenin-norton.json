@@ -73,6 +73,12 @@
   ],
   "interactivos": [
     {
+      "id": "protoboard-simulator",
+      "tipo": "protoboard-thevenin",
+      "titulo": "Simulador de Protoboard: Thevenin y Norton",
+      "descripcion": "Construye un circuito en el protoboard para experimentar con equivalentes Thevenin y Norton."
+    },
+    {
       "id": "thevenin-calculator",
       "tipo": "circuit-simulator",
       "titulo": "Calculadora de Thevenin",

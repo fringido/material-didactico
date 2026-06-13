@@ -8,7 +8,6 @@ import { FilterSimulatorComponent } from '../../components/circuit-simulator/fil
 import { OscillatorSimulatorComponent } from '../../components/circuit-simulator/oscillator-simulator.component';
 import { BodeChartComponent } from '../../components/bode-chart/bode-chart.component';
 import { PageBackBarComponent } from '../../components/page-back-bar/page-back-bar.component';
-import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circuit-simulator/dynamic-circuit-simulator.component';
 
 @Component({
   selector: 'app-sistemas',
@@ -21,8 +20,7 @@ import { DynamicCircuitSimulatorComponent } from '../../components/dynamic-circu
     FilterSimulatorComponent,
     OscillatorSimulatorComponent,
     BodeChartComponent,
-    PageBackBarComponent,
-    DynamicCircuitSimulatorComponent
+    PageBackBarComponent
   ],
   templateUrl: './sistemas.component.html',
   styles: []

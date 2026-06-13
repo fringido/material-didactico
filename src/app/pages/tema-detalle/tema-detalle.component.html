@@ -363,6 +363,9 @@
                   [equation]="inter.ecuacion || 'V = I \\cdot R'">
                 </app-equation-chart>
               }
+              @case ('protoboard-thevenin') {
+                <app-protoboard-thevenin-norton />
+              }
             }
           </div>
         }
